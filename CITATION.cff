@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this dataset, please cite it as below."
+type: dataset
+title: "Token cost by language: 41 languages measured on GPT tokenizers"
+authors:
+  - name: TokenSave
+    website: "https://tokensave.app"
+date-released: 2026-10-17
+doi: 10.5281/zenodo.23427148
+url: "https://tokensave.app/data/token-cost-by-language"
+license: CC-BY-4.0
+keywords: [tokenizer, tokenization, multilingual, llm-cost, tiktoken, o200k_base, cl100k_base]

@@ -1,0 +1,42 @@
+language_code,language,o200k_tokens,o200k_vs_english_pct,cl100k_tokens,cl100k_vs_english_pct,prompt
+en,English,34,0,34,0,Please summarize the customer email below in three bullet points and suggest a polite reply. The customer says the order arrived two days late and one item was missing from the box.
+zh-CN,Chinese (Simplified),35,3,52,53,请用三个要点总结下面的客户邮件，并建议一封礼貌的回复。客户说订单晚到了两天，而且箱子里少了一件商品。
+id,Indonesian,39,15,47,38,Ringkas email pelanggan di bawah ini dalam tiga poin dan sarankan balasan yang sopan. Pelanggan mengatakan pesanan tiba dua hari terlambat dan satu barang hilang dari kotak.
+es,Spanish,40,18,44,29,Resume el siguiente correo del cliente en tres puntos y sugiere una respuesta amable. El cliente dice que el pedido llegó con dos días de retraso y que faltaba un artículo en la caja.
+pt,Portuguese,41,21,48,41,Resuma o e-mail do cliente abaixo em três tópicos e sugira uma resposta educada. O cliente diz que o pedido chegou com dois dias de atraso e que faltava um item na caixa.
+fa,Persian,42,24,95,179,ایمیل مشتری زیر را در سه نکته خلاصه کنید و یک پاسخ مودبانه پیشنهاد دهید. مشتری می‌گوید سفارش دو روز دیر رسید و یکی از اقلام در جعبه نبود.
+de,German,43,26,51,50,"Fasse die folgende Kunden-E-Mail in drei Stichpunkten zusammen und schlage eine höfliche Antwort vor. Der Kunde sagt, dass die Bestellung zwei Tage zu spät ankam und ein Artikel im Paket fehlte."
+ar,Arabic,43,26,103,203,لخّص رسالة العميل أدناه في ثلاث نقاط واقترح ردًا مهذبًا. يقول العميل إن الطلب وصل متأخرًا يومين وإن أحد المنتجات كان مفقودًا من الصندوق.
+fr,French,44,29,49,44,Résumez l'e-mail du client ci-dessous en trois points et proposez une réponse polie. Le client indique que la commande est arrivée avec deux jours de retard et qu'un article manquait dans le colis.
+nl,Dutch,44,29,59,74,Vat de onderstaande e-mail van de klant samen in drie punten en stel een beleefd antwoord voor. De klant zegt dat de bestelling twee dagen te laat aankwam en dat er één artikel in de doos ontbrak.
+sv,Swedish,45,32,51,50,Sammanfatta kundens e-post nedan i tre punkter och föreslå ett artigt svar. Kunden säger att beställningen kom två dagar för sent och att en vara saknades i lådan.
+no,Norwegian,45,32,53,56,"Oppsummer kundens e-post nedenfor i tre punkter, og foreslå et høflig svar. Kunden sier at bestillingen kom to dager for sent, og at det manglet en vare i esken."
+ru,Russian,45,32,73,115,"Кратко изложите письмо клиента ниже в трёх пунктах и предложите вежливый ответ. Клиент пишет, что заказ пришёл на два дня позже и в коробке не хватало одного товара."
+da,Danish,46,35,54,59,"Opsummer kundens e-mail nedenfor i tre punkter, og foreslå et høfligt svar. Kunden skriver, at ordren kom to dage for sent, og at der manglede en vare i kassen."
+zh-TW,Chinese (Traditional),46,35,72,112,請用三個重點總結下面的客戶郵件，並建議一封禮貌的回覆。客戶說訂單晚到了兩天，而且箱子裡少了一件商品。
+vi,Vietnamese,46,35,79,132,Hãy tóm tắt email của khách hàng dưới đây thành ba ý chính và đề xuất một câu trả lời lịch sự. Khách hàng nói rằng đơn hàng đến trễ hai ngày và thiếu một món trong hộp.
+it,Italian,47,38,54,59,Riassumi l'email del cliente qui sotto in tre punti e suggerisci una risposta cortese. Il cliente dice che l'ordine è arrivato con due giorni di ritardo e che mancava un articolo nella scatola.
+fi,Finnish,49,44,69,103,"Tiivistä alla oleva asiakkaan sähköposti kolmeen kohtaan ja ehdota kohteliasta vastausta. Asiakas kertoo, että tilaus saapui kaksi päivää myöhässä ja laatikosta puuttui yksi tuote."
+ko,Korean,49,44,85,150,아래 고객 이메일을 세 가지 요점으로 요약하고 정중한 답장을 제안해 주세요. 고객은 주문이 이틀 늦게 도착했고 상자에서 물건 하나가 빠져 있었다고 말합니다.
+tr,Turkish,50,47,70,106,"Aşağıdaki müşteri e-postasını üç madde halinde özetleyin ve kibar bir yanıt önerin. Müşteri, siparişin iki gün geç geldiğini ve kutuda bir ürünün eksik olduğunu söylüyor."
+hi,Hindi,51,50,156,359,नीचे दिए गए ग्राहक ईमेल को तीन बिंदुओं में सारांशित करें और एक विनम्र उत्तर सुझाएँ। ग्राहक का कहना है कि ऑर्डर दो दिन देर से पहुँचा और डिब्बे में एक सामान कम था।
+fil,Filipino,52,53,60,76,Ibuod ang email ng customer sa ibaba sa tatlong punto at magmungkahi ng magalang na sagot. Sinabi ng customer na dumating ang order nang dalawang araw na huli at may isang item na kulang sa kahon.
+ro,Romanian,52,53,60,76,Rezumați e-mailul clientului de mai jos în trei puncte și propuneți un răspuns politicos. Clientul spune că comanda a sosit cu două zile întârziere și că un articol lipsea din cutie.
+he,Hebrew,53,56,128,276,סכמו את המייל של הלקוח למטה בשלוש נקודות והציעו תשובה מנומסת. הלקוח אומר שההזמנה הגיעה באיחור של יומיים ושפריט אחד היה חסר בקופסה.
+ur,Urdu,54,59,144,324,نیچے دی گئی گاہک کی ای میل کا تین نکات میں خلاصہ کریں اور ایک شائستہ جواب تجویز کریں۔ گاہک کا کہنا ہے کہ آرڈر دو دن دیر سے پہنچا اور ڈبے میں ایک چیز کم تھی۔
+gu,Gujarati,54,59,244,618,નીચેના ગ્રાહકના ઇમેઇલનો ત્રણ મુદ્દાઓમાં સારાંશ આપો અને નમ્ર જવાબ સૂચવો. ગ્રાહક કહે છે કે ઓર્ડર બે દિવસ મોડો આવ્યો અને બોક્સમાંથી એક વસ્તુ ખૂટતી હતી.
+mr,Marathi,56,65,167,391,खालील ग्राहकाच्या ईमेलचा तीन मुद्द्यांमध्ये सारांश द्या आणि एक नम्र उत्तर सुचवा. ग्राहक म्हणतो की ऑर्डर दोन दिवस उशिरा पोहोचली आणि बॉक्समधून एक वस्तू गायब होती.
+bn,Bengali,57,68,207,509,নিচের গ্রাহকের ইমেলটি তিনটি পয়েন্টে সংক্ষেপ করুন এবং একটি বিনীত উত্তর প্রস্তাব করুন। গ্রাহক বলছেন অর্ডারটি দুই দিন দেরিতে এসেছে এবং বাক্স থেকে একটি জিনিস অনুপস্থিত ছিল।
+hu,Hungarian,59,74,77,126,"Foglald össze az alábbi ügyfél-e-mailt három pontban, és javasolj egy udvarias választ. Az ügyfél azt írja, hogy a rendelés két nap késéssel érkezett, és egy termék hiányzott a dobozból."
+th,Thai,59,74,126,271,โปรดสรุปอีเมลของลูกค้าด้านล่างเป็นสามข้อและเสนอคำตอบที่สุภาพ ลูกค้าบอกว่าคำสั่งซื้อมาถึงช้าไปสองวันและมีสินค้าหายไปหนึ่งชิ้นจากกล่อง
+ja,Japanese,61,79,75,121,以下の顧客メールを3つの箇条書きで要約し、丁寧な返信を提案してください。顧客によると、注文品が2日遅れて届き、箱から商品が1つ欠けていたそうです。
+kn,Kannada,61,79,318,835,ಕೆಳಗಿನ ಗ್ರಾಹಕರ ಇಮೇಲ್ ಅನ್ನು ಮೂರು ಅಂಶಗಳಲ್ಲಿ ಸಾರಾಂಶಗೊಳಿಸಿ ಮತ್ತು ವಿನಯದ ಉತ್ತರವನ್ನು ಸೂಚಿಸಿ. ಆರ್ಡರ್ ಎರಡು ದಿನ ತಡವಾಗಿ ಬಂದಿದೆ ಮತ್ತು ಪೆಟ್ಟಿಗೆಯಲ್ಲಿ ಒಂದು ವಸ್ತು ಕಾಣೆಯಾಗಿದೆ ಎಂದು ಗ್ರಾಹಕರು ಹೇಳುತ್ತಾರೆ.
+ml,Malayalam,63,85,343,909,താഴെയുള്ള ഉപഭോക്താവിന്റെ ഇമെയിൽ മൂന്ന് പോയിന്റുകളായി സംഗ്രഹിച്ച് ഒരു വിനീതമായ മറുപടി നിർദ്ദേശിക്കുക. ഓർഡർ രണ്ട് ദിവസം വൈകിയാണ് എത്തിയതെന്നും പെട്ടിയിൽ ഒരു സാധനം കുറവായിരുന്നുവെന്നും ഉപഭോക്താവ് പറയുന്നു.
+pl,Polish,64,88,72,112,"Podsumuj poniższy e-mail od klienta w trzech punktach i zaproponuj uprzejmą odpowiedź. Klient twierdzi, że zamówienie dotarło z dwudniowym opóźnieniem, a w paczce brakowało jednego produktu."
+uk,Ukrainian,64,88,107,215,"Коротко викладіть лист клієнта нижче у трьох пунктах і запропонуйте ввічливу відповідь. Клієнт пише, що замовлення прийшло на два дні пізніше і в коробці бракувало одного товару."
+ta,Tamil,67,97,288,747,"கீழே உள்ள வாடிக்கையாளரின் மின்னஞ்சலை மூன்று புள்ளிகளில் சுருக்கி, ஒரு பணிவான பதிலைப் பரிந்துரைக்கவும். ஆர்டர் இரண்டு நாட்கள் தாமதமாக வந்ததாகவும், பெட்டியில் ஒரு பொருள் காணவில்லை என்றும் வாடிக்கையாளர் கூறுகிறார்."
+sk,Slovak,68,100,86,153,"Zhrňte nižšie uvedený e-mail zákazníka do troch bodov a navrhnite zdvorilú odpoveď. Zákazník píše, že objednávka dorazila s dvojdňovým oneskorením a v krabici chýbala jedna položka."
+cs,Czech,68,100,88,159,"Shrňte níže uvedený e-mail zákazníka do tří bodů a navrhněte zdvořilou odpověď. Zákazník píše, že objednávka dorazila se dvoudenním zpožděním a v krabici chyběla jedna položka."
+te,Telugu,69,103,319,838,"క్రింది కస్టమర్ ఇమెయిల్‌ను మూడు పాయింట్లలో సంగ్రహించి, మర్యాదపూర్వకమైన సమాధానాన్ని సూచించండి. ఆర్డర్ రెండు రోజులు ఆలస్యంగా వచ్చిందని, పెట్టెలో ఒక వస్తువు లేదని కస్టమర్ చెబుతున్నారు."
+el,Greek,70,106,168,394,Συνοψίστε το παρακάτω email του πελάτη σε τρία σημεία και προτείνετε μια ευγενική απάντηση. Ο πελάτης λέει ότι η παραγγελία έφτασε με δύο ημέρες καθυστέρηση και ότι έλειπε ένα προϊόν από το κουτί.
+pa,Punjabi,83,144,252,641,ਹੇਠਾਂ ਦਿੱਤੀ ਗਾਹਕ ਦੀ ਈਮੇਲ ਦਾ ਤਿੰਨ ਨੁਕਤਿਆਂ ਵਿੱਚ ਸਾਰ ਦਿਓ ਅਤੇ ਇੱਕ ਨਿਮਰ ਜਵਾਬ ਸੁਝਾਓ। ਗਾਹਕ ਕਹਿੰਦਾ ਹੈ ਕਿ ਆਰਡਰ ਦੋ ਦਿਨ ਦੇਰ ਨਾਲ ਪਹੁੰਚਿਆ ਅਤੇ ਡੱਬੇ ਵਿੱਚੋਂ ਇੱਕ ਚੀਜ਼ ਗਾਇਬ ਸੀ।

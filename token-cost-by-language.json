@@ -1,0 +1,383 @@
+{
+ "title": "Token cost by language: 41 languages measured on GPT tokenizers",
+ "url": "https://tokensave.app/data/token-cost-by-language",
+ "license": "CC BY 4.0",
+ "measured": "2026-09-30",
+ "verified": "2026-10-16",
+ "tokenizers": [
+  "o200k_base (GPT-4o and later)",
+  "cl100k_base (GPT-4, GPT-3.5)"
+ ],
+ "citation": "TokenSave (2026). Token cost by language: 41 languages measured on GPT tokenizers [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23427148",
+ "rows": [
+  {
+   "code": "en",
+   "name": "English",
+   "o": 34,
+   "po": 0,
+   "c": 34,
+   "pc": 0,
+   "prompt": "Please summarize the customer email below in three bullet points and suggest a polite reply. The customer says the order arrived two days late and one item was missing from the box."
+  },
+  {
+   "code": "zh-CN",
+   "name": "Chinese (Simplified)",
+   "o": 35,
+   "po": 3,
+   "c": 52,
+   "pc": 53,
+   "prompt": "请用三个要点总结下面的客户邮件，并建议一封礼貌的回复。客户说订单晚到了两天，而且箱子里少了一件商品。"
+  },
+  {
+   "code": "id",
+   "name": "Indonesian",
+   "o": 39,
+   "po": 15,
+   "c": 47,
+   "pc": 38,
+   "prompt": "Ringkas email pelanggan di bawah ini dalam tiga poin dan sarankan balasan yang sopan. Pelanggan mengatakan pesanan tiba dua hari terlambat dan satu barang hilang dari kotak."
+  },
+  {
+   "code": "es",
+   "name": "Spanish",
+   "o": 40,
+   "po": 18,
+   "c": 44,
+   "pc": 29,
+   "prompt": "Resume el siguiente correo del cliente en tres puntos y sugiere una respuesta amable. El cliente dice que el pedido llegó con dos días de retraso y que faltaba un artículo en la caja."
+  },
+  {
+   "code": "pt",
+   "name": "Portuguese",
+   "o": 41,
+   "po": 21,
+   "c": 48,
+   "pc": 41,
+   "prompt": "Resuma o e-mail do cliente abaixo em três tópicos e sugira uma resposta educada. O cliente diz que o pedido chegou com dois dias de atraso e que faltava um item na caixa."
+  },
+  {
+   "code": "fa",
+   "name": "Persian",
+   "o": 42,
+   "po": 24,
+   "c": 95,
+   "pc": 179,
+   "prompt": "ایمیل مشتری زیر را در سه نکته خلاصه کنید و یک پاسخ مودبانه پیشنهاد دهید. مشتری می‌گوید سفارش دو روز دیر رسید و یکی از اقلام در جعبه نبود."
+  },
+  {
+   "code": "de",
+   "name": "German",
+   "o": 43,
+   "po": 26,
+   "c": 51,
+   "pc": 50,
+   "prompt": "Fasse die folgende Kunden-E-Mail in drei Stichpunkten zusammen und schlage eine höfliche Antwort vor. Der Kunde sagt, dass die Bestellung zwei Tage zu spät ankam und ein Artikel im Paket fehlte."
+  },
+  {
+   "code": "ar",
+   "name": "Arabic",
+   "o": 43,
+   "po": 26,
+   "c": 103,
+   "pc": 203,
+   "prompt": "لخّص رسالة العميل أدناه في ثلاث نقاط واقترح ردًا مهذبًا. يقول العميل إن الطلب وصل متأخرًا يومين وإن أحد المنتجات كان مفقودًا من الصندوق."
+  },
+  {
+   "code": "fr",
+   "name": "French",
+   "o": 44,
+   "po": 29,
+   "c": 49,
+   "pc": 44,
+   "prompt": "Résumez l'e-mail du client ci-dessous en trois points et proposez une réponse polie. Le client indique que la commande est arrivée avec deux jours de retard et qu'un article manquait dans le colis."
+  },
+  {
+   "code": "nl",
+   "name": "Dutch",
+   "o": 44,
+   "po": 29,
+   "c": 59,
+   "pc": 74,
+   "prompt": "Vat de onderstaande e-mail van de klant samen in drie punten en stel een beleefd antwoord voor. De klant zegt dat de bestelling twee dagen te laat aankwam en dat er één artikel in de doos ontbrak."
+  },
+  {
+   "code": "sv",
+   "name": "Swedish",
+   "o": 45,
+   "po": 32,
+   "c": 51,
+   "pc": 50,
+   "prompt": "Sammanfatta kundens e-post nedan i tre punkter och föreslå ett artigt svar. Kunden säger att beställningen kom två dagar för sent och att en vara saknades i lådan."
+  },
+  {
+   "code": "no",
+   "name": "Norwegian",
+   "o": 45,
+   "po": 32,
+   "c": 53,
+   "pc": 56,
+   "prompt": "Oppsummer kundens e-post nedenfor i tre punkter, og foreslå et høflig svar. Kunden sier at bestillingen kom to dager for sent, og at det manglet en vare i esken."
+  },
+  {
+   "code": "ru",
+   "name": "Russian",
+   "o": 45,
+   "po": 32,
+   "c": 73,
+   "pc": 115,
+   "prompt": "Кратко изложите письмо клиента ниже в трёх пунктах и предложите вежливый ответ. Клиент пишет, что заказ пришёл на два дня позже и в коробке не хватало одного товара."
+  },
+  {
+   "code": "da",
+   "name": "Danish",
+   "o": 46,
+   "po": 35,
+   "c": 54,
+   "pc": 59,
+   "prompt": "Opsummer kundens e-mail nedenfor i tre punkter, og foreslå et høfligt svar. Kunden skriver, at ordren kom to dage for sent, og at der manglede en vare i kassen."
+  },
+  {
+   "code": "zh-TW",
+   "name": "Chinese (Traditional)",
+   "o": 46,
+   "po": 35,
+   "c": 72,
+   "pc": 112,
+   "prompt": "請用三個重點總結下面的客戶郵件，並建議一封禮貌的回覆。客戶說訂單晚到了兩天，而且箱子裡少了一件商品。"
+  },
+  {
+   "code": "vi",
+   "name": "Vietnamese",
+   "o": 46,
+   "po": 35,
+   "c": 79,
+   "pc": 132,
+   "prompt": "Hãy tóm tắt email của khách hàng dưới đây thành ba ý chính và đề xuất một câu trả lời lịch sự. Khách hàng nói rằng đơn hàng đến trễ hai ngày và thiếu một món trong hộp."
+  },
+  {
+   "code": "it",
+   "name": "Italian",
+   "o": 47,
+   "po": 38,
+   "c": 54,
+   "pc": 59,
+   "prompt": "Riassumi l'email del cliente qui sotto in tre punti e suggerisci una risposta cortese. Il cliente dice che l'ordine è arrivato con due giorni di ritardo e che mancava un articolo nella scatola."
+  },
+  {
+   "code": "fi",
+   "name": "Finnish",
+   "o": 49,
+   "po": 44,
+   "c": 69,
+   "pc": 103,
+   "prompt": "Tiivistä alla oleva asiakkaan sähköposti kolmeen kohtaan ja ehdota kohteliasta vastausta. Asiakas kertoo, että tilaus saapui kaksi päivää myöhässä ja laatikosta puuttui yksi tuote."
+  },
+  {
+   "code": "ko",
+   "name": "Korean",
+   "o": 49,
+   "po": 44,
+   "c": 85,
+   "pc": 150,
+   "prompt": "아래 고객 이메일을 세 가지 요점으로 요약하고 정중한 답장을 제안해 주세요. 고객은 주문이 이틀 늦게 도착했고 상자에서 물건 하나가 빠져 있었다고 말합니다."
+  },
+  {
+   "code": "tr",
+   "name": "Turkish",
+   "o": 50,
+   "po": 47,
+   "c": 70,
+   "pc": 106,
+   "prompt": "Aşağıdaki müşteri e-postasını üç madde halinde özetleyin ve kibar bir yanıt önerin. Müşteri, siparişin iki gün geç geldiğini ve kutuda bir ürünün eksik olduğunu söylüyor."
+  },
+  {
+   "code": "hi",
+   "name": "Hindi",
+   "o": 51,
+   "po": 50,
+   "c": 156,
+   "pc": 359,
+   "prompt": "नीचे दिए गए ग्राहक ईमेल को तीन बिंदुओं में सारांशित करें और एक विनम्र उत्तर सुझाएँ। ग्राहक का कहना है कि ऑर्डर दो दिन देर से पहुँचा और डिब्बे में एक सामान कम था।"
+  },
+  {
+   "code": "fil",
+   "name": "Filipino",
+   "o": 52,
+   "po": 53,
+   "c": 60,
+   "pc": 76,
+   "prompt": "Ibuod ang email ng customer sa ibaba sa tatlong punto at magmungkahi ng magalang na sagot. Sinabi ng customer na dumating ang order nang dalawang araw na huli at may isang item na kulang sa kahon."
+  },
+  {
+   "code": "ro",
+   "name": "Romanian",
+   "o": 52,
+   "po": 53,
+   "c": 60,
+   "pc": 76,
+   "prompt": "Rezumați e-mailul clientului de mai jos în trei puncte și propuneți un răspuns politicos. Clientul spune că comanda a sosit cu două zile întârziere și că un articol lipsea din cutie."
+  },
+  {
+   "code": "he",
+   "name": "Hebrew",
+   "o": 53,
+   "po": 56,
+   "c": 128,
+   "pc": 276,
+   "prompt": "סכמו את המייל של הלקוח למטה בשלוש נקודות והציעו תשובה מנומסת. הלקוח אומר שההזמנה הגיעה באיחור של יומיים ושפריט אחד היה חסר בקופסה."
+  },
+  {
+   "code": "ur",
+   "name": "Urdu",
+   "o": 54,
+   "po": 59,
+   "c": 144,
+   "pc": 324,
+   "prompt": "نیچے دی گئی گاہک کی ای میل کا تین نکات میں خلاصہ کریں اور ایک شائستہ جواب تجویز کریں۔ گاہک کا کہنا ہے کہ آرڈر دو دن دیر سے پہنچا اور ڈبے میں ایک چیز کم تھی۔"
+  },
+  {
+   "code": "gu",
+   "name": "Gujarati",
+   "o": 54,
+   "po": 59,
+   "c": 244,
+   "pc": 618,
+   "prompt": "નીચેના ગ્રાહકના ઇમેઇલનો ત્રણ મુદ્દાઓમાં સારાંશ આપો અને નમ્ર જવાબ સૂચવો. ગ્રાહક કહે છે કે ઓર્ડર બે દિવસ મોડો આવ્યો અને બોક્સમાંથી એક વસ્તુ ખૂટતી હતી."
+  },
+  {
+   "code": "mr",
+   "name": "Marathi",
+   "o": 56,
+   "po": 65,
+   "c": 167,
+   "pc": 391,
+   "prompt": "खालील ग्राहकाच्या ईमेलचा तीन मुद्द्यांमध्ये सारांश द्या आणि एक नम्र उत्तर सुचवा. ग्राहक म्हणतो की ऑर्डर दोन दिवस उशिरा पोहोचली आणि बॉक्समधून एक वस्तू गायब होती."
+  },
+  {
+   "code": "bn",
+   "name": "Bengali",
+   "o": 57,
+   "po": 68,
+   "c": 207,
+   "pc": 509,
+   "prompt": "নিচের গ্রাহকের ইমেলটি তিনটি পয়েন্টে সংক্ষেপ করুন এবং একটি বিনীত উত্তর প্রস্তাব করুন। গ্রাহক বলছেন অর্ডারটি দুই দিন দেরিতে এসেছে এবং বাক্স থেকে একটি জিনিস অনুপস্থিত ছিল।"
+  },
+  {
+   "code": "hu",
+   "name": "Hungarian",
+   "o": 59,
+   "po": 74,
+   "c": 77,
+   "pc": 126,
+   "prompt": "Foglald össze az alábbi ügyfél-e-mailt három pontban, és javasolj egy udvarias választ. Az ügyfél azt írja, hogy a rendelés két nap késéssel érkezett, és egy termék hiányzott a dobozból."
+  },
+  {
+   "code": "th",
+   "name": "Thai",
+   "o": 59,
+   "po": 74,
+   "c": 126,
+   "pc": 271,
+   "prompt": "โปรดสรุปอีเมลของลูกค้าด้านล่างเป็นสามข้อและเสนอคำตอบที่สุภาพ ลูกค้าบอกว่าคำสั่งซื้อมาถึงช้าไปสองวันและมีสินค้าหายไปหนึ่งชิ้นจากกล่อง"
+  },
+  {
+   "code": "ja",
+   "name": "Japanese",
+   "o": 61,
+   "po": 79,
+   "c": 75,
+   "pc": 121,
+   "prompt": "以下の顧客メールを3つの箇条書きで要約し、丁寧な返信を提案してください。顧客によると、注文品が2日遅れて届き、箱から商品が1つ欠けていたそうです。"
+  },
+  {
+   "code": "kn",
+   "name": "Kannada",
+   "o": 61,
+   "po": 79,
+   "c": 318,
+   "pc": 835,
+   "prompt": "ಕೆಳಗಿನ ಗ್ರಾಹಕರ ಇಮೇಲ್ ಅನ್ನು ಮೂರು ಅಂಶಗಳಲ್ಲಿ ಸಾರಾಂಶಗೊಳಿಸಿ ಮತ್ತು ವಿನಯದ ಉತ್ತರವನ್ನು ಸೂಚಿಸಿ. ಆರ್ಡರ್ ಎರಡು ದಿನ ತಡವಾಗಿ ಬಂದಿದೆ ಮತ್ತು ಪೆಟ್ಟಿಗೆಯಲ್ಲಿ ಒಂದು ವಸ್ತು ಕಾಣೆಯಾಗಿದೆ ಎಂದು ಗ್ರಾಹಕರು ಹೇಳುತ್ತಾರೆ."
+  },
+  {
+   "code": "ml",
+   "name": "Malayalam",
+   "o": 63,
+   "po": 85,
+   "c": 343,
+   "pc": 909,
+   "prompt": "താഴെയുള്ള ഉപഭോക്താവിന്റെ ഇമെയിൽ മൂന്ന് പോയിന്റുകളായി സംഗ്രഹിച്ച് ഒരു വിനീതമായ മറുപടി നിർദ്ദേശിക്കുക. ഓർഡർ രണ്ട് ദിവസം വൈകിയാണ് എത്തിയതെന്നും പെട്ടിയിൽ ഒരു സാധനം കുറവായിരുന്നുവെന്നും ഉപഭോക്താവ് പറയുന്നു."
+  },
+  {
+   "code": "pl",
+   "name": "Polish",
+   "o": 64,
+   "po": 88,
+   "c": 72,
+   "pc": 112,
+   "prompt": "Podsumuj poniższy e-mail od klienta w trzech punktach i zaproponuj uprzejmą odpowiedź. Klient twierdzi, że zamówienie dotarło z dwudniowym opóźnieniem, a w paczce brakowało jednego produktu."
+  },
+  {
+   "code": "uk",
+   "name": "Ukrainian",
+   "o": 64,
+   "po": 88,
+   "c": 107,
+   "pc": 215,
+   "prompt": "Коротко викладіть лист клієнта нижче у трьох пунктах і запропонуйте ввічливу відповідь. Клієнт пише, що замовлення прийшло на два дні пізніше і в коробці бракувало одного товару."
+  },
+  {
+   "code": "ta",
+   "name": "Tamil",
+   "o": 67,
+   "po": 97,
+   "c": 288,
+   "pc": 747,
+   "prompt": "கீழே உள்ள வாடிக்கையாளரின் மின்னஞ்சலை மூன்று புள்ளிகளில் சுருக்கி, ஒரு பணிவான பதிலைப் பரிந்துரைக்கவும். ஆர்டர் இரண்டு நாட்கள் தாமதமாக வந்ததாகவும், பெட்டியில் ஒரு பொருள் காணவில்லை என்றும் வாடிக்கையாளர் கூறுகிறார்."
+  },
+  {
+   "code": "sk",
+   "name": "Slovak",
+   "o": 68,
+   "po": 100,
+   "c": 86,
+   "pc": 153,
+   "prompt": "Zhrňte nižšie uvedený e-mail zákazníka do troch bodov a navrhnite zdvorilú odpoveď. Zákazník píše, že objednávka dorazila s dvojdňovým oneskorením a v krabici chýbala jedna položka."
+  },
+  {
+   "code": "cs",
+   "name": "Czech",
+   "o": 68,
+   "po": 100,
+   "c": 88,
+   "pc": 159,
+   "prompt": "Shrňte níže uvedený e-mail zákazníka do tří bodů a navrhněte zdvořilou odpověď. Zákazník píše, že objednávka dorazila se dvoudenním zpožděním a v krabici chyběla jedna položka."
+  },
+  {
+   "code": "te",
+   "name": "Telugu",
+   "o": 69,
+   "po": 103,
+   "c": 319,
+   "pc": 838,
+   "prompt": "క్రింది కస్టమర్ ఇమెయిల్‌ను మూడు పాయింట్లలో సంగ్రహించి, మర్యాదపూర్వకమైన సమాధానాన్ని సూచించండి. ఆర్డర్ రెండు రోజులు ఆలస్యంగా వచ్చిందని, పెట్టెలో ఒక వస్తువు లేదని కస్టమర్ చెబుతున్నారు."
+  },
+  {
+   "code": "el",
+   "name": "Greek",
+   "o": 70,
+   "po": 106,
+   "c": 168,
+   "pc": 394,
+   "prompt": "Συνοψίστε το παρακάτω email του πελάτη σε τρία σημεία και προτείνετε μια ευγενική απάντηση. Ο πελάτης λέει ότι η παραγγελία έφτασε με δύο ημέρες καθυστέρηση και ότι έλειπε ένα προϊόν από το κουτί."
+  },
+  {
+   "code": "pa",
+   "name": "Punjabi",
+   "o": 83,
+   "po": 144,
+   "c": 252,
+   "pc": 641,
+   "prompt": "ਹੇਠਾਂ ਦਿੱਤੀ ਗਾਹਕ ਦੀ ਈਮੇਲ ਦਾ ਤਿੰਨ ਨੁਕਤਿਆਂ ਵਿੱਚ ਸਾਰ ਦਿਓ ਅਤੇ ਇੱਕ ਨਿਮਰ ਜਵਾਬ ਸੁਝਾਓ। ਗਾਹਕ ਕਹਿੰਦਾ ਹੈ ਕਿ ਆਰਡਰ ਦੋ ਦਿਨ ਦੇਰ ਨਾਲ ਪਹੁੰਚਿਆ ਅਤੇ ਡੱਬੇ ਵਿੱਚੋਂ ਇੱਕ ਚੀਜ਼ ਗਾਇਬ ਸੀ।"
+  }
+ ]
+}
