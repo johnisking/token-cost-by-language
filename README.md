@@ -11,6 +11,10 @@ The newer `o200k_base` tokenizer narrowed the gap a lot for most languages. On t
 - Measured: 2026-09-30 · counts re-verified: 2026-10-16
 - License: CC BY 4.0 (free to reuse with attribution and a link)
 
+## Also in this repo
+
+- [`claude-gemini/`](claude-gemini/): the same prompt on Claude Opus/Sonnet 5.5, Claude Haiku 4.5, Gemini 3.x and GPT o200k (measured 2026-10-17, DOI [10.5281/zenodo.23428350](https://doi.org/10.5281/zenodo.23428350)). Korean needs 89 Claude tokens vs 49 on GPT and 48 on Gemini.
+
 ## Files
 
 - `token-cost-by-language.csv`: one row per language with `language_code, language, o200k_tokens, o200k_vs_english_pct, cl100k_tokens, cl100k_vs_english_pct, prompt` (the translated prompt is included so every count can be reproduced)
