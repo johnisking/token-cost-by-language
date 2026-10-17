@@ -1,0 +1,9 @@
+format,characters,claude55_tokens,claude55_vs_indented_json_pct,claude45_tokens,claude45_vs_indented_json_pct,gemini_tokens,gemini_vs_indented_json_pct,gpt_tokens,gpt_vs_indented_json_pct
+tsv,1087,621,-66,477,-71,483,-70,427,-68
+csv,1087,620,-66,476,-71,482,-70,429,-68
+toon,1142,647,-65,502,-69,508,-69,474,-65
+markdown_table,1453,800,-57,649,-60,590,-64,539,-60
+json_minified,2447,1210,-34,847,-48,791,-51,763,-43
+yaml,2493,1275,-31,1074,-34,1076,-34,997,-25
+json_pretty,4230,1841,0,1618,0,1623,0,1336,0
+xml,4675,2200,20,1868,15,1873,15,1603,20

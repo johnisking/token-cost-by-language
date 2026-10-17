@@ -1,0 +1,122 @@
+{
+ "title": "Token cost by data format: JSON vs YAML vs CSV vs TOON on Claude, Gemini and GPT",
+ "url": "https://tokensave.app/data/token-cost-by-format",
+ "license": "CC BY 4.0",
+ "measured": "2026-10-17",
+ "data": "20 products x 7 fields (id, name, category, price, in_stock, rating, tags)",
+ "tokenizers": {
+  "claude55": "Claude Opus 5.5 / Sonnet 5.5 (identical counts)",
+  "claude45": "Claude Haiku 4.5",
+  "gemini": "Gemini 3.8 Flash",
+  "gpt": "OpenAI o200k_base (GPT-4o and later)"
+ },
+ "citation": "TokenSave (2026). Token cost by data format: JSON vs YAML vs CSV vs TOON on Claude, Gemini and GPT [Data set]. https://tokensave.app/data/token-cost-by-format",
+ "rows": [
+  {
+   "format": "tsv",
+   "chars": 1087,
+   "gpt": 427,
+   "claude55": 621,
+   "claude45": 477,
+   "gemini": 483,
+   "gpt_vs_json": -68,
+   "claude55_vs_json": -66,
+   "claude45_vs_json": -71,
+   "gemini_vs_json": -70
+  },
+  {
+   "format": "csv",
+   "chars": 1087,
+   "gpt": 429,
+   "claude55": 620,
+   "claude45": 476,
+   "gemini": 482,
+   "gpt_vs_json": -68,
+   "claude55_vs_json": -66,
+   "claude45_vs_json": -71,
+   "gemini_vs_json": -70
+  },
+  {
+   "format": "toon",
+   "chars": 1142,
+   "gpt": 474,
+   "claude55": 647,
+   "claude45": 502,
+   "gemini": 508,
+   "gpt_vs_json": -65,
+   "claude55_vs_json": -65,
+   "claude45_vs_json": -69,
+   "gemini_vs_json": -69
+  },
+  {
+   "format": "markdown_table",
+   "chars": 1453,
+   "gpt": 539,
+   "claude55": 800,
+   "claude45": 649,
+   "gemini": 590,
+   "gpt_vs_json": -60,
+   "claude55_vs_json": -57,
+   "claude45_vs_json": -60,
+   "gemini_vs_json": -64
+  },
+  {
+   "format": "json_minified",
+   "chars": 2447,
+   "gpt": 763,
+   "claude55": 1210,
+   "claude45": 847,
+   "gemini": 791,
+   "gpt_vs_json": -43,
+   "claude55_vs_json": -34,
+   "claude45_vs_json": -48,
+   "gemini_vs_json": -51
+  },
+  {
+   "format": "yaml",
+   "chars": 2493,
+   "gpt": 997,
+   "claude55": 1275,
+   "claude45": 1074,
+   "gemini": 1076,
+   "gpt_vs_json": -25,
+   "claude55_vs_json": -31,
+   "claude45_vs_json": -34,
+   "gemini_vs_json": -34
+  },
+  {
+   "format": "json_pretty",
+   "chars": 4230,
+   "gpt": 1336,
+   "claude55": 1841,
+   "claude45": 1618,
+   "gemini": 1623,
+   "gpt_vs_json": 0,
+   "claude55_vs_json": 0,
+   "claude45_vs_json": 0,
+   "gemini_vs_json": 0
+  },
+  {
+   "format": "xml",
+   "chars": 4675,
+   "gpt": 1603,
+   "claude55": 2200,
+   "claude45": 1868,
+   "gemini": 1873,
+   "gpt_vs_json": 20,
+   "claude55_vs_json": 20,
+   "claude45_vs_json": 15,
+   "gemini_vs_json": 15
+  }
+ ],
+ "inputs": {
+  "json_pretty": "{\n  \"products\": [\n    {\n      \"id\": 1,\n      \"name\": \"Wireless Mouse\",\n      \"category\": \"Electronics\",\n      \"price\": 24.99,\n      \"in_stock\": true,\n      \"rating\": 4.5,\n      \"tags\": [\n        \"office\",\n        \"wireless\"\n      ]\n    },\n    {\n      \"id\": 2,\n      \"name\": \"Mechanical Keyboard\",\n      \"category\": \"Electronics\",\n      \"price\": 89.0,\n      \"in_stock\": true,\n      \"rating\": 4.7,\n      \"tags\": [\n        \"office\",\n        \"gaming\"\n      ]\n    },\n    {\n      \"id\": 3,\n      \"name\": \"USB-C Hub\",\n      \"category\": \"Electronics\",\n      \"price\": 34.5,\n      \"in_stock\": false,\n      \"rating\": 4.2,\n      \"tags\": [\n        \"office\",\n        \"travel\"\n      ]\n    },\n    {\n      \"id\": 4,\n      \"name\": \"Desk Lamp\",\n      \"category\": \"Home\",\n      \"price\": 42.0,\n      \"in_stock\": true,\n      \"rating\": 4.4,\n      \"tags\": [\n        \"office\",\n        \"lighting\"\n      ]\n    },\n    {\n      \"id\": 5,\n      \"name\": \"Coffee Mug\",\n      \"category\": \"Kitchen\",\n      \"price\": 12.99,\n      \"in_stock\": true,\n      \"rating\": 4.8,\n      \"tags\": [\n        \"gift\"\n      ]\n    },\n    {\n      \"id\": 6,\n      \"name\": \"Notebook A5\",\n      \"category\": \"Stationery\",\n      \"price\": 7.5,\n      \"in_stock\": true,\n      \"rating\": 4.6,\n      \"tags\": [\n        \"office\",\n        \"school\"\n      ]\n    },\n    {\n      \"id\": 7,\n      \"name\": \"Water Bottle\",\n      \"category\": \"Outdoor\",\n      \"price\": 19.95,\n      \"in_stock\": false,\n      \"rating\": 4.3,\n      \"tags\": [\n        \"travel\",\n        \"sport\"\n      ]\n    },\n    {\n      \"id\": 8,\n      \"name\": \"Backpack\",\n      \"category\": \"Outdoor\",\n      \"price\": 64.0,\n      \"in_stock\": true,\n      \"rating\": 4.5,\n      \"tags\": [\n        \"travel\",\n        \"school\"\n      ]\n    },\n    {\n      \"id\": 9,\n      \"name\": \"Phone Stand\",\n      \"category\": \"Electronics\",\n      \"price\": 15.0,\n      \"in_stock\": true,\n      \"rating\": 4.1,\n      \"tags\": [\n        \"office\"\n      ]\n    },\n    {\n      \"id\": 10,\n      \"name\": \"Noise-Cancelling Headphones\",\n      \"category\": \"Electronics\",\n      \"price\": 199.0,\n      \"in_stock\": true,\n      \"rating\": 4.6,\n      \"tags\": [\n        \"travel\",\n        \"music\"\n      ]\n    },\n    {\n      \"id\": 11,\n      \"name\": \"Yoga Mat\",\n      \"category\": \"Sport\",\n      \"price\": 29.99,\n      \"in_stock\": true,\n      \"rating\": 4.4,\n      \"tags\": [\n        \"sport\",\n        \"home\"\n      ]\n    },\n    {\n      \"id\": 12,\n      \"name\": \"French Press\",\n      \"category\": \"Kitchen\",\n      \"price\": 27.5,\n      \"in_stock\": false,\n      \"rating\": 4.7,\n      \"tags\": [\n        \"coffee\",\n        \"gift\"\n      ]\n    },\n    {\n      \"id\": 13,\n      \"name\": \"LED Strip Lights\",\n      \"category\": \"Home\",\n      \"price\": 22.0,\n      \"in_stock\": true,\n      \"rating\": 4.0,\n      \"tags\": [\n        \"lighting\",\n        \"gaming\"\n      ]\n    },\n    {\n      \"id\": 14,\n      \"name\": \"Gel Pens (10 pack)\",\n      \"category\": \"Stationery\",\n      \"price\": 9.99,\n      \"in_stock\": true,\n      \"rating\": 4.5,\n      \"tags\": [\n        \"school\",\n        \"gift\"\n      ]\n    },\n    {\n      \"id\": 15,\n      \"name\": \"Portable Charger\",\n      \"category\": \"Electronics\",\n      \"price\": 39.0,\n      \"in_stock\": true,\n      \"rating\": 4.3,\n      \"tags\": [\n        \"travel\"\n      ]\n    },\n    {\n      \"id\": 16,\n      \"name\": \"Cast Iron Pan\",\n      \"category\": \"Kitchen\",\n      \"price\": 45.0,\n      \"in_stock\": true,\n      \"rating\": 4.8,\n      \"tags\": [\n        \"cooking\"\n      ]\n    },\n    {\n      \"id\": 17,\n      \"name\": \"Running Shoes\",\n      \"category\": \"Sport\",\n      \"price\": 120.0,\n      \"in_stock\": false,\n      \"rating\": 4.4,\n      \"tags\": [\n        \"sport\",\n        \"running\"\n      ]\n    },\n    {\n      \"id\": 18,\n      \"name\": \"Plant Pot\",\n      \"category\": \"Home\",\n      \"price\": 14.5,\n      \"in_stock\": true,\n      \"rating\": 4.2,\n      \"tags\": [\n        \"garden\",\n        \"gift\"\n      ]\n    },\n    {\n      \"id\": 19,\n      \"name\": \"Webcam 1080p\",\n      \"category\": \"Electronics\",\n      \"price\": 59.0,\n      \"in_stock\": true,\n      \"rating\": 4.1,\n      \"tags\": [\n        \"office\",\n        \"streaming\"\n      ]\n    },\n    {\n      \"id\": 20,\n      \"name\": \"Travel Pillow\",\n      \"category\": \"Outdoor\",\n      \"price\": 18.0,\n      \"in_stock\": true,\n      \"rating\": 4.0,\n      \"tags\": [\n        \"travel\"\n      ]\n    }\n  ]\n}",
+  "json_minified": "{\"products\":[{\"id\":1,\"name\":\"Wireless Mouse\",\"category\":\"Electronics\",\"price\":24.99,\"in_stock\":true,\"rating\":4.5,\"tags\":[\"office\",\"wireless\"]},{\"id\":2,\"name\":\"Mechanical Keyboard\",\"category\":\"Electronics\",\"price\":89.0,\"in_stock\":true,\"rating\":4.7,\"tags\":[\"office\",\"gaming\"]},{\"id\":3,\"name\":\"USB-C Hub\",\"category\":\"Electronics\",\"price\":34.5,\"in_stock\":false,\"rating\":4.2,\"tags\":[\"office\",\"travel\"]},{\"id\":4,\"name\":\"Desk Lamp\",\"category\":\"Home\",\"price\":42.0,\"in_stock\":true,\"rating\":4.4,\"tags\":[\"office\",\"lighting\"]},{\"id\":5,\"name\":\"Coffee Mug\",\"category\":\"Kitchen\",\"price\":12.99,\"in_stock\":true,\"rating\":4.8,\"tags\":[\"gift\"]},{\"id\":6,\"name\":\"Notebook A5\",\"category\":\"Stationery\",\"price\":7.5,\"in_stock\":true,\"rating\":4.6,\"tags\":[\"office\",\"school\"]},{\"id\":7,\"name\":\"Water Bottle\",\"category\":\"Outdoor\",\"price\":19.95,\"in_stock\":false,\"rating\":4.3,\"tags\":[\"travel\",\"sport\"]},{\"id\":8,\"name\":\"Backpack\",\"category\":\"Outdoor\",\"price\":64.0,\"in_stock\":true,\"rating\":4.5,\"tags\":[\"travel\",\"school\"]},{\"id\":9,\"name\":\"Phone Stand\",\"category\":\"Electronics\",\"price\":15.0,\"in_stock\":true,\"rating\":4.1,\"tags\":[\"office\"]},{\"id\":10,\"name\":\"Noise-Cancelling Headphones\",\"category\":\"Electronics\",\"price\":199.0,\"in_stock\":true,\"rating\":4.6,\"tags\":[\"travel\",\"music\"]},{\"id\":11,\"name\":\"Yoga Mat\",\"category\":\"Sport\",\"price\":29.99,\"in_stock\":true,\"rating\":4.4,\"tags\":[\"sport\",\"home\"]},{\"id\":12,\"name\":\"French Press\",\"category\":\"Kitchen\",\"price\":27.5,\"in_stock\":false,\"rating\":4.7,\"tags\":[\"coffee\",\"gift\"]},{\"id\":13,\"name\":\"LED Strip Lights\",\"category\":\"Home\",\"price\":22.0,\"in_stock\":true,\"rating\":4.0,\"tags\":[\"lighting\",\"gaming\"]},{\"id\":14,\"name\":\"Gel Pens (10 pack)\",\"category\":\"Stationery\",\"price\":9.99,\"in_stock\":true,\"rating\":4.5,\"tags\":[\"school\",\"gift\"]},{\"id\":15,\"name\":\"Portable Charger\",\"category\":\"Electronics\",\"price\":39.0,\"in_stock\":true,\"rating\":4.3,\"tags\":[\"travel\"]},{\"id\":16,\"name\":\"Cast Iron Pan\",\"category\":\"Kitchen\",\"price\":45.0,\"in_stock\":true,\"rating\":4.8,\"tags\":[\"cooking\"]},{\"id\":17,\"name\":\"Running Shoes\",\"category\":\"Sport\",\"price\":120.0,\"in_stock\":false,\"rating\":4.4,\"tags\":[\"sport\",\"running\"]},{\"id\":18,\"name\":\"Plant Pot\",\"category\":\"Home\",\"price\":14.5,\"in_stock\":true,\"rating\":4.2,\"tags\":[\"garden\",\"gift\"]},{\"id\":19,\"name\":\"Webcam 1080p\",\"category\":\"Electronics\",\"price\":59.0,\"in_stock\":true,\"rating\":4.1,\"tags\":[\"office\",\"streaming\"]},{\"id\":20,\"name\":\"Travel Pillow\",\"category\":\"Outdoor\",\"price\":18.0,\"in_stock\":true,\"rating\":4.0,\"tags\":[\"travel\"]}]}",
+  "yaml": "products:\n- id: 1\n  name: Wireless Mouse\n  category: Electronics\n  price: 24.99\n  in_stock: true\n  rating: 4.5\n  tags:\n  - office\n  - wireless\n- id: 2\n  name: Mechanical Keyboard\n  category: Electronics\n  price: 89.0\n  in_stock: true\n  rating: 4.7\n  tags:\n  - office\n  - gaming\n- id: 3\n  name: USB-C Hub\n  category: Electronics\n  price: 34.5\n  in_stock: false\n  rating: 4.2\n  tags:\n  - office\n  - travel\n- id: 4\n  name: Desk Lamp\n  category: Home\n  price: 42.0\n  in_stock: true\n  rating: 4.4\n  tags:\n  - office\n  - lighting\n- id: 5\n  name: Coffee Mug\n  category: Kitchen\n  price: 12.99\n  in_stock: true\n  rating: 4.8\n  tags:\n  - gift\n- id: 6\n  name: Notebook A5\n  category: Stationery\n  price: 7.5\n  in_stock: true\n  rating: 4.6\n  tags:\n  - office\n  - school\n- id: 7\n  name: Water Bottle\n  category: Outdoor\n  price: 19.95\n  in_stock: false\n  rating: 4.3\n  tags:\n  - travel\n  - sport\n- id: 8\n  name: Backpack\n  category: Outdoor\n  price: 64.0\n  in_stock: true\n  rating: 4.5\n  tags:\n  - travel\n  - school\n- id: 9\n  name: Phone Stand\n  category: Electronics\n  price: 15.0\n  in_stock: true\n  rating: 4.1\n  tags:\n  - office\n- id: 10\n  name: Noise-Cancelling Headphones\n  category: Electronics\n  price: 199.0\n  in_stock: true\n  rating: 4.6\n  tags:\n  - travel\n  - music\n- id: 11\n  name: Yoga Mat\n  category: Sport\n  price: 29.99\n  in_stock: true\n  rating: 4.4\n  tags:\n  - sport\n  - home\n- id: 12\n  name: French Press\n  category: Kitchen\n  price: 27.5\n  in_stock: false\n  rating: 4.7\n  tags:\n  - coffee\n  - gift\n- id: 13\n  name: LED Strip Lights\n  category: Home\n  price: 22.0\n  in_stock: true\n  rating: 4.0\n  tags:\n  - lighting\n  - gaming\n- id: 14\n  name: Gel Pens (10 pack)\n  category: Stationery\n  price: 9.99\n  in_stock: true\n  rating: 4.5\n  tags:\n  - school\n  - gift\n- id: 15\n  name: Portable Charger\n  category: Electronics\n  price: 39.0\n  in_stock: true\n  rating: 4.3\n  tags:\n  - travel\n- id: 16\n  name: Cast Iron Pan\n  category: Kitchen\n  price: 45.0\n  in_stock: true\n  rating: 4.8\n  tags:\n  - cooking\n- id: 17\n  name: Running Shoes\n  category: Sport\n  price: 120.0\n  in_stock: false\n  rating: 4.4\n  tags:\n  - sport\n  - running\n- id: 18\n  name: Plant Pot\n  category: Home\n  price: 14.5\n  in_stock: true\n  rating: 4.2\n  tags:\n  - garden\n  - gift\n- id: 19\n  name: Webcam 1080p\n  category: Electronics\n  price: 59.0\n  in_stock: true\n  rating: 4.1\n  tags:\n  - office\n  - streaming\n- id: 20\n  name: Travel Pillow\n  category: Outdoor\n  price: 18.0\n  in_stock: true\n  rating: 4.0\n  tags:\n  - travel\n",
+  "xml": "<products>\n  <product>\n    <id>1</id>\n    <name>Wireless Mouse</name>\n    <category>Electronics</category>\n    <price>24.99</price>\n    <in_stock>true</in_stock>\n    <rating>4.5</rating>\n    <tags><tag>office</tag><tag>wireless</tag></tags>\n  </product>\n  <product>\n    <id>2</id>\n    <name>Mechanical Keyboard</name>\n    <category>Electronics</category>\n    <price>89.0</price>\n    <in_stock>true</in_stock>\n    <rating>4.7</rating>\n    <tags><tag>office</tag><tag>gaming</tag></tags>\n  </product>\n  <product>\n    <id>3</id>\n    <name>USB-C Hub</name>\n    <category>Electronics</category>\n    <price>34.5</price>\n    <in_stock>false</in_stock>\n    <rating>4.2</rating>\n    <tags><tag>office</tag><tag>travel</tag></tags>\n  </product>\n  <product>\n    <id>4</id>\n    <name>Desk Lamp</name>\n    <category>Home</category>\n    <price>42.0</price>\n    <in_stock>true</in_stock>\n    <rating>4.4</rating>\n    <tags><tag>office</tag><tag>lighting</tag></tags>\n  </product>\n  <product>\n    <id>5</id>\n    <name>Coffee Mug</name>\n    <category>Kitchen</category>\n    <price>12.99</price>\n    <in_stock>true</in_stock>\n    <rating>4.8</rating>\n    <tags><tag>gift</tag></tags>\n  </product>\n  <product>\n    <id>6</id>\n    <name>Notebook A5</name>\n    <category>Stationery</category>\n    <price>7.5</price>\n    <in_stock>true</in_stock>\n    <rating>4.6</rating>\n    <tags><tag>office</tag><tag>school</tag></tags>\n  </product>\n  <product>\n    <id>7</id>\n    <name>Water Bottle</name>\n    <category>Outdoor</category>\n    <price>19.95</price>\n    <in_stock>false</in_stock>\n    <rating>4.3</rating>\n    <tags><tag>travel</tag><tag>sport</tag></tags>\n  </product>\n  <product>\n    <id>8</id>\n    <name>Backpack</name>\n    <category>Outdoor</category>\n    <price>64.0</price>\n    <in_stock>true</in_stock>\n    <rating>4.5</rating>\n    <tags><tag>travel</tag><tag>school</tag></tags>\n  </product>\n  <product>\n    <id>9</id>\n    <name>Phone Stand</name>\n    <category>Electronics</category>\n    <price>15.0</price>\n    <in_stock>true</in_stock>\n    <rating>4.1</rating>\n    <tags><tag>office</tag></tags>\n  </product>\n  <product>\n    <id>10</id>\n    <name>Noise-Cancelling Headphones</name>\n    <category>Electronics</category>\n    <price>199.0</price>\n    <in_stock>true</in_stock>\n    <rating>4.6</rating>\n    <tags><tag>travel</tag><tag>music</tag></tags>\n  </product>\n  <product>\n    <id>11</id>\n    <name>Yoga Mat</name>\n    <category>Sport</category>\n    <price>29.99</price>\n    <in_stock>true</in_stock>\n    <rating>4.4</rating>\n    <tags><tag>sport</tag><tag>home</tag></tags>\n  </product>\n  <product>\n    <id>12</id>\n    <name>French Press</name>\n    <category>Kitchen</category>\n    <price>27.5</price>\n    <in_stock>false</in_stock>\n    <rating>4.7</rating>\n    <tags><tag>coffee</tag><tag>gift</tag></tags>\n  </product>\n  <product>\n    <id>13</id>\n    <name>LED Strip Lights</name>\n    <category>Home</category>\n    <price>22.0</price>\n    <in_stock>true</in_stock>\n    <rating>4.0</rating>\n    <tags><tag>lighting</tag><tag>gaming</tag></tags>\n  </product>\n  <product>\n    <id>14</id>\n    <name>Gel Pens (10 pack)</name>\n    <category>Stationery</category>\n    <price>9.99</price>\n    <in_stock>true</in_stock>\n    <rating>4.5</rating>\n    <tags><tag>school</tag><tag>gift</tag></tags>\n  </product>\n  <product>\n    <id>15</id>\n    <name>Portable Charger</name>\n    <category>Electronics</category>\n    <price>39.0</price>\n    <in_stock>true</in_stock>\n    <rating>4.3</rating>\n    <tags><tag>travel</tag></tags>\n  </product>\n  <product>\n    <id>16</id>\n    <name>Cast Iron Pan</name>\n    <category>Kitchen</category>\n    <price>45.0</price>\n    <in_stock>true</in_stock>\n    <rating>4.8</rating>\n    <tags><tag>cooking</tag></tags>\n  </product>\n  <product>\n    <id>17</id>\n    <name>Running Shoes</name>\n    <category>Sport</category>\n    <price>120.0</price>\n    <in_stock>false</in_stock>\n    <rating>4.4</rating>\n    <tags><tag>sport</tag><tag>running</tag></tags>\n  </product>\n  <product>\n    <id>18</id>\n    <name>Plant Pot</name>\n    <category>Home</category>\n    <price>14.5</price>\n    <in_stock>true</in_stock>\n    <rating>4.2</rating>\n    <tags><tag>garden</tag><tag>gift</tag></tags>\n  </product>\n  <product>\n    <id>19</id>\n    <name>Webcam 1080p</name>\n    <category>Electronics</category>\n    <price>59.0</price>\n    <in_stock>true</in_stock>\n    <rating>4.1</rating>\n    <tags><tag>office</tag><tag>streaming</tag></tags>\n  </product>\n  <product>\n    <id>20</id>\n    <name>Travel Pillow</name>\n    <category>Outdoor</category>\n    <price>18.0</price>\n    <in_stock>true</in_stock>\n    <rating>4.0</rating>\n    <tags><tag>travel</tag></tags>\n  </product>\n</products>",
+  "csv": "id,name,category,price,in_stock,rating,tags\n1,Wireless Mouse,Electronics,24.99,true,4.5,office;wireless\n2,Mechanical Keyboard,Electronics,89.0,true,4.7,office;gaming\n3,USB-C Hub,Electronics,34.5,false,4.2,office;travel\n4,Desk Lamp,Home,42.0,true,4.4,office;lighting\n5,Coffee Mug,Kitchen,12.99,true,4.8,gift\n6,Notebook A5,Stationery,7.5,true,4.6,office;school\n7,Water Bottle,Outdoor,19.95,false,4.3,travel;sport\n8,Backpack,Outdoor,64.0,true,4.5,travel;school\n9,Phone Stand,Electronics,15.0,true,4.1,office\n10,Noise-Cancelling Headphones,Electronics,199.0,true,4.6,travel;music\n11,Yoga Mat,Sport,29.99,true,4.4,sport;home\n12,French Press,Kitchen,27.5,false,4.7,coffee;gift\n13,LED Strip Lights,Home,22.0,true,4.0,lighting;gaming\n14,Gel Pens (10 pack),Stationery,9.99,true,4.5,school;gift\n15,Portable Charger,Electronics,39.0,true,4.3,travel\n16,Cast Iron Pan,Kitchen,45.0,true,4.8,cooking\n17,Running Shoes,Sport,120.0,false,4.4,sport;running\n18,Plant Pot,Home,14.5,true,4.2,garden;gift\n19,Webcam 1080p,Electronics,59.0,true,4.1,office;streaming\n20,Travel Pillow,Outdoor,18.0,true,4.0,travel\n",
+  "tsv": "id\tname\tcategory\tprice\tin_stock\trating\ttags\n1\tWireless Mouse\tElectronics\t24.99\ttrue\t4.5\toffice;wireless\n2\tMechanical Keyboard\tElectronics\t89.0\ttrue\t4.7\toffice;gaming\n3\tUSB-C Hub\tElectronics\t34.5\tfalse\t4.2\toffice;travel\n4\tDesk Lamp\tHome\t42.0\ttrue\t4.4\toffice;lighting\n5\tCoffee Mug\tKitchen\t12.99\ttrue\t4.8\tgift\n6\tNotebook A5\tStationery\t7.5\ttrue\t4.6\toffice;school\n7\tWater Bottle\tOutdoor\t19.95\tfalse\t4.3\ttravel;sport\n8\tBackpack\tOutdoor\t64.0\ttrue\t4.5\ttravel;school\n9\tPhone Stand\tElectronics\t15.0\ttrue\t4.1\toffice\n10\tNoise-Cancelling Headphones\tElectronics\t199.0\ttrue\t4.6\ttravel;music\n11\tYoga Mat\tSport\t29.99\ttrue\t4.4\tsport;home\n12\tFrench Press\tKitchen\t27.5\tfalse\t4.7\tcoffee;gift\n13\tLED Strip Lights\tHome\t22.0\ttrue\t4.0\tlighting;gaming\n14\tGel Pens (10 pack)\tStationery\t9.99\ttrue\t4.5\tschool;gift\n15\tPortable Charger\tElectronics\t39.0\ttrue\t4.3\ttravel\n16\tCast Iron Pan\tKitchen\t45.0\ttrue\t4.8\tcooking\n17\tRunning Shoes\tSport\t120.0\tfalse\t4.4\tsport;running\n18\tPlant Pot\tHome\t14.5\ttrue\t4.2\tgarden;gift\n19\tWebcam 1080p\tElectronics\t59.0\ttrue\t4.1\toffice;streaming\n20\tTravel Pillow\tOutdoor\t18.0\ttrue\t4.0\ttravel\n",
+  "markdown_table": "| id | name | category | price | in_stock | rating | tags |\n|---|---|---|---|---|---|---|\n| 1 | Wireless Mouse | Electronics | 24.99 | true | 4.5 | office;wireless |\n| 2 | Mechanical Keyboard | Electronics | 89.0 | true | 4.7 | office;gaming |\n| 3 | USB-C Hub | Electronics | 34.5 | false | 4.2 | office;travel |\n| 4 | Desk Lamp | Home | 42.0 | true | 4.4 | office;lighting |\n| 5 | Coffee Mug | Kitchen | 12.99 | true | 4.8 | gift |\n| 6 | Notebook A5 | Stationery | 7.5 | true | 4.6 | office;school |\n| 7 | Water Bottle | Outdoor | 19.95 | false | 4.3 | travel;sport |\n| 8 | Backpack | Outdoor | 64.0 | true | 4.5 | travel;school |\n| 9 | Phone Stand | Electronics | 15.0 | true | 4.1 | office |\n| 10 | Noise-Cancelling Headphones | Electronics | 199.0 | true | 4.6 | travel;music |\n| 11 | Yoga Mat | Sport | 29.99 | true | 4.4 | sport;home |\n| 12 | French Press | Kitchen | 27.5 | false | 4.7 | coffee;gift |\n| 13 | LED Strip Lights | Home | 22.0 | true | 4.0 | lighting;gaming |\n| 14 | Gel Pens (10 pack) | Stationery | 9.99 | true | 4.5 | school;gift |\n| 15 | Portable Charger | Electronics | 39.0 | true | 4.3 | travel |\n| 16 | Cast Iron Pan | Kitchen | 45.0 | true | 4.8 | cooking |\n| 17 | Running Shoes | Sport | 120.0 | false | 4.4 | sport;running |\n| 18 | Plant Pot | Home | 14.5 | true | 4.2 | garden;gift |\n| 19 | Webcam 1080p | Electronics | 59.0 | true | 4.1 | office;streaming |\n| 20 | Travel Pillow | Outdoor | 18.0 | true | 4.0 | travel |\n",
+  "toon": "products[20]{id,name,category,price,in_stock,rating,tags}:\n  1,Wireless Mouse,Electronics,24.99,true,4.5,office|wireless\n  2,Mechanical Keyboard,Electronics,89.0,true,4.7,office|gaming\n  3,USB-C Hub,Electronics,34.5,false,4.2,office|travel\n  4,Desk Lamp,Home,42.0,true,4.4,office|lighting\n  5,Coffee Mug,Kitchen,12.99,true,4.8,gift\n  6,Notebook A5,Stationery,7.5,true,4.6,office|school\n  7,Water Bottle,Outdoor,19.95,false,4.3,travel|sport\n  8,Backpack,Outdoor,64.0,true,4.5,travel|school\n  9,Phone Stand,Electronics,15.0,true,4.1,office\n  10,Noise-Cancelling Headphones,Electronics,199.0,true,4.6,travel|music\n  11,Yoga Mat,Sport,29.99,true,4.4,sport|home\n  12,French Press,Kitchen,27.5,false,4.7,coffee|gift\n  13,LED Strip Lights,Home,22.0,true,4.0,lighting|gaming\n  14,Gel Pens (10 pack),Stationery,9.99,true,4.5,school|gift\n  15,Portable Charger,Electronics,39.0,true,4.3,travel\n  16,Cast Iron Pan,Kitchen,45.0,true,4.8,cooking\n  17,Running Shoes,Sport,120.0,false,4.4,sport|running\n  18,Plant Pot,Home,14.5,true,4.2,garden|gift\n  19,Webcam 1080p,Electronics,59.0,true,4.1,office|streaming\n  20,Travel Pillow,Outdoor,18.0,true,4.0,travel\n"
+ }
+}
