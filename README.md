@@ -15,6 +15,7 @@ The newer `o200k_base` tokenizer narrowed the gap a lot for most languages. On t
 
 - [`claude-gemini/`](claude-gemini/): the same prompt on Claude Opus/Sonnet 5.5, Claude Haiku 4.5, Gemini 3.x and GPT o200k (measured 2026-10-17, DOI [10.5281/zenodo.23428350](https://doi.org/10.5281/zenodo.23428350)). Korean needs 89 Claude tokens vs 49 on GPT and 48 on Gemini.
 - [`format/`](format/): the same 20-row table in 8 data formats (JSON, YAML, XML, CSV, TSV, Markdown, TOON) on the same four tokenizers (measured 2026-10-17, DOI [10.5281/zenodo.23435788](https://doi.org/10.5281/zenodo.23435788)). CSV needs 68% fewer GPT tokens than indented JSON.
+- [`image/`](image/): input tokens for one image at 10 resolutions on Claude 5.5, Claude Haiku 4.5, Gemini and GPT (measured 2026-10-18, DOI [10.5281/zenodo.23443906](https://doi.org/10.5281/zenodo.23443906)). A 12 MP photo costs 1,065 tokens on Gemini, 4,005 on Claude 5.5 and 14,364 on GPT-6 Astra by default.
 
 ## Files
 

@@ -1,0 +1,137 @@
+{
+ "title": "Image input token cost by resolution: Claude vs Gemini vs GPT",
+ "url": "https://tokensave.app/data/image-token-cost",
+ "license": "CC BY 4.0",
+ "measured": "2026-10-18",
+ "columns": {
+  "claude55": "Claude Opus 5.5 / Sonnet 5.5, measured (identical counts)",
+  "claude45": "Claude Haiku 4.5, measured",
+  "gemini": "Gemini 3.8 Flash, measured in Google AI Studio (default media resolution)",
+  "gpt6_auto": "gpt-6-astra, detail auto/original, computed with OpenAI's published patch formula",
+  "gpt6_high": "gpt-6-astra, detail high (2,500-patch budget), computed",
+  "gpt55_auto": "gpt-5.5, detail auto/original (10,000-patch budget), computed"
+ },
+ "citation": "TokenSave (2026). Image input token cost by resolution: Claude vs Gemini vs GPT [Data set]. https://tokensave.app/data/image-token-cost",
+ "rows": [
+  {
+   "size": "256x256",
+   "width": 256,
+   "height": 256,
+   "megapixels": 0.07,
+   "claude55": 177,
+   "claude45": 165,
+   "gemini": 1090,
+   "gpt6_auto": 77,
+   "gpt6_high": 77,
+   "gpt55_auto": 77
+  },
+  {
+   "size": "512x512",
+   "width": 512,
+   "height": 512,
+   "megapixels": 0.26,
+   "claude55": 438,
+   "claude45": 426,
+   "gemini": 1090,
+   "gpt6_auto": 308,
+   "gpt6_high": 308,
+   "gpt55_auto": 308
+  },
+  {
+   "size": "768x768",
+   "width": 768,
+   "height": 768,
+   "megapixels": 0.59,
+   "claude55": 861,
+   "claude45": 849,
+   "gemini": 1090,
+   "gpt6_auto": 692,
+   "gpt6_high": 692,
+   "gpt55_auto": 692
+  },
+  {
+   "size": "1024x1024",
+   "width": 1024,
+   "height": 1024,
+   "megapixels": 1.05,
+   "claude55": 1446,
+   "claude45": 1434,
+   "gemini": 1090,
+   "gpt6_auto": 1229,
+   "gpt6_high": 1229,
+   "gpt55_auto": 1229
+  },
+  {
+   "size": "1280x720",
+   "width": 1280,
+   "height": 720,
+   "megapixels": 0.92,
+   "claude55": 1273,
+   "claude45": 1261,
+   "gemini": 1101,
+   "gpt6_auto": 1104,
+   "gpt6_high": 1104,
+   "gpt55_auto": 1104
+  },
+  {
+   "size": "1920x1080",
+   "width": 1920,
+   "height": 1080,
+   "megapixels": 2.07,
+   "claude55": 2768,
+   "claude45": 1625,
+   "gemini": 1101,
+   "gpt6_auto": 2448,
+   "gpt6_high": 2448,
+   "gpt55_auto": 2448
+  },
+  {
+   "size": "1080x1920",
+   "width": 1080,
+   "height": 1920,
+   "megapixels": 2.07,
+   "claude55": 2768,
+   "claude45": 1625,
+   "gemini": 1101,
+   "gpt6_auto": 2448,
+   "gpt6_high": 2448,
+   "gpt55_auto": 2448
+  },
+  {
+   "size": "2560x1440",
+   "width": 2560,
+   "height": 1440,
+   "megapixels": 3.69,
+   "claude55": 3069,
+   "claude45": 1657,
+   "gemini": 1101,
+   "gpt6_auto": 4320,
+   "gpt6_high": 2931,
+   "gpt55_auto": 4320
+  },
+  {
+   "size": "3840x2160",
+   "width": 3840,
+   "height": 2160,
+   "megapixels": 8.29,
+   "claude55": 3069,
+   "claude45": 1657,
+   "gemini": 1101,
+   "gpt6_auto": 9792,
+   "gpt6_high": 2931,
+   "gpt55_auto": 9792
+  },
+  {
+   "size": "4032x3024",
+   "width": 4032,
+   "height": 3024,
+   "megapixels": 12.19,
+   "claude55": 4005,
+   "claude45": 1661,
+   "gemini": 1065,
+   "gpt6_auto": 14364,
+   "gpt6_high": 2942,
+   "gpt55_auto": 11868
+  }
+ ]
+}
