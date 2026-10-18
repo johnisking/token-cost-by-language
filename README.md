@@ -22,7 +22,7 @@ The newer `o200k_base` tokenizer narrowed the gap a lot for most languages. On t
 - [`agents/`](agents/): Claude Code vs Codex — startup tokens, the cost of 1 to 30 MCP tools and the same coding task (measured 2026-10-18, DOI [10.5281/zenodo.23448342](https://doi.org/10.5281/zenodo.23448342)). A one-word reply costs 35,771 input tokens in Claude Code and 14,678 in Codex.
 - [`search/`](search/): web search in Claude Code and Codex — tokens, searches and the sites seen and cited for four kinds of question (measured 2026-10-18, DOI [10.5281/zenodo.23449842](https://doi.org/10.5281/zenodo.23449842)). A one-line fact question cost 150,414 input tokens in Claude Code and 33,296 in Codex.
 - [`search-language/`](search-language/): AI web search by language — Claude Code and Codex in English, Korean, Japanese, Spanish and Ukrainian, plus local topics about Seoul, Tokyo, Madrid and Kyiv (measured 2026-10-18, DOI [10.5281/zenodo.23451506](https://doi.org/10.5281/zenodo.23451506)). English searches for AI topics, local-language searches for local topics.
-- [`agent-instructions/`](agent-instructions/): CLAUDE.md and AGENTS.md size — tokens and cost per request for 0–50 KB instruction files in Claude Code and Codex (measured 2026-10-18). A 50 KB CLAUDE.md adds 15,985 tokens per request; Codex ignores AGENTS.md text past 32 KiB.
+- [`agent-instructions/`](agent-instructions/): CLAUDE.md and AGENTS.md size — tokens and cost per request for 0–50 KB instruction files in Claude Code and Codex (measured 2026-10-18, DOI [10.5281/zenodo.23453217](https://doi.org/10.5281/zenodo.23453217)). A 50 KB CLAUDE.md adds 15,985 tokens per request; Codex ignores AGENTS.md text past 32 KiB.
 
 ## Files
 

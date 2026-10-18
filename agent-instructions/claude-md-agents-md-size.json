@@ -3,7 +3,7 @@
  "url": "https://tokensave.app/data/claude-md-agents-md-size",
  "license": "CC BY 4.0",
  "measured": "2026-10-18",
- "citation": "TokenSave (2026). CLAUDE.md and AGENTS.md size: what instruction files cost in Claude Code and Codex [Data set]. https://tokensave.app/data/claude-md-agents-md-size",
+ "citation": "TokenSave (2026). CLAUDE.md and AGENTS.md size: what instruction files cost in Claude Code and Codex [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23453217",
  "tools": {
   "claude_code": "Claude Code 2.1.295 (Opus 5.5), effort medium",
   "codex": "Codex CLI 0.162 (gpt-6-luna), effort medium"

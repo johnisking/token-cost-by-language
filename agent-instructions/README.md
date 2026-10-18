@@ -6,6 +6,8 @@ Claude Code and Codex run with CLAUDE.md / AGENTS.md files of 0, 1, 5, 10, 25 an
 
 - Source page, chart and method: https://tokensave.app/data/claude-md-agents-md-size
 - Related: Claude Code vs Codex startup tokens ([`../agents/`](../agents/))
+- DOI (Zenodo): [10.5281/zenodo.23453217](https://doi.org/10.5281/zenodo.23453217)
+- Also on: [Hugging Face](https://huggingface.co/datasets/JOHNISKING/claude-md-agents-md-size) · [Kaggle](https://www.kaggle.com/datasets/johnisking/claude-md-and-agents-md-size-token-cost)
 - Measured: 2026-10-18
 - License: CC BY 4.0
 
@@ -48,6 +50,6 @@ Claude Code and Codex run with CLAUDE.md / AGENTS.md files of 0, 1, 5, 10, 25 an
 
 ## Citation
 
-TokenSave (2026). CLAUDE.md and AGENTS.md size: what instruction files cost in Claude Code and Codex [Data set]. https://tokensave.app/data/claude-md-agents-md-size
+TokenSave (2026). CLAUDE.md and AGENTS.md size: what instruction files cost in Claude Code and Codex [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23453217
 
 Check your own Claude Code usage at [tokensave.app](https://tokensave.app/claude-code-usage).
