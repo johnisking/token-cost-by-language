@@ -1,0 +1,164 @@
+{
+ "title": "Claude Code vs Codex: startup tokens, MCP tools and the same coding task",
+ "url": "https://tokensave.app/data/claude-code-vs-codex-tokens",
+ "license": "CC BY 4.0",
+ "measured": "2026-10-18",
+ "citation": "TokenSave (2026). Claude Code vs Codex: startup tokens, MCP tools and the same coding task [Data set]. https://tokensave.app/data/claude-code-vs-codex-tokens",
+ "startup": {
+  "prompt": "Reply with the single word OK.",
+  "mcp_server": "Self-written stdio MCP server (mcp_dummy.js) exposing N tracker tools, each with a one-sentence description and a 5-property input schema. Full definitions: 151 o200k tokens per tool, 4,541 for 30 tools.",
+  "full_definition_tokens_o200k": {
+   "1": 151,
+   "30": 4541
+  },
+  "codex_tool_use_check": {
+   "mcp_tools": 10,
+   "input_tokens": 47876
+  },
+  "rows": [
+   {
+    "tool": "claude_code",
+    "tool_name": "Claude Code 2.1.295",
+    "model": "claude-opus-5-5 (default, Max plan)",
+    "mcp_tools": 0,
+    "run1": 35765,
+    "run2": 35777,
+    "avg": 35771,
+    "added_vs_no_mcp": 0
+   },
+   {
+    "tool": "claude_code",
+    "tool_name": "Claude Code 2.1.295",
+    "model": "claude-opus-5-5 (default, Max plan)",
+    "mcp_tools": 1,
+    "run1": 35790,
+    "run2": 35790,
+    "avg": 35790,
+    "added_vs_no_mcp": 19
+   },
+   {
+    "tool": "claude_code",
+    "tool_name": "Claude Code 2.1.295",
+    "model": "claude-opus-5-5 (default, Max plan)",
+    "mcp_tools": 10,
+    "run1": 35913,
+    "run2": 35913,
+    "avg": 35913,
+    "added_vs_no_mcp": 142
+   },
+   {
+    "tool": "claude_code",
+    "tool_name": "Claude Code 2.1.295",
+    "model": "claude-opus-5-5 (default, Max plan)",
+    "mcp_tools": 30,
+    "run1": 36165,
+    "run2": 36165,
+    "avg": 36165,
+    "added_vs_no_mcp": 394
+   },
+   {
+    "tool": "codex",
+    "tool_name": "Codex CLI 0.162",
+    "model": "gpt-6-luna, reasoning effort low (ChatGPT plan)",
+    "mcp_tools": 0,
+    "run1": 14678,
+    "run2": 14678,
+    "avg": 14678,
+    "added_vs_no_mcp": 0
+   },
+   {
+    "tool": "codex",
+    "tool_name": "Codex CLI 0.162",
+    "model": "gpt-6-luna, reasoning effort low (ChatGPT plan)",
+    "mcp_tools": 1,
+    "run1": 14678,
+    "run2": 14678,
+    "avg": 14678,
+    "added_vs_no_mcp": 0
+   },
+   {
+    "tool": "codex",
+    "tool_name": "Codex CLI 0.162",
+    "model": "gpt-6-luna, reasoning effort low (ChatGPT plan)",
+    "mcp_tools": 10,
+    "run1": 14678,
+    "run2": 14678,
+    "avg": 14678,
+    "added_vs_no_mcp": 0
+   },
+   {
+    "tool": "codex",
+    "tool_name": "Codex CLI 0.162",
+    "model": "gpt-6-luna, reasoning effort low (ChatGPT plan)",
+    "mcp_tools": 30,
+    "run1": 14678,
+    "run2": 14678,
+    "avg": 14678,
+    "added_vs_no_mcp": 0
+   }
+  ]
+ },
+ "same_task": {
+  "measured": "2026-10-18",
+  "prompt": "Make a brick-breaker game that runs in the browser as a single file named index.html in the current folder. It needs 2 levels, a score display and 3 lives, and it must be playable with the keyboard and the mouse. Write the file and finish.",
+  "setup": "Each run in its own empty folder, no MCP servers. Claude Code: claude -p --effort medium --permission-mode acceptEdits --output-format json; tokens from modelUsage, cost is Claude Code list API cost. Codex: codex exec --json -s workspace-write -c model_reasoning_effort=\"medium\"; tokens from turn.completed. Time is wall-clock. Every game loaded without errors and showed 2 levels, score and 3 lives in a headless browser check.",
+  "rows": [
+   {
+    "tool": "claude_code",
+    "tool_name": "Claude Code 2.1.295",
+    "model": "claude-opus-5-5, effort medium",
+    "run": 1,
+    "input_tokens": 123666,
+    "cached_input_tokens": 95504,
+    "output_tokens": 8537,
+    "seconds": 73,
+    "api_cost_usd": 0.42,
+    "file_lines": 487,
+    "file_chars": 14992,
+    "works": true
+   },
+   {
+    "tool": "claude_code",
+    "tool_name": "Claude Code 2.1.295",
+    "model": "claude-opus-5-5, effort medium",
+    "run": 2,
+    "input_tokens": 79213,
+    "cached_input_tokens": 51762,
+    "output_tokens": 7870,
+    "seconds": 63,
+    "api_cost_usd": 0.39,
+    "file_lines": 527,
+    "file_chars": 15088,
+    "works": true
+   },
+   {
+    "tool": "codex",
+    "tool_name": "Codex CLI 0.162",
+    "model": "gpt-6-luna, reasoning effort medium",
+    "run": 1,
+    "input_tokens": 47954,
+    "cached_input_tokens": 29824,
+    "output_tokens": 2872,
+    "seconds": 33,
+    "api_cost_usd": null,
+    "file_lines": 49,
+    "file_chars": 7566,
+    "works": true
+   },
+   {
+    "tool": "codex",
+    "tool_name": "Codex CLI 0.162",
+    "model": "gpt-6-luna, reasoning effort medium",
+    "run": 2,
+    "input_tokens": 48815,
+    "cached_input_tokens": 37504,
+    "output_tokens": 3803,
+    "seconds": 41,
+    "api_cost_usd": null,
+    "file_lines": 117,
+    "file_chars": 10045,
+    "works": true
+   }
+  ]
+ }
+}
