@@ -1,0 +1,8 @@
+input,label,codex_avg_input_tokens,codex_run1,codex_run2,codex_result,cursor_avg_input_tokens,cursor_run1,cursor_run2,cursor_result
+text_page_plain,Same page as a .txt file,29921,29921,29921,read correctly,26600,26597,26603,read correctly
+text_1p,"PDF, text, 1 page",92668,124742,60595,read correctly,76220,76212,76227,read correctly
+text_5p,"PDF, text, 5 pages",74710,64932,84487,read correctly,78624,78899,78349,read correctly
+text_10p,"PDF, text, 10 pages",114776,49273,180278,read correctly,81750,82503,80998,read correctly
+table_plain,Same table as a .csv file,30105,14693,30105,"run 1 failed (said it could not read files), run 2 read correctly; average uses run 2",28560,28060,29060,read correctly
+table_1p,"PDF, table, 1 page",85710,82826,88595,read correctly,76704,76935,76473,read correctly
+scan_1p,"PDF, scanned image, 1 page",215837,238147,193527,failed: said it could not read the page (no OCR tool),84940,93324,76556,wrong: described content that is not in the file (both runs)
