@@ -6,6 +6,8 @@ Input tokens Claude Code and Codex use before doing any work, what adding 1 to 3
 
 - Source page, chart and method: https://tokensave.app/data/claude-code-vs-codex-tokens
 - Related: Claude effort levels (https://tokensave.app/data/claude-effort-cost)
+- DOI (Zenodo): [10.5281/zenodo.23448342](https://doi.org/10.5281/zenodo.23448342)
+- Also on: [Hugging Face](https://huggingface.co/datasets/JOHNISKING/claude-code-vs-codex-tokens) · [Kaggle](https://www.kaggle.com/datasets/johnisking/claude-code-vs-codex-startup-and-task-tokens)
 - Measured: 2026-10-18
 - License: CC BY 4.0
 
@@ -59,6 +61,6 @@ Prompt: "Make a brick-breaker game that runs in the browser as a single file nam
 
 ## Citation
 
-TokenSave (2026). Claude Code vs Codex: startup tokens, MCP tools and the same coding task [Data set]. https://tokensave.app/data/claude-code-vs-codex-tokens
+TokenSave (2026). Claude Code vs Codex: startup tokens, MCP tools and the same coding task [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23448342
 
 See your own Claude Code and Codex usage at [tokensave.app](https://tokensave.app/claude-code-usage).
