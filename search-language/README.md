@@ -1,8 +1,8 @@
-# Claude web search by language: search queries, cited sources and tokens in 5 languages
+# AI web search by language: what Claude Code and Codex search for, and cite, in 5 languages
 
-The same four questions asked in English, Korean, Japanese, Spanish and Ukrainian in Claude Code with web search on, two runs each: the language of every search query, the links cited and their language, the answer language, input and output tokens, searches, page opens and time.
+Claude Code and Codex answering the same questions in English, Korean, Japanese, Spanish and Ukrainian with web search on, plus local-topic questions about Seoul, Tokyo, Madrid and Kyiv asked in the local language and in English: the language of every search query, every cited link and its language, the answer language, tokens, searches and time. Version 2 (128 runs).
 
-**Headline:** asked in Korean, Japanese, Spanish or Ukrainian, Claude Code ran 64 of its 65 web searches in English, and none of the 139 links it cited was a page in the question's language. Every answer came back in the language of the question.
+**Headline:** asked about AI in Korean, Japanese, Spanish or Ukrainian, Claude Code and Codex ran 205 of their 206 searches in English and cited no pages in the question's language. Asked about Seoul, Tokyo, Madrid or Kyiv in the local language, Claude Code searched in that language 84% of the time. Every answer came back in the language of the question.
 
 - Source page, chart and method: https://tokensave.app/data/claude-web-search-by-language
 - Related: web search in Claude Code and Codex ([`../search/`](../search/), https://tokensave.app/data/ai-agent-web-search-tokens)
@@ -13,60 +13,63 @@ The same four questions asked in English, Korean, Japanese, Spanish and Ukrainia
 
 ## Key findings
 
-- Claude searches in English, whatever language you ask in: 64 of 65 searches for non-English questions were in English. The only exception was one Korean query run alongside an English one for the Korean research question. For the price question every language produced the identical query "Claude Pro plan price per month US".
-- The sources stay English: none of the 139 links cited in the 32 non-English answers was a page in the question's language. The one non-English page cited anywhere was a Spanish Euronews article, in a Ukrainian answer and an English one.
-- The answer still comes back in your language: all 40 answers were in the language of the question, and every price answer gave the correct $20 a month.
-- The same query did not lead to the same sources: for the price question, answers cited Anthropic's own pricing pages in 2 of 2 English, Korean and Japanese runs, 0 of 2 Spanish and 1 of 2 Ukrainian runs.
-- Language barely changes the token count; the run does: with one identical search the price question cost 122,171 input tokens in English and 122,777 to 124,766 in the other languages (up to 2% more). The research question ranged from 138,821 to 838,383 input tokens across runs.
-- For prices Claude skipped search entirely and opened the official pricing pages directly, in every language and run.
+- For a global topic, both agents search in English: asked about AI products in Korean, Japanese, Spanish or Ukrainian, Claude Code wrote 64 of 65 queries in English and Codex all 141.
+- So the sources stay English: none of the 139 links Claude Code cited and none of the 83 Codex cited was a page in the question's language.
+- For a local topic, the search follows the country: asked in the local language about metro fares, the week's news and restaurants, Claude Code searched in that language 53 of 63 times, and 79 of 94 cited links were local-language pages.
+- Even an English question about a local topic pulls in local sources: 33 of 67 searches were in the country's language (every query for the Madrid metro fare was in Spanish), and 42 of 95 cited links were local-language pages.
+- Ukrainian news was the exception: asked in Ukrainian, Claude Code cited English-language outlets (NPR, Al Jazeera, CNN) for 7 of 11 links.
+- All 128 answers were written in the language of the question.
+- Language barely changes the token count; Codex used about 72,000 to 82,000 input tokens per answer and Claude Code about 166,000 to 279,000.
 
 ## Files
 
-- `claude-web-search-by-language.csv`: one row per run with `language, question, question_type, run, input_tokens, output_tokens, helper_model_input_tokens, searches, searches_in_english, searches_in_question_language, page_opens, seconds, cited_links, cited_in_question_language, cited_other_language, answer_language, fact_answer_20_usd, cited_official_page, search_queries, domains_cited`
-- `claude-web-search-by-language.json`: the same data plus the exact prompts in each language and every cited URL
+- `claude-web-search-by-language.csv`: one row per run with `tool, topic, ask_language, topic_country, question, question_type, run, input_tokens, output_tokens, search_queries_count, queries_in_english, queries_in_ask_language, queries_in_topic_language, page_opens, seconds, cited_links, cited_in_ask_language, cited_in_topic_language, cited_english, cited_other_language, answer_language, search_queries, domains_cited`
+- `claude-web-search-by-language.json`: the same data plus every prompt, every cited URL and the language of each cited page
 
-## Per question language (4 questions × 2 runs)
+## AI topic: search language and sources (4 questions × 2 runs)
 
-| Question language | Searches in English | Cited links in the question's language | Answers in the question's language | Input tokens (avg) | Output tokens (avg) | Time (avg) |
-|---|---:|---:|---:|---:|---:|---:|
-| English | 14 / 14 | 28 / 29 | 8 / 8 | 220,363 | 8,182 | 50 s |
-| Korean | 16 / 17 | 0 / 30 | 8 / 8 | 245,421 | 9,078 | 51 s |
-| Japanese | 16 / 16 | 0 / 37 | 8 / 8 | 264,318 | 8,200 | 54 s |
-| Spanish | 15 / 15 | 0 / 33 | 8 / 8 | 166,456 | 7,367 | 40 s |
-| Ukrainian | 17 / 17 | 0 / 39 | 8 / 8 | 279,189 | 8,122 | 55 s |
+| Question language | Tool | Queries in English | Cited links in the question's language | Input tokens (avg) |
+|---|---|---:|---:|---:|
+| English | Claude Code | 14 / 14 | 28 / 29 | 220,363 |
+| English | Codex | 40 / 40 | 21 / 21 | 71,547 |
+| Korean | Claude Code | 16 / 17 | 0 / 30 | 245,421 |
+| Korean | Codex | 30 / 30 | 0 / 22 | 81,625 |
+| Japanese | Claude Code | 16 / 16 | 0 / 37 | 264,318 |
+| Japanese | Codex | 37 / 37 | 0 / 20 | 73,073 |
+| Spanish | Claude Code | 15 / 15 | 0 / 33 | 166,456 |
+| Spanish | Codex | 31 / 31 | 0 / 19 | 80,666 |
+| Ukrainian | Claude Code | 17 / 17 | 0 / 39 | 279,189 |
+| Ukrainian | Codex | 43 / 43 | 0 / 22 | 79,978 |
 
-## Input tokens per question and language (average of 2 runs)
+## Local topics (Claude Code, 3 questions × 2 runs)
 
-| Question | English | Korean | Japanese | Spanish | Ukrainian |
-|---|---:|---:|---:|---:|---:|
-| Simple fact | 150,414 | 122,874 | 122,884 | 124,492 | 124,684 |
-| Recent news | 180,111 | 246,168 | 219,678 | 212,642 | 227,292 |
-| Price comparison | 178,710 | 243,225 | 183,234 | 175,150 | 186,673 |
-| Research question | 372,216 | 369,418 | 531,476 | 153,538 | 578,108 |
-
-## Questions
-
-- **English:** "What is the current monthly price of the Claude Pro plan in the United States? Answer in one sentence and cite your source." · "Summarize the three most important AI model releases announced in the past 7 days, one sentence each, with a source link for each." · "Compare the current API prices per million input and output tokens of the flagship models from Anthropic, OpenAI and Google. Use official pricing pages and cite them." · "How many more tokens does Korean text need than the same English text on OpenAI and Claude tokenizers? Give numbers and cite your sources."
-- **Korean:** "미국에서 Claude Pro 요금제의 현재 월 가격은 얼마인가요? 한 문장으로 답하고 출처를 밝혀 주세요." · "지난 7일 동안 발표된 가장 중요한 AI 모델 출시 3가지를 각각 한 문장으로 요약하고, 각각 출처 링크를 붙여 주세요." · "Anthropic, OpenAI, Google의 대표 모델 API 가격(입력·출력 100만 토큰당)을 현재 기준으로 비교해 주세요. 공식 가격 페이지를 근거로 출처를 밝혀 주세요." · "같은 내용의 한국어 글은 영어보다 OpenAI와 Claude 토크나이저에서 토큰이 얼마나 더 필요한가요? 수치와 출처를 알려 주세요."
-- **Japanese:** "米国における Claude Pro プランの現在の月額料金はいくらですか？一文で答え、出典を示してください。" · "過去7日間に発表された最も重要なAIモデルのリリースを3つ、それぞれ一文で要約し、それぞれに出典リンクを付けてください。" · "Anthropic、OpenAI、Googleのフラッグシップモデルの現在のAPI料金（入力・出力100万トークンあたり）を比較してください。公式の料金ページを使い、出典を示してください。" · "同じ内容の韓国語の文章は、英語と比べてOpenAIとClaudeのトークナイザーでどれくらい多くのトークンが必要ですか？数値と出典を示してください。"
-- **Spanish:** "¿Cuál es el precio mensual actual del plan Claude Pro en Estados Unidos? Responde en una frase y cita tu fuente." · "Resume los tres lanzamientos de modelos de IA más importantes anunciados en los últimos 7 días, en una frase cada uno, con un enlace a la fuente para cada uno." · "Compara los precios actuales de la API por millón de tokens de entrada y de salida de los modelos insignia de Anthropic, OpenAI y Google. Usa las páginas oficiales de precios y cítalas." · "¿Cuántos tokens más necesita un texto en coreano que el mismo texto en inglés con los tokenizadores de OpenAI y Claude? Da cifras y cita tus fuentes."
-- **Ukrainian:** "Яка поточна місячна ціна тарифу Claude Pro у США? Дай відповідь одним реченням і вкажи джерело." · "Коротко опиши три найважливіші релізи моделей ШІ, оголошені за останні 7 днів, по одному реченню на кожен, з посиланням на джерело для кожного." · "Порівняй поточні ціни API за мільйон вхідних і вихідних токенів флагманських моделей Anthropic, OpenAI та Google. Використай офіційні сторінки цін і посилайся на них." · "На скільки більше токенів потребує корейський текст порівняно з тим самим англійським текстом у токенізаторах OpenAI та Claude? Наведи цифри та вкажи джерела."
+| Topic country | Asked in | Queries in the country's language | Cited links in the country's language | Cited English pages | Input tokens (avg) |
+|---|---|---:|---:|---:|---:|
+| South Korea | Korean | 14 / 17 | 18 / 18 | 0 | 200,570 |
+| South Korea | English | 7 / 19 | 9 / 23 | 13 | 190,343 |
+| Japan | Japanese | 22 / 24 | 28 / 31 | 0 | 251,767 |
+| Japan | English | 7 / 17 | 4 / 24 | 20 | 201,251 |
+| Spain | Spanish | 11 / 12 | 23 / 24 | 1 | 158,518 |
+| Spain | English | 11 / 16 | 19 / 23 | 4 | 239,644 |
+| Ukraine | Ukrainian | 6 / 10 | 10 / 21 | 10 | 145,656 |
+| Ukraine | English | 8 / 15 | 10 / 25 | 14 | 158,498 |
 
 ## Method
 
-1. Claude Code 2.1.295 (Opus 5.5, Max plan) on one Windows laptop, effort medium: `claude -p --output-format stream-json --verbose --allowedTools WebSearch WebFetch`, no MCP servers, each run in its own empty folder, prompt sent through standard input.
-2. The English runs are the Claude Code runs of the web search dataset in `../search/`, measured the same day with the same settings.
-3. Search language: the script of each WebSearch query (Hangul, Japanese, Cyrillic, Spanish words) or English. Cited links: every URL in the final answer; the language of each cited page was checked by hand.
-4. Input tokens are summed over every model in the run, including cache reads and the helper model.
+1. Both tools on one Windows laptop, effort medium, each run in its own empty folder, prompt sent through standard input.
+2. Claude Code 2.1.295 (Opus 5.5, Max plan): `claude -p --output-format stream-json --verbose --allowedTools WebSearch WebFetch`, no MCP servers.
+3. Codex CLI 0.162 (gpt-6-luna, ChatGPT plan): `codex --search exec --json`; every query in a search step is counted.
+4. The English AI-topic runs are those of the web search dataset in `../search/`, measured the same day with the same settings.
+5. Query language: script of each query (Hangul, Japanese, Cyrillic) or Spanish versus English words for Latin script. Cited links: every URL in the final answer; the language of each cited page was checked by hand from its address and title.
 
 ## Limitations
 
-- One tool, four questions, two runs per language, on one day; search results and the model's choices change over time.
-- The questions are about AI products, where English sources dominate; local topics may behave differently.
-- The research question asks about Korean in every language, which may favour Korean sources for the Korean run.
+- Two tools, two runs per question, on one day; search results and the models' choices change over time.
+- Local topics were measured on Claude Code only, for four countries and three kinds of question.
+- The AI research question asks about Korean in every language, which may favour Korean sources for the Korean run.
 
 ## Citation
 
-TokenSave (2026). Claude web search by language: search queries, cited sources and tokens in 5 languages [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23451506
+TokenSave (2026). AI web search by language: what Claude Code and Codex search for, and cite, in 5 languages [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23451506
 
 Check your own Claude Code usage at [tokensave.app](https://tokensave.app/claude-code-usage).

@@ -1,68 +1,122 @@
 {
- "title": "Claude web search by language: search queries, cited sources and tokens in 5 languages",
+ "title": "AI web search by language: what Claude Code and Codex search for, and cite, in 5 languages",
  "url": "https://tokensave.app/data/claude-web-search-by-language",
  "license": "CC BY 4.0",
  "measured": "2026-10-18",
- "citation": "TokenSave (2026). Claude web search by language: search queries, cited sources and tokens in 5 languages [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23451506",
- "tool": "Claude Code 2.1.295 (Opus 5.5), effort medium, WebSearch and WebFetch only",
+ "version": 2,
+ "citation": "TokenSave (2026). AI web search by language: what Claude Code and Codex search for, and cite, in 5 languages [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23451506",
+ "tools": {
+  "claude_code": "Claude Code 2.1.295 (Opus 5.5), effort medium, WebSearch and WebFetch only",
+  "codex": "Codex CLI 0.162 (gpt-6-luna), effort medium, codex --search exec"
+ },
  "question_types": {
   "q1_fact": "Simple fact",
   "q2_news": "Recent news",
   "q3_compare": "Price comparison",
-  "q4_geo": "Research question"
+  "q4_geo": "Research question",
+  "l1_fare": "Local fact: metro fare",
+  "l2_news": "Local news",
+  "l3_food": "Local restaurants"
  },
  "prompts": {
-  "en": {
-   "q1_fact": "What is the current monthly price of the Claude Pro plan in the United States? Answer in one sentence and cite your source.",
-   "q2_news": "Summarize the three most important AI model releases announced in the past 7 days, one sentence each, with a source link for each.",
-   "q3_compare": "Compare the current API prices per million input and output tokens of the flagship models from Anthropic, OpenAI and Google. Use official pricing pages and cite them.",
-   "q4_geo": "How many more tokens does Korean text need than the same English text on OpenAI and Claude tokenizers? Give numbers and cite your sources."
+  "ai": {
+   "en": {
+    "q1_fact": "What is the current monthly price of the Claude Pro plan in the United States? Answer in one sentence and cite your source.",
+    "q2_news": "Summarize the three most important AI model releases announced in the past 7 days, one sentence each, with a source link for each.",
+    "q3_compare": "Compare the current API prices per million input and output tokens of the flagship models from Anthropic, OpenAI and Google. Use official pricing pages and cite them.",
+    "q4_geo": "How many more tokens does Korean text need than the same English text on OpenAI and Claude tokenizers? Give numbers and cite your sources."
+   },
+   "ko": {
+    "q1_fact": "미국에서 Claude Pro 요금제의 현재 월 가격은 얼마인가요? 한 문장으로 답하고 출처를 밝혀 주세요.",
+    "q2_news": "지난 7일 동안 발표된 가장 중요한 AI 모델 출시 3가지를 각각 한 문장으로 요약하고, 각각 출처 링크를 붙여 주세요.",
+    "q3_compare": "Anthropic, OpenAI, Google의 대표 모델 API 가격(입력·출력 100만 토큰당)을 현재 기준으로 비교해 주세요. 공식 가격 페이지를 근거로 출처를 밝혀 주세요.",
+    "q4_geo": "같은 내용의 한국어 글은 영어보다 OpenAI와 Claude 토크나이저에서 토큰이 얼마나 더 필요한가요? 수치와 출처를 알려 주세요."
+   },
+   "ja": {
+    "q1_fact": "米国における Claude Pro プランの現在の月額料金はいくらですか？一文で答え、出典を示してください。",
+    "q2_news": "過去7日間に発表された最も重要なAIモデルのリリースを3つ、それぞれ一文で要約し、それぞれに出典リンクを付けてください。",
+    "q3_compare": "Anthropic、OpenAI、Googleのフラッグシップモデルの現在のAPI料金（入力・出力100万トークンあたり）を比較してください。公式の料金ページを使い、出典を示してください。",
+    "q4_geo": "同じ内容の韓国語の文章は、英語と比べてOpenAIとClaudeのトークナイザーでどれくらい多くのトークンが必要ですか？数値と出典を示してください。"
+   },
+   "es": {
+    "q1_fact": "¿Cuál es el precio mensual actual del plan Claude Pro en Estados Unidos? Responde en una frase y cita tu fuente.",
+    "q2_news": "Resume los tres lanzamientos de modelos de IA más importantes anunciados en los últimos 7 días, en una frase cada uno, con un enlace a la fuente para cada uno.",
+    "q3_compare": "Compara los precios actuales de la API por millón de tokens de entrada y de salida de los modelos insignia de Anthropic, OpenAI y Google. Usa las páginas oficiales de precios y cítalas.",
+    "q4_geo": "¿Cuántos tokens más necesita un texto en coreano que el mismo texto en inglés con los tokenizadores de OpenAI y Claude? Da cifras y cita tus fuentes."
+   },
+   "uk": {
+    "q1_fact": "Яка поточна місячна ціна тарифу Claude Pro у США? Дай відповідь одним реченням і вкажи джерело.",
+    "q2_news": "Коротко опиши три найважливіші релізи моделей ШІ, оголошені за останні 7 днів, по одному реченню на кожен, з посиланням на джерело для кожного.",
+    "q3_compare": "Порівняй поточні ціни API за мільйон вхідних і вихідних токенів флагманських моделей Anthropic, OpenAI та Google. Використай офіційні сторінки цін і посилайся на них.",
+    "q4_geo": "На скільки більше токенів потребує корейський текст порівняно з тим самим англійським текстом у токенізаторах OpenAI та Claude? Наведи цифри та вкажи джерела."
+   }
   },
-  "ko": {
-   "q1_fact": "미국에서 Claude Pro 요금제의 현재 월 가격은 얼마인가요? 한 문장으로 답하고 출처를 밝혀 주세요.",
-   "q2_news": "지난 7일 동안 발표된 가장 중요한 AI 모델 출시 3가지를 각각 한 문장으로 요약하고, 각각 출처 링크를 붙여 주세요.",
-   "q3_compare": "Anthropic, OpenAI, Google의 대표 모델 API 가격(입력·출력 100만 토큰당)을 현재 기준으로 비교해 주세요. 공식 가격 페이지를 근거로 출처를 밝혀 주세요.",
-   "q4_geo": "같은 내용의 한국어 글은 영어보다 OpenAI와 Claude 토크나이저에서 토큰이 얼마나 더 필요한가요? 수치와 출처를 알려 주세요."
-  },
-  "ja": {
-   "q1_fact": "米国における Claude Pro プランの現在の月額料金はいくらですか？一文で答え、出典を示してください。",
-   "q2_news": "過去7日間に発表された最も重要なAIモデルのリリースを3つ、それぞれ一文で要約し、それぞれに出典リンクを付けてください。",
-   "q3_compare": "Anthropic、OpenAI、Googleのフラッグシップモデルの現在のAPI料金（入力・出力100万トークンあたり）を比較してください。公式の料金ページを使い、出典を示してください。",
-   "q4_geo": "同じ内容の韓国語の文章は、英語と比べてOpenAIとClaudeのトークナイザーでどれくらい多くのトークンが必要ですか？数値と出典を示してください。"
-  },
-  "es": {
-   "q1_fact": "¿Cuál es el precio mensual actual del plan Claude Pro en Estados Unidos? Responde en una frase y cita tu fuente.",
-   "q2_news": "Resume los tres lanzamientos de modelos de IA más importantes anunciados en los últimos 7 días, en una frase cada uno, con un enlace a la fuente para cada uno.",
-   "q3_compare": "Compara los precios actuales de la API por millón de tokens de entrada y de salida de los modelos insignia de Anthropic, OpenAI y Google. Usa las páginas oficiales de precios y cítalas.",
-   "q4_geo": "¿Cuántos tokens más necesita un texto en coreano que el mismo texto en inglés con los tokenizadores de OpenAI y Claude? Da cifras y cita tus fuentes."
-  },
-  "uk": {
-   "q1_fact": "Яка поточна місячна ціна тарифу Claude Pro у США? Дай відповідь одним реченням і вкажи джерело.",
-   "q2_news": "Коротко опиши три найважливіші релізи моделей ШІ, оголошені за останні 7 днів, по одному реченню на кожен, з посиланням на джерело для кожного.",
-   "q3_compare": "Порівняй поточні ціни API за мільйон вхідних і вихідних токенів флагманських моделей Anthropic, OpenAI та Google. Використай офіційні сторінки цін і посилайся на них.",
-   "q4_geo": "На скільки більше токенів потребує корейський текст порівняно з тим самим англійським текстом у токенізаторах OpenAI та Claude? Наведи цифри та вкажи джерела."
+  "local": {
+   "ko": {
+    "l1_fare": "서울 지하철 기본요금(교통카드, 성인 기준)은 현재 얼마인가요? 한 문장으로 답하고 출처를 밝혀 주세요.",
+    "l2_news": "지난 7일 동안 한국에서 가장 중요한 뉴스 3가지를 각각 한 문장으로 요약하고, 각각 출처 링크를 붙여 주세요.",
+    "l3_food": "서울에서 지금 평이 가장 좋은 평양냉면 집 3곳을 추천하고, 각각 출처를 밝혀 주세요."
+   },
+   "ja": {
+    "l1_fare": "東京メトロの初乗り運賃（ICカード、大人）は現在いくらですか？一文で答え、出典を示してください。",
+    "l2_news": "過去7日間の日本で最も重要なニュースを3つ、それぞれ一文で要約し、それぞれに出典リンクを付けてください。",
+    "l3_food": "東京で今いちばん評判の良いラーメン店を3軒すすめて、それぞれ出典を示してください。"
+   },
+   "es": {
+    "l1_fare": "¿Cuánto cuesta actualmente un billete sencillo de metro en Madrid (zona A)? Responde en una frase y cita tu fuente.",
+    "l2_news": "Resume las tres noticias más importantes de España de los últimos 7 días, en una frase cada una, con un enlace a la fuente para cada una.",
+    "l3_food": "Recomienda los 3 restaurantes de cocido madrileño mejor valorados ahora mismo en Madrid y cita una fuente para cada uno."
+   },
+   "uk": {
+    "l1_fare": "Скільки зараз коштує одна поїздка в київському метро? Дай відповідь одним реченням і вкажи джерело.",
+    "l2_news": "Коротко опиши три найважливіші новини України за останні 7 днів, по одному реченню на кожну, з посиланням на джерело для кожної.",
+    "l3_food": "Порадь 3 найкращі зараз заклади в Києві, де подають борщ, і вкажи джерело для кожного."
+   },
+   "en-ko": {
+    "l1_fare": "What is the current base fare of the Seoul subway (transit card, adult)? Answer in one sentence and cite your source.",
+    "l2_news": "Summarize the three most important news stories in South Korea from the past 7 days, one sentence each, with a source link for each.",
+    "l3_food": "Recommend the 3 best-rated Pyongyang naengmyeon restaurants in Seoul right now and cite a source for each."
+   },
+   "en-ja": {
+    "l1_fare": "What is the current minimum fare on Tokyo Metro (IC card, adult)? Answer in one sentence and cite your source.",
+    "l2_news": "Summarize the three most important news stories in Japan from the past 7 days, one sentence each, with a source link for each.",
+    "l3_food": "Recommend the 3 best-rated ramen shops in Tokyo right now and cite a source for each."
+   },
+   "en-es": {
+    "l1_fare": "How much does a single Madrid metro ticket (zone A) cost right now? Answer in one sentence and cite your source.",
+    "l2_news": "Summarize the three most important news stories in Spain from the past 7 days, one sentence each, with a source link for each.",
+    "l3_food": "Recommend the 3 best-rated cocido madrileño restaurants in Madrid right now and cite a source for each."
+   },
+   "en-uk": {
+    "l1_fare": "How much does a single ride on the Kyiv metro cost right now? Answer in one sentence and cite your source.",
+    "l2_news": "Summarize the three most important news stories in Ukraine from the past 7 days, one sentence each, with a source link for each.",
+    "l3_food": "Recommend the 3 best places in Kyiv to eat borscht right now and cite a source for each."
+   }
   }
  },
  "rows": [
   {
-   "language": "en",
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
    "question": "q1_fact",
    "question_type": "Simple fact",
    "run": 1,
    "input_tokens": 178656,
    "output_tokens": 2181,
-   "helper_model_input_tokens": 30210,
-   "searches": 2,
-   "searches_in_english": 2,
-   "searches_in_question_language": 2,
+   "search_queries_count": 2,
+   "queries_in_english": 2,
+   "queries_in_ask_language": 2,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 28,
    "cited_links": 2,
-   "cited_in_question_language": 2,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": null,
+   "cited_english": 2,
    "cited_other_language": 0,
    "answer_language": "en",
-   "fact_answer_20_usd": true,
-   "cited_official_page": true,
    "search_queries": [
     "Claude Pro plan price per month US",
     "Claude Pro pricing"
@@ -74,27 +128,69 @@
    "cited_urls": [
     "https://claude.com/pricing",
     "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en"
    ]
   },
   {
-   "language": "en",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 1,
+   "input_tokens": 33162,
+   "output_tokens": 105,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 10,
+   "cited_links": 1,
+   "cited_in_ask_language": 1,
+   "cited_in_topic_language": null,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "site:anthropic.com Claude Pro plan $20 month US"
+   ],
+   "domains_cited": [
+    "support.anthropic.com"
+   ],
+   "cited_urls": [
+    "https://support.anthropic.com/en/articles/8325610-how-much-does-claude-pro-cost"
+   ],
+   "cited_page_languages": [
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
    "question": "q1_fact",
    "question_type": "Simple fact",
    "run": 2,
    "input_tokens": 122171,
    "output_tokens": 870,
-   "helper_model_input_tokens": 12690,
-   "searches": 1,
-   "searches_in_english": 1,
-   "searches_in_question_language": 1,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 18,
    "cited_links": 2,
-   "cited_in_question_language": 2,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": null,
+   "cited_english": 2,
    "cited_other_language": 0,
    "answer_language": "en",
-   "fact_answer_20_usd": true,
-   "cited_official_page": true,
    "search_queries": [
     "Claude Pro plan monthly price US"
    ],
@@ -105,27 +201,69 @@
    "cited_urls": [
     "https://claude.com/pricing",
     "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en"
    ]
   },
   {
-   "language": "en",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 2,
+   "input_tokens": 33429,
+   "output_tokens": 110,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 9,
+   "cited_links": 1,
+   "cited_in_ask_language": 1,
+   "cited_in_topic_language": null,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "site:anthropic.com Claude Pro price $20 month US"
+   ],
+   "domains_cited": [
+    "anthropic.com"
+   ],
+   "cited_urls": [
+    "https://www.anthropic.com/pricing"
+   ],
+   "cited_page_languages": [
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
    "question": "q2_news",
    "question_type": "Recent news",
    "run": 1,
    "input_tokens": 209864,
    "output_tokens": 6354,
-   "helper_model_input_tokens": 56634,
-   "searches": 4,
-   "searches_in_english": 4,
-   "searches_in_question_language": 4,
+   "search_queries_count": 4,
+   "queries_in_english": 4,
+   "queries_in_ask_language": 4,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 39,
    "cited_links": 4,
-   "cited_in_question_language": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
    "cited_other_language": 1,
    "answer_language": "en",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "new AI model release announced October 2026",
     "AI model launch this week October 12-18 2026",
@@ -143,27 +281,83 @@
     "https://blog.google/innovation-and-ai/products/gemini-app/gemini-4-availability",
     "https://research.meta.ai/blog/muse-spark-open",
     "https://llmgateway.io/timeline"
+   ],
+   "cited_page_languages": [
+    "es",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "en",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 1,
+   "input_tokens": 68841,
+   "output_tokens": 435,
+   "search_queries_count": 7,
+   "queries_in_english": 7,
+   "queries_in_ask_language": 7,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 16,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "AI model release announced October 2026 model launch",
+    "new AI model released October 2026 announcement",
+    "site:openai.com/index October 2026 model release",
+    "site:anthropic.com/news October 2026 model announcement",
+    "October 15 2026 AI model released October 16 2026 model launch",
+    "October 2026 AI model launch Oct 12 Muse Wonder Microsoft MAI-Code-1.1 Flash",
+    "October 2026 new model launch AI \"Oct 15\" model"
+   ],
+   "domains_cited": [
+    "artificialwatch.com",
+    "about.fb.com",
+    "themodelgap.com"
+   ],
+   "cited_urls": [
+    "https://artificialwatch.com/releases",
+    "https://about.fb.com/news/2026/10/introducing-muse-wonder-models/",
+    "https://themodelgap.com/new-ai-models"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
    "question": "q2_news",
    "question_type": "Recent news",
    "run": 2,
    "input_tokens": 150358,
    "output_tokens": 4192,
-   "helper_model_input_tokens": 38322,
-   "searches": 2,
-   "searches_in_english": 2,
-   "searches_in_question_language": 2,
+   "search_queries_count": 2,
+   "queries_in_english": 2,
+   "queries_in_ask_language": 2,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 28,
    "cited_links": 3,
-   "cited_in_question_language": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
    "cited_other_language": 0,
    "answer_language": "en",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "new AI model release announced October 2026",
     "AI model launch this week October 12-18 2026 OpenAI Google Anthropic Meta"
@@ -177,27 +371,82 @@
     "https://www.axios.com/2026/10/12/meta-new-ai-models-anthropic-openai",
     "https://dev.to/hiroki-ii-ai/ai-daily-digest-october-17-2026-meta-opens-816b-parameters-chatgpt-drives-chrome-anthropic-3pij",
     "https://www.clone-systems.com/blog/new-ai-models-october-2026-release-guide-and-security"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "en",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 2,
+   "input_tokens": 67541,
+   "output_tokens": 445,
+   "search_queries_count": 7,
+   "queries_in_english": 7,
+   "queries_in_ask_language": 7,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 14,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "AI model released announced October 2026 model release",
+    "new AI model launch October 12 2026 October 18 2026",
+    "site:theverge.com AI model October 2026 released",
+    "October 2026 AI model release October 16 model official announced",
+    "October 2026 Gemini 4 Argon official announcement",
+    "October 15 Nvidia Nemotron 3.5 Super VL official release",
+    "Reflection AI Beam model October 16 2026 release"
+   ],
+   "domains_cited": [
+    "blog.google",
+    "blogs.nvidia.com",
+    "reflection.ai"
+   ],
+   "cited_urls": [
+    "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/",
+    "https://blogs.nvidia.com/blog/nemotron-3-5-super-vl/",
+    "https://reflection.ai/blog/beam-is-available"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
    "question": "q3_compare",
    "question_type": "Price comparison",
    "run": 1,
    "input_tokens": 186932,
    "output_tokens": 17740,
-   "helper_model_input_tokens": 23187,
-   "searches": 0,
-   "searches_in_english": 0,
-   "searches_in_question_language": 0,
+   "search_queries_count": 0,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 8,
    "seconds": 79,
    "cited_links": 4,
-   "cited_in_question_language": 4,
+   "cited_in_ask_language": 4,
+   "cited_in_topic_language": null,
+   "cited_english": 4,
    "cited_other_language": 0,
    "answer_language": "en",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [],
    "domains_cited": [
     "platform.claude.com",
@@ -210,27 +459,79 @@
     "https://claude.com/pricing",
     "https://developers.openai.com/api/docs/pricing",
     "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "en",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 1,
+   "input_tokens": 93037,
+   "output_tokens": 698,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 3,
+   "queries_in_topic_language": null,
+   "page_opens": 2,
+   "seconds": 22,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "site:anthropic.com/pricing API Claude Opus pricing input output tokens",
+    "site:openai.com/api/pricing flagship API model input output tokens",
+    "site:ai.google.dev/gemini-api/docs/pricing Gemini API pricing input output"
+   ],
+   "domains_cited": [
+    "anthropic.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://www.anthropic.com/claude/opus",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
    "question": "q3_compare",
    "question_type": "Price comparison",
    "run": 2,
    "input_tokens": 170488,
    "output_tokens": 12008,
-   "helper_model_input_tokens": 23189,
-   "searches": 0,
-   "searches_in_english": 0,
-   "searches_in_question_language": 0,
+   "search_queries_count": 0,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 5,
    "seconds": 48,
    "cited_links": 3,
-   "cited_in_question_language": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
    "cited_other_language": 0,
    "answer_language": "en",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [],
    "domains_cited": [
     "platform.claude.com",
@@ -241,27 +542,85 @@
     "https://platform.claude.com/docs/en/about-claude/pricing",
     "https://developers.openai.com/api/docs/pricing.",
     "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "en",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 2,
+   "input_tokens": 106132,
+   "output_tokens": 661,
+   "search_queries_count": 10,
+   "queries_in_english": 10,
+   "queries_in_ask_language": 10,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 22,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "site:anthropic.com pricing API Claude Opus 4.1 input output per million tokens",
+    "site:openai.com API pricing flagship GPT-5 input output tokens",
+    "site:ai.google.dev/gemini-api/docs/pricing Gemini API pricing input output flagship",
+    "site:anthropic.com/pricing Claude 4.5 Opus API pricing $ per million",
+    "site:docs.anthropic.com/en/docs/about-claude/models pricing Claude Opus API $15 $75",
+    "site:openai.com/api/pricing GPT-5.5 API pricing per 1M",
+    "site:developers.openai.com/api/docs/pricing GPT-5.5 pricing",
+    "site:developers.openai.com/api/docs/models/gpt-5.6 price input output GPT-5.6 flagship",
+    "site:ai.google.dev/gemini-api/docs/pricing Gemini 4 Argon official pricing",
+    "site:anthropic.com/claude/opus Opus 5.5 pricing official"
+   ],
+   "domains_cited": [
+    "anthropic.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://www.anthropic.com/claude/opus",
+    "https://developers.openai.com/api/docs/models/gpt-4-and-gpt-4-turbo",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
    "question": "q4_geo",
    "question_type": "Research question",
    "run": 1,
    "input_tokens": 426565,
    "output_tokens": 12119,
-   "helper_model_input_tokens": 38942,
-   "searches": 3,
-   "searches_in_english": 3,
-   "searches_in_question_language": 3,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 3,
+   "queries_in_topic_language": null,
    "page_opens": 8,
    "seconds": 85,
    "cited_links": 7,
-   "cited_in_question_language": 7,
+   "cited_in_ask_language": 7,
+   "cited_in_topic_language": null,
+   "cited_english": 7,
    "cited_other_language": 0,
    "answer_language": "en",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "Korean vs English token count ratio GPT-4o o200k cl100k tokenizer",
     "Claude tokenizer Korean tokens compared to English ratio",
@@ -283,27 +642,87 @@
     "https://dev.to/synthorai/which-llm-is-cheapest-for-your-language-tokenizer-costs-measured-1k5m",
     "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
     "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "en",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 1,
+   "input_tokens": 66519,
+   "output_tokens": 568,
+   "search_queries_count": 5,
+   "queries_in_english": 5,
+   "queries_in_ask_language": 5,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 18,
+   "cited_links": 4,
+   "cited_in_ask_language": 4,
+   "cited_in_topic_language": null,
+   "cited_english": 4,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "OpenAI tokenizer Korean English token count comparison Korean tokens",
+    "Claude tokenizer Korean English token count Korean Anthropic",
+    "Korean English tokenization ratio OpenAI Claude tokenizer",
+    "site:platform.openai.com/docs tokenization tiktoken encodings",
+    "site:docs.anthropic.com token counting tokenizer not published tokens count API"
+   ],
+   "domains_cited": [
+    "huggingface.co",
+    "zolamir.com",
+    "platform.openai.com",
+    "platform.claude.com"
+   ],
+   "cited_urls": [
+    "https://huggingface.co/datasets/drlee1/deepseek-v4-distill-ko-1k",
+    "https://zolamir.com/en/best/korean/",
+    "https://platform.openai.com/tokenizer",
+    "https://platform.claude.com/docs/en/build-with-claude/token-counting"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
    "question": "q4_geo",
    "question_type": "Research question",
    "run": 2,
    "input_tokens": 317868,
    "output_tokens": 9992,
-   "helper_model_input_tokens": 101634,
-   "searches": 2,
-   "searches_in_english": 2,
-   "searches_in_question_language": 2,
+   "search_queries_count": 2,
+   "queries_in_english": 2,
+   "queries_in_ask_language": 2,
+   "queries_in_topic_language": null,
    "page_opens": 4,
    "seconds": 75,
    "cited_links": 4,
-   "cited_in_question_language": 4,
+   "cited_in_ask_language": 4,
+   "cited_in_topic_language": null,
+   "cited_english": 4,
    "cited_other_language": 0,
    "answer_language": "en",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "Korean vs English token count ratio GPT-4o o200k cl100k tokenizer",
     "Claude tokenizer Korean tokens compared to English ratio"
@@ -318,27 +737,82 @@
     "https://dev.to/synthorai/which-llm-is-cheapest-for-your-language-tokenizer-costs-measured-1k5m",
     "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
     "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ko",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "en",
+   "topic_country": null,
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 2,
+   "input_tokens": 103718,
+   "output_tokens": 619,
+   "search_queries_count": 6,
+   "queries_in_english": 6,
+   "queries_in_ask_language": 6,
+   "queries_in_topic_language": null,
+   "page_opens": 1,
+   "seconds": 21,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "site:platform.openai.com tokenizer Korean tokenization OpenAI cookbook",
+    "site:docs.anthropic.com tokenizer Korean tokens token counting",
+    "OpenAI tokenizer Korean English same text token counts benchmark Claude",
+    "site:docs.anthropic.com/en/docs/build-with-claude/token-counting count_tokens API",
+    "site:anthropic.com/news tokenizer Claude token count 1.35 tokenizer",
+    "site:platform.openai.com/docs/guides/text? tokens tokenizer o200k_base"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "platform.openai.com",
+    "platform.claude.com"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://platform.openai.com/tokenizer",
+    "https://platform.claude.com/docs/en/build-with-claude/token-counting"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
    "question": "q1_fact",
    "question_type": "Simple fact",
    "run": 1,
    "input_tokens": 122777,
    "output_tokens": 875,
-   "helper_model_input_tokens": 13120,
-   "searches": 1,
-   "searches_in_english": 1,
-   "searches_in_question_language": 0,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 17,
    "cited_links": 2,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 2,
    "cited_other_language": 0,
    "answer_language": "ko",
-   "fact_answer_20_usd": true,
-   "cited_official_page": true,
    "search_queries": [
     "Claude Pro plan price per month US"
    ],
@@ -349,27 +823,69 @@
    "cited_urls": [
     "https://claude.com/pricing",
     "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ko",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 1,
+   "input_tokens": 33526,
+   "output_tokens": 86,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 14,
+   "cited_links": 1,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "site:anthropic.com Claude Pro $20 per month"
+   ],
+   "domains_cited": [
+    "anthropic.com"
+   ],
+   "cited_urls": [
+    "https://www.anthropic.com/pricing"
+   ],
+   "cited_page_languages": [
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
    "question": "q1_fact",
    "question_type": "Simple fact",
    "run": 2,
    "input_tokens": 122972,
    "output_tokens": 992,
-   "helper_model_input_tokens": 13356,
-   "searches": 1,
-   "searches_in_english": 1,
-   "searches_in_question_language": 0,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 16,
    "cited_links": 2,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 2,
    "cited_other_language": 0,
    "answer_language": "ko",
-   "fact_answer_20_usd": true,
-   "cited_official_page": true,
    "search_queries": [
     "Claude Pro plan price per month US"
    ],
@@ -380,27 +896,69 @@
    "cited_urls": [
     "https://claude.com/pricing",
     "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ko",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 2,
+   "input_tokens": 33379,
+   "output_tokens": 132,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 11,
+   "cited_links": 1,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "site:anthropic.com Claude Pro $20 per month pricing"
+   ],
+   "domains_cited": [
+    "anthropic.com"
+   ],
+   "cited_urls": [
+    "https://www.anthropic.com/pricing"
+   ],
+   "cited_page_languages": [
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
    "question": "q2_news",
    "question_type": "Recent news",
    "run": 1,
    "input_tokens": 209895,
    "output_tokens": 6510,
-   "helper_model_input_tokens": 56075,
-   "searches": 4,
-   "searches_in_english": 4,
-   "searches_in_question_language": 0,
+   "search_queries_count": 4,
+   "queries_in_english": 4,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 38,
    "cited_links": 3,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
    "cited_other_language": 0,
    "answer_language": "ko",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "AI model release announced October 2026",
     "new AI model launch this week October 12-18 2026",
@@ -415,27 +973,79 @@
     "https://techcrunch.com/2026/10/12/meta-releases-its-first-frontier-model-muse-wonder",
     "https://letsdatascience.com/news/google-releases-gemini-4-argon-for-scientific-computing-644a49ff",
     "https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ko",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 1,
+   "input_tokens": 116468,
+   "output_tokens": 498,
+   "search_queries_count": 4,
+   "queries_in_english": 4,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 2,
+   "seconds": 23,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "AI model release announced October 2026 new model",
+    "new AI model launch October 12 2026 October 18 2026",
+    "site:openai.com/index October 2026 model release",
+    "site:anthropic.com/news October 2026 model release"
+   ],
+   "domains_cited": [
+    "axios.com",
+    "reflection.ai",
+    "api-docs.deepseek.com"
+   ],
+   "cited_urls": [
+    "https://www.axios.com/2026/10/12/meta-new-ai-models-anthropic-openai",
+    "https://reflection.ai/",
+    "https://api-docs.deepseek.com/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
    "question": "q2_news",
    "question_type": "Recent news",
    "run": 2,
    "input_tokens": 282440,
    "output_tokens": 10010,
-   "helper_model_input_tokens": 83616,
-   "searches": 6,
-   "searches_in_english": 6,
-   "searches_in_question_language": 0,
+   "search_queries_count": 6,
+   "queries_in_english": 6,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 53,
    "cited_links": 4,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 4,
    "cited_other_language": 0,
    "answer_language": "ko",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "AI model release announced October 2026",
     "new AI model launch this week October 12-18 2026",
@@ -455,27 +1065,82 @@
     "https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs/",
     "https://www.devx.com/artificial-intelligence-ai/what-is-grok-voice-3-0-xai-speech-to-speech-model/",
     "https://www.hpcwire.com/aiwire/2026/10/15/nvidia-expands-nemotron-family-with-highest-efficiency-super-vl-and-bolt-models/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ko",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 2,
+   "input_tokens": 68651,
+   "output_tokens": 500,
+   "search_queries_count": 6,
+   "queries_in_english": 6,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 21,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "AI model launch announced October 2026 model release October 12 2026",
+    "new AI model October 2026 release announcement October 16 2026",
+    "AI model launch October 2026 week October 12 2026",
+    "site:blog.google Gemini 4 Argon October 13 2026",
+    "Meta Muse Wonder official October 12 2026 announcement",
+    "Reflection AI Beam 1.0 official October 16 2026 model"
+   ],
+   "domains_cited": [
+    "about.fb.com",
+    "blog.google",
+    "reflection.ai"
+   ],
+   "cited_urls": [
+    "https://about.fb.com/news/2026/10/introducing-muse-wonder-models/",
+    "https://blog.google/innovation-and-ai/technology/developers-tools/build-with-gemini-4-argon/",
+    "https://reflection.ai/blog/beam-is-available/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
    "question": "q3_compare",
    "question_type": "Price comparison",
    "run": 1,
    "input_tokens": 175620,
    "output_tokens": 13517,
-   "helper_model_input_tokens": 23223,
-   "searches": 0,
-   "searches_in_english": 0,
-   "searches_in_question_language": 0,
+   "search_queries_count": 0,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 6,
    "seconds": 59,
    "cited_links": 3,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
    "cited_other_language": 0,
    "answer_language": "ko",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [],
    "domains_cited": [
     "platform.claude.com",
@@ -486,27 +1151,78 @@
     "https://platform.claude.com/docs/en/about-claude/pricing",
     "https://developers.openai.com/api/docs/pricing",
     "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ko",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 1,
+   "input_tokens": 152314,
+   "output_tokens": 897,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 3,
+   "seconds": 28,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "site:anthropic.com/pricing API Claude Opus 4.1 input output pricing",
+    "site:openai.com/api/pricing GPT-5 API pricing input output",
+    "site:ai.google.dev/gemini-api/docs/pricing Gemini 2.5 Pro pricing"
+   ],
+   "domains_cited": [
+    "www-cdn.anthropic.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://www-cdn.anthropic.com/files/4zrzovbb/website/3684c2faafb97418665782cea0001f439f74b1d2.pdf",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
    "question": "q3_compare",
    "question_type": "Price comparison",
    "run": 2,
    "input_tokens": 310830,
    "output_tokens": 18090,
-   "helper_model_input_tokens": 23177,
-   "searches": 0,
-   "searches_in_english": 0,
-   "searches_in_question_language": 0,
+   "search_queries_count": 0,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 8,
    "seconds": 75,
    "cited_links": 4,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 4,
    "cited_other_language": 0,
    "answer_language": "ko",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [],
    "domains_cited": [
     "platform.claude.com",
@@ -519,27 +1235,82 @@
     "https://claude.com/pricing",
     "https://developers.openai.com/api/docs/pricing",
     "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ko",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 2,
+   "input_tokens": 110487,
+   "output_tokens": 793,
+   "search_queries_count": 6,
+   "queries_in_english": 6,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 1,
+   "seconds": 24,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "site:anthropic.com/pricing Claude API pricing input output million tokens",
+    "site:openai.com/api/pricing API pricing input output tokens",
+    "site:ai.google.dev/gemini-api/docs/pricing Gemini API pricing",
+    "site:openai.com/api/pricing GPT-5.5 input output pricing per 1M tokens",
+    "site:platform.openai.com/docs/pricing GPT-5.5 pricing",
+    "site:docs.anthropic.com/en/docs/about-claude/models overview Claude Opus current model API pricing"
+   ],
+   "domains_cited": [
+    "platform.claude.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://developers.openai.com/api/docs/models/gpt-5.5",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
    "question": "q4_geo",
    "question_type": "Research question",
    "run": 1,
    "input_tokens": 537557,
    "output_tokens": 14125,
-   "helper_model_input_tokens": 127733,
-   "searches": 3,
-   "searches_in_english": 3,
-   "searches_in_question_language": 0,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 8,
    "seconds": 86,
    "cited_links": 8,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 8,
    "cited_other_language": 0,
    "answer_language": "ko",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "Korean vs English token count ratio GPT-4o o200k_base cl100k tokenizer",
     "Claude tokenizer Korean token ratio English comparison",
@@ -563,27 +1334,86 @@
     "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
     "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf",
     "https://community.openai.com/t/need-more-efficient-tokenizer-for-korean/286682.md"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ko",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 1,
+   "input_tokens": 69320,
+   "output_tokens": 1053,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 1,
+   "seconds": 25,
+   "cited_links": 4,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 4,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "OpenAI tokenizer Korean English token count comparison tiktoken Korean",
+    "Anthropic Claude tokenizer Korean English token count tokens Korean",
+    "Korean tokenization OpenAI Claude tokenizer benchmark Korean English ratio"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "platform.claude.com",
+    "help.openai.com",
+    "hiai.korea.ac.kr"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://platform.claude.com/docs/en/build-with-claude/token-counting",
+    "https://help.openai.com/en/articles/4936856-understanding-and-counting-tokens",
+    "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
    "question": "q4_geo",
    "question_type": "Research question",
    "run": 2,
    "input_tokens": 201280,
    "output_tokens": 8501,
-   "helper_model_input_tokens": 27397,
-   "searches": 2,
-   "searches_in_english": 1,
-   "searches_in_question_language": 1,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": null,
    "page_opens": 2,
    "seconds": 66,
    "cited_links": 4,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 4,
    "cited_other_language": 0,
    "answer_language": "ko",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "Korean vs English token count ratio GPT-4o o200k Claude tokenizer comparison",
     "한국어 토큰 영어 대비 배 GPT-4o Claude 토크나이저 비교"
@@ -599,27 +1429,85 @@
     "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
     "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf",
     "https://community.openai.com/t/need-more-efficient-tokenizer-for-korean/286682.md"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ja",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ko",
+   "topic_country": null,
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 2,
+   "input_tokens": 68855,
+   "output_tokens": 1037,
+   "search_queries_count": 6,
+   "queries_in_english": 6,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 28,
+   "cited_links": 4,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 4,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "OpenAI tokenizer Korean English tokens ratio tokenizer cookbook",
+    "Anthropic Claude tokenizer Korean English token count official",
+    "OpenAI tiktoken tokenizer Korean language tokenization comparison",
+    "Claude tokenizer Korean token count English comparison",
+    "site:docs.anthropic.com count tokens API tokenizer multilingual Claude",
+    "site:anthropic.com tokenizer multilingual Korean tokens"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "docs.anthropic.com",
+    "hiai.korea.ac.kr",
+    "help.openai.com"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://docs.anthropic.com/en/docs/about-claude/pricing",
+    "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf",
+    "https://help.openai.com/ko-kr/articles/4936856-%ED%86%A0%ED%81%B0%EC%9D%B4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B4%EB%A9%B0-%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%84%B8%EB%82%98%EC%9A%94"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
    "question": "q1_fact",
    "question_type": "Simple fact",
    "run": 1,
    "input_tokens": 122979,
    "output_tokens": 1048,
-   "helper_model_input_tokens": 13326,
-   "searches": 1,
-   "searches_in_english": 1,
-   "searches_in_question_language": 0,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 13,
    "cited_links": 2,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 2,
    "cited_other_language": 0,
    "answer_language": "ja",
-   "fact_answer_20_usd": true,
-   "cited_official_page": true,
    "search_queries": [
     "Claude Pro plan price per month US"
    ],
@@ -630,27 +1518,69 @@
    "cited_urls": [
     "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan",
     "https://claude.com/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ja",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 1,
+   "input_tokens": 33426,
+   "output_tokens": 122,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 11,
+   "cited_links": 1,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "site:anthropic.com Claude Pro $20 per month US"
+   ],
+   "domains_cited": [
+    "anthropic.com"
+   ],
+   "cited_urls": [
+    "https://www.anthropic.com/pricing"
+   ],
+   "cited_page_languages": [
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
    "question": "q1_fact",
    "question_type": "Simple fact",
    "run": 2,
    "input_tokens": 122790,
    "output_tokens": 917,
-   "helper_model_input_tokens": 13164,
-   "searches": 1,
-   "searches_in_english": 1,
-   "searches_in_question_language": 0,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 17,
    "cited_links": 2,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 2,
    "cited_other_language": 0,
    "answer_language": "ja",
-   "fact_answer_20_usd": true,
-   "cited_official_page": true,
    "search_queries": [
     "Claude Pro plan price per month US"
    ],
@@ -661,27 +1591,69 @@
    "cited_urls": [
     "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan",
     "https://claude.com/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ja",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 2,
+   "input_tokens": 33490,
+   "output_tokens": 118,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 11,
+   "cited_links": 1,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "site:claude.com/pricing Claude Pro $20 monthly US"
+   ],
+   "domains_cited": [
+    "claude.com"
+   ],
+   "cited_urls": [
+    "https://claude.com/pricing"
+   ],
+   "cited_page_languages": [
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
    "question": "q2_news",
    "question_type": "Recent news",
    "run": 1,
    "input_tokens": 219241,
    "output_tokens": 7372,
-   "helper_model_input_tokens": 64219,
-   "searches": 4,
-   "searches_in_english": 4,
-   "searches_in_question_language": 0,
+   "search_queries_count": 4,
+   "queries_in_english": 4,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 43,
    "cited_links": 5,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 5,
    "cited_other_language": 0,
    "answer_language": "ja",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "AI model release announced October 2026",
     "new AI model launch this week October 13-18 2026",
@@ -700,27 +1672,88 @@
     "https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs/",
     "https://llmgateway.io/timeline",
     "https://www.nocode.mba/ai-release-tracker/2026/10"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ja",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 1,
+   "input_tokens": 106411,
+   "output_tokens": 801,
+   "search_queries_count": 11,
+   "queries_in_english": 11,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 23,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "AI model release announced October 12 2026 model",
+    "AI model release announced October 13 2026 OR October 14 2026",
+    "AI model launch October 15 2026 OR October 16 OR October 17 2026",
+    "new AI model released October 2026 this week",
+    "site:blog.google Gemini 4 October 13 2026",
+    "site:about.fb.com Muse Wonder October 12 2026 Muse Spark Open October 15",
+    "October 2026 AI model release official announcement DeepSeek V4.1 Flash 1017",
+    "October 2026 AI model release Gemini 4 Meta Muse Wonder news",
+    "site:about.fb.com \"Muse Spark Open\"",
+    "Meta October 15 2026 Muse Spark Open official release weights",
+    "October 2026 AI model release October 16 official model released"
+   ],
+   "domains_cited": [
+    "about.fb.com",
+    "dev.meta.ai",
+    "reddit.com"
+   ],
+   "cited_urls": [
+    "https://about.fb.com/news/2026/10/introducing-muse-wonder-models/",
+    "https://dev.meta.ai/resources/blog/build-with-muse-spark-open",
+    "https://www.reddit.com/r/DeepSeek/comments/1x84tv8/psa_deepseekv41flash1017_update_official/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
    "question": "q2_news",
    "question_type": "Recent news",
    "run": 2,
    "input_tokens": 220114,
    "output_tokens": 7568,
-   "helper_model_input_tokens": 64681,
-   "searches": 4,
-   "searches_in_english": 4,
-   "searches_in_question_language": 0,
+   "search_queries_count": 4,
+   "queries_in_english": 4,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 42,
    "cited_links": 7,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 7,
    "cited_other_language": 0,
    "answer_language": "ja",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "AI model release announced October 2026",
     "new LLM launch this week October 13-18 2026",
@@ -744,27 +1777,87 @@
     "https://bloomberg.com/news/articles/2026-10-17/deepseek-pushes-out-updated-ai-model-it-says-is-faster-leaner",
     "https://llmgateway.io/timeline",
     "https://riorundown.substack.com/p/ai-news-oct-18-2026-open-models-and"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ja",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 2,
+   "input_tokens": 68090,
+   "output_tokens": 511,
+   "search_queries_count": 8,
+   "queries_in_english": 8,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 19,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "AI model release announced October 12 2026 model",
+    "AI model release October 13 2026",
+    "AI model launch October 14 2026 OR October 15 2026 OR October 16 2026",
+    "AI model release October 17 2026 OR October 18 2026",
+    "site:deepseek.com DeepSeek-V4.1-Flash-1017",
+    "site:about.fb.com Muse Spark Open October 2026",
+    "site:nvidia.com Nemotron 3.5 Super VL Bolt October 15 2026",
+    "\"Nemotron 3.5\" October 15 2026 official"
+   ],
+   "domains_cited": [
+    "api-docs.deepseek.com",
+    "blogs.nvidia.com",
+    "aireleasetracker.com"
+   ],
+   "cited_urls": [
+    "https://api-docs.deepseek.com/news/news261017/",
+    "https://blogs.nvidia.com/blog/nemotron-3-5-super-vl/",
+    "https://aireleasetracker.com/latest"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
    "question": "q3_compare",
    "question_type": "Price comparison",
    "run": 1,
    "input_tokens": 183103,
    "output_tokens": 11386,
-   "helper_model_input_tokens": 23155,
-   "searches": 0,
-   "searches_in_english": 0,
-   "searches_in_question_language": 0,
+   "search_queries_count": 0,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 8,
    "seconds": 82,
    "cited_links": 4,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 4,
    "cited_other_language": 0,
    "answer_language": "ja",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [],
    "domains_cited": [
     "platform.claude.com",
@@ -777,27 +1870,79 @@
     "https://claude.com/pricing",
     "https://developers.openai.com/api/docs/pricing",
     "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ja",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 1,
+   "input_tokens": 131134,
+   "output_tokens": 733,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 3,
+   "seconds": 33,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "site:anthropic.com/pricing Claude API pricing Opus official",
+    "site:openai.com/api/pricing flagship model API pricing official",
+    "site:ai.google.dev/gemini-api/docs/pricing Gemini API pricing official"
+   ],
+   "domains_cited": [
+    "anthropic.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://www.anthropic.com/claude/opus",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
    "question": "q3_compare",
    "question_type": "Price comparison",
    "run": 2,
    "input_tokens": 183366,
    "output_tokens": 12366,
-   "helper_model_input_tokens": 23198,
-   "searches": 0,
-   "searches_in_english": 0,
-   "searches_in_question_language": 0,
+   "search_queries_count": 0,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 8,
    "seconds": 59,
    "cited_links": 4,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 4,
    "cited_other_language": 0,
    "answer_language": "ja",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [],
    "domains_cited": [
     "claude.com",
@@ -810,27 +1955,79 @@
     "https://platform.claude.com/docs/en/about-claude/pricing",
     "https://developers.openai.com/api/docs/pricing（platform.openai.com/docs/pricing",
     "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ja",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 2,
+   "input_tokens": 105902,
+   "output_tokens": 828,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 2,
+   "seconds": 32,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "site:anthropic.com/pricing API Claude Opus pricing per million tokens",
+    "site:openai.com/api/pricing flagship model API pricing per million tokens",
+    "site:ai.google.dev/gemini-api/docs/pricing Gemini API pricing flagship"
+   ],
+   "domains_cited": [
+    "platform.claude.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
    "question": "q4_geo",
    "question_type": "Research question",
    "run": 1,
    "input_tokens": 838383,
    "output_tokens": 13863,
-   "helper_model_input_tokens": 185593,
-   "searches": 3,
-   "searches_in_english": 3,
-   "searches_in_question_language": 0,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 11,
    "seconds": 107,
    "cited_links": 6,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 6,
    "cited_other_language": 0,
    "answer_language": "ja",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "Korean vs English token count tokenizer premium GPT-4o o200k cl100k",
     "Claude tokenizer Korean tokens compared to English ratio",
@@ -850,27 +2047,84 @@
     "https://proceedings.neurips.cc/paper_files/paper/2023/hash/74bb24dca8334adce292883b4b651eda-Abstract.html",
     "https://github.com/AleksandarPetrov/tokenization-fairness",
     "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "ja",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 1,
+   "input_tokens": 68547,
+   "output_tokens": 846,
+   "search_queries_count": 6,
+   "queries_in_english": 6,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 20,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "site:openai.com tokenizer Korean tokens English 1.5x",
+    "site:docs.anthropic.com Korean tokenization English tokens Korean",
+    "site:anthropic.com tokenizer Korean English tokens",
+    "site:docs.anthropic.com \"Korean\" \"tokens\" tokenizer",
+    "site:anthropic.com \"Korean\" \"tokens\" Claude tokenizer",
+    "Anthropic token count Korean English comparison tokenizer"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "platform.openai.com",
+    "docs.anthropic.com"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://platform.openai.com/tokenizer",
+    "https://docs.anthropic.com/en/docs/build-with-claude/token-counting"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
    "question": "q4_geo",
    "question_type": "Research question",
    "run": 2,
    "input_tokens": 224570,
    "output_tokens": 11077,
-   "helper_model_input_tokens": 46959,
-   "searches": 3,
-   "searches_in_english": 3,
-   "searches_in_question_language": 0,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 2,
    "seconds": 73,
    "cited_links": 7,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 7,
    "cited_other_language": 0,
    "answer_language": "ja",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "Korean vs English token count ratio GPT-4o o200k tokenizer Claude tokenizer",
     "Petrov \"Language Model Tokenizers Introduce Unfairness Between Languages\" Korean premium",
@@ -893,27 +2147,83 @@
     "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf",
     "https://docs.anthropic.com/en/docs/build-with-claude/token-counting",
     "https://arxiv.org/abs/2305.15425v1"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "es",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "ja",
+   "topic_country": null,
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 2,
+   "input_tokens": 37582,
+   "output_tokens": 635,
+   "search_queries_count": 4,
+   "queries_in_english": 4,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 15,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "site:openai.com tokenizer Korean English tokens multilingual",
+    "site:anthropic.com Korean tokenizer tokens English multilingual",
+    "OpenAI tokenizer Korean English token count comparison",
+    "Claude tokenizer Korean English tokens per character"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "platform.openai.com",
+    "academy.claude.com"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://platform.openai.com/tokenizer",
+    "https://academy.claude.com/tutorials/tokens-and-embeddings"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
    "question": "q1_fact",
    "question_type": "Simple fact",
    "run": 1,
    "input_tokens": 124473,
    "output_tokens": 1112,
-   "helper_model_input_tokens": 14824,
-   "searches": 1,
-   "searches_in_english": 1,
-   "searches_in_question_language": 0,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 17,
    "cited_links": 2,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 2,
    "cited_other_language": 0,
    "answer_language": "es",
-   "fact_answer_20_usd": true,
-   "cited_official_page": false,
    "search_queries": [
     "Claude Pro plan price per month US"
    ],
@@ -924,27 +2234,69 @@
    "cited_urls": [
     "https://www.ssdnodes.com/learn/claude-pro-price-and-limits",
     "https://www.morphllm.com/claude-code-pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en"
    ]
   },
   {
-   "language": "es",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 1,
+   "input_tokens": 33476,
+   "output_tokens": 106,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 10,
+   "cited_links": 1,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "site:anthropic.com Claude Pro $20 per month United States"
+   ],
+   "domains_cited": [
+    "support.anthropic.com"
+   ],
+   "cited_urls": [
+    "https://support.anthropic.com/en/articles/8325610-how-much-does-claude-pro-cost"
+   ],
+   "cited_page_languages": [
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
    "question": "q1_fact",
    "question_type": "Simple fact",
    "run": 2,
    "input_tokens": 124512,
    "output_tokens": 1178,
-   "helper_model_input_tokens": 14945,
-   "searches": 1,
-   "searches_in_english": 1,
-   "searches_in_question_language": 0,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 14,
    "cited_links": 2,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 2,
    "cited_other_language": 0,
    "answer_language": "es",
-   "fact_answer_20_usd": true,
-   "cited_official_page": false,
    "search_queries": [
     "Claude Pro plan price per month US"
    ],
@@ -955,27 +2307,69 @@
    "cited_urls": [
     "https://www.ssdnodes.com/learn/claude-pro-price-and-limits",
     "https://www.wearetandem.ai/en/blog/tools/claude-max-pro-pricing-plans"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en"
    ]
   },
   {
-   "language": "es",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 2,
+   "input_tokens": 33439,
+   "output_tokens": 126,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 12,
+   "cited_links": 1,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "site:anthropic.com Claude Pro $20 per month United States pricing"
+   ],
+   "domains_cited": [
+    "anthropic.com"
+   ],
+   "cited_urls": [
+    "https://www.anthropic.com/pricing"
+   ],
+   "cited_page_languages": [
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
    "question": "q2_news",
    "question_type": "Recent news",
    "run": 1,
    "input_tokens": 283799,
    "output_tokens": 9505,
-   "helper_model_input_tokens": 83500,
-   "searches": 6,
-   "searches_in_english": 6,
-   "searches_in_question_language": 0,
+   "search_queries_count": 6,
+   "queries_in_english": 6,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 55,
    "cited_links": 3,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
    "cited_other_language": 0,
    "answer_language": "es",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "new AI model release announced October 2026",
     "AI model launch this week October 13-18 2026",
@@ -993,27 +2387,83 @@
     "https://www.techrepublic.com/article/news-meta-muse-spark-open-apple-mac-studio/",
     "https://letsdatascience.com/news/google-releases-gemini-4-argon-for-scientific-computing-644a49ff",
     "https://techenclave.com/news/items/xai-releases-grok-voice-3-and-upgrades-the-latest-api-alias"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "es",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 1,
+   "input_tokens": 69040,
+   "output_tokens": 532,
+   "search_queries_count": 8,
+   "queries_in_english": 8,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 18,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "AI model launch announced October 2026 model release",
+    "new AI model released October 12 2026 OR October 13 2026 OR October 14 2026 OR October 15 2026 OR October 16 2026 OR October 17 2026 OR October 18 2026",
+    "site:openai.com index model October 2026",
+    "site:anthropic.com news model October 2026",
+    "Reflection AI Beam 1.0 October 16 2026 official launch",
+    "IFM Jais 3 October 15 2026 launch official",
+    "DeepSeek V4.1 Flash October 17 2026 official",
+    "AI model launch October 2026 October 15 Muse Spark Open Nemotron official"
+   ],
+   "domains_cited": [
+    "research.meta.ai",
+    "ifm.ai",
+    "reflection.ai"
+   ],
+   "cited_urls": [
+    "https://research.meta.ai/blog/muse-spark-open",
+    "https://ifm.ai/jais3/press-release/",
+    "https://reflection.ai/blog/beam-is-available"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
    "question": "q2_news",
    "question_type": "Recent news",
    "run": 2,
    "input_tokens": 141485,
    "output_tokens": 3343,
-   "helper_model_input_tokens": 30096,
-   "searches": 2,
-   "searches_in_english": 2,
-   "searches_in_question_language": 0,
+   "search_queries_count": 2,
+   "queries_in_english": 2,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 23,
    "cited_links": 5,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 5,
    "cited_other_language": 0,
    "answer_language": "es",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "AI model launch announced October 2026",
     "new AI model released this week October 13-18 2026"
@@ -1031,27 +2481,83 @@
     "https://aiweekly.co/ai-news-today",
     "https://llmgateway.io/timeline",
     "https://opper.ai/model-releases"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "es",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 2,
+   "input_tokens": 68661,
+   "output_tokens": 464,
+   "search_queries_count": 6,
+   "queries_in_english": 6,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 19,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "AI model launch announced October 2026 model release",
+    "new AI model released October 2026 announcement",
+    "site:blog.google AI model October 2026 launch OR site:openai.com/index October 2026 model",
+    "October 13 2026 AI model launch official announcement model released",
+    "October 14 2026 AI model launch official model release",
+    "October 16 2026 AI model launch official announcement Reflection Beam DeepSeek"
+   ],
+   "domains_cited": [
+    "blog.google",
+    "axios.com",
+    "reflection.ai"
+   ],
+   "cited_urls": [
+    "https://blog.google/intl/en-mena/product-updates/explore-get-answers/gemini-4-argon-built-to-solve-your-hardest-problems/",
+    "https://www.axios.com/2026/10/12/meta-new-ai-models-anthropic-openai",
+    "https://reflection.ai/blog/beam-is-available"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
    "question": "q3_compare",
    "question_type": "Price comparison",
    "run": 1,
    "input_tokens": 176188,
    "output_tokens": 18122,
-   "helper_model_input_tokens": 23212,
-   "searches": 0,
-   "searches_in_english": 0,
-   "searches_in_question_language": 0,
+   "search_queries_count": 0,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 6,
    "seconds": 73,
    "cited_links": 3,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
    "cited_other_language": 0,
    "answer_language": "es",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [],
    "domains_cited": [
     "platform.claude.com",
@@ -1062,27 +2568,78 @@
     "https://platform.claude.com/docs/en/about-claude/pricing",
     "https://developers.openai.com/api/docs/pricing",
     "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "es",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 1,
+   "input_tokens": 152705,
+   "output_tokens": 640,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 3,
+   "seconds": 27,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "site:anthropic.com pricing Claude Opus API input output million tokens",
+    "site:openai.com/api/pricing flagship model input output tokens pricing",
+    "site:ai.google.dev/gemini-api/docs/pricing Gemini flagship model input output pricing"
+   ],
+   "domains_cited": [
+    "anthropic.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://www.anthropic.com/claude/opus",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
    "question": "q3_compare",
    "question_type": "Price comparison",
    "run": 2,
    "input_tokens": 174111,
    "output_tokens": 13250,
-   "helper_model_input_tokens": 23199,
-   "searches": 0,
-   "searches_in_english": 0,
-   "searches_in_question_language": 0,
+   "search_queries_count": 0,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 6,
    "seconds": 57,
    "cited_links": 3,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
    "cited_other_language": 0,
    "answer_language": "es",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [],
    "domains_cited": [
     "platform.claude.com",
@@ -1093,27 +2650,78 @@
     "https://platform.claude.com/docs/en/about-claude/pricing",
     "https://developers.openai.com/api/docs/pricing",
     "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "es",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 2,
+   "input_tokens": 154047,
+   "output_tokens": 762,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 3,
+   "seconds": 28,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "site:anthropic.com/pricing API pricing Claude Opus official",
+    "site:openai.com/api/pricing flagship models official API pricing",
+    "site:ai.google.dev/gemini-api/docs/pricing Gemini API pricing official"
+   ],
+   "domains_cited": [
+    "platform.claude.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
    "question": "q4_geo",
    "question_type": "Research question",
    "run": 1,
    "input_tokens": 168255,
    "output_tokens": 6828,
-   "helper_model_input_tokens": 54148,
-   "searches": 3,
-   "searches_in_english": 3,
-   "searches_in_question_language": 0,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 39,
    "cited_links": 8,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 8,
    "cited_other_language": 0,
    "answer_language": "es",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "Korean vs English token count ratio GPT-4o o200k tokenizer",
     "Claude tokenizer Korean tokens compared to English ratio",
@@ -1137,27 +2745,83 @@
     "https://proceedings.neurips.cc/paper_files/paper/2023/hash/74bb24dca8334adce292883b4b651eda-Abstract.html",
     "https://arxiv.org/pdf/2305.15425v1",
     "https://github.com/AleksandarPetrov/tokenization-fairness"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "es",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 1,
+   "input_tokens": 65200,
+   "output_tokens": 572,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 1,
+   "seconds": 18,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "site:openai.com Korean English tokens tokenizer Korean tokenization",
+    "site:docs.anthropic.com token counting Korean English tokenizer",
+    "Anthropic Claude tokenizer Korean English tokens comparison"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "platform.claude.com",
+    "platform.openai.com"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://platform.claude.com/docs/en/build-with-claude/token-counting",
+    "https://platform.openai.com/tokenizer"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
    "question": "q4_geo",
    "question_type": "Research question",
    "run": 2,
    "input_tokens": 138821,
    "output_tokens": 5596,
-   "helper_model_input_tokens": 26378,
-   "searches": 2,
-   "searches_in_english": 2,
-   "searches_in_question_language": 0,
+   "search_queries_count": 2,
+   "queries_in_english": 2,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 39,
    "cited_links": 7,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 7,
    "cited_other_language": 0,
    "answer_language": "es",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "Korean vs English token count ratio GPT-4o o200k tokenizer Claude tokenizer",
     "tokenizer language premium Korean English tokens comparison study Claude OpenAI"
@@ -1178,27 +2842,82 @@
     "https://arxiv.org/pdf/2601.09200",
     "https://arxiv.org/pdf/2502.12560",
     "https://claudeissues.com/issue/26401-feature-request-non-english-users-korean-japanese-cjk-face-structural-disadvanta"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "uk",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "es",
+   "topic_country": null,
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 2,
+   "input_tokens": 68759,
+   "output_tokens": 694,
+   "search_queries_count": 6,
+   "queries_in_english": 6,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 19,
+   "cited_links": 2,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 2,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "site:openai.com Korean English tokens tokenizer Korean 1.5x",
+    "site:docs.anthropic.com Korean tokenization English tokens",
+    "Korean text token count compared English OpenAI tokenizer Claude tokenizer",
+    "site:docs.anthropic.com/en/docs/build-with-claude token counting count_tokens tokenizer",
+    "site:platform.claude.com/docs token counting API count_tokens",
+    "Korean penalty tokenizer GPT-4 Korean English ratio study 2024"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "platform.claude.com"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://platform.claude.com/docs/en/build-with-claude/token-counting"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
    "question": "q1_fact",
    "question_type": "Simple fact",
    "run": 1,
    "input_tokens": 124766,
    "output_tokens": 1149,
-   "helper_model_input_tokens": 15087,
-   "searches": 1,
-   "searches_in_english": 1,
-   "searches_in_question_language": 0,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 22,
    "cited_links": 3,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
    "cited_other_language": 0,
    "answer_language": "uk",
-   "fact_answer_20_usd": true,
-   "cited_official_page": true,
    "search_queries": [
     "Claude Pro plan price per month US"
    ],
@@ -1211,27 +2930,70 @@
     "https://claude.com/pricing",
     "https://www.ssdnodes.com/learn/claude-pro-price-and-limits",
     "https://www.wearetandem.ai/en/blog/tools/claude-max-pro-pricing-plans"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "uk",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 1,
+   "input_tokens": 33393,
+   "output_tokens": 116,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 11,
+   "cited_links": 1,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "site:claude.com/pricing Claude Pro $20 month US"
+   ],
+   "domains_cited": [
+    "claude.com"
+   ],
+   "cited_urls": [
+    "https://claude.com/pricing"
+   ],
+   "cited_page_languages": [
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
    "question": "q1_fact",
    "question_type": "Simple fact",
    "run": 2,
    "input_tokens": 124602,
    "output_tokens": 1154,
-   "helper_model_input_tokens": 14972,
-   "searches": 1,
-   "searches_in_english": 1,
-   "searches_in_question_language": 0,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 15,
    "cited_links": 3,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
    "cited_other_language": 0,
    "answer_language": "uk",
-   "fact_answer_20_usd": true,
-   "cited_official_page": false,
    "search_queries": [
     "Claude Pro plan price per month US"
    ],
@@ -1244,27 +3006,70 @@
     "https://suprmind.ai/hub/claude/pricing/",
     "https://www.claudecoworkexpert.com/en/pricing/",
     "https://www.ssdnodes.com/learn/claude-pro-price-and-limits"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "uk",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 2,
+   "input_tokens": 33427,
+   "output_tokens": 120,
+   "search_queries_count": 1,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 11,
+   "cited_links": 1,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "site:anthropic.com Claude Pro $20 per month US"
+   ],
+   "domains_cited": [
+    "anthropic.com"
+   ],
+   "cited_urls": [
+    "https://www.anthropic.com/pricing"
+   ],
+   "cited_page_languages": [
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
    "question": "q2_news",
    "question_type": "Recent news",
    "run": 1,
    "input_tokens": 315019,
    "output_tokens": 10706,
-   "helper_model_input_tokens": 112933,
-   "searches": 7,
-   "searches_in_english": 7,
-   "searches_in_question_language": 0,
+   "search_queries_count": 7,
+   "queries_in_english": 7,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 53,
    "cited_links": 6,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 5,
    "cited_other_language": 1,
    "answer_language": "uk",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "AI model release announced October 2026",
     "new AI model launch this week October 12-18 2026",
@@ -1289,27 +3094,90 @@
     "https://www.devx.com/artificial-intelligence-ai/what-is-grok-voice-3-0-xai-speech-to-speech-model/",
     "https://llmgateway.io/timeline",
     "https://thenextweb.com/news/deepseek-v4-1-flash-launch-v4-pro-retired-price-cut"
+   ],
+   "cited_page_languages": [
+    "es",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "uk",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 1,
+   "input_tokens": 106383,
+   "output_tokens": 648,
+   "search_queries_count": 12,
+   "queries_in_english": 12,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 23,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "AI model release announced October 2026 model launch",
+    "site:openai.com/index October 2026 model release",
+    "site:blog.google October 2026 AI model release",
+    "site:anthropic.com/news October 2026 model release",
+    "DeepSeek V4.1 Flash October 17 2026 official",
+    "Reflection AI Beam 1.0 October 16 2026 official release",
+    "Jais 3 October 15 2026 launch official",
+    "October 11 2026 AI model release official October 2026 model",
+    "site:api-docs.deepseek.com \"1017\" 2026",
+    "site:huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017",
+    "site:ifm.ai/jais3 Jais 3 October 15 2026",
+    "AI model released October 12 13 14 15 16 17 2026 model launch"
+   ],
+   "domains_cited": [
+    "evalmap.ai",
+    "reflection.ai",
+    "ifm.ai"
+   ],
+   "cited_urls": [
+    "https://evalmap.ai/releases/",
+    "https://reflection.ai/blog/beam-is-available",
+    "https://ifm.ai/jais3/press-release/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
    "question": "q2_news",
    "question_type": "Recent news",
    "run": 2,
    "input_tokens": 139566,
    "output_tokens": 3542,
-   "helper_model_input_tokens": 28181,
-   "searches": 2,
-   "searches_in_english": 2,
-   "searches_in_question_language": 0,
+   "search_queries_count": 2,
+   "queries_in_english": 2,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 0,
    "seconds": 20,
    "cited_links": 3,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
    "cited_other_language": 0,
    "answer_language": "uk",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "new AI model release announced October 2026",
     "AI model launch this week October 12-18 2026"
@@ -1323,27 +3191,86 @@
     "https://www.digitalapplied.com/blog/ai-model-releases-october-2026-tracker",
     "https://aifront-page.com/open-weights-october-2026-ai-model-launches/",
     "https://llmgateway.io/timeline"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "uk",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 2,
+   "input_tokens": 106060,
+   "output_tokens": 751,
+   "search_queries_count": 12,
+   "queries_in_english": 12,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 25,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "AI model release announced October 11 2026 October 18 2026",
+    "new AI model announced October 2026 model release",
+    "site:openai.com/index October 2026 model",
+    "site:anthropic.com/news October 2026 model",
+    "Meta Muse Glimmer October 12 2026 official announcement AI models",
+    "Microsoft MAI-Code-1.1 Flash October 12 2026 announcement",
+    "AI model launch October 14 2026 model announced official",
+    "new model released October 11 12 13 14 15 16 17 2026 AI",
+    "site:research.google/blog \"Gemini 4 Argon\" October 13 2026",
+    "site:research.meta.ai/blog \"Muse Wonder\" October 12 2026",
+    "DeepSeek V4.1 Flash 1017 official October 17 2026",
+    "October 15 2026 model release AI official Muse Spark Open"
+   ],
+   "domains_cited": [
+    "research.meta.ai",
+    "api-docs.deepseek.com"
+   ],
+   "cited_urls": [
+    "https://research.meta.ai/blog/muse-wonder",
+    "https://research.meta.ai/blog/muse-spark-open",
+    "https://api-docs.deepseek.com/news/news261017/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
    "question": "q3_compare",
    "question_type": "Price comparison",
    "run": 1,
    "input_tokens": 171736,
    "output_tokens": 11414,
-   "helper_model_input_tokens": 23204,
-   "searches": 0,
-   "searches_in_english": 0,
-   "searches_in_question_language": 0,
+   "search_queries_count": 0,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 6,
    "seconds": 62,
    "cited_links": 4,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 4,
    "cited_other_language": 0,
    "answer_language": "uk",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [],
    "domains_cited": [
     "platform.claude.com",
@@ -1356,27 +3283,79 @@
     "https://developers.openai.com/api/docs/pricing",
     "https://openai.com/api/pricing/",
     "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "uk",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 1,
+   "input_tokens": 69293,
+   "output_tokens": 626,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 1,
+   "seconds": 20,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "site:anthropic.com pricing Claude API Opus input output tokens",
+    "site:openai.com API pricing GPT flagship input output tokens",
+    "site:ai.google.dev Gemini API pricing flagship input output tokens"
+   ],
+   "domains_cited": [
+    "anthropic.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://www.anthropic.com/claude/opus",
+    "https://developers.openai.com/api/docs/models/gpt-4-and-gpt-4-turbo",
+    "https://ai.google.dev/gemini-api/docs/latest-model"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
    "question": "q3_compare",
    "question_type": "Price comparison",
    "run": 2,
    "input_tokens": 201610,
    "output_tokens": 13380,
-   "helper_model_input_tokens": 23200,
-   "searches": 0,
-   "searches_in_english": 0,
-   "searches_in_question_language": 0,
+   "search_queries_count": 0,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 9,
    "seconds": 59,
    "cited_links": 5,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 5,
    "cited_other_language": 0,
    "answer_language": "uk",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [],
    "domains_cited": [
     "claude.com",
@@ -1391,27 +3370,80 @@
     "https://developers.openai.com/api/docs/pricing.",
     "https://openai.com/api/pricing/",
     "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "uk",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 2,
+   "input_tokens": 153576,
+   "output_tokens": 800,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 3,
+   "seconds": 27,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "site:anthropic.com/pricing Claude API pricing Opus input output tokens",
+    "site:openai.com/api/pricing flagship model API pricing input output tokens",
+    "site:ai.google.dev/gemini-api/docs/pricing flagship Gemini API pricing"
+   ],
+   "domains_cited": [
+    "platform.claude.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
    "question": "q4_geo",
    "question_type": "Research question",
    "run": 1,
    "input_tokens": 553400,
    "output_tokens": 12027,
-   "helper_model_input_tokens": 127953,
-   "searches": 3,
-   "searches_in_english": 3,
-   "searches_in_question_language": 0,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 7,
    "seconds": 107,
    "cited_links": 6,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 6,
    "cited_other_language": 0,
    "answer_language": "uk",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "Korean vs English token count ratio GPT-4o o200k cl100k tokenizer",
     "Claude tokenizer Korean tokens compared to English ratio",
@@ -1431,27 +3463,89 @@
     "https://dev.to/synthorai/which-llm-is-cheapest-for-your-language-tokenizer-costs-measured-1k5m",
     "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
     "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
    ]
   },
   {
-   "language": "uk",
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 1,
+   "input_tokens": 68657,
+   "output_tokens": 930,
+   "search_queries_count": 6,
+   "queries_in_english": 6,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 21,
+   "cited_links": 5,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 5,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "site:platform.openai.com tokenization Korean tokens English tokenizer",
+    "site:docs.anthropic.com token counting Korean English tokens tokenizer",
+    "OpenAI tokenizer Korean English same text tokens Claude tokenizer Korean",
+    "site:docs.anthropic.com/en/docs/build-with-claude/token-counting count_tokens API tokenizer",
+    "site:docs.anthropic.com \"Korean\" \"tokens\" Claude tokenizer",
+    "site:anthropic.com tokenizer Korean English tokens"
+   ],
+   "domains_cited": [
+    "zolamir.com",
+    "ioptera.com",
+    "docs.anthropic.com",
+    "help.openai.com"
+   ],
+   "cited_urls": [
+    "https://zolamir.com/en/best/korean/",
+    "https://ioptera.com/en/token-cost/korean",
+    "https://docs.anthropic.com/en/docs/build-with-claude/token-counting",
+    "https://docs.anthropic.com/en/docs/about-claude/models/migrating-to-claude-4",
+    "https://help.openai.com/en/articles/4936856-understanding-and-counting-tokens"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
    "question": "q4_geo",
    "question_type": "Research question",
    "run": 2,
    "input_tokens": 602815,
    "output_tokens": 11603,
-   "helper_model_input_tokens": 112850,
-   "searches": 3,
-   "searches_in_english": 3,
-   "searches_in_question_language": 0,
+   "search_queries_count": 3,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
    "page_opens": 8,
    "seconds": 100,
    "cited_links": 9,
-   "cited_in_question_language": 0,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 9,
    "cited_other_language": 0,
    "answer_language": "uk",
-   "fact_answer_20_usd": null,
-   "cited_official_page": null,
    "search_queries": [
     "Korean vs English token count ratio GPT-4 cl100k o200k tokenizer",
     "Claude tokenizer Korean tokens compared to English ratio",
@@ -1477,6 +3571,2225 @@
     "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
     "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf",
     "https://community.openai.com/t/need-more-efficient-tokenizer-for-korean/286682"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "codex",
+   "topic": "ai",
+   "ask_language": "uk",
+   "topic_country": null,
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 2,
+   "input_tokens": 69034,
+   "output_tokens": 883,
+   "search_queries_count": 5,
+   "queries_in_english": 5,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": null,
+   "page_opens": 0,
+   "seconds": 23,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": null,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "OpenAI Korean English tokenization 1.7x tokens Korean official",
+    "Claude tokenizer Korean English token count comparison Korean tokens",
+    "Anthropic tokenization Korean English tokens tokenizer",
+    "site:docs.anthropic.com count tokens API tokenizer model-specific",
+    "site:docs.anthropic.com \"count_tokens\" token counting"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "openai.com",
+    "docs.anthropic.com"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://openai.com/index/hello-gpt-4o/",
+    "https://docs.anthropic.com/it/docs/about-claude/models/migrating-to-claude-4"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "ko",
+   "topic_country": "South Korea",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 1,
+   "input_tokens": 126071,
+   "output_tokens": 2076,
+   "search_queries_count": 1,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 21,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": 3,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "서울 지하철 기본요금 교통카드 성인 2026"
+   ],
+   "domains_cited": [
+    "v.daum.net",
+    "kbthink.com",
+    "blog.namanecard.com"
+   ],
+   "cited_urls": [
+    "https://v.daum.net/v/20250627114538136",
+    "https://kbthink.com/main/living-finance/talk-cardnews/2025/metro-fare.html",
+    "https://blog.namanecard.com/seoul-subway-guide-2026-t-money-climate-card-ko/"
+   ],
+   "cited_page_languages": [
+    "ko",
+    "ko",
+    "ko"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "ko",
+   "topic_country": "South Korea",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 2,
+   "input_tokens": 125210,
+   "output_tokens": 1739,
+   "search_queries_count": 1,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 23,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": 3,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "서울 지하철 기본요금 2026 교통카드 성인"
+   ],
+   "domains_cited": [
+    "kbthink.com",
+    "news.seoul.go.kr",
+    "jab-guyver.co.kr"
+   ],
+   "cited_urls": [
+    "https://kbthink.com/main/living-finance/talk-cardnews/2025/metro-fare.html",
+    "https://news.seoul.go.kr/traffic/archives/tag/%ec%a7%80%ed%95%98%ec%b2%a0-%ea%b8%b0%eb%b3%b8%ec%9a%94%ea%b8%88",
+    "https://jab-guyver.co.kr/2741"
+   ],
+   "cited_page_languages": [
+    "ko",
+    "ko",
+    "ko"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "ko",
+   "topic_country": "South Korea",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 1,
+   "input_tokens": 286347,
+   "output_tokens": 12112,
+   "search_queries_count": 6,
+   "queries_in_english": 2,
+   "queries_in_ask_language": 4,
+   "queries_in_topic_language": 4,
+   "page_opens": 0,
+   "seconds": 51,
+   "cited_links": 4,
+   "cited_in_ask_language": 4,
+   "cited_in_topic_language": 4,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "한국 주요 뉴스 2026년 10월",
+    "South Korea news October 2026",
+    "코스피 서킷브레이커 발동 10월 15일 반도체",
+    "인천 쇼핑몰 흉기 난동 전자발찌 법무부 사과",
+    "DMZ landmine explosion South Korean soldiers injured apology North Korea October 2026",
+    "북한 탄도미사일 발사 합참 900km 10월"
+   ],
+   "domains_cited": [
+    "core.asiae.co.kr",
+    "mt.co.kr",
+    "wikitree.co.kr",
+    "biz.sbs.co.kr"
+   ],
+   "cited_urls": [
+    "https://core.asiae.co.kr/article/2026101512365111295",
+    "https://www.mt.co.kr/article/2026101317564385062",
+    "https://www.wikitree.co.kr/articles/1165938",
+    "https://biz.sbs.co.kr/amp/article/20000339357"
+   ],
+   "cited_page_languages": [
+    "ko",
+    "ko",
+    "ko",
+    "ko"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "ko",
+   "topic_country": "South Korea",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 2,
+   "input_tokens": 228887,
+   "output_tokens": 11630,
+   "search_queries_count": 5,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 4,
+   "queries_in_topic_language": 4,
+   "page_opens": 0,
+   "seconds": 45,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": 3,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "한국 주요 뉴스 2026년 10월 셋째 주",
+    "South Korea news October 2026",
+    "북한 탄도미사일 발사 900km 합참 10월",
+    "인천 복합상가 흉기 전자발찌 법무부 사과",
+    "코스피 급락 반도체 AI 이번주 10월 2026"
+   ],
+   "domains_cited": [
+    "newspim.com",
+    "rfa.org",
+    "hankookilbo.com"
+   ],
+   "cited_urls": [
+    "https://www.newspim.com/news/view/20261015001141",
+    "https://www.rfa.org/korean/in-focus/2026/10/12/north-korea-ballistic-missiles/",
+    "https://www.hankookilbo.com/news/article/A2026101318160005634"
+   ],
+   "cited_page_languages": [
+    "ko",
+    "ko",
+    "ko"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "ko",
+   "topic_country": "South Korea",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 1,
+   "input_tokens": 233066,
+   "output_tokens": 10224,
+   "search_queries_count": 2,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 2,
+   "queries_in_topic_language": 2,
+   "page_opens": 2,
+   "seconds": 85,
+   "cited_links": 2,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 2,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "서울 평양냉면 맛집 추천 2026",
+    "2026 미쉐린 가이드 서울 빕구르망 평양냉면"
+   ],
+   "domains_cited": [
+    "v.daum.net"
+   ],
+   "cited_urls": [
+    "https://v.daum.net/v/4Mka8LNd0z",
+    "https://v.daum.net/v/20260630082125307"
+   ],
+   "cited_page_languages": [
+    "ko",
+    "ko"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "ko",
+   "topic_country": "South Korea",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 2,
+   "input_tokens": 203841,
+   "output_tokens": 7336,
+   "search_queries_count": 2,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 2,
+   "queries_in_topic_language": 2,
+   "page_opens": 1,
+   "seconds": 52,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": 3,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "search_queries": [
+    "서울 평양냉면 맛집 2026 미쉐린 빕구르망",
+    "서울 평양냉면 순위 2026 블루리본"
+   ],
+   "domains_cited": [
+    "v.daum.net",
+    "guide.michelin.com",
+    "sidae.com"
+   ],
+   "cited_urls": [
+    "https://v.daum.net/v/4Mka8LNd0z",
+    "https://guide.michelin.com/kr/ko/article/michelin-guide-ceremony/the-michelin-guide-seoul-busan-2025-bib-gourmand-selection-a-culinary-journey-through-korea-s-finest-affordable-eats-copy1",
+    "https://www.sidae.com/article/2025052315430992609"
+   ],
+   "cited_page_languages": [
+    "ko",
+    "ko",
+    "ko"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "ja",
+   "topic_country": "Japan",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 1,
+   "input_tokens": 180788,
+   "output_tokens": 3340,
+   "search_queries_count": 2,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 2,
+   "queries_in_topic_language": 2,
+   "page_opens": 0,
+   "seconds": 33,
+   "cited_links": 2,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 2,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "東京メトロ 初乗り運賃 IC 2026 運賃改定",
+    "東京メトロ 運賃表 普通運賃 IC 178円 1～6km"
+   ],
+   "domains_cited": [
+    "tokyometro.jp"
+   ],
+   "cited_urls": [
+    "https://www.tokyometro.jp/ticket/types/regular/index.html",
+    "https://www.tokyometro.jp/ticket/types/pasmo/index.html"
+   ],
+   "cited_page_languages": [
+    "ja",
+    "ja"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "ja",
+   "topic_country": "Japan",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 2,
+   "input_tokens": 123046,
+   "output_tokens": 1556,
+   "search_queries_count": 1,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 17,
+   "cited_links": 2,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 2,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "東京メトロ 初乗り運賃 IC 2026"
+   ],
+   "domains_cited": [
+    "tokyometro.jp"
+   ],
+   "cited_urls": [
+    "https://www.tokyometro.jp/support/guide/operation/pdf/information_20260314.pdf",
+    "https://www.tokyometro.jp/ticket/types/regular/index.html"
+   ],
+   "cited_page_languages": [
+    "ja",
+    "ja"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "ja",
+   "topic_country": "Japan",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 1,
+   "input_tokens": 219311,
+   "output_tokens": 9840,
+   "search_queries_count": 5,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 4,
+   "queries_in_topic_language": 4,
+   "page_opens": 0,
+   "seconds": 41,
+   "cited_links": 5,
+   "cited_in_ask_language": 5,
+   "cited_in_topic_language": 5,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "日本 主要ニュース 2026年10月",
+    "Japan news October 2026",
+    "東京株 3318円安 過去3番目の下げ幅 半導体",
+    "北朝鮮 弾道ミサイル 発射 10月12日 2026 高市",
+    "緊急地震速報 誤発表 気象庁 2026年10月"
+   ],
+   "domains_cited": [
+    "kumanichi.com",
+    "mod.go.jp",
+    "jma.go.jp"
+   ],
+   "cited_urls": [
+    "https://kumanichi.com/articles/2046867",
+    "https://www.mod.go.jp/j/press/news/2026/10/12e.html",
+    "https://kumanichi.com/articles/2045731",
+    "https://kumanichi.com/articles/2047238",
+    "https://www.jma.go.jp/jma/press/2610/16b/kaisetsu202610161400.pdf"
+   ],
+   "cited_page_languages": [
+    "ja",
+    "ja",
+    "ja",
+    "ja",
+    "ja"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "ja",
+   "topic_country": "Japan",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 2,
+   "input_tokens": 273918,
+   "output_tokens": 10606,
+   "search_queries_count": 6,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 5,
+   "queries_in_topic_language": 5,
+   "page_opens": 0,
+   "seconds": 54,
+   "cited_links": 5,
+   "cited_in_ask_language": 5,
+   "cited_in_topic_language": 5,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "日本 ニュース 2026年10月",
+    "Japan news October 2026",
+    "高市首相 所信表明演説 経世済民 臨時国会 10月",
+    "日経平均 3318円安 過去3番目 半導体 10月15日",
+    "北朝鮮 弾道ミサイル 発射 10月12日 2026",
+    "閣議決定 犯罪グループ 端末 遠隔アクセス 法案 2026年10月"
+   ],
+   "domains_cited": [
+    "minkabu.jp",
+    "mod.go.jp",
+    "kumanichi.com",
+    "jiji.com",
+    "jimin.jp"
+   ],
+   "cited_urls": [
+    "https://minkabu.jp/news/4636842",
+    "https://www.mod.go.jp/j/press/news/2026/10/12e.html",
+    "https://kumanichi.com/articles/2047129",
+    "https://www.jiji.com/jc/archives?g=soc_archive_0",
+    "https://www.jimin.jp/involved/mailmagazine/backnumber/214341.html"
+   ],
+   "cited_page_languages": [
+    "ja",
+    "ja",
+    "ja",
+    "ja",
+    "ja"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "ja",
+   "topic_country": "Japan",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 1,
+   "input_tokens": 447528,
+   "output_tokens": 13419,
+   "search_queries_count": 5,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 5,
+   "queries_in_topic_language": 5,
+   "page_opens": 6,
+   "seconds": 113,
+   "cited_links": 7,
+   "cited_in_ask_language": 4,
+   "cited_in_topic_language": 4,
+   "cited_english": 0,
+   "cited_other_language": 3,
+   "answer_language": "ja",
+   "search_queries": [
+    "食べログ ラーメン 百名店 2026 東京",
+    "東京 ラーメン ランキング 2026 人気 評価 1位",
+    "TRY ラーメン大賞 2025-2026 大賞 総合",
+    "食べログ ラーメン 東京 ランキング 1位 点数 2026年",
+    "らぁ麺や 嶋 西新宿 食べログ 百名店 2025 評価"
+   ],
+   "domains_cited": [
+    "tabelog.com",
+    "etnet.com.hk",
+    "stheadline.com",
+    "tokyoramenoftheyear.com",
+    "ugatech.jp",
+    "award.tabelog.com"
+   ],
+   "cited_urls": [
+    "https://tabelog.com/cn/R8708/rstLst/ramen/",
+    "https://www.etnet.com.hk/www/tc/lifestyle/387876/東京三大拉麵店「拉麵屋",
+    "https://www.stheadline.com/food/3488239/日本神級名店拉麪屋-嶋登港選址銅鑼灣-必試招牌醬油拉麪-每日限量120碗",
+    "https://tokyoramenoftheyear.com/ja/article/info-0010",
+    "https://tokyoramenoftheyear.com/ja/article/26th-try-ramen-award-001",
+    "https://www.ugatech.jp/?p=105710",
+    "https://award.tabelog.com/hyakumeiten/ramen_tokyo/2025"
+   ],
+   "cited_page_languages": [
+    "zh",
+    "zh",
+    "zh",
+    "ja",
+    "ja",
+    "ja",
+    "ja"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "ja",
+   "topic_country": "Japan",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 2,
+   "input_tokens": 266010,
+   "output_tokens": 9234,
+   "search_queries_count": 5,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 5,
+   "queries_in_topic_language": 5,
+   "page_opens": 2,
+   "seconds": 59,
+   "cited_links": 10,
+   "cited_in_ask_language": 10,
+   "cited_in_topic_language": 10,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "search_queries": [
+    "食べログ ラーメン 百名店 2026 東京",
+    "食べログ ラーメン 東京 ランキング 評価 高い 2026",
+    "らぁ麺や 嶋 食べログ 評価 西新宿",
+    "麺屋吉左右 木場 食べログ 評価 百名店",
+    "宍道湖しじみ中華蕎麦 琥珀 東京本店 食べログ 評価"
+   ],
+   "domains_cited": [
+    "ramendb.supleks.jp",
+    "nlab.itmedia.co.jp",
+    "retty.me",
+    "guide.michelin.com",
+    "appbank.net",
+    "tabelog.com",
+    "kyodonewsprwire.jp",
+    "walkerplus.com",
+    "adrim.co.jp"
+   ],
+   "cited_urls": [
+    "https://ramendb.supleks.jp/rank?state=tokyo",
+    "https://nlab.itmedia.co.jp/research/articles/3107619/",
+    "https://retty.me/author/1039703/mybest/2021/",
+    "https://guide.michelin.com/jp/ja/tokyo-region/tokyo/restaurant/shinjiko-shijimi-chukasoba-kohaku",
+    "https://www.appbank.net/2023/10/12/casual-food/2591460.php",
+    "https://tabelog.com/ramen/tokyo/rank/",
+    "https://retty.me/restaurant/100001544711/",
+    "https://kyodonewsprwire.jp/release/202605078668",
+    "https://www.walkerplus.com/article/1007062/",
+    "https://adrim.co.jp/hoshimap/ranking/tokyo-ramen-ranking/"
+   ],
+   "cited_page_languages": [
+    "ja",
+    "ja",
+    "ja",
+    "ja",
+    "ja",
+    "ja",
+    "ja",
+    "ja",
+    "ja",
+    "ja"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "es",
+   "topic_country": "Spain",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 1,
+   "input_tokens": 125710,
+   "output_tokens": 1876,
+   "search_queries_count": 1,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 21,
+   "cited_links": 2,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 2,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "precio billete sencillo metro Madrid zona A 2026"
+   ],
+   "domains_cited": [
+    "elespanol.com",
+    "moncloa.com"
+   ],
+   "cited_urls": [
+    "https://www.elespanol.com/madrid/capital/20260910/madrid-cambia-normas-metro-billete-sencillo-costara-euros-partir-octubre-viajar-zona/1003744379479_0.html",
+    "https://www.moncloa.com/2026/09/10/billete-metro-madrid-zona-a-octubre-3429368"
+   ],
+   "cited_page_languages": [
+    "es",
+    "es"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "es",
+   "topic_country": "Spain",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 2,
+   "input_tokens": 125727,
+   "output_tokens": 1704,
+   "search_queries_count": 1,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 20,
+   "cited_links": 2,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 2,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "precio billete sencillo metro Madrid zona A 2026"
+   ],
+   "domains_cited": [
+    "elespanol.com",
+    "moncloa.com"
+   ],
+   "cited_urls": [
+    "https://www.elespanol.com/madrid/capital/20260910/madrid-cambia-normas-metro-billete-sencillo-costara-euros-partir-octubre-viajar-zona/1003744379479_0.html",
+    "https://www.moncloa.com/2026/09/10/billete-metro-madrid-zona-a-octubre-3429368"
+   ],
+   "cited_page_languages": [
+    "es",
+    "es"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "es",
+   "topic_country": "Spain",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 1,
+   "input_tokens": 252139,
+   "output_tokens": 9774,
+   "search_queries_count": 5,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 4,
+   "queries_in_topic_language": 4,
+   "page_opens": 0,
+   "seconds": 54,
+   "cited_links": 4,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": 3,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "noticias España octubre 2026 última semana",
+    "Spain news October 2026",
+    "dana Adam aviso rojo Valencia Alicante",
+    "Felipe VI visita Ceuta migrantes octubre 2026",
+    "Ada Colau candidata Frente Amplio elecciones 29 noviembre"
+   ],
+   "domains_cited": [
+    "rtvc.es",
+    "es.euronews.com",
+    "theolivepress.es",
+    "infobae.com"
+   ],
+   "cited_urls": [
+    "https://rtvc.es/frente-amplio-acuerda-designar-a-ada-colau-como-cabeza-de-lista-12-octubre-2026/",
+    "https://es.euronews.com/2026/10/13/los-reyes-visitan-una-ceuta-que-los-recibe-con-los-brazos-abiertos",
+    "https://www.theolivepress.es/spain-news/2026/10/13/spain-economic-growth-imf-forecast/",
+    "https://www.infobae.com/espana/agencias/2026/10/18/temas-del-dia-de-efe-espana-del-domingo-18-de-octubre-de-2026-1330-horas/"
+   ],
+   "cited_page_languages": [
+    "es",
+    "es",
+    "en",
+    "es"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "es",
+   "topic_country": "Spain",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 2,
+   "input_tokens": 140432,
+   "output_tokens": 4980,
+   "search_queries_count": 2,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 2,
+   "queries_in_topic_language": 2,
+   "page_opens": 0,
+   "seconds": 25,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": 3,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "noticias España octubre 2026",
+    "España noticias principales semana 12-18 octubre 2026"
+   ],
+   "domains_cited": [
+    "periodistadigital.com",
+    "libertaddigital.com",
+    "infobae.com"
+   ],
+   "cited_urls": [
+    "https://www.periodistadigital.com/periodismo/20261018/diez-claves-dominan-politica-periodismo-espana-domingo-18-octubre-2026-noticia-689405257727/",
+    "https://www.libertaddigital.com/espana/2026-10-13/",
+    "https://www.infobae.com/espana/agencias/2026/10/14/temas-del-dia-de-efe-espana-del-jueves-15-de-octubre-de-2026/?outputType=amp-type"
+   ],
+   "cited_page_languages": [
+    "es",
+    "es",
+    "es"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "es",
+   "topic_country": "Spain",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 1,
+   "input_tokens": 181056,
+   "output_tokens": 5200,
+   "search_queries_count": 2,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 2,
+   "queries_in_topic_language": 2,
+   "page_opens": 0,
+   "seconds": 45,
+   "cited_links": 8,
+   "cited_in_ask_language": 8,
+   "cited_in_topic_language": 8,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "mejores restaurantes cocido madrileño Madrid 2026",
+    "Malacatín La Bola Casa Dani cocido madrileño mejor valorado"
+   ],
+   "domains_cited": [
+    "ifema.es",
+    "gastroactitud.com",
+    "losviajeros.com",
+    "neo2.com",
+    "eldiario.es",
+    "guiadelocio.es",
+    "unbuendiaenmadrid.com",
+    "muchoturismo.com"
+   ],
+   "cited_urls": [
+    "https://www.ifema.es/visita-madrid/gastronomia/mejores-restaurantes-comer-cocido-madrid",
+    "https://www.gastroactitud.com/pista/mejor-cocido-madrileno/",
+    "https://www.losviajeros.com/foros.php?p=3637574",
+    "https://www.neo2.com/mejores-cocidos-madrilenos-2026/",
+    "https://www.eldiario.es/madrid/somos/agenda/ruta-cocido-madrileno-2026-30-restaurantes-capital-listado-completo-participantes-precios_1_12984165.html",
+    "https://guiadelocio.es/madrid/en-estos-restaurantes-se-toma-el-mejor-cocido-madrileno/",
+    "https://unbuendiaenmadrid.com/los-mejores-cocidos-de-madrid/",
+    "https://www.muchoturismo.com/mejores-cocidos-madrid.html"
+   ],
+   "cited_page_languages": [
+    "es",
+    "es",
+    "es",
+    "es",
+    "es",
+    "es",
+    "es",
+    "es"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "es",
+   "topic_country": "Spain",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 2,
+   "input_tokens": 126044,
+   "output_tokens": 3260,
+   "search_queries_count": 1,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 35,
+   "cited_links": 5,
+   "cited_in_ask_language": 5,
+   "cited_in_topic_language": 5,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "search_queries": [
+    "mejores restaurantes cocido madrileño Madrid 2026 ranking"
+   ],
+   "domains_cited": [
+    "cocidomadrid.com",
+    "losmejoresdemadrid.com",
+    "miradormadrid.com",
+    "neo2.com",
+    "unbuendiaenmadrid.com"
+   ],
+   "cited_urls": [
+    "https://www.cocidomadrid.com/",
+    "https://losmejoresdemadrid.com/restaurantes/cocido/",
+    "https://www.miradormadrid.com/restaurantes-cocido-madrileno-autentico/",
+    "https://www.neo2.com/mejores-cocidos-madrilenos-2026/",
+    "https://unbuendiaenmadrid.com/los-mejores-cocidos-de-madrid/"
+   ],
+   "cited_page_languages": [
+    "es",
+    "es",
+    "es",
+    "es",
+    "es"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "uk",
+   "topic_country": "Ukraine",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 1,
+   "input_tokens": 122472,
+   "output_tokens": 1417,
+   "search_queries_count": 1,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 19,
+   "cited_links": 2,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 2,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "вартість проїзду київське метро 2026"
+   ],
+   "domains_cited": [
+    "epravda.com.ua",
+    "pro.kyiv.ua"
+   ],
+   "cited_urls": [
+    "https://epravda.com.ua/finances/yak-u-kiyevi-podorozhchaye-projizd-u-transporti-821730/",
+    "https://pro.kyiv.ua/vartist-proizdu-kyiv/"
+   ],
+   "cited_page_languages": [
+    "uk",
+    "uk"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "uk",
+   "topic_country": "Ukraine",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 2,
+   "input_tokens": 122271,
+   "output_tokens": 1632,
+   "search_queries_count": 1,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 18,
+   "cited_links": 1,
+   "cited_in_ask_language": 1,
+   "cited_in_topic_language": 1,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "вартість проїзду київське метро 2026"
+   ],
+   "domains_cited": [
+    "grani.kiev.ua"
+   ],
+   "cited_urls": [
+    "https://www.grani.kiev.ua/skilky-koshtuie-metro-v-kyievi-poizdka-proizni-pilhy/"
+   ],
+   "cited_page_languages": [
+    "uk"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "uk",
+   "topic_country": "Ukraine",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 1,
+   "input_tokens": 135994,
+   "output_tokens": 4187,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 26,
+   "cited_links": 6,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 2,
+   "cited_english": 4,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "Україна новини жовтень 2026",
+    "Ukraine news October 2026"
+   ],
+   "domains_cited": [
+    "npr.org",
+    "aljazeera.com",
+    "cnn.com",
+    "news.un.org",
+    "ipress.ua",
+    "ukrinform.ua"
+   ],
+   "cited_urls": [
+    "https://www.npr.org/2026/10/15/g-s1-148194/russia-ukraine-war",
+    "https://www.aljazeera.com/news/2026/10/16/ukraine-repels-russian-forces-as-us-support-wavers-energy-strikes-escalate",
+    "https://www.cnn.com/2026/10/13/europe/ukraine-zelensky-missile-latam-intl",
+    "https://news.un.org/en/story/2026/10/1168585",
+    "https://ipress.ua/",
+    "https://www.ukrinform.ua/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "uk",
+    "uk"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "uk",
+   "topic_country": "Ukraine",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 2,
+   "input_tokens": 136730,
+   "output_tokens": 4101,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 26,
+   "cited_links": 5,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 2,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "Україна новини жовтень 2026",
+    "Ukraine news October 2026"
+   ],
+   "domains_cited": [
+    "npr.org",
+    "aljazeera.com",
+    "cnn.com",
+    "ipress.ua",
+    "ukrinform.ua"
+   ],
+   "cited_urls": [
+    "https://www.npr.org/2026/10/15/g-s1-148194/russia-ukraine-war",
+    "https://www.aljazeera.com/news/2026/10/16/ukraine-repels-russian-forces-as-us-support-wavers-energy-strikes-escalate",
+    "https://www.cnn.com/2026/10/13/europe/ukraine-zelensky-missile-latam-intl",
+    "https://ipress.ua/",
+    "https://www.ukrinform.ua/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "uk",
+    "uk"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "uk",
+   "topic_country": "Ukraine",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 1,
+   "input_tokens": 218860,
+   "output_tokens": 7825,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 4,
+   "seconds": 60,
+   "cited_links": 2,
+   "cited_in_ask_language": 1,
+   "cited_in_topic_language": 1,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "search_queries": [
+    "найкращий борщ Київ ресторани 2026",
+    "best borscht Kyiv restaurants 2026"
+   ],
+   "domains_cited": [
+    "nashkiev.ua",
+    "tykyiv.com"
+   ],
+   "cited_urls": [
+    "https://nashkiev.ua/eat/de-v-kievi-poisti-borsch-z-tsikavoyu-podacheyu-oglyad-zakladiv",
+    "https://tykyiv.com/en/establishments/tvoyi-retseptori-budut-v-zakhvati-de-sprobuvati-borshch-v-kiievi/"
+   ],
+   "cited_page_languages": [
+    "uk",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "uk",
+   "topic_country": "Ukraine",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 2,
+   "input_tokens": 137607,
+   "output_tokens": 4308,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 35,
+   "cited_links": 5,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 2,
+   "cited_english": 2,
+   "cited_other_language": 1,
+   "answer_language": "uk",
+   "search_queries": [
+    "найкращий борщ Київ ресторани 2026",
+    "best borscht Kyiv restaurants 2026"
+   ],
+   "domains_cited": [
+    "tykyiv.com",
+    "kyivpost.com",
+    "yandex.com",
+    "dovidnik.com.ua",
+    "44.ua"
+   ],
+   "cited_urls": [
+    "https://tykyiv.com/en/establishments/tvoyi-retseptori-budut-v-zakhvati-de-sprobuvati-borshch-v-kiievi/",
+    "https://kyivpost.com/lifestyle/try-modern-ukrainian-cuisine-at-these-6-kyiv-restaurants.html",
+    "https://yandex.com/maps/org/restoran_pervak/1032708739/",
+    "https://dovidnik.com.ua/blog/de-povisty-borshch-u-kyivi-reitynh-zakladiv.html",
+    "https://www.44.ua/news/3586306/najkrasij-bors-kieva-top-10-zakladiv-z-originalnou-podaceu-ta-skilki-kostue-popularna-strava"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "unknown",
+    "uk",
+    "uk"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "South Korea",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 1,
+   "input_tokens": 125862,
+   "output_tokens": 2046,
+   "search_queries_count": 1,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 21,
+   "cited_links": 2,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": 2,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "서울 지하철 기본요금 교통카드 성인 2026"
+   ],
+   "domains_cited": [
+    "biz.sbs.co.kr",
+    "news.seoul.go.kr"
+   ],
+   "cited_urls": [
+    "https://biz.sbs.co.kr/amp/article/20000241493",
+    "https://news.seoul.go.kr/traffic/archives/tag/%ec%a7%80%ed%95%98%ec%b2%a0-%ea%b8%b0%eb%b3%b8%ec%9a%94%ea%b8%88"
+   ],
+   "cited_page_languages": [
+    "ko",
+    "ko"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "South Korea",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 2,
+   "input_tokens": 126762,
+   "output_tokens": 1981,
+   "search_queries_count": 1,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 17,
+   "cited_links": 3,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": 3,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "서울 지하철 기본요금 교통카드 성인 2026"
+   ],
+   "domains_cited": [
+    "magazine.hankyung.com",
+    "kbthink.com",
+    "jab-guyver.co.kr"
+   ],
+   "cited_urls": [
+    "https://magazine.hankyung.com/business/article/202506285502b",
+    "https://kbthink.com/main/living-finance/talk-cardnews/2025/metro-fare.html",
+    "https://jab-guyver.co.kr/2741"
+   ],
+   "cited_page_languages": [
+    "ko",
+    "ko",
+    "ko"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "South Korea",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 1,
+   "input_tokens": 226500,
+   "output_tokens": 10336,
+   "search_queries_count": 5,
+   "queries_in_english": 4,
+   "queries_in_ask_language": 4,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 43,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": 0,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "South Korea news October 2026",
+    "한국 주요 뉴스 2026년 10월 셋째주",
+    "Incheon shopping centre stabbing electronic monitoring Justice Ministry apology",
+    "KOSPI circuit breaker October 15 2026 chip stocks",
+    "North Korea ballistic missile launch 900km October 2026"
+   ],
+   "domains_cited": [
+    "longbridge.com",
+    "koreatimes.co.kr",
+    "scmp.com"
+   ],
+   "cited_urls": [
+    "https://longbridge.com/en/news/301923082",
+    "https://www.koreatimes.co.kr/southkorea/defense/20261013/us-pacific-command-says-n-korea-fired-2-ballistic-missiles-reaffirms-defense-commitment",
+    "https://www.scmp.com/news/asia/east-asia/article/3370755/south-korea-shopping-centre-stabbing-leaves-8-injured"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "South Korea",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 2,
+   "input_tokens": 324955,
+   "output_tokens": 13310,
+   "search_queries_count": 7,
+   "queries_in_english": 5,
+   "queries_in_ask_language": 5,
+   "queries_in_topic_language": 2,
+   "page_opens": 0,
+   "seconds": 63,
+   "cited_links": 3,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 1,
+   "cited_english": 2,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "South Korea news October 2026",
+    "한국 주요 뉴스 2026년 10월",
+    "KOSPI circuit breaker October 15 2026 semiconductor sell-off",
+    "Incheon shopping centre rampage electronic tag probation Justice Ministry apology",
+    "DMZ landmine blast South Korean soldiers injured demands apology North Korea denies",
+    "코스피 10월 13일 5.5% 급락 6000선 붕괴",
+    "North Korea ballistic missile launch 900km Joint Chiefs of Staff October 2026"
+   ],
+   "domains_cited": [
+    "newspim.com",
+    "scmp.com",
+    "koreatimes.co.kr"
+   ],
+   "cited_urls": [
+    "https://www.newspim.com/news/view/20261013000430",
+    "https://www.scmp.com/news/asia/east-asia/article/3370755/south-korea-shopping-centre-stabbing-leaves-8-injured",
+    "https://www.koreatimes.co.kr/southkorea/defense/20261013/us-pacific-command-says-n-korea-fired-2-ballistic-missiles-reaffirms-defense-commitment"
+   ],
+   "cited_page_languages": [
+    "ko",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "South Korea",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 1,
+   "input_tokens": 140032,
+   "output_tokens": 4885,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 33,
+   "cited_links": 5,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 2,
+   "cited_english": 2,
+   "cited_other_language": 1,
+   "answer_language": "en",
+   "search_queries": [
+    "best Pyongyang naengmyeon Seoul 2026 Michelin Guide",
+    "평양냉면 맛집 서울 2026 블루리본 미쉐린"
+   ],
+   "domains_cited": [
+    "trvlogue.com",
+    "allurekorea.com",
+    "viamichelin.pl",
+    "v.daum.net"
+   ],
+   "cited_urls": [
+    "https://www.trvlogue.com/en/nampo-myeonok-seoul-review",
+    "https://www.allurekorea.com/2024/05/28/%ec%97%b0%ec%98%88%ec%9d%b8%eb%8f%84-%ec%a6%90%ea%b2%a8%ec%b0%be%eb%8a%94-%ed%8f%89%ec%96%91%eb%83%89%eb%a9%b4-%eb%a7%9b%ec%a7%91-4/",
+    "https://www.viamichelin.pl/maps/restaurants/poi/seoul-07238-zgsqauwp",
+    "https://www.trvlogue.com/en/seoryeong-seoul-cold-noodles",
+    "https://v.daum.net/v/20260630082125307"
+   ],
+   "cited_page_languages": [
+    "en",
+    "ko",
+    "pl",
+    "en",
+    "ko"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "South Korea",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 2,
+   "input_tokens": 197948,
+   "output_tokens": 7225,
+   "search_queries_count": 3,
+   "queries_in_english": 2,
+   "queries_in_ask_language": 2,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 51,
+   "cited_links": 7,
+   "cited_in_ask_language": 6,
+   "cited_in_topic_language": 1,
+   "cited_english": 6,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "best Pyongyang naengmyeon Seoul 2026 Michelin Bib Gourmand",
+    "평양냉면 맛집 서울 2026 블루리본",
+    "Michelin Guide Seoul 2026 Bib Gourmand naengmyeon Woo Lae Oak Euljiro Myeonok Pildong Myeonok"
+   ],
+   "domains_cited": [
+    "guide.michelin.com",
+    "seoulkoreaasia.com",
+    "trvlogue.com",
+    "v.daum.net"
+   ],
+   "cited_urls": [
+    "https://guide.michelin.com/us/en/seoul-capital-area/kr-seoul/restaurant/pildong-myeonok",
+    "https://guide.michelin.com/us/en/seoul-capital-area/kr-seoul/restaurant/jungin-myeonok",
+    "https://seoulkoreaasia.com/10-seoul-michelin-restaurants-budget-to-fancy/",
+    "https://www.trvlogue.com/en/nampo-myeonok-seoul-review",
+    "https://v.daum.net/v/20260630082125307",
+    "https://guide.michelin.com/en/article/michelin-guide-ceremony/korea-bib-gourmand-2026",
+    "https://guide.michelin.com/us/en/seoul-capital-area/kr-seoul/restaurants/bib-gourmand"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "ko",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Japan",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 1,
+   "input_tokens": 175847,
+   "output_tokens": 3512,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 35,
+   "cited_links": 2,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 0,
+   "cited_english": 2,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "東京メトロ 運賃改定 2026 初乗り IC",
+    "Tokyo Metro fare IC card adult 178 yen minimum fare"
+   ],
+   "domains_cited": [
+    "tokyometro.jp"
+   ],
+   "cited_urls": [
+    "https://www.tokyometro.jp/lang_en/ticket/types/regular/index.html",
+    "https://www.tokyometro.jp/lang_en/ticket/particularcase/ayase_kitasenju/index.html"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Japan",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 2,
+   "input_tokens": 176213,
+   "output_tokens": 3282,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 32,
+   "cited_links": 3,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 1,
+   "cited_english": 2,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "東京メトロ 運賃改定 2026 初乗り IC運賃",
+    "Tokyo Metro fare 178 yen IC card minimum fare 1-6 km"
+   ],
+   "domains_cited": [
+    "tokyometro.jp",
+    "roote.ekispert.net"
+   ],
+   "cited_urls": [
+    "https://www.tokyometro.jp/lang_en/ticket/types/regular/index.html",
+    "https://www.tokyometro.jp/en/ticket/regular/index.html",
+    "https://roote.ekispert.net/revision/spring2026"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "ja"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Japan",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 1,
+   "input_tokens": 220820,
+   "output_tokens": 8291,
+   "search_queries_count": 5,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 3,
+   "queries_in_topic_language": 2,
+   "page_opens": 0,
+   "seconds": 37,
+   "cited_links": 4,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": 1,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "Japan news October 2026",
+    "日本 ニュース 2026年10月 主要",
+    "日経平均 3318円安 10月15日",
+    "North Korea ballistic missile launch October 12 2026 Japan",
+    "IDC Frontier ransomware 495 companies local governments"
+   ],
+   "domains_cited": [
+    "tbladvisory.com",
+    "nippon.com",
+    "japantimes.co.jp",
+    "bleepingcomputer.com"
+   ],
+   "cited_urls": [
+    "https://tbladvisory.com/?p=62106",
+    "https://www.nippon.com/en/news/yjj2026101200185/",
+    "https://www.japantimes.co.jp/business/2026/10/13/economy/boj-lean-against-october-rate-hike/",
+    "https://www.bleepingcomputer.com/news/security/ransomware-attack-disrupts-japans-idcf-cloud-used-by-govt-clients/"
+   ],
+   "cited_page_languages": [
+    "ja",
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Japan",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 2,
+   "input_tokens": 208722,
+   "output_tokens": 7414,
+   "search_queries_count": 4,
+   "queries_in_english": 3,
+   "queries_in_ask_language": 3,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 38,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": 0,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "Japan news October 2026",
+    "日本 ニュース 2026年10月 主要",
+    "Nikkei plunges 3,318 yen October 15 2026",
+    "Japan Meteorological Agency erroneous earthquake early warning magnitude 9.9 withdrawn"
+   ],
+   "domains_cited": [
+    "nippon.com",
+    "qna.org.qa",
+    "japantimes.co.jp"
+   ],
+   "cited_urls": [
+    "https://www.nippon.com/en/news/yjj2026101600527/",
+    "https://qna.org.qa/en/News-Area/News/2026-10/15/japans-nikkei-index-plunges-over-3300-points-in-third-largest-drop-in-history",
+    "https://www.japantimes.co.jp/business/2026/10/13/economy/boj-lean-against-october-rate-hike/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Japan",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 1,
+   "input_tokens": 142690,
+   "output_tokens": 4329,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 30,
+   "cited_links": 4,
+   "cited_in_ask_language": 4,
+   "cited_in_topic_language": 0,
+   "cited_english": 4,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "Tabelog ramen Tokyo top rated 2026",
+    "食べログ ラーメン 百名店 2026 東京 ランキング 高評価"
+   ],
+   "domains_cited": [
+    "tabelog.com"
+   ],
+   "cited_urls": [
+    "https://tabelog.com/en/rstLst/ramen",
+    "https://tabelog.com/en/R8708/rstLst/ramen",
+    "https://tabelog.com/en/rstLst/ramen/1/",
+    "https://tabelog.com/en/R13/rstLst/MC/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Japan",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 2,
+   "input_tokens": 283215,
+   "output_tokens": 7615,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 4,
+   "seconds": 60,
+   "cited_links": 8,
+   "cited_in_ask_language": 6,
+   "cited_in_topic_language": 2,
+   "cited_english": 6,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "Tabelog ramen Tokyo top rated 2026",
+    "食べログ ラーメン 百名店 2026 東京 評価 ランキング"
+   ],
+   "domains_cited": [
+    "tabelog.com",
+    "goodxssss.com",
+    "note.com",
+    "ramental.net"
+   ],
+   "cited_urls": [
+    "https://tabelog.com/en/ramen/tokyo/rank/",
+    "https://tabelog.com/en/tokyo/rstLst/ramen/?SrtT=rt",
+    "https://goodxssss.com/en/best-tokyo-ramen-tabelog-top-rated-en/",
+    "https://tabelog.com/en/tokyo/rstLst/ramen/",
+    "https://tabelog.com/en/tokyo/rstLst/MC/",
+    "https://note.com/yoshi_foodie_jp/n/n3b121deea6b7?hl=en",
+    "https://tabelog.com/ramen/tokyo/rank/",
+    "https://ramental.net/2026/04/01/tokyo-best100-2026/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "en",
+    "ja",
+    "ja"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Spain",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 1,
+   "input_tokens": 177088,
+   "output_tokens": 3411,
+   "search_queries_count": 2,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": 2,
+   "page_opens": 0,
+   "seconds": 30,
+   "cited_links": 2,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": 2,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "precio billete sencillo metro Madrid zona A 2026",
+    "Metro de Madrid billete sencillo zona A 1,50 2,00 euros tarifas 2026"
+   ],
+   "domains_cited": [
+    "comunidad.madrid",
+    "gacetinmadrid.com"
+   ],
+   "cited_urls": [
+    "https://www.comunidad.madrid/noticias/2026/09/10/diaz-ayuso-anuncia-tarifa-unica-15-euros-billete-sencillo-zona-metro-octubre",
+    "https://gacetinmadrid.com/2026/09/30/metro-madrid-implanta-tarifa-unica-billete-sencillo/"
+   ],
+   "cited_page_languages": [
+    "es",
+    "es"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Spain",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 2,
+   "input_tokens": 303480,
+   "output_tokens": 4346,
+   "search_queries_count": 1,
+   "queries_in_english": 0,
+   "queries_in_ask_language": 0,
+   "queries_in_topic_language": 1,
+   "page_opens": 2,
+   "seconds": 48,
+   "cited_links": 1,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": 1,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "precio billete sencillo metro Madrid zona A 2026"
+   ],
+   "domains_cited": [
+    "crtm.es"
+   ],
+   "cited_urls": [
+    "https://crtm.es/media/s1qi0nmo/bocm-20251231-precios_transporte.pdf"
+   ],
+   "cited_page_languages": [
+    "es"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Spain",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 1,
+   "input_tokens": 211243,
+   "output_tokens": 7057,
+   "search_queries_count": 4,
+   "queries_in_english": 2,
+   "queries_in_ask_language": 2,
+   "queries_in_topic_language": 2,
+   "page_opens": 0,
+   "seconds": 36,
+   "cited_links": 3,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": 0,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "Spain news October 2026",
+    "noticias España última semana octubre 2026",
+    "DANA Adam alerta roja Almería Valencia",
+    "King Felipe Ceuta visit migration October 2026"
+   ],
+   "domains_cited": [
+    "abcnews.com",
+    "theolivepress.es",
+    "euronews.com"
+   ],
+   "cited_urls": [
+    "https://abcnews.com/International/wireStory/spains-king-queen-visit-ceuta-territory-grapples-protracted-137218149",
+    "https://www.theolivepress.es/spain-news/2026/10/13/spain-economic-growth-imf-forecast/",
+    "https://www.euronews.com/2026/10/05/pedro-sanchez-calls-early-elections-in-spain-after-defeat-of-housing-decrees"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Spain",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 2,
+   "input_tokens": 139005,
+   "output_tokens": 4269,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 26,
+   "cited_links": 4,
+   "cited_in_ask_language": 1,
+   "cited_in_topic_language": 3,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "Spain news this week October 2026",
+    "noticias España octubre 2026"
+   ],
+   "domains_cited": [
+    "infobae.com",
+    "thelocal.es",
+    "libertaddigital.com"
+   ],
+   "cited_urls": [
+    "https://www.infobae.com/espana/agencias/2026/10/16/temas-del-dia-de-efe-espana-del-viernes-16-de-octubre-de-2026-1330-horas/",
+    "https://www.thelocal.es/20261015/today-in-spain-a-roundup-of-the-latest-news-on-thursday-99",
+    "https://www.libertaddigital.com/espana/2026-10-13/",
+    "https://www.infobae.com/espana/agencias/2026/10/17/temas-del-dia-de-efe-espana-del-domingo-18-de-octubre-de-2026/"
+   ],
+   "cited_page_languages": [
+    "es",
+    "en",
+    "es",
+    "es"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Spain",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 1,
+   "input_tokens": 214972,
+   "output_tokens": 5996,
+   "search_queries_count": 3,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 2,
+   "page_opens": 0,
+   "seconds": 46,
+   "cited_links": 7,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": 7,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "mejores restaurantes cocido madrileño Madrid 2026",
+    "best cocido madrileño restaurants Madrid 2026",
+    "ganador mejor cocido madrileño 2026 Ruta del Cocido"
+   ],
+   "domains_cited": [
+    "timeout.es",
+    "guiadelocio.es",
+    "esdiario.com",
+    "comunidad.madrid",
+    "esmadrid.com",
+    "moncloa.com",
+    "hola.com"
+   ],
+   "cited_urls": [
+    "https://www.timeout.es/madrid/es/noticias/este-restaurante-familiar-abierto-en-1942-es-el-nuevo-rey-del-cocido-en-madrid-48-horas-de-elaboracion-y-15-ingredientes-distintos-021326",
+    "https://guiadelocio.es/madrid/en-estos-restaurantes-se-toma-el-mejor-cocido-madrileno/",
+    "https://www.esdiario.com/chismografo/tendencias/260313/182310/todavia-tomar-buen-cocidito-madrileno-cuatro-vuelcos.html",
+    "https://www.comunidad.madrid/node/45819",
+    "https://www.esmadrid.com/node/69130",
+    "https://www.moncloa.com/2026/02/12/guia-cocido-2026-madrid-3360670/",
+    "https://www.hola.com/cocina/noticias/20260227884116/cocido-madrileno-mejores-restaurantes-madrid/"
+   ],
+   "cited_page_languages": [
+    "es",
+    "es",
+    "es",
+    "es",
+    "es",
+    "es",
+    "es"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Spain",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 2,
+   "input_tokens": 392074,
+   "output_tokens": 10801,
+   "search_queries_count": 4,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 3,
+   "page_opens": 3,
+   "seconds": 91,
+   "cited_links": 6,
+   "cited_in_ask_language": 0,
+   "cited_in_topic_language": 6,
+   "cited_english": 0,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "mejor cocido madrileño Madrid 2026 ranking",
+    "best cocido madrileño restaurants Madrid 2026",
+    "ganador Ruta del Cocido Madrileño 2026 mejor cocido",
+    "\"mejor cocido madrileño 2026\" premio restaurante abril"
+   ],
+   "domains_cited": [
+    "esmadrid.com",
+    "merca2.es",
+    "hola.com",
+    "neo2.com",
+    "lasrecetasdecarol.com",
+    "comunidad.madrid"
+   ],
+   "cited_urls": [
+    "https://www.esmadrid.com/node/69130",
+    "https://www.merca2.es/2026/03/23/cocido-madrileno-tres-vuelcos-2362402/",
+    "https://www.hola.com/cocina/noticias/20260227884116/cocido-madrileno-mejores-restaurantes-madrid/",
+    "https://www.neo2.com/mejores-cocidos-madrilenos-2026/",
+    "https://lasrecetasdecarol.com/ruta-del-cocido-madrileno-2026-edicion-16/",
+    "https://www.comunidad.madrid/press-releases/download/111750"
+   ],
+   "cited_page_languages": [
+    "es",
+    "es",
+    "es",
+    "es",
+    "es",
+    "es"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Ukraine",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 1,
+   "input_tokens": 138354,
+   "output_tokens": 2909,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 19,
+   "cited_links": 2,
+   "cited_in_ask_language": 1,
+   "cited_in_topic_language": 1,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "Kyiv metro fare price 2026",
+    "вартість проїзду київське метро 2026"
+   ],
+   "domains_cited": [
+    "kyivpost.com",
+    "grani.kiev.ua"
+   ],
+   "cited_urls": [
+    "https://www.kyivpost.com/post/80320",
+    "https://www.grani.kiev.ua/skilky-koshtuie-metro-v-kyievi-poizdka-proizni-pilhy/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "uk"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Ukraine",
+   "question": "l1_fare",
+   "question_type": "Local fact: metro fare",
+   "run": 2,
+   "input_tokens": 138076,
+   "output_tokens": 3124,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 19,
+   "cited_links": 2,
+   "cited_in_ask_language": 1,
+   "cited_in_topic_language": 1,
+   "cited_english": 1,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "Kyiv metro fare price 2026",
+    "вартість проїзду київське метро 2026"
+   ],
+   "domains_cited": [
+    "kyivpost.com",
+    "epravda.com.ua"
+   ],
+   "cited_urls": [
+    "https://www.kyivpost.com/post/80320",
+    "https://epravda.com.ua/finances/yak-u-kiyevi-podorozhchaye-projizd-u-transporti-821730/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "uk"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Ukraine",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 1,
+   "input_tokens": 135379,
+   "output_tokens": 3584,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 28,
+   "cited_links": 4,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": 1,
+   "cited_english": 3,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "Ukraine news October 2026",
+    "Україна головні новини жовтень 2026"
+   ],
+   "domains_cited": [
+    "npr.org",
+    "aljazeera.com",
+    "news.un.org",
+    "suspilne.media"
+   ],
+   "cited_urls": [
+    "https://www.npr.org/2026/10/15/g-s1-148194/russia-ukraine-war",
+    "https://www.aljazeera.com/news/2026/10/16/ukraine-repels-russian-forces-as-us-support-wavers-energy-strikes-escalate",
+    "https://news.un.org/en/story/2026/10/1168585",
+    "https://suspilne.media/archive/2026/10/16/"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "uk"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Ukraine",
+   "question": "l2_news",
+   "question_type": "Local news",
+   "run": 2,
+   "input_tokens": 144201,
+   "output_tokens": 3902,
+   "search_queries_count": 2,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 1,
+   "page_opens": 0,
+   "seconds": 26,
+   "cited_links": 4,
+   "cited_in_ask_language": 4,
+   "cited_in_topic_language": 0,
+   "cited_english": 4,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "Ukraine news October 2026",
+    "Україна новини жовтень 2026"
+   ],
+   "domains_cited": [
+    "aljazeera.com",
+    "npr.org",
+    "kyivpost.com"
+   ],
+   "cited_urls": [
+    "https://www.aljazeera.com/news/2026/10/17/russian-attacks-in-ukraine-kill-at-least-8-cut-power-to-1-million",
+    "https://www.npr.org/2026/10/15/g-s1-148194/russia-ukraine-war",
+    "https://www.kyivpost.com/thread/87339",
+    "https://www.aljazeera.com/news/2026/10/16/ukraine-repels-russian-forces-as-us-support-wavers-energy-strikes-escalate"
+   ],
+   "cited_page_languages": [
+    "en",
+    "en",
+    "en",
+    "en"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Ukraine",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 1,
+   "input_tokens": 188341,
+   "output_tokens": 6473,
+   "search_queries_count": 3,
+   "queries_in_english": 1,
+   "queries_in_ask_language": 1,
+   "queries_in_topic_language": 2,
+   "page_opens": 0,
+   "seconds": 45,
+   "cited_links": 6,
+   "cited_in_ask_language": 2,
+   "cited_in_topic_language": 4,
+   "cited_english": 2,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "search_queries": [
+    "best borscht Kyiv restaurant 2026",
+    "найкращий борщ Київ ресторан 2026",
+    "де з'їсти борщ у Києві 2025 2026 добірка закладів"
+   ],
+   "domains_cited": [
+    "nashkiev.ua",
+    "archive.kyivpost.com",
+    "itimaker.com",
+    "tykyiv.com",
+    "44.ua",
+    "kiev.vgorode.ua"
+   ],
+   "cited_urls": [
+    "https://nashkiev.ua/eat/de-v-kievi-poisti-borsch-z-tsikavoyu-podacheyu-oglyad-zakladiv",
+    "https://archive.kyivpost.com/lifestyle/try-ukrainian-cuisine.html",
+    "https://www.itimaker.com/blog/best-restaurants-in-kyiv",
+    "https://tykyiv.com/establishments/tse-14-zakladiv-iaki-vidkrilisia-v-kiievi-u-travni/",
+    "https://www.44.ua/news/3586306/najkrasij-bors-kieva-top-10-zakladiv-z-originalnou-podaceu-ta-skilki-kostue-popularna-strava",
+    "https://kiev.vgorode.ua/ukr/news/dosuh_y_eda/a1284647-10-zakladiv-u-kijevi-zhe-mozhna-pojisti-smachnij-borshch"
+   ],
+   "cited_page_languages": [
+    "uk",
+    "en",
+    "en",
+    "uk",
+    "uk",
+    "uk"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "topic": "local",
+   "ask_language": "en",
+   "topic_country": "Ukraine",
+   "question": "l3_food",
+   "question_type": "Local restaurants",
+   "run": 2,
+   "input_tokens": 206636,
+   "output_tokens": 8141,
+   "search_queries_count": 4,
+   "queries_in_english": 2,
+   "queries_in_ask_language": 2,
+   "queries_in_topic_language": 2,
+   "page_opens": 0,
+   "seconds": 47,
+   "cited_links": 7,
+   "cited_in_ask_language": 3,
+   "cited_in_topic_language": 3,
+   "cited_english": 3,
+   "cited_other_language": 1,
+   "answer_language": "en",
+   "search_queries": [
+    "best borscht Kyiv restaurant 2026",
+    "найкращий борщ у Києві ресторани 2026",
+    "де з'їсти смачний борщ у Києві добірка",
+    "Kyiv where to eat borscht guide Ostannia Barykada Kanapa Spotykach"
+   ],
+   "domains_cited": [
+    "kyivpost.com",
+    "44.ua",
+    "yandex.com",
+    "tasteatlas.com",
+    "nv.ua",
+    "kiev.vgorode.ua",
+    "kyivmaps.com"
+   ],
+   "cited_urls": [
+    "https://www.kyivpost.com/lifestyle/try-modern-ukrainian-cuisine-at-these-6-kyiv-restaurants.html",
+    "https://www.44.ua/news/3586306/najkrasij-bors-kieva-top-10-zakladiv-z-originalnou-podaceu-ta-skilki-kostue-popularna-strava",
+    "https://yandex.com/maps/org/restoran_pervak/1032708739/",
+    "https://www.tasteatlas.com/best-dishes-in-kyiv",
+    "https://nv.ua/ukr/food/restaurants/borshch-u-kiyevi-de-kushtuvati-nezvichayni-borshchi-z-cikavoyu-podacheyu-u-stolici-50424364.html",
+    "https://kiev.vgorode.ua/ukr/news/dosuh_y_eda/a1284647-10-zakladiv-u-kijevi-zhe-mozhna-pojisti-smachnij-borshch",
+    "https://kyivmaps.com/en/blog/top-15-restoraniv-ukrainskoi-kuhni-v-kievi-kudi-varto-povesti-inozemca"
+   ],
+   "cited_page_languages": [
+    "en",
+    "uk",
+    "unknown",
+    "en",
+    "uk",
+    "uk",
+    "en"
    ]
   }
  ]
