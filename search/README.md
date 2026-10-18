@@ -6,6 +6,8 @@ Four kinds of question asked with web search on in Claude Code and Codex, two ru
 
 - Source page, chart and method: https://tokensave.app/data/ai-agent-web-search-tokens
 - Related: Claude Code vs Codex startup tokens (https://tokensave.app/data/claude-code-vs-codex-tokens)
+- DOI (Zenodo): [10.5281/zenodo.23449842](https://doi.org/10.5281/zenodo.23449842)
+- Also on: [Hugging Face](https://huggingface.co/datasets/JOHNISKING/ai-agent-web-search-tokens) · [Kaggle](https://www.kaggle.com/datasets/johnisking/ai-web-search-tokens-claude-code-vs-codex)
 - Measured: 2026-10-18
 - License: CC BY 4.0
 
@@ -72,6 +74,6 @@ Four kinds of question asked with web search on in Claude Code and Codex, two ru
 
 ## Citation
 
-TokenSave (2026). Web search in Claude Code and Codex: tokens, searches and sources per question [Data set]. https://tokensave.app/data/ai-agent-web-search-tokens
+TokenSave (2026). Web search in Claude Code and Codex: tokens, searches and sources per question [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23449842
 
 Check your own Claude Code and Codex usage at [tokensave.app](https://tokensave.app/claude-code-usage).
