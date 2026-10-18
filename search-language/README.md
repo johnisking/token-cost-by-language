@@ -6,6 +6,8 @@ The same four questions asked in English, Korean, Japanese, Spanish and Ukrainia
 
 - Source page, chart and method: https://tokensave.app/data/claude-web-search-by-language
 - Related: web search in Claude Code and Codex ([`../search/`](../search/), https://tokensave.app/data/ai-agent-web-search-tokens)
+- DOI (Zenodo): [10.5281/zenodo.23451506](https://doi.org/10.5281/zenodo.23451506)
+- Also on: [Hugging Face](https://huggingface.co/datasets/JOHNISKING/claude-web-search-by-language) · [Kaggle](https://www.kaggle.com/datasets/johnisking/claude-web-search-by-language)
 - Measured: 2026-10-18
 - License: CC BY 4.0
 
@@ -65,6 +67,6 @@ The same four questions asked in English, Korean, Japanese, Spanish and Ukrainia
 
 ## Citation
 
-TokenSave (2026). Claude web search by language: search queries, cited sources and tokens in 5 languages [Data set]. https://tokensave.app/data/claude-web-search-by-language
+TokenSave (2026). Claude web search by language: search queries, cited sources and tokens in 5 languages [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23451506
 
 Check your own Claude Code usage at [tokensave.app](https://tokensave.app/claude-code-usage).

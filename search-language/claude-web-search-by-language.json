@@ -3,7 +3,7 @@
  "url": "https://tokensave.app/data/claude-web-search-by-language",
  "license": "CC BY 4.0",
  "measured": "2026-10-18",
- "citation": "TokenSave (2026). Claude web search by language: search queries, cited sources and tokens in 5 languages [Data set]. https://tokensave.app/data/claude-web-search-by-language",
+ "citation": "TokenSave (2026). Claude web search by language: search queries, cited sources and tokens in 5 languages [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23451506",
  "tool": "Claude Code 2.1.295 (Opus 5.5), effort medium, WebSearch and WebFetch only",
  "question_types": {
   "q1_fact": "Simple fact",
