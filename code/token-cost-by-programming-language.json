@@ -1,0 +1,351 @@
+{
+ "title": "Token cost by programming language: the same programs in 10 languages on Claude, Gemini and GPT",
+ "url": "https://tokensave.app/data/token-cost-by-programming-language",
+ "license": "CC BY 4.0",
+ "measured": "2026-10-18",
+ "programs": {
+  "inventory": "Inventory class: add, restock, sell, low-stock list, total value, formatted report",
+  "dijkstra": "Dijkstra's shortest path on a 6-node graph with path reconstruction"
+ },
+ "tokenizers": {
+  "claude55": "Claude Opus 5.5 / Sonnet 5.5 (identical counts)",
+  "claude45": "Claude Haiku 4.5",
+  "gemini": "Gemini 3.8 Flash",
+  "gpt": "OpenAI o200k_base (GPT-4o and later)"
+ },
+ "citation": "TokenSave (2026). Token cost by programming language: the same programs in 10 languages on Claude, Gemini and GPT [Data set]. https://tokensave.app/data/token-cost-by-programming-language",
+ "rows": [
+  {
+   "language": "python",
+   "name": "Python",
+   "inventory": {
+    "chars": 1620,
+    "lines": 56,
+    "claude55": 627,
+    "claude45": 522,
+    "gemini": 523,
+    "gpt": 431
+   },
+   "dijkstra": {
+    "chars": 1267,
+    "lines": 51,
+    "claude55": 549,
+    "claude45": 448,
+    "gemini": 440,
+    "gpt": 378
+   },
+   "claude55": 1176,
+   "claude45": 970,
+   "gemini": 963,
+   "gpt": 809,
+   "chars": 2887,
+   "lines": 107,
+   "claude55_vs_python": 0,
+   "claude45_vs_python": 0,
+   "gemini_vs_python": 0,
+   "gpt_vs_python": 0,
+   "claude55_vs_gpt": 45
+  },
+  {
+   "language": "ruby",
+   "name": "Ruby",
+   "inventory": {
+    "chars": 1368,
+    "lines": 63,
+    "claude55": 613,
+    "claude45": 503,
+    "gemini": 499,
+    "gpt": 433
+   },
+   "dijkstra": {
+    "chars": 1110,
+    "lines": 46,
+    "claude55": 568,
+    "claude45": 458,
+    "gemini": 445,
+    "gpt": 386
+   },
+   "claude55": 1181,
+   "claude45": 961,
+   "gemini": 944,
+   "gpt": 819,
+   "chars": 2478,
+   "lines": 109,
+   "claude55_vs_python": 0,
+   "claude45_vs_python": -1,
+   "gemini_vs_python": -2,
+   "gpt_vs_python": 1,
+   "claude55_vs_gpt": 44
+  },
+  {
+   "language": "javascript",
+   "name": "JavaScript",
+   "inventory": {
+    "chars": 1691,
+    "lines": 70,
+    "claude55": 734,
+    "claude45": 616,
+    "gemini": 609,
+    "gpt": 491
+   },
+   "dijkstra": {
+    "chars": 1504,
+    "lines": 56,
+    "claude55": 708,
+    "claude45": 583,
+    "gemini": 575,
+    "gpt": 476
+   },
+   "claude55": 1442,
+   "claude45": 1199,
+   "gemini": 1184,
+   "gpt": 967,
+   "chars": 3195,
+   "lines": 126,
+   "claude55_vs_python": 23,
+   "claude45_vs_python": 24,
+   "gemini_vs_python": 23,
+   "gpt_vs_python": 20,
+   "claude55_vs_gpt": 49
+  },
+  {
+   "language": "typescript",
+   "name": "TypeScript",
+   "inventory": {
+    "chars": 1806,
+    "lines": 68,
+    "claude55": 758,
+    "claude45": 632,
+    "gemini": 623,
+    "gpt": 511
+   },
+   "dijkstra": {
+    "chars": 1804,
+    "lines": 59,
+    "claude55": 832,
+    "claude45": 679,
+    "gemini": 665,
+    "gpt": 559
+   },
+   "claude55": 1590,
+   "claude45": 1311,
+   "gemini": 1288,
+   "gpt": 1070,
+   "chars": 3610,
+   "lines": 127,
+   "claude55_vs_python": 35,
+   "claude45_vs_python": 35,
+   "gemini_vs_python": 34,
+   "gpt_vs_python": 32,
+   "claude55_vs_gpt": 49
+  },
+  {
+   "language": "php",
+   "name": "PHP",
+   "inventory": {
+    "chars": 2104,
+    "lines": 80,
+    "claude55": 846,
+    "claude45": 705,
+    "gemini": 694,
+    "gpt": 620
+   },
+   "dijkstra": {
+    "chars": 1593,
+    "lines": 59,
+    "claude55": 763,
+    "claude45": 606,
+    "gemini": 568,
+    "gpt": 508
+   },
+   "claude55": 1609,
+   "claude45": 1311,
+   "gemini": 1262,
+   "gpt": 1128,
+   "chars": 3697,
+   "lines": 139,
+   "claude55_vs_python": 37,
+   "claude45_vs_python": 35,
+   "gemini_vs_python": 31,
+   "gpt_vs_python": 39,
+   "claude55_vs_gpt": 43
+  },
+  {
+   "language": "rust",
+   "name": "Rust",
+   "inventory": {
+    "chars": 2347,
+    "lines": 87,
+    "claude55": 988,
+    "claude45": 800,
+    "gemini": 782,
+    "gpt": 638
+   },
+   "dijkstra": {
+    "chars": 1734,
+    "lines": 55,
+    "claude55": 827,
+    "claude45": 652,
+    "gemini": 629,
+    "gpt": 551
+   },
+   "claude55": 1815,
+   "claude45": 1452,
+   "gemini": 1411,
+   "gpt": 1189,
+   "chars": 4081,
+   "lines": 142,
+   "claude55_vs_python": 54,
+   "claude45_vs_python": 50,
+   "gemini_vs_python": 47,
+   "gpt_vs_python": 47,
+   "claude55_vs_gpt": 53
+  },
+  {
+   "language": "java",
+   "name": "Java",
+   "inventory": {
+    "chars": 2659,
+    "lines": 88,
+    "claude55": 941,
+    "claude45": 780,
+    "gemini": 771,
+    "gpt": 620
+   },
+   "dijkstra": {
+    "chars": 2442,
+    "lines": 66,
+    "claude55": 993,
+    "claude45": 771,
+    "gemini": 740,
+    "gpt": 597
+   },
+   "claude55": 1934,
+   "claude45": 1551,
+   "gemini": 1511,
+   "gpt": 1217,
+   "chars": 5101,
+   "lines": 154,
+   "claude55_vs_python": 64,
+   "claude45_vs_python": 60,
+   "gemini_vs_python": 57,
+   "gpt_vs_python": 50,
+   "claude55_vs_gpt": 59
+  },
+  {
+   "language": "cpp",
+   "name": "C++",
+   "inventory": {
+    "chars": 2862,
+    "lines": 104,
+    "claude55": 1087,
+    "claude45": 934,
+    "gemini": 926,
+    "gpt": 766
+   },
+   "dijkstra": {
+    "chars": 1931,
+    "lines": 68,
+    "claude55": 846,
+    "claude45": 692,
+    "gemini": 691,
+    "gpt": 577
+   },
+   "claude55": 1933,
+   "claude45": 1626,
+   "gemini": 1617,
+   "gpt": 1343,
+   "chars": 4793,
+   "lines": 172,
+   "claude55_vs_python": 64,
+   "claude45_vs_python": 68,
+   "gemini_vs_python": 68,
+   "gpt_vs_python": 66,
+   "claude55_vs_gpt": 44
+  },
+  {
+   "language": "go",
+   "name": "Go",
+   "inventory": {
+    "chars": 2193,
+    "lines": 103,
+    "claude55": 1057,
+    "claude45": 849,
+    "gemini": 818,
+    "gpt": 651
+   },
+   "dijkstra": {
+    "chars": 2099,
+    "lines": 96,
+    "claude55": 1086,
+    "claude45": 900,
+    "gemini": 883,
+    "gpt": 708
+   },
+   "claude55": 2143,
+   "claude45": 1749,
+   "gemini": 1701,
+   "gpt": 1359,
+   "chars": 4292,
+   "lines": 199,
+   "claude55_vs_python": 82,
+   "claude45_vs_python": 80,
+   "gemini_vs_python": 77,
+   "gpt_vs_python": 68,
+   "claude55_vs_gpt": 58
+  },
+  {
+   "language": "c",
+   "name": "C",
+   "inventory": {
+    "chars": 3135,
+    "lines": 115,
+    "claude55": 1388,
+    "claude45": 1152,
+    "gemini": 1126,
+    "gpt": 940
+   },
+   "dijkstra": {
+    "chars": 1708,
+    "lines": 62,
+    "claude55": 831,
+    "claude45": 707,
+    "gemini": 694,
+    "gpt": 596
+   },
+   "claude55": 2219,
+   "claude45": 1859,
+   "gemini": 1820,
+   "gpt": 1536,
+   "chars": 4843,
+   "lines": 177,
+   "claude55_vs_python": 89,
+   "claude45_vs_python": 92,
+   "gemini_vs_python": 89,
+   "gpt_vs_python": 90,
+   "claude55_vs_gpt": 44
+  }
+ ],
+ "sources": {
+  "python|inventory": "class Item:\n    def __init__(self, name, qty, price):\n        self.name = name\n        self.qty = qty\n        self.price = price\n\n    def value(self):\n        return self.qty * self.price\n\n\nclass Inventory:\n    def __init__(self):\n        self.items = {}\n\n    def add(self, name, qty, price):\n        self.items[name] = Item(name, qty, price)\n\n    def restock(self, name, amount):\n        self.items[name].qty += amount\n\n    def sell(self, name, amount):\n        item = self.items[name]\n        if item.qty < amount:\n            return False\n        item.qty -= amount\n        return True\n\n    def low_stock(self, threshold):\n        return sorted(name for name, item in self.items.items() if item.qty <= threshold)\n\n    def total_value(self):\n        return sum(item.value() for item in self.items.values())\n\n    def report(self):\n        rows = sorted(self.items.values(), key=lambda item: (-item.value(), item.name))\n        return [f\"{item.name:<12}{item.qty:>5}{item.value():>10.2f}\" for item in rows]\n\n\ndef main():\n    inventory = Inventory()\n    inventory.add(\"apple\", 3, 0.5)\n    inventory.add(\"banana\", 12, 0.25)\n    inventory.add(\"cherry\", 0, 4.0)\n    inventory.add(\"date\", 7, 1.5)\n    inventory.add(\"elderberry\", 2, 6.0)\n    inventory.restock(\"cherry\", 5)\n    print(\"Sold banana:\", \"yes\" if inventory.sell(\"banana\", 4) else \"no\")\n    print(\"Sold apple:\", \"yes\" if inventory.sell(\"apple\", 10) else \"no\")\n    print(\"Low stock:\", \", \".join(inventory.low_stock(3)))\n    for line in inventory.report():\n        print(line)\n    print(f\"Total: {inventory.total_value():.2f}\")\n\n\nif __name__ == \"__main__\":\n    main()\n",
+  "python|dijkstra": "import heapq\n\nEDGES = [\n    (\"A\", \"B\", 4), (\"A\", \"C\", 2), (\"B\", \"C\", 1), (\"B\", \"D\", 5), (\"C\", \"D\", 8),\n    (\"C\", \"E\", 10), (\"D\", \"E\", 2), (\"D\", \"F\", 6), (\"E\", \"F\", 3),\n]\n\n\ndef build_graph(edges):\n    graph = {}\n    for a, b, weight in edges:\n        graph.setdefault(a, []).append((b, weight))\n        graph.setdefault(b, []).append((a, weight))\n    return graph\n\n\ndef dijkstra(graph, start):\n    dist = {node: float(\"inf\") for node in graph}\n    prev = {}\n    dist[start] = 0\n    queue = [(0, start)]\n    while queue:\n        d, node = heapq.heappop(queue)\n        if d > dist[node]:\n            continue\n        for neighbor, weight in graph[node]:\n            nd = d + weight\n            if nd < dist[neighbor]:\n                dist[neighbor] = nd\n                prev[neighbor] = node\n                heapq.heappush(queue, (nd, neighbor))\n    return dist, prev\n\n\ndef path_to(prev, start, target):\n    path = [target]\n    while path[-1] != start:\n        path.append(prev[path[-1]])\n    return list(reversed(path))\n\n\ndef main():\n    graph = build_graph(EDGES)\n    dist, prev = dijkstra(graph, \"A\")\n    for node in sorted(dist):\n        print(f\"{node}: {dist[node]}\")\n    print(\"Path:\", \" -> \".join(path_to(prev, \"A\", \"F\")))\n\n\nif __name__ == \"__main__\":\n    main()\n",
+  "javascript|inventory": "class Item {\n  constructor(name, qty, price) {\n    this.name = name;\n    this.qty = qty;\n    this.price = price;\n  }\n\n  value() {\n    return this.qty * this.price;\n  }\n}\n\nclass Inventory {\n  constructor() {\n    this.items = new Map();\n  }\n\n  add(name, qty, price) {\n    this.items.set(name, new Item(name, qty, price));\n  }\n\n  restock(name, amount) {\n    this.items.get(name).qty += amount;\n  }\n\n  sell(name, amount) {\n    const item = this.items.get(name);\n    if (item.qty < amount) {\n      return false;\n    }\n    item.qty -= amount;\n    return true;\n  }\n\n  lowStock(threshold) {\n    return [...this.items.values()]\n      .filter((item) => item.qty <= threshold)\n      .map((item) => item.name)\n      .sort();\n  }\n\n  totalValue() {\n    return [...this.items.values()].reduce((sum, item) => sum + item.value(), 0);\n  }\n\n  report() {\n    return [...this.items.values()]\n      .sort((a, b) => b.value() - a.value() || a.name.localeCompare(b.name))\n      .map((item) => item.name.padEnd(12) + String(item.qty).padStart(5) + item.value().toFixed(2).padStart(10));\n  }\n}\n\nfunction main() {\n  const inventory = new Inventory();\n  inventory.add(\"apple\", 3, 0.5);\n  inventory.add(\"banana\", 12, 0.25);\n  inventory.add(\"cherry\", 0, 4.0);\n  inventory.add(\"date\", 7, 1.5);\n  inventory.add(\"elderberry\", 2, 6.0);\n  inventory.restock(\"cherry\", 5);\n  console.log(\"Sold banana:\", inventory.sell(\"banana\", 4) ? \"yes\" : \"no\");\n  console.log(\"Sold apple:\", inventory.sell(\"apple\", 10) ? \"yes\" : \"no\");\n  console.log(\"Low stock:\", inventory.lowStock(3).join(\", \"));\n  for (const line of inventory.report()) {\n    console.log(line);\n  }\n  console.log(`Total: ${inventory.totalValue().toFixed(2)}`);\n}\n\nmain();\n",
+  "javascript|dijkstra": "const EDGES = [\n  [\"A\", \"B\", 4], [\"A\", \"C\", 2], [\"B\", \"C\", 1], [\"B\", \"D\", 5], [\"C\", \"D\", 8],\n  [\"C\", \"E\", 10], [\"D\", \"E\", 2], [\"D\", \"F\", 6], [\"E\", \"F\", 3],\n];\n\nfunction buildGraph(edges) {\n  const graph = new Map();\n  for (const [a, b, weight] of edges) {\n    if (!graph.has(a)) graph.set(a, []);\n    if (!graph.has(b)) graph.set(b, []);\n    graph.get(a).push([b, weight]);\n    graph.get(b).push([a, weight]);\n  }\n  return graph;\n}\n\nfunction dijkstra(graph, start) {\n  const dist = new Map();\n  const prev = new Map();\n  for (const node of graph.keys()) dist.set(node, Infinity);\n  dist.set(start, 0);\n  const queue = [[0, start]];\n  while (queue.length > 0) {\n    queue.sort((x, y) => x[0] - y[0]);\n    const [d, node] = queue.shift();\n    if (d > dist.get(node)) continue;\n    for (const [neighbor, weight] of graph.get(node)) {\n      const nd = d + weight;\n      if (nd < dist.get(neighbor)) {\n        dist.set(neighbor, nd);\n        prev.set(neighbor, node);\n        queue.push([nd, neighbor]);\n      }\n    }\n  }\n  return { dist, prev };\n}\n\nfunction pathTo(prev, start, target) {\n  const path = [target];\n  while (path[path.length - 1] !== start) {\n    path.push(prev.get(path[path.length - 1]));\n  }\n  return path.reverse();\n}\n\nfunction main() {\n  const graph = buildGraph(EDGES);\n  const { dist, prev } = dijkstra(graph, \"A\");\n  for (const node of [...dist.keys()].sort()) {\n    console.log(`${node}: ${dist.get(node)}`);\n  }\n  console.log(\"Path:\", pathTo(prev, \"A\", \"F\").join(\" -> \"));\n}\n\nmain();\n",
+  "typescript|inventory": "class Item {\n  constructor(\n    public name: string,\n    public qty: number,\n    public price: number,\n  ) {}\n\n  value(): number {\n    return this.qty * this.price;\n  }\n}\n\nclass Inventory {\n  private items = new Map<string, Item>();\n\n  add(name: string, qty: number, price: number): void {\n    this.items.set(name, new Item(name, qty, price));\n  }\n\n  restock(name: string, amount: number): void {\n    this.items.get(name)!.qty += amount;\n  }\n\n  sell(name: string, amount: number): boolean {\n    const item = this.items.get(name)!;\n    if (item.qty < amount) {\n      return false;\n    }\n    item.qty -= amount;\n    return true;\n  }\n\n  lowStock(threshold: number): string[] {\n    return [...this.items.values()]\n      .filter((item) => item.qty <= threshold)\n      .map((item) => item.name)\n      .sort();\n  }\n\n  totalValue(): number {\n    return [...this.items.values()].reduce((sum, item) => sum + item.value(), 0);\n  }\n\n  report(): string[] {\n    return [...this.items.values()]\n      .sort((a, b) => b.value() - a.value() || a.name.localeCompare(b.name))\n      .map((item) => item.name.padEnd(12) + String(item.qty).padStart(5) + item.value().toFixed(2).padStart(10));\n  }\n}\n\nfunction main(): void {\n  const inventory = new Inventory();\n  inventory.add(\"apple\", 3, 0.5);\n  inventory.add(\"banana\", 12, 0.25);\n  inventory.add(\"cherry\", 0, 4.0);\n  inventory.add(\"date\", 7, 1.5);\n  inventory.add(\"elderberry\", 2, 6.0);\n  inventory.restock(\"cherry\", 5);\n  console.log(\"Sold banana:\", inventory.sell(\"banana\", 4) ? \"yes\" : \"no\");\n  console.log(\"Sold apple:\", inventory.sell(\"apple\", 10) ? \"yes\" : \"no\");\n  console.log(\"Low stock:\", inventory.lowStock(3).join(\", \"));\n  for (const line of inventory.report()) {\n    console.log(line);\n  }\n  console.log(`Total: ${inventory.totalValue().toFixed(2)}`);\n}\n\nmain();\n",
+  "typescript|dijkstra": "type Edge = [string, string, number];\ntype Graph = Map<string, [string, number][]>;\n\nconst EDGES: Edge[] = [\n  [\"A\", \"B\", 4], [\"A\", \"C\", 2], [\"B\", \"C\", 1], [\"B\", \"D\", 5], [\"C\", \"D\", 8],\n  [\"C\", \"E\", 10], [\"D\", \"E\", 2], [\"D\", \"F\", 6], [\"E\", \"F\", 3],\n];\n\nfunction buildGraph(edges: Edge[]): Graph {\n  const graph: Graph = new Map();\n  for (const [a, b, weight] of edges) {\n    if (!graph.has(a)) graph.set(a, []);\n    if (!graph.has(b)) graph.set(b, []);\n    graph.get(a)!.push([b, weight]);\n    graph.get(b)!.push([a, weight]);\n  }\n  return graph;\n}\n\nfunction dijkstra(graph: Graph, start: string): { dist: Map<string, number>; prev: Map<string, string> } {\n  const dist = new Map<string, number>();\n  const prev = new Map<string, string>();\n  for (const node of graph.keys()) dist.set(node, Infinity);\n  dist.set(start, 0);\n  const queue: [number, string][] = [[0, start]];\n  while (queue.length > 0) {\n    queue.sort((x, y) => x[0] - y[0]);\n    const [d, node] = queue.shift()!;\n    if (d > dist.get(node)!) continue;\n    for (const [neighbor, weight] of graph.get(node)!) {\n      const nd = d + weight;\n      if (nd < dist.get(neighbor)!) {\n        dist.set(neighbor, nd);\n        prev.set(neighbor, node);\n        queue.push([nd, neighbor]);\n      }\n    }\n  }\n  return { dist, prev };\n}\n\nfunction pathTo(prev: Map<string, string>, start: string, target: string): string[] {\n  const path = [target];\n  while (path[path.length - 1] !== start) {\n    path.push(prev.get(path[path.length - 1])!);\n  }\n  return path.reverse();\n}\n\nfunction main(): void {\n  const graph = buildGraph(EDGES);\n  const { dist, prev } = dijkstra(graph, \"A\");\n  for (const node of [...dist.keys()].sort()) {\n    console.log(`${node}: ${dist.get(node)}`);\n  }\n  console.log(\"Path:\", pathTo(prev, \"A\", \"F\").join(\" -> \"));\n}\n\nmain();\n",
+  "java|inventory": "import java.util.ArrayList;\nimport java.util.Comparator;\nimport java.util.LinkedHashMap;\nimport java.util.List;\nimport java.util.Map;\n\npublic class Inventory {\n    static class Item {\n        final String name;\n        int qty;\n        final double price;\n\n        Item(String name, int qty, double price) {\n            this.name = name;\n            this.qty = qty;\n            this.price = price;\n        }\n\n        double value() {\n            return qty * price;\n        }\n    }\n\n    private final Map<String, Item> items = new LinkedHashMap<>();\n\n    public void add(String name, int qty, double price) {\n        items.put(name, new Item(name, qty, price));\n    }\n\n    public void restock(String name, int amount) {\n        items.get(name).qty += amount;\n    }\n\n    public boolean sell(String name, int amount) {\n        Item item = items.get(name);\n        if (item.qty < amount) {\n            return false;\n        }\n        item.qty -= amount;\n        return true;\n    }\n\n    public List<String> lowStock(int threshold) {\n        List<String> names = new ArrayList<>();\n        for (Item item : items.values()) {\n            if (item.qty <= threshold) {\n                names.add(item.name);\n            }\n        }\n        names.sort(null);\n        return names;\n    }\n\n    public double totalValue() {\n        double total = 0;\n        for (Item item : items.values()) {\n            total += item.value();\n        }\n        return total;\n    }\n\n    public List<String> report() {\n        List<Item> rows = new ArrayList<>(items.values());\n        rows.sort(Comparator.comparingDouble(Item::value).reversed().thenComparing(item -> item.name));\n        List<String> lines = new ArrayList<>();\n        for (Item item : rows) {\n            lines.add(String.format(\"%-12s%5d%10.2f\", item.name, item.qty, item.value()));\n        }\n        return lines;\n    }\n\n    public static void main(String[] args) {\n        Inventory inventory = new Inventory();\n        inventory.add(\"apple\", 3, 0.5);\n        inventory.add(\"banana\", 12, 0.25);\n        inventory.add(\"cherry\", 0, 4.0);\n        inventory.add(\"date\", 7, 1.5);\n        inventory.add(\"elderberry\", 2, 6.0);\n        inventory.restock(\"cherry\", 5);\n        System.out.println(\"Sold banana: \" + (inventory.sell(\"banana\", 4) ? \"yes\" : \"no\"));\n        System.out.println(\"Sold apple: \" + (inventory.sell(\"apple\", 10) ? \"yes\" : \"no\"));\n        System.out.println(\"Low stock: \" + String.join(\", \", inventory.lowStock(3)));\n        for (String line : inventory.report()) {\n            System.out.println(line);\n        }\n        System.out.println(String.format(\"Total: %.2f\", inventory.totalValue()));\n    }\n}\n",
+  "java|dijkstra": "import java.util.ArrayList;\nimport java.util.Collections;\nimport java.util.HashMap;\nimport java.util.List;\nimport java.util.Map;\nimport java.util.PriorityQueue;\nimport java.util.TreeMap;\n\npublic class Dijkstra {\n    record Edge(String to, int weight) {}\n\n    record Entry(int dist, String node) {}\n\n    static final Object[][] EDGES = {\n        {\"A\", \"B\", 4}, {\"A\", \"C\", 2}, {\"B\", \"C\", 1}, {\"B\", \"D\", 5}, {\"C\", \"D\", 8},\n        {\"C\", \"E\", 10}, {\"D\", \"E\", 2}, {\"D\", \"F\", 6}, {\"E\", \"F\", 3},\n    };\n\n    static Map<String, List<Edge>> buildGraph() {\n        Map<String, List<Edge>> graph = new HashMap<>();\n        for (Object[] e : EDGES) {\n            String a = (String) e[0];\n            String b = (String) e[1];\n            int weight = (Integer) e[2];\n            graph.computeIfAbsent(a, k -> new ArrayList<>()).add(new Edge(b, weight));\n            graph.computeIfAbsent(b, k -> new ArrayList<>()).add(new Edge(a, weight));\n        }\n        return graph;\n    }\n\n    public static void main(String[] args) {\n        Map<String, List<Edge>> graph = buildGraph();\n        Map<String, Integer> dist = new TreeMap<>();\n        Map<String, String> prev = new HashMap<>();\n        for (String node : graph.keySet()) {\n            dist.put(node, Integer.MAX_VALUE);\n        }\n        dist.put(\"A\", 0);\n        PriorityQueue<Entry> queue = new PriorityQueue<>((x, y) -> Integer.compare(x.dist(), y.dist()));\n        queue.add(new Entry(0, \"A\"));\n        while (!queue.isEmpty()) {\n            Entry current = queue.poll();\n            if (current.dist() > dist.get(current.node())) {\n                continue;\n            }\n            for (Edge edge : graph.get(current.node())) {\n                int nd = current.dist() + edge.weight();\n                if (nd < dist.get(edge.to())) {\n                    dist.put(edge.to(), nd);\n                    prev.put(edge.to(), current.node());\n                    queue.add(new Entry(nd, edge.to()));\n                }\n            }\n        }\n        for (Map.Entry<String, Integer> entry : dist.entrySet()) {\n            System.out.println(entry.getKey() + \": \" + entry.getValue());\n        }\n        List<String> path = new ArrayList<>();\n        path.add(\"F\");\n        while (!path.get(path.size() - 1).equals(\"A\")) {\n            path.add(prev.get(path.get(path.size() - 1)));\n        }\n        Collections.reverse(path);\n        System.out.println(\"Path: \" + String.join(\" -> \", path));\n    }\n}\n",
+  "go|inventory": "package main\n\nimport (\n\t\"fmt\"\n\t\"sort\"\n\t\"strings\"\n)\n\ntype Item struct {\n\tName  string\n\tQty   int\n\tPrice float64\n}\n\nfunc (i *Item) Value() float64 {\n\treturn float64(i.Qty) * i.Price\n}\n\ntype Inventory struct {\n\titems map[string]*Item\n}\n\nfunc NewInventory() *Inventory {\n\treturn &Inventory{items: make(map[string]*Item)}\n}\n\nfunc (inv *Inventory) Add(name string, qty int, price float64) {\n\tinv.items[name] = &Item{Name: name, Qty: qty, Price: price}\n}\n\nfunc (inv *Inventory) Restock(name string, amount int) {\n\tinv.items[name].Qty += amount\n}\n\nfunc (inv *Inventory) Sell(name string, amount int) bool {\n\titem := inv.items[name]\n\tif item.Qty < amount {\n\t\treturn false\n\t}\n\titem.Qty -= amount\n\treturn true\n}\n\nfunc (inv *Inventory) LowStock(threshold int) []string {\n\tvar names []string\n\tfor _, item := range inv.items {\n\t\tif item.Qty <= threshold {\n\t\t\tnames = append(names, item.Name)\n\t\t}\n\t}\n\tsort.Strings(names)\n\treturn names\n}\n\nfunc (inv *Inventory) TotalValue() float64 {\n\ttotal := 0.0\n\tfor _, item := range inv.items {\n\t\ttotal += item.Value()\n\t}\n\treturn total\n}\n\nfunc (inv *Inventory) Report() []string {\n\trows := make([]*Item, 0, len(inv.items))\n\tfor _, item := range inv.items {\n\t\trows = append(rows, item)\n\t}\n\tsort.Slice(rows, func(a, b int) bool {\n\t\tif rows[a].Value() != rows[b].Value() {\n\t\t\treturn rows[a].Value() > rows[b].Value()\n\t\t}\n\t\treturn rows[a].Name < rows[b].Name\n\t})\n\tlines := make([]string, 0, len(rows))\n\tfor _, item := range rows {\n\t\tlines = append(lines, fmt.Sprintf(\"%-12s%5d%10.2f\", item.Name, item.Qty, item.Value()))\n\t}\n\treturn lines\n}\n\nfunc yesNo(ok bool) string {\n\tif ok {\n\t\treturn \"yes\"\n\t}\n\treturn \"no\"\n}\n\nfunc main() {\n\tinventory := NewInventory()\n\tinventory.Add(\"apple\", 3, 0.5)\n\tinventory.Add(\"banana\", 12, 0.25)\n\tinventory.Add(\"cherry\", 0, 4.0)\n\tinventory.Add(\"date\", 7, 1.5)\n\tinventory.Add(\"elderberry\", 2, 6.0)\n\tinventory.Restock(\"cherry\", 5)\n\tfmt.Println(\"Sold banana:\", yesNo(inventory.Sell(\"banana\", 4)))\n\tfmt.Println(\"Sold apple:\", yesNo(inventory.Sell(\"apple\", 10)))\n\tfmt.Println(\"Low stock:\", strings.Join(inventory.LowStock(3), \", \"))\n\tfor _, line := range inventory.Report() {\n\t\tfmt.Println(line)\n\t}\n\tfmt.Printf(\"Total: %.2f\\n\", inventory.TotalValue())\n}\n",
+  "go|dijkstra": "package main\n\nimport (\n\t\"container/heap\"\n\t\"fmt\"\n\t\"math\"\n\t\"sort\"\n\t\"strings\"\n)\n\ntype Edge struct {\n\tTo     string\n\tWeight int\n}\n\ntype Entry struct {\n\tDist int\n\tNode string\n}\n\ntype Queue []Entry\n\nfunc (q Queue) Len() int            { return len(q) }\nfunc (q Queue) Less(i, j int) bool  { return q[i].Dist < q[j].Dist }\nfunc (q Queue) Swap(i, j int)       { q[i], q[j] = q[j], q[i] }\nfunc (q *Queue) Push(x interface{}) { *q = append(*q, x.(Entry)) }\nfunc (q *Queue) Pop() interface{} {\n\told := *q\n\tn := len(old)\n\titem := old[n-1]\n\t*q = old[:n-1]\n\treturn item\n}\n\nvar edges = []struct {\n\tA, B   string\n\tWeight int\n}{\n\t{\"A\", \"B\", 4}, {\"A\", \"C\", 2}, {\"B\", \"C\", 1}, {\"B\", \"D\", 5}, {\"C\", \"D\", 8},\n\t{\"C\", \"E\", 10}, {\"D\", \"E\", 2}, {\"D\", \"F\", 6}, {\"E\", \"F\", 3},\n}\n\nfunc buildGraph() map[string][]Edge {\n\tgraph := make(map[string][]Edge)\n\tfor _, e := range edges {\n\t\tgraph[e.A] = append(graph[e.A], Edge{e.B, e.Weight})\n\t\tgraph[e.B] = append(graph[e.B], Edge{e.A, e.Weight})\n\t}\n\treturn graph\n}\n\nfunc dijkstra(graph map[string][]Edge, start string) (map[string]int, map[string]string) {\n\tdist := make(map[string]int)\n\tprev := make(map[string]string)\n\tfor node := range graph {\n\t\tdist[node] = math.MaxInt\n\t}\n\tdist[start] = 0\n\tq := &Queue{{0, start}}\n\tfor q.Len() > 0 {\n\t\tcurrent := heap.Pop(q).(Entry)\n\t\tif current.Dist > dist[current.Node] {\n\t\t\tcontinue\n\t\t}\n\t\tfor _, edge := range graph[current.Node] {\n\t\t\tnd := current.Dist + edge.Weight\n\t\t\tif nd < dist[edge.To] {\n\t\t\t\tdist[edge.To] = nd\n\t\t\t\tprev[edge.To] = current.Node\n\t\t\t\theap.Push(q, Entry{nd, edge.To})\n\t\t\t}\n\t\t}\n\t}\n\treturn dist, prev\n}\n\nfunc main() {\n\tgraph := buildGraph()\n\tdist, prev := dijkstra(graph, \"A\")\n\tnodes := make([]string, 0, len(dist))\n\tfor node := range dist {\n\t\tnodes = append(nodes, node)\n\t}\n\tsort.Strings(nodes)\n\tfor _, node := range nodes {\n\t\tfmt.Printf(\"%s: %d\\n\", node, dist[node])\n\t}\n\tpath := []string{\"F\"}\n\tfor path[len(path)-1] != \"A\" {\n\t\tpath = append(path, prev[path[len(path)-1]])\n\t}\n\tfor i, j := 0, len(path)-1; i < j; i, j = i+1, j-1 {\n\t\tpath[i], path[j] = path[j], path[i]\n\t}\n\tfmt.Println(\"Path:\", strings.Join(path, \" -> \"))\n}\n",
+  "rust|inventory": "use std::collections::HashMap;\n\nstruct Item {\n    name: String,\n    qty: u32,\n    price: f64,\n}\n\nimpl Item {\n    fn value(&self) -> f64 {\n        self.qty as f64 * self.price\n    }\n}\n\nstruct Inventory {\n    items: HashMap<String, Item>,\n}\n\nimpl Inventory {\n    fn new() -> Self {\n        Inventory { items: HashMap::new() }\n    }\n\n    fn add(&mut self, name: &str, qty: u32, price: f64) {\n        self.items.insert(name.to_string(), Item { name: name.to_string(), qty, price });\n    }\n\n    fn restock(&mut self, name: &str, amount: u32) {\n        if let Some(item) = self.items.get_mut(name) {\n            item.qty += amount;\n        }\n    }\n\n    fn sell(&mut self, name: &str, amount: u32) -> bool {\n        match self.items.get_mut(name) {\n            Some(item) if item.qty >= amount => {\n                item.qty -= amount;\n                true\n            }\n            _ => false,\n        }\n    }\n\n    fn low_stock(&self, threshold: u32) -> Vec<String> {\n        let mut names: Vec<String> = self\n            .items\n            .values()\n            .filter(|item| item.qty <= threshold)\n            .map(|item| item.name.clone())\n            .collect();\n        names.sort();\n        names\n    }\n\n    fn total_value(&self) -> f64 {\n        self.items.values().map(|item| item.value()).sum()\n    }\n\n    fn report(&self) -> Vec<String> {\n        let mut rows: Vec<&Item> = self.items.values().collect();\n        rows.sort_by(|a, b| b.value().partial_cmp(&a.value()).unwrap().then_with(|| a.name.cmp(&b.name)));\n        rows.iter()\n            .map(|item| format!(\"{:<12}{:>5}{:>10.2}\", item.name, item.qty, item.value()))\n            .collect()\n    }\n}\n\nfn yes_no(ok: bool) -> &'static str {\n    if ok { \"yes\" } else { \"no\" }\n}\n\nfn main() {\n    let mut inventory = Inventory::new();\n    inventory.add(\"apple\", 3, 0.5);\n    inventory.add(\"banana\", 12, 0.25);\n    inventory.add(\"cherry\", 0, 4.0);\n    inventory.add(\"date\", 7, 1.5);\n    inventory.add(\"elderberry\", 2, 6.0);\n    inventory.restock(\"cherry\", 5);\n    println!(\"Sold banana: {}\", yes_no(inventory.sell(\"banana\", 4)));\n    println!(\"Sold apple: {}\", yes_no(inventory.sell(\"apple\", 10)));\n    println!(\"Low stock: {}\", inventory.low_stock(3).join(\", \"));\n    for line in inventory.report() {\n        println!(\"{}\", line);\n    }\n    println!(\"Total: {:.2}\", inventory.total_value());\n}\n",
+  "rust|dijkstra": "use std::cmp::Reverse;\nuse std::collections::{BTreeMap, BinaryHeap, HashMap};\n\nconst EDGES: [(&str, &str, u32); 9] = [\n    (\"A\", \"B\", 4), (\"A\", \"C\", 2), (\"B\", \"C\", 1), (\"B\", \"D\", 5), (\"C\", \"D\", 8),\n    (\"C\", \"E\", 10), (\"D\", \"E\", 2), (\"D\", \"F\", 6), (\"E\", \"F\", 3),\n];\n\nfn build_graph() -> HashMap<&'static str, Vec<(&'static str, u32)>> {\n    let mut graph: HashMap<&str, Vec<(&str, u32)>> = HashMap::new();\n    for &(a, b, weight) in EDGES.iter() {\n        graph.entry(a).or_default().push((b, weight));\n        graph.entry(b).or_default().push((a, weight));\n    }\n    graph\n}\n\nfn dijkstra<'a>(\n    graph: &HashMap<&'a str, Vec<(&'a str, u32)>>,\n    start: &'a str,\n) -> (BTreeMap<&'a str, u32>, HashMap<&'a str, &'a str>) {\n    let mut dist: BTreeMap<&str, u32> = graph.keys().map(|&node| (node, u32::MAX)).collect();\n    let mut prev = HashMap::new();\n    dist.insert(start, 0);\n    let mut queue = BinaryHeap::new();\n    queue.push(Reverse((0, start)));\n    while let Some(Reverse((d, node))) = queue.pop() {\n        if d > dist[node] {\n            continue;\n        }\n        for &(neighbor, weight) in &graph[node] {\n            let nd = d + weight;\n            if nd < dist[neighbor] {\n                dist.insert(neighbor, nd);\n                prev.insert(neighbor, node);\n                queue.push(Reverse((nd, neighbor)));\n            }\n        }\n    }\n    (dist, prev)\n}\n\nfn main() {\n    let graph = build_graph();\n    let (dist, prev) = dijkstra(&graph, \"A\");\n    for (node, d) in &dist {\n        println!(\"{}: {}\", node, d);\n    }\n    let mut path = vec![\"F\"];\n    while *path.last().unwrap() != \"A\" {\n        path.push(prev[path.last().unwrap()]);\n    }\n    path.reverse();\n    println!(\"Path: {}\", path.join(\" -> \"));\n}\n",
+  "cpp|inventory": "#include <algorithm>\n#include <cstdio>\n#include <iostream>\n#include <map>\n#include <string>\n#include <vector>\n\nstruct Item {\n    std::string name;\n    int qty;\n    double price;\n\n    double value() const { return qty * price; }\n};\n\nclass Inventory {\npublic:\n    void add(const std::string& name, int qty, double price) {\n        items_[name] = Item{name, qty, price};\n    }\n\n    void restock(const std::string& name, int amount) {\n        items_[name].qty += amount;\n    }\n\n    bool sell(const std::string& name, int amount) {\n        Item& item = items_[name];\n        if (item.qty < amount) {\n            return false;\n        }\n        item.qty -= amount;\n        return true;\n    }\n\n    std::vector<std::string> lowStock(int threshold) const {\n        std::vector<std::string> names;\n        for (const auto& [name, item] : items_) {\n            if (item.qty <= threshold) {\n                names.push_back(name);\n            }\n        }\n        return names;\n    }\n\n    double totalValue() const {\n        double total = 0;\n        for (const auto& [name, item] : items_) {\n            total += item.value();\n        }\n        return total;\n    }\n\n    std::vector<std::string> report() const {\n        std::vector<Item> rows;\n        for (const auto& [name, item] : items_) {\n            rows.push_back(item);\n        }\n        std::sort(rows.begin(), rows.end(), [](const Item& a, const Item& b) {\n            if (a.value() != b.value()) {\n                return a.value() > b.value();\n            }\n            return a.name < b.name;\n        });\n        std::vector<std::string> lines;\n        for (const Item& item : rows) {\n            char buffer[64];\n            std::snprintf(buffer, sizeof(buffer), \"%-12s%5d%10.2f\", item.name.c_str(), item.qty, item.value());\n            lines.push_back(buffer);\n        }\n        return lines;\n    }\n\nprivate:\n    std::map<std::string, Item> items_;\n};\n\nstd::string join(const std::vector<std::string>& parts, const std::string& sep) {\n    std::string result;\n    for (size_t i = 0; i < parts.size(); ++i) {\n        if (i > 0) {\n            result += sep;\n        }\n        result += parts[i];\n    }\n    return result;\n}\n\nint main() {\n    Inventory inventory;\n    inventory.add(\"apple\", 3, 0.5);\n    inventory.add(\"banana\", 12, 0.25);\n    inventory.add(\"cherry\", 0, 4.0);\n    inventory.add(\"date\", 7, 1.5);\n    inventory.add(\"elderberry\", 2, 6.0);\n    inventory.restock(\"cherry\", 5);\n    std::cout << \"Sold banana: \" << (inventory.sell(\"banana\", 4) ? \"yes\" : \"no\") << \"\\n\";\n    std::cout << \"Sold apple: \" << (inventory.sell(\"apple\", 10) ? \"yes\" : \"no\") << \"\\n\";\n    std::cout << \"Low stock: \" << join(inventory.lowStock(3), \", \") << \"\\n\";\n    for (const std::string& line : inventory.report()) {\n        std::cout << line << \"\\n\";\n    }\n    std::printf(\"Total: %.2f\\n\", inventory.totalValue());\n    return 0;\n}\n",
+  "cpp|dijkstra": "#include <algorithm>\n#include <climits>\n#include <functional>\n#include <iostream>\n#include <map>\n#include <queue>\n#include <string>\n#include <tuple>\n#include <utility>\n#include <vector>\n\nusing Graph = std::map<std::string, std::vector<std::pair<std::string, int>>>;\n\nconst std::vector<std::tuple<std::string, std::string, int>> EDGES = {\n    {\"A\", \"B\", 4}, {\"A\", \"C\", 2}, {\"B\", \"C\", 1}, {\"B\", \"D\", 5}, {\"C\", \"D\", 8},\n    {\"C\", \"E\", 10}, {\"D\", \"E\", 2}, {\"D\", \"F\", 6}, {\"E\", \"F\", 3},\n};\n\nGraph buildGraph() {\n    Graph graph;\n    for (const auto& [a, b, weight] : EDGES) {\n        graph[a].push_back({b, weight});\n        graph[b].push_back({a, weight});\n    }\n    return graph;\n}\n\nint main() {\n    Graph graph = buildGraph();\n    std::map<std::string, int> dist;\n    std::map<std::string, std::string> prev;\n    for (const auto& [node, edges] : graph) {\n        dist[node] = INT_MAX;\n    }\n    dist[\"A\"] = 0;\n    using Entry = std::pair<int, std::string>;\n    std::priority_queue<Entry, std::vector<Entry>, std::greater<Entry>> queue;\n    queue.push({0, \"A\"});\n    while (!queue.empty()) {\n        auto [d, node] = queue.top();\n        queue.pop();\n        if (d > dist[node]) {\n            continue;\n        }\n        for (const auto& [neighbor, weight] : graph[node]) {\n            int nd = d + weight;\n            if (nd < dist[neighbor]) {\n                dist[neighbor] = nd;\n                prev[neighbor] = node;\n                queue.push({nd, neighbor});\n            }\n        }\n    }\n    for (const auto& [node, d] : dist) {\n        std::cout << node << \": \" << d << \"\\n\";\n    }\n    std::vector<std::string> path = {\"F\"};\n    while (path.back() != \"A\") {\n        path.push_back(prev[path.back()]);\n    }\n    std::reverse(path.begin(), path.end());\n    std::cout << \"Path: \";\n    for (size_t i = 0; i < path.size(); ++i) {\n        std::cout << (i > 0 ? \" -> \" : \"\") << path[i];\n    }\n    std::cout << \"\\n\";\n    return 0;\n}\n",
+  "c|inventory": "#include <stdbool.h>\n#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\n#define MAX_ITEMS 16\n\ntypedef struct {\n    char name[32];\n    int qty;\n    double price;\n} Item;\n\ntypedef struct {\n    Item items[MAX_ITEMS];\n    int count;\n} Inventory;\n\nstatic double item_value(const Item *item) {\n    return item->qty * item->price;\n}\n\nstatic Item *find_item(Inventory *inv, const char *name) {\n    for (int i = 0; i < inv->count; i++) {\n        if (strcmp(inv->items[i].name, name) == 0) {\n            return &inv->items[i];\n        }\n    }\n    return NULL;\n}\n\nstatic void add_item(Inventory *inv, const char *name, int qty, double price) {\n    Item *item = &inv->items[inv->count++];\n    strncpy(item->name, name, sizeof(item->name) - 1);\n    item->name[sizeof(item->name) - 1] = '\\0';\n    item->qty = qty;\n    item->price = price;\n}\n\nstatic void restock(Inventory *inv, const char *name, int amount) {\n    find_item(inv, name)->qty += amount;\n}\n\nstatic bool sell(Inventory *inv, const char *name, int amount) {\n    Item *item = find_item(inv, name);\n    if (item->qty < amount) {\n        return false;\n    }\n    item->qty -= amount;\n    return true;\n}\n\nstatic int compare_names(const void *a, const void *b) {\n    return strcmp(*(const char *const *)a, *(const char *const *)b);\n}\n\nstatic void print_low_stock(const Inventory *inv, int threshold) {\n    const char *names[MAX_ITEMS];\n    int n = 0;\n    for (int i = 0; i < inv->count; i++) {\n        if (inv->items[i].qty <= threshold) {\n            names[n++] = inv->items[i].name;\n        }\n    }\n    qsort(names, n, sizeof(names[0]), compare_names);\n    printf(\"Low stock: \");\n    for (int i = 0; i < n; i++) {\n        printf(\"%s%s\", i > 0 ? \", \" : \"\", names[i]);\n    }\n    printf(\"\\n\");\n}\n\nstatic double total_value(const Inventory *inv) {\n    double total = 0;\n    for (int i = 0; i < inv->count; i++) {\n        total += item_value(&inv->items[i]);\n    }\n    return total;\n}\n\nstatic int compare_items(const void *a, const void *b) {\n    const Item *x = a;\n    const Item *y = b;\n    double vx = item_value(x);\n    double vy = item_value(y);\n    if (vx != vy) {\n        return vx < vy ? 1 : -1;\n    }\n    return strcmp(x->name, y->name);\n}\n\nstatic void print_report(const Inventory *inv) {\n    Item rows[MAX_ITEMS];\n    memcpy(rows, inv->items, sizeof(Item) * inv->count);\n    qsort(rows, inv->count, sizeof(Item), compare_items);\n    for (int i = 0; i < inv->count; i++) {\n        printf(\"%-12s%5d%10.2f\\n\", rows[i].name, rows[i].qty, item_value(&rows[i]));\n    }\n}\n\nint main(void) {\n    Inventory inventory = {.count = 0};\n    add_item(&inventory, \"apple\", 3, 0.5);\n    add_item(&inventory, \"banana\", 12, 0.25);\n    add_item(&inventory, \"cherry\", 0, 4.0);\n    add_item(&inventory, \"date\", 7, 1.5);\n    add_item(&inventory, \"elderberry\", 2, 6.0);\n    restock(&inventory, \"cherry\", 5);\n    printf(\"Sold banana: %s\\n\", sell(&inventory, \"banana\", 4) ? \"yes\" : \"no\");\n    printf(\"Sold apple: %s\\n\", sell(&inventory, \"apple\", 10) ? \"yes\" : \"no\");\n    print_low_stock(&inventory, 3);\n    print_report(&inventory);\n    printf(\"Total: %.2f\\n\", total_value(&inventory));\n    return 0;\n}\n",
+  "c|dijkstra": "#include <limits.h>\n#include <stdbool.h>\n#include <stdio.h>\n\n#define N 6\n\nstatic const char NAMES[N] = {'A', 'B', 'C', 'D', 'E', 'F'};\n\nstatic const int EDGES[][3] = {\n    {0, 1, 4}, {0, 2, 2}, {1, 2, 1}, {1, 3, 5}, {2, 3, 8},\n    {2, 4, 10}, {3, 4, 2}, {3, 5, 6}, {4, 5, 3},\n};\n\nint main(void) {\n    int graph[N][N] = {0};\n    int edge_count = sizeof(EDGES) / sizeof(EDGES[0]);\n    for (int i = 0; i < edge_count; i++) {\n        graph[EDGES[i][0]][EDGES[i][1]] = EDGES[i][2];\n        graph[EDGES[i][1]][EDGES[i][0]] = EDGES[i][2];\n    }\n    int dist[N];\n    int prev[N];\n    bool done[N] = {false};\n    for (int i = 0; i < N; i++) {\n        dist[i] = INT_MAX;\n        prev[i] = -1;\n    }\n    dist[0] = 0;\n    for (int round = 0; round < N; round++) {\n        int node = -1;\n        for (int i = 0; i < N; i++) {\n            if (!done[i] && (node == -1 || dist[i] < dist[node])) {\n                node = i;\n            }\n        }\n        if (dist[node] == INT_MAX) {\n            break;\n        }\n        done[node] = true;\n        for (int neighbor = 0; neighbor < N; neighbor++) {\n            int weight = graph[node][neighbor];\n            if (weight > 0 && dist[node] + weight < dist[neighbor]) {\n                dist[neighbor] = dist[node] + weight;\n                prev[neighbor] = node;\n            }\n        }\n    }\n    for (int i = 0; i < N; i++) {\n        printf(\"%c: %d\\n\", NAMES[i], dist[i]);\n    }\n    int path[N];\n    int length = 0;\n    for (int node = 5; node != -1; node = prev[node]) {\n        path[length++] = node;\n    }\n    printf(\"Path: \");\n    for (int i = length - 1; i >= 0; i--) {\n        printf(\"%c%s\", NAMES[path[i]], i > 0 ? \" -> \" : \"\");\n    }\n    printf(\"\\n\");\n    return 0;\n}\n",
+  "php|inventory": "<?php\n\nclass Item\n{\n    public function __construct(\n        public string $name,\n        public int $qty,\n        public float $price,\n    ) {\n    }\n\n    public function value(): float\n    {\n        return $this->qty * $this->price;\n    }\n}\n\nclass Inventory\n{\n    private array $items = [];\n\n    public function add(string $name, int $qty, float $price): void\n    {\n        $this->items[$name] = new Item($name, $qty, $price);\n    }\n\n    public function restock(string $name, int $amount): void\n    {\n        $this->items[$name]->qty += $amount;\n    }\n\n    public function sell(string $name, int $amount): bool\n    {\n        $item = $this->items[$name];\n        if ($item->qty < $amount) {\n            return false;\n        }\n        $item->qty -= $amount;\n        return true;\n    }\n\n    public function lowStock(int $threshold): array\n    {\n        $names = [];\n        foreach ($this->items as $item) {\n            if ($item->qty <= $threshold) {\n                $names[] = $item->name;\n            }\n        }\n        sort($names);\n        return $names;\n    }\n\n    public function totalValue(): float\n    {\n        return array_sum(array_map(fn (Item $item) => $item->value(), $this->items));\n    }\n\n    public function report(): array\n    {\n        $rows = array_values($this->items);\n        usort($rows, fn (Item $a, Item $b) => [$b->value(), $a->name] <=> [$a->value(), $b->name]);\n        return array_map(fn (Item $item) => sprintf('%-12s%5d%10.2f', $item->name, $item->qty, $item->value()), $rows);\n    }\n}\n\n$inventory = new Inventory();\n$inventory->add('apple', 3, 0.5);\n$inventory->add('banana', 12, 0.25);\n$inventory->add('cherry', 0, 4.0);\n$inventory->add('date', 7, 1.5);\n$inventory->add('elderberry', 2, 6.0);\n$inventory->restock('cherry', 5);\necho 'Sold banana: ' . ($inventory->sell('banana', 4) ? 'yes' : 'no') . \"\\n\";\necho 'Sold apple: ' . ($inventory->sell('apple', 10) ? 'yes' : 'no') . \"\\n\";\necho 'Low stock: ' . implode(', ', $inventory->lowStock(3)) . \"\\n\";\nforeach ($inventory->report() as $line) {\n    echo $line . \"\\n\";\n}\nprintf(\"Total: %.2f\\n\", $inventory->totalValue());\n",
+  "php|dijkstra": "<?php\n\nconst EDGES = [\n    ['A', 'B', 4], ['A', 'C', 2], ['B', 'C', 1], ['B', 'D', 5], ['C', 'D', 8],\n    ['C', 'E', 10], ['D', 'E', 2], ['D', 'F', 6], ['E', 'F', 3],\n];\n\nfunction buildGraph(array $edges): array\n{\n    $graph = [];\n    foreach ($edges as [$a, $b, $weight]) {\n        $graph[$a][] = [$b, $weight];\n        $graph[$b][] = [$a, $weight];\n    }\n    return $graph;\n}\n\nfunction dijkstra(array $graph, string $start): array\n{\n    $dist = array_fill_keys(array_keys($graph), PHP_INT_MAX);\n    $prev = [];\n    $dist[$start] = 0;\n    $queue = new SplPriorityQueue();\n    $queue->setExtractFlags(SplPriorityQueue::EXTR_BOTH);\n    $queue->insert($start, 0);\n    while (!$queue->isEmpty()) {\n        ['data' => $node, 'priority' => $priority] = $queue->extract();\n        $d = -$priority;\n        if ($d > $dist[$node]) {\n            continue;\n        }\n        foreach ($graph[$node] as [$neighbor, $weight]) {\n            $nd = $d + $weight;\n            if ($nd < $dist[$neighbor]) {\n                $dist[$neighbor] = $nd;\n                $prev[$neighbor] = $node;\n                $queue->insert($neighbor, -$nd);\n            }\n        }\n    }\n    return [$dist, $prev];\n}\n\nfunction pathTo(array $prev, string $start, string $target): array\n{\n    $path = [$target];\n    while (end($path) !== $start) {\n        $path[] = $prev[end($path)];\n    }\n    return array_reverse($path);\n}\n\n$graph = buildGraph(EDGES);\n[$dist, $prev] = dijkstra($graph, 'A');\nksort($dist);\nforeach ($dist as $node => $d) {\n    echo \"$node: $d\\n\";\n}\necho 'Path: ' . implode(' -> ', pathTo($prev, 'A', 'F')) . \"\\n\";\n",
+  "ruby|inventory": "class Item\n  attr_reader :name, :price\n  attr_accessor :qty\n\n  def initialize(name, qty, price)\n    @name = name\n    @qty = qty\n    @price = price\n  end\n\n  def value\n    qty * price\n  end\nend\n\nclass Inventory\n  def initialize\n    @items = {}\n  end\n\n  def add(name, qty, price)\n    @items[name] = Item.new(name, qty, price)\n  end\n\n  def restock(name, amount)\n    @items[name].qty += amount\n  end\n\n  def sell(name, amount)\n    item = @items[name]\n    return false if item.qty < amount\n\n    item.qty -= amount\n    true\n  end\n\n  def low_stock(threshold)\n    @items.values.select { |item| item.qty <= threshold }.map(&:name).sort\n  end\n\n  def total_value\n    @items.values.sum(&:value)\n  end\n\n  def report\n    @items.values\n          .sort_by { |item| [-item.value, item.name] }\n          .map { |item| format('%-12s%5d%10.2f', item.name, item.qty, item.value) }\n  end\nend\n\ninventory = Inventory.new\ninventory.add('apple', 3, 0.5)\ninventory.add('banana', 12, 0.25)\ninventory.add('cherry', 0, 4.0)\ninventory.add('date', 7, 1.5)\ninventory.add('elderberry', 2, 6.0)\ninventory.restock('cherry', 5)\nputs \"Sold banana: #{inventory.sell('banana', 4) ? 'yes' : 'no'}\"\nputs \"Sold apple: #{inventory.sell('apple', 10) ? 'yes' : 'no'}\"\nputs \"Low stock: #{inventory.low_stock(3).join(', ')}\"\ninventory.report.each { |line| puts line }\nputs format('Total: %.2f', inventory.total_value)\n",
+  "ruby|dijkstra": "EDGES = [\n  ['A', 'B', 4], ['A', 'C', 2], ['B', 'C', 1], ['B', 'D', 5], ['C', 'D', 8],\n  ['C', 'E', 10], ['D', 'E', 2], ['D', 'F', 6], ['E', 'F', 3]\n].freeze\n\ndef build_graph(edges)\n  graph = Hash.new { |hash, key| hash[key] = [] }\n  edges.each do |a, b, weight|\n    graph[a] << [b, weight]\n    graph[b] << [a, weight]\n  end\n  graph\nend\n\ndef dijkstra(graph, start)\n  dist = graph.keys.to_h { |node| [node, Float::INFINITY] }\n  prev = {}\n  dist[start] = 0\n  queue = [[0, start]]\n  until queue.empty?\n    d, node = queue.min_by(&:first)\n    queue.delete([d, node])\n    next if d > dist[node]\n\n    graph[node].each do |neighbor, weight|\n      nd = d + weight\n      next unless nd < dist[neighbor]\n\n      dist[neighbor] = nd\n      prev[neighbor] = node\n      queue << [nd, neighbor]\n    end\n  end\n  [dist, prev]\nend\n\ndef path_to(prev, start, target)\n  path = [target]\n  path << prev[path.last] until path.last == start\n  path.reverse\nend\n\ngraph = build_graph(EDGES)\ndist, prev = dijkstra(graph, 'A')\ndist.keys.sort.each { |node| puts \"#{node}: #{dist[node]}\" }\nputs \"Path: #{path_to(prev, 'A', 'F').join(' -> ')}\"\n"
+ }
+}

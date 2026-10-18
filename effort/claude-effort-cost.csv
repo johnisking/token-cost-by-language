@@ -1,0 +1,8 @@
+model,effort,seconds,output_tokens,total_tokens,cost_usd,code_lines
+claude-opus-5-5,low,32,3368,129315,0.48,138
+claude-opus-5-5,medium,52,6299,133428,0.56,358
+claude-opus-5-5,high,110,12376,222854,0.75,523
+claude-opus-5-5,xhigh,272,32435,472082,1.36,639
+claude-opus-5-5,max,1342,160033,2504957,5.25,1121
+claude-sonnet-5-5,medium,37,4100,115073,0.25,198
+claude-sonnet-5-5,high,58,8073,137593,0.30,398

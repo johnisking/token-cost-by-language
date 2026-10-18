@@ -1,0 +1,8 @@
+input,label,kind,pages,claude55_tokens,claude45_tokens,gemini_tokens,gpt_tokens,claude55_per_page,claude45_per_page,gemini_per_page
+text_1p,"PDF, text, 1 page",pdf,1,2347,2115,561,,2347,2115,561
+text_5p,"PDF, text, 5 pages",pdf,5,11631,10499,2801,,2326,2100,560
+text_10p,"PDF, text, 10 pages",pdf,10,23236,20979,5601,,2324,2098,560
+table_1p,"PDF, table, 1 page",pdf,1,2481,2278,561,,2481,2278,561
+scan_1p,"PDF, scanned image, 1 page",pdf,1,1600,1592,561,,1600,1592,561
+text_page_plain,Same page pasted as text,text,1,728,503,455,461,728,503,455
+table_plain,Same table pasted as CSV text,text,1,913,720,777,629,913,720,777

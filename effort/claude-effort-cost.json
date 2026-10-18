@@ -1,0 +1,81 @@
+{
+ "title": "Claude effort levels: tokens, time and cost for the same coding task",
+ "url": "https://tokensave.app/data/claude-effort-cost",
+ "license": "CC BY 4.0",
+ "measured": "2026-10-09",
+ "tool": "Claude Code (claude -p --effort), tokens and cost from ccusage at API prices",
+ "prompt": "Make a brick-breaker game that runs in the browser as a single file named index.html in the current folder. It needs 2 levels, a score display and 3 lives, and it must be playable with the keyboard and the mouse. Write the file and finish.",
+ "citation": "TokenSave (2026). Claude effort levels: tokens, time and cost for the same coding task [Data set]. https://tokensave.app/data/claude-effort-cost",
+ "rows": [
+  {
+   "model": "claude-opus-5-5",
+   "model_name": "Opus 5.5",
+   "effort": "low",
+   "seconds": 32,
+   "output_tokens": 3368,
+   "total_tokens": 129315,
+   "cost_usd": 0.48,
+   "code_lines": 138
+  },
+  {
+   "model": "claude-opus-5-5",
+   "model_name": "Opus 5.5",
+   "effort": "medium",
+   "seconds": 52,
+   "output_tokens": 6299,
+   "total_tokens": 133428,
+   "cost_usd": 0.56,
+   "code_lines": 358
+  },
+  {
+   "model": "claude-opus-5-5",
+   "model_name": "Opus 5.5",
+   "effort": "high",
+   "seconds": 110,
+   "output_tokens": 12376,
+   "total_tokens": 222854,
+   "cost_usd": 0.75,
+   "code_lines": 523
+  },
+  {
+   "model": "claude-opus-5-5",
+   "model_name": "Opus 5.5",
+   "effort": "xhigh",
+   "seconds": 272,
+   "output_tokens": 32435,
+   "total_tokens": 472082,
+   "cost_usd": 1.36,
+   "code_lines": 639
+  },
+  {
+   "model": "claude-opus-5-5",
+   "model_name": "Opus 5.5",
+   "effort": "max",
+   "seconds": 1342,
+   "output_tokens": 160033,
+   "total_tokens": 2504957,
+   "cost_usd": 5.25,
+   "code_lines": 1121
+  },
+  {
+   "model": "claude-sonnet-5-5",
+   "model_name": "Sonnet 5.5",
+   "effort": "medium",
+   "seconds": 37,
+   "output_tokens": 4100,
+   "total_tokens": 115073,
+   "cost_usd": 0.25,
+   "code_lines": 198
+  },
+  {
+   "model": "claude-sonnet-5-5",
+   "model_name": "Sonnet 5.5",
+   "effort": "high",
+   "seconds": 58,
+   "output_tokens": 8073,
+   "total_tokens": 137593,
+   "cost_usd": 0.3,
+   "code_lines": 398
+  }
+ ]
+}

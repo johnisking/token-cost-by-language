@@ -1,0 +1,110 @@
+{
+ "title": "PDF token cost per page: Claude vs Gemini, and PDF vs pasted text",
+ "url": "https://tokensave.app/data/pdf-token-cost",
+ "license": "CC BY 4.0",
+ "measured": "2026-10-18",
+ "tokenizers": {
+  "claude55": "Claude Opus 5.5 / Sonnet 5.5 (identical counts)",
+  "claude45": "Claude Haiku 4.5",
+  "gemini": "Gemini 3.8 Flash (AI Studio)",
+  "gpt": "OpenAI o200k_base, pasted text only"
+ },
+ "citation": "TokenSave (2026). PDF token cost per page: Claude vs Gemini, and PDF vs pasted text [Data set]. https://tokensave.app/data/pdf-token-cost",
+ "rows": [
+  {
+   "input": "text_1p",
+   "label": "PDF, text, 1 page",
+   "kind": "pdf",
+   "pages": 1,
+   "claude55": 2347,
+   "claude45": 2115,
+   "gemini": 561,
+   "gpt": null,
+   "claude55_per_page": 2347,
+   "claude45_per_page": 2115,
+   "gemini_per_page": 561
+  },
+  {
+   "input": "text_5p",
+   "label": "PDF, text, 5 pages",
+   "kind": "pdf",
+   "pages": 5,
+   "claude55": 11631,
+   "claude45": 10499,
+   "gemini": 2801,
+   "gpt": null,
+   "claude55_per_page": 2326,
+   "claude45_per_page": 2100,
+   "gemini_per_page": 560
+  },
+  {
+   "input": "text_10p",
+   "label": "PDF, text, 10 pages",
+   "kind": "pdf",
+   "pages": 10,
+   "claude55": 23236,
+   "claude45": 20979,
+   "gemini": 5601,
+   "gpt": null,
+   "claude55_per_page": 2324,
+   "claude45_per_page": 2098,
+   "gemini_per_page": 560
+  },
+  {
+   "input": "table_1p",
+   "label": "PDF, table, 1 page",
+   "kind": "pdf",
+   "pages": 1,
+   "claude55": 2481,
+   "claude45": 2278,
+   "gemini": 561,
+   "gpt": null,
+   "claude55_per_page": 2481,
+   "claude45_per_page": 2278,
+   "gemini_per_page": 561
+  },
+  {
+   "input": "scan_1p",
+   "label": "PDF, scanned image, 1 page",
+   "kind": "pdf",
+   "pages": 1,
+   "claude55": 1600,
+   "claude45": 1592,
+   "gemini": 561,
+   "gpt": null,
+   "claude55_per_page": 1600,
+   "claude45_per_page": 1592,
+   "gemini_per_page": 561
+  },
+  {
+   "input": "text_page_plain",
+   "label": "Same page pasted as text",
+   "kind": "text",
+   "pages": 1,
+   "claude55": 728,
+   "claude45": 503,
+   "gemini": 455,
+   "gpt": 461,
+   "claude55_per_page": 728,
+   "claude45_per_page": 503,
+   "gemini_per_page": 455
+  },
+  {
+   "input": "table_plain",
+   "label": "Same table pasted as CSV text",
+   "kind": "text",
+   "pages": 1,
+   "claude55": 913,
+   "claude45": 720,
+   "gemini": 777,
+   "gpt": 629,
+   "claude55_per_page": 913,
+   "claude45_per_page": 720,
+   "gemini_per_page": 777
+  }
+ ],
+ "pasted_text": {
+  "text_page_plain": "Garden notes, page 1\n\nKeeping a small vegetable garden productive through a whole season is mostly a matter of steady, unglamorous habits rather than special tricks. The most common reason beginners give up is not bad soil or bad luck but an early burst of enthusiasm followed by weeks of neglect. A bed that gets ten minutes of attention every second day will almost always outperform one that gets a whole weekend once a month.\n\nStart with the soil. Before planting, loosen the top twenty centimetres with a fork and mix in a generous layer of compost. Avoid digging when the ground is wet, because compacted clay dries into hard clods that roots cannot push through. If water still pools on the surface an hour after rain, the bed needs either raising or more organic matter, and usually both.\n\nChoose crops that suit the space and the climate instead of the seed catalogue. Lettuce, radishes, spinach and peas tolerate cool weather and can be sown early. Tomatoes, peppers, beans and squash need warm soil and should wait until the risk of frost has passed. Sowing a short row of fast crops every two weeks gives a steady harvest instead of a glut followed by nothing.\n\nWater deeply and less often. A thorough soaking twice a week encourages roots to grow down, while a light daily sprinkle keeps them near the surface where they dry out quickly. Water in the morning so that leaves dry before evening, which reduces fungal disease. A layer of straw or shredded leaves around the plants keeps moisture in and weeds down.\n\nCheck the plants for pests while you water. Turning over a few leaves takes a minute and catches aphids, caterpillars and slug damage before they spread. Many problems can be handled by hand: pick off caterpillars, knock aphids off with a jet of water, and lay boards on the path overnight to collect slugs in the morning. Healthy, unstressed plants resist most attacks on their own.\n\nFinally, keep simple notes. Write down what you planted, when, and how it did. After one season the notebook becomes more useful than any general guide, because it describes your own soil, your own weather and your own mistakes. Most experienced gardeners say the same thing: the second year is always better than the first, mainly because they remembered what went wrong.",
+  "table_plain": "Item,Category,Unit,Price,Stock,Supplier\nProduct 01,Tools,piece,38.50,13,RootWorks\nProduct 02,Soil,bag,75.50,26,SoilCo\nProduct 03,Pots,set,22.50,39,Bloom & Co\nProduct 04,Fertiliser,pack,59.50,52,GreenLeaf\nProduct 05,Seeds,piece,6.50,65,RootWorks\nProduct 06,Tools,bag,43.50,78,SoilCo\nProduct 07,Soil,set,80.50,91,Bloom & Co\nProduct 08,Pots,pack,27.50,104,GreenLeaf\nProduct 09,Fertiliser,piece,64.50,117,RootWorks\nProduct 10,Seeds,bag,11.50,10,SoilCo\nProduct 11,Tools,set,48.50,23,Bloom & Co\nProduct 12,Soil,pack,85.50,36,GreenLeaf\nProduct 13,Pots,piece,32.50,49,RootWorks\nProduct 14,Fertiliser,bag,69.50,62,SoilCo\nProduct 15,Seeds,set,16.50,75,Bloom & Co\nProduct 16,Tools,pack,53.50,88,GreenLeaf\nProduct 17,Soil,piece,90.50,101,RootWorks\nProduct 18,Pots,bag,37.50,114,SoilCo\nProduct 19,Fertiliser,set,74.50,7,Bloom & Co\nProduct 20,Seeds,pack,21.50,20,GreenLeaf\nProduct 21,Tools,piece,58.50,33,RootWorks\nProduct 22,Soil,bag,5.50,46,SoilCo\nProduct 23,Pots,set,42.50,59,Bloom & Co\nProduct 24,Fertiliser,pack,79.50,72,GreenLeaf\nProduct 25,Seeds,piece,26.50,85,RootWorks\nProduct 26,Tools,bag,63.50,98,SoilCo\nProduct 27,Soil,set,10.50,111,Bloom & Co\nProduct 28,Pots,pack,47.50,4,GreenLeaf\nProduct 29,Fertiliser,piece,84.50,17,RootWorks\nProduct 30,Seeds,bag,31.50,30,SoilCo\nProduct 31,Tools,set,68.50,43,Bloom & Co\nProduct 32,Soil,pack,15.50,56,GreenLeaf\nProduct 33,Pots,piece,52.50,69,RootWorks\nProduct 34,Fertiliser,bag,89.50,82,SoilCo\nProduct 35,Seeds,set,36.50,95,Bloom & Co"
+ }
+}
