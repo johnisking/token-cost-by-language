@@ -21,6 +21,7 @@ The newer `o200k_base` tokenizer narrowed the gap a lot for most languages. On t
 - [`effort/`](effort/): the same coding task at each Claude effort level, Opus 5.5 low to max and Sonnet 5.5 (measured 2026-10-09, DOI [10.5281/zenodo.23446567](https://doi.org/10.5281/zenodo.23446567)). Medium cost $0.56 and max $5.25.
 - [`agents/`](agents/): Claude Code vs Codex — startup tokens, the cost of 1 to 30 MCP tools and the same coding task (measured 2026-10-18, DOI [10.5281/zenodo.23448342](https://doi.org/10.5281/zenodo.23448342)). A one-word reply costs 35,771 input tokens in Claude Code and 14,678 in Codex.
 - [`search/`](search/): web search in Claude Code and Codex — tokens, searches and the sites seen and cited for four kinds of question (measured 2026-10-18, DOI [10.5281/zenodo.23449842](https://doi.org/10.5281/zenodo.23449842)). A one-line fact question cost 150,414 input tokens in Claude Code and 33,296 in Codex.
+- [`search-language/`](search-language/): Claude web search by question language — the same questions in English, Korean, Japanese, Spanish and Ukrainian (measured 2026-10-18). Claude ran 64 of 65 non-English searches in English and cited no pages in the question's language.
 
 ## Files
 

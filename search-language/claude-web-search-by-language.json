@@ -1,0 +1,1483 @@
+{
+ "title": "Claude web search by language: search queries, cited sources and tokens in 5 languages",
+ "url": "https://tokensave.app/data/claude-web-search-by-language",
+ "license": "CC BY 4.0",
+ "measured": "2026-10-18",
+ "citation": "TokenSave (2026). Claude web search by language: search queries, cited sources and tokens in 5 languages [Data set]. https://tokensave.app/data/claude-web-search-by-language",
+ "tool": "Claude Code 2.1.295 (Opus 5.5), effort medium, WebSearch and WebFetch only",
+ "question_types": {
+  "q1_fact": "Simple fact",
+  "q2_news": "Recent news",
+  "q3_compare": "Price comparison",
+  "q4_geo": "Research question"
+ },
+ "prompts": {
+  "en": {
+   "q1_fact": "What is the current monthly price of the Claude Pro plan in the United States? Answer in one sentence and cite your source.",
+   "q2_news": "Summarize the three most important AI model releases announced in the past 7 days, one sentence each, with a source link for each.",
+   "q3_compare": "Compare the current API prices per million input and output tokens of the flagship models from Anthropic, OpenAI and Google. Use official pricing pages and cite them.",
+   "q4_geo": "How many more tokens does Korean text need than the same English text on OpenAI and Claude tokenizers? Give numbers and cite your sources."
+  },
+  "ko": {
+   "q1_fact": "미국에서 Claude Pro 요금제의 현재 월 가격은 얼마인가요? 한 문장으로 답하고 출처를 밝혀 주세요.",
+   "q2_news": "지난 7일 동안 발표된 가장 중요한 AI 모델 출시 3가지를 각각 한 문장으로 요약하고, 각각 출처 링크를 붙여 주세요.",
+   "q3_compare": "Anthropic, OpenAI, Google의 대표 모델 API 가격(입력·출력 100만 토큰당)을 현재 기준으로 비교해 주세요. 공식 가격 페이지를 근거로 출처를 밝혀 주세요.",
+   "q4_geo": "같은 내용의 한국어 글은 영어보다 OpenAI와 Claude 토크나이저에서 토큰이 얼마나 더 필요한가요? 수치와 출처를 알려 주세요."
+  },
+  "ja": {
+   "q1_fact": "米国における Claude Pro プランの現在の月額料金はいくらですか？一文で答え、出典を示してください。",
+   "q2_news": "過去7日間に発表された最も重要なAIモデルのリリースを3つ、それぞれ一文で要約し、それぞれに出典リンクを付けてください。",
+   "q3_compare": "Anthropic、OpenAI、Googleのフラッグシップモデルの現在のAPI料金（入力・出力100万トークンあたり）を比較してください。公式の料金ページを使い、出典を示してください。",
+   "q4_geo": "同じ内容の韓国語の文章は、英語と比べてOpenAIとClaudeのトークナイザーでどれくらい多くのトークンが必要ですか？数値と出典を示してください。"
+  },
+  "es": {
+   "q1_fact": "¿Cuál es el precio mensual actual del plan Claude Pro en Estados Unidos? Responde en una frase y cita tu fuente.",
+   "q2_news": "Resume los tres lanzamientos de modelos de IA más importantes anunciados en los últimos 7 días, en una frase cada uno, con un enlace a la fuente para cada uno.",
+   "q3_compare": "Compara los precios actuales de la API por millón de tokens de entrada y de salida de los modelos insignia de Anthropic, OpenAI y Google. Usa las páginas oficiales de precios y cítalas.",
+   "q4_geo": "¿Cuántos tokens más necesita un texto en coreano que el mismo texto en inglés con los tokenizadores de OpenAI y Claude? Da cifras y cita tus fuentes."
+  },
+  "uk": {
+   "q1_fact": "Яка поточна місячна ціна тарифу Claude Pro у США? Дай відповідь одним реченням і вкажи джерело.",
+   "q2_news": "Коротко опиши три найважливіші релізи моделей ШІ, оголошені за останні 7 днів, по одному реченню на кожен, з посиланням на джерело для кожного.",
+   "q3_compare": "Порівняй поточні ціни API за мільйон вхідних і вихідних токенів флагманських моделей Anthropic, OpenAI та Google. Використай офіційні сторінки цін і посилайся на них.",
+   "q4_geo": "На скільки більше токенів потребує корейський текст порівняно з тим самим англійським текстом у токенізаторах OpenAI та Claude? Наведи цифри та вкажи джерела."
+  }
+ },
+ "rows": [
+  {
+   "language": "en",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 1,
+   "input_tokens": 178656,
+   "output_tokens": 2181,
+   "helper_model_input_tokens": 30210,
+   "searches": 2,
+   "searches_in_english": 2,
+   "searches_in_question_language": 2,
+   "page_opens": 0,
+   "seconds": 28,
+   "cited_links": 2,
+   "cited_in_question_language": 2,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "fact_answer_20_usd": true,
+   "cited_official_page": true,
+   "search_queries": [
+    "Claude Pro plan price per month US",
+    "Claude Pro pricing"
+   ],
+   "domains_cited": [
+    "claude.com",
+    "support.claude.com"
+   ],
+   "cited_urls": [
+    "https://claude.com/pricing",
+    "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan"
+   ]
+  },
+  {
+   "language": "en",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 2,
+   "input_tokens": 122171,
+   "output_tokens": 870,
+   "helper_model_input_tokens": 12690,
+   "searches": 1,
+   "searches_in_english": 1,
+   "searches_in_question_language": 1,
+   "page_opens": 0,
+   "seconds": 18,
+   "cited_links": 2,
+   "cited_in_question_language": 2,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "fact_answer_20_usd": true,
+   "cited_official_page": true,
+   "search_queries": [
+    "Claude Pro plan monthly price US"
+   ],
+   "domains_cited": [
+    "claude.com",
+    "support.claude.com"
+   ],
+   "cited_urls": [
+    "https://claude.com/pricing",
+    "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan"
+   ]
+  },
+  {
+   "language": "en",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 1,
+   "input_tokens": 209864,
+   "output_tokens": 6354,
+   "helper_model_input_tokens": 56634,
+   "searches": 4,
+   "searches_in_english": 4,
+   "searches_in_question_language": 4,
+   "page_opens": 0,
+   "seconds": 39,
+   "cited_links": 4,
+   "cited_in_question_language": 3,
+   "cited_other_language": 1,
+   "answer_language": "en",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "new AI model release announced October 2026",
+    "AI model launch this week October 12-18 2026",
+    "Gemini 4 Argon generally available Google blog",
+    "Meta Muse Wonder 1.0 announcement"
+   ],
+   "domains_cited": [
+    "es.euronews.com",
+    "blog.google",
+    "research.meta.ai",
+    "llmgateway.io"
+   ],
+   "cited_urls": [
+    "https://es.euronews.com/2026/10/13/meta-lanza-muse-wonder-sus-modelos-de-ia-mas-potentes-hasta-ahora",
+    "https://blog.google/innovation-and-ai/products/gemini-app/gemini-4-availability",
+    "https://research.meta.ai/blog/muse-spark-open",
+    "https://llmgateway.io/timeline"
+   ]
+  },
+  {
+   "language": "en",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 2,
+   "input_tokens": 150358,
+   "output_tokens": 4192,
+   "helper_model_input_tokens": 38322,
+   "searches": 2,
+   "searches_in_english": 2,
+   "searches_in_question_language": 2,
+   "page_opens": 0,
+   "seconds": 28,
+   "cited_links": 3,
+   "cited_in_question_language": 3,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "new AI model release announced October 2026",
+    "AI model launch this week October 12-18 2026 OpenAI Google Anthropic Meta"
+   ],
+   "domains_cited": [
+    "axios.com",
+    "dev.to",
+    "clone-systems.com"
+   ],
+   "cited_urls": [
+    "https://www.axios.com/2026/10/12/meta-new-ai-models-anthropic-openai",
+    "https://dev.to/hiroki-ii-ai/ai-daily-digest-october-17-2026-meta-opens-816b-parameters-chatgpt-drives-chrome-anthropic-3pij",
+    "https://www.clone-systems.com/blog/new-ai-models-october-2026-release-guide-and-security"
+   ]
+  },
+  {
+   "language": "en",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 1,
+   "input_tokens": 186932,
+   "output_tokens": 17740,
+   "helper_model_input_tokens": 23187,
+   "searches": 0,
+   "searches_in_english": 0,
+   "searches_in_question_language": 0,
+   "page_opens": 8,
+   "seconds": 79,
+   "cited_links": 4,
+   "cited_in_question_language": 4,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [],
+   "domains_cited": [
+    "platform.claude.com",
+    "claude.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://claude.com/pricing",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ]
+  },
+  {
+   "language": "en",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 2,
+   "input_tokens": 170488,
+   "output_tokens": 12008,
+   "helper_model_input_tokens": 23189,
+   "searches": 0,
+   "searches_in_english": 0,
+   "searches_in_question_language": 0,
+   "page_opens": 5,
+   "seconds": 48,
+   "cited_links": 3,
+   "cited_in_question_language": 3,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [],
+   "domains_cited": [
+    "platform.claude.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://developers.openai.com/api/docs/pricing.",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ]
+  },
+  {
+   "language": "en",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 1,
+   "input_tokens": 426565,
+   "output_tokens": 12119,
+   "helper_model_input_tokens": 38942,
+   "searches": 3,
+   "searches_in_english": 3,
+   "searches_in_question_language": 3,
+   "page_opens": 8,
+   "seconds": 85,
+   "cited_links": 7,
+   "cited_in_question_language": 7,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "Korean vs English token count ratio GPT-4o o200k cl100k tokenizer",
+    "Claude tokenizer Korean tokens compared to English ratio",
+    "tokenizer premium languages Korean FLORES \"Language Model Tokenizers Introduce Unfairness Between Languages\""
+   ],
+   "domains_cited": [
+    "proceedings.neurips.cc",
+    "arxiv.org",
+    "github.com",
+    "jangwook.net",
+    "dev.to",
+    "hiai.korea.ac.kr"
+   ],
+   "cited_urls": [
+    "https://proceedings.neurips.cc/paper_files/paper/2023/hash/74bb24dca8334adce292883b4b651eda-Abstract.html",
+    "https://arxiv.org/abs/2305.15425v1",
+    "https://github.com/AleksandarPetrov/tokenization-fairness",
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://dev.to/synthorai/which-llm-is-cheapest-for-your-language-tokenizer-costs-measured-1k5m",
+    "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
+    "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf"
+   ]
+  },
+  {
+   "language": "en",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 2,
+   "input_tokens": 317868,
+   "output_tokens": 9992,
+   "helper_model_input_tokens": 101634,
+   "searches": 2,
+   "searches_in_english": 2,
+   "searches_in_question_language": 2,
+   "page_opens": 4,
+   "seconds": 75,
+   "cited_links": 4,
+   "cited_in_question_language": 4,
+   "cited_other_language": 0,
+   "answer_language": "en",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "Korean vs English token count ratio GPT-4o o200k cl100k tokenizer",
+    "Claude tokenizer Korean tokens compared to English ratio"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "dev.to",
+    "hiai.korea.ac.kr"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://dev.to/synthorai/which-llm-is-cheapest-for-your-language-tokenizer-costs-measured-1k5m",
+    "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
+    "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf"
+   ]
+  },
+  {
+   "language": "ko",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 1,
+   "input_tokens": 122777,
+   "output_tokens": 875,
+   "helper_model_input_tokens": 13120,
+   "searches": 1,
+   "searches_in_english": 1,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 17,
+   "cited_links": 2,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "fact_answer_20_usd": true,
+   "cited_official_page": true,
+   "search_queries": [
+    "Claude Pro plan price per month US"
+   ],
+   "domains_cited": [
+    "claude.com",
+    "support.claude.com"
+   ],
+   "cited_urls": [
+    "https://claude.com/pricing",
+    "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan"
+   ]
+  },
+  {
+   "language": "ko",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 2,
+   "input_tokens": 122972,
+   "output_tokens": 992,
+   "helper_model_input_tokens": 13356,
+   "searches": 1,
+   "searches_in_english": 1,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 16,
+   "cited_links": 2,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "fact_answer_20_usd": true,
+   "cited_official_page": true,
+   "search_queries": [
+    "Claude Pro plan price per month US"
+   ],
+   "domains_cited": [
+    "claude.com",
+    "support.claude.com"
+   ],
+   "cited_urls": [
+    "https://claude.com/pricing",
+    "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan"
+   ]
+  },
+  {
+   "language": "ko",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 1,
+   "input_tokens": 209895,
+   "output_tokens": 6510,
+   "helper_model_input_tokens": 56075,
+   "searches": 4,
+   "searches_in_english": 4,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 38,
+   "cited_links": 3,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "AI model release announced October 2026",
+    "new AI model launch this week October 12-18 2026",
+    "Google Gemini 4 Argon general availability",
+    "Meta Muse Wonder frontier model Active Memory"
+   ],
+   "domains_cited": [
+    "techcrunch.com",
+    "letsdatascience.com"
+   ],
+   "cited_urls": [
+    "https://techcrunch.com/2026/10/12/meta-releases-its-first-frontier-model-muse-wonder",
+    "https://letsdatascience.com/news/google-releases-gemini-4-argon-for-scientific-computing-644a49ff",
+    "https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs/"
+   ]
+  },
+  {
+   "language": "ko",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 2,
+   "input_tokens": 282440,
+   "output_tokens": 10010,
+   "helper_model_input_tokens": 83616,
+   "searches": 6,
+   "searches_in_english": 6,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 53,
+   "cited_links": 4,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "AI model release announced October 2026",
+    "new AI model launch this week October 12-18 2026",
+    "DeepSeek V4.1 Flash release",
+    "xAI Grok Voice 3.0 launch",
+    "Meta Muse Wonder 1.0",
+    "NVIDIA Nemotron 3.5 Super VL release"
+   ],
+   "domains_cited": [
+    "yourstory.com",
+    "techcrunch.com",
+    "devx.com",
+    "hpcwire.com"
+   ],
+   "cited_urls": [
+    "https://yourstory.com/ai-story/muse-wonder-meta-ai-race-frontier-models",
+    "https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs/",
+    "https://www.devx.com/artificial-intelligence-ai/what-is-grok-voice-3-0-xai-speech-to-speech-model/",
+    "https://www.hpcwire.com/aiwire/2026/10/15/nvidia-expands-nemotron-family-with-highest-efficiency-super-vl-and-bolt-models/"
+   ]
+  },
+  {
+   "language": "ko",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 1,
+   "input_tokens": 175620,
+   "output_tokens": 13517,
+   "helper_model_input_tokens": 23223,
+   "searches": 0,
+   "searches_in_english": 0,
+   "searches_in_question_language": 0,
+   "page_opens": 6,
+   "seconds": 59,
+   "cited_links": 3,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [],
+   "domains_cited": [
+    "platform.claude.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ]
+  },
+  {
+   "language": "ko",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 2,
+   "input_tokens": 310830,
+   "output_tokens": 18090,
+   "helper_model_input_tokens": 23177,
+   "searches": 0,
+   "searches_in_english": 0,
+   "searches_in_question_language": 0,
+   "page_opens": 8,
+   "seconds": 75,
+   "cited_links": 4,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [],
+   "domains_cited": [
+    "platform.claude.com",
+    "claude.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://claude.com/pricing",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ]
+  },
+  {
+   "language": "ko",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 1,
+   "input_tokens": 537557,
+   "output_tokens": 14125,
+   "helper_model_input_tokens": 127733,
+   "searches": 3,
+   "searches_in_english": 3,
+   "searches_in_question_language": 0,
+   "page_opens": 8,
+   "seconds": 86,
+   "cited_links": 8,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "Korean vs English token count ratio GPT-4o o200k_base cl100k tokenizer",
+    "Claude tokenizer Korean token ratio English comparison",
+    "Petrov \"Language Model Tokenizers Introduce Unfairness Between Languages\" Korean premium"
+   ],
+   "domains_cited": [
+    "proceedings.neurips.cc",
+    "arxiv.org",
+    "github.com",
+    "jangwook.net",
+    "dev.to",
+    "hiai.korea.ac.kr",
+    "community.openai.com"
+   ],
+   "cited_urls": [
+    "https://proceedings.neurips.cc/paper_files/paper/2023/hash/74bb24dca8334adce292883b4b651eda-Abstract.html",
+    "https://arxiv.org/abs/2305.15425v1",
+    "https://github.com/AleksandarPetrov/tokenization-fairness",
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://dev.to/synthorai/which-llm-is-cheapest-for-your-language-tokenizer-costs-measured-1k5m",
+    "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
+    "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf",
+    "https://community.openai.com/t/need-more-efficient-tokenizer-for-korean/286682.md"
+   ]
+  },
+  {
+   "language": "ko",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 2,
+   "input_tokens": 201280,
+   "output_tokens": 8501,
+   "helper_model_input_tokens": 27397,
+   "searches": 2,
+   "searches_in_english": 1,
+   "searches_in_question_language": 1,
+   "page_opens": 2,
+   "seconds": 66,
+   "cited_links": 4,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ko",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "Korean vs English token count ratio GPT-4o o200k Claude tokenizer comparison",
+    "한국어 토큰 영어 대비 배 GPT-4o Claude 토크나이저 비교"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "dev.to",
+    "hiai.korea.ac.kr",
+    "community.openai.com"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
+    "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf",
+    "https://community.openai.com/t/need-more-efficient-tokenizer-for-korean/286682.md"
+   ]
+  },
+  {
+   "language": "ja",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 1,
+   "input_tokens": 122979,
+   "output_tokens": 1048,
+   "helper_model_input_tokens": 13326,
+   "searches": 1,
+   "searches_in_english": 1,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 13,
+   "cited_links": 2,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "fact_answer_20_usd": true,
+   "cited_official_page": true,
+   "search_queries": [
+    "Claude Pro plan price per month US"
+   ],
+   "domains_cited": [
+    "support.claude.com",
+    "claude.com"
+   ],
+   "cited_urls": [
+    "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan",
+    "https://claude.com/pricing"
+   ]
+  },
+  {
+   "language": "ja",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 2,
+   "input_tokens": 122790,
+   "output_tokens": 917,
+   "helper_model_input_tokens": 13164,
+   "searches": 1,
+   "searches_in_english": 1,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 17,
+   "cited_links": 2,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "fact_answer_20_usd": true,
+   "cited_official_page": true,
+   "search_queries": [
+    "Claude Pro plan price per month US"
+   ],
+   "domains_cited": [
+    "support.claude.com",
+    "claude.com"
+   ],
+   "cited_urls": [
+    "https://support.claude.com/en/articles/8325606-what-is-the-pro-plan",
+    "https://claude.com/pricing"
+   ]
+  },
+  {
+   "language": "ja",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 1,
+   "input_tokens": 219241,
+   "output_tokens": 7372,
+   "helper_model_input_tokens": 64219,
+   "searches": 4,
+   "searches_in_english": 4,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 43,
+   "cited_links": 5,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "AI model release announced October 2026",
+    "new AI model launch this week October 13-18 2026",
+    "Gemini 4 Argon generally available Gemini API",
+    "Meta Muse Wonder launch"
+   ],
+   "domains_cited": [
+    "letsdatascience.com",
+    "techcrunch.com",
+    "llmgateway.io",
+    "nocode.mba"
+   ],
+   "cited_urls": [
+    "https://letsdatascience.com/news/meta-launches-muse-wonder-and-muse-wonder-full-for-agentic-t-41113cca",
+    "https://letsdatascience.com/news/google-releases-gemini-4-argon-for-scientific-computing-644a49ff",
+    "https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs/",
+    "https://llmgateway.io/timeline",
+    "https://www.nocode.mba/ai-release-tracker/2026/10"
+   ]
+  },
+  {
+   "language": "ja",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 2,
+   "input_tokens": 220114,
+   "output_tokens": 7568,
+   "helper_model_input_tokens": 64681,
+   "searches": 4,
+   "searches_in_english": 4,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 42,
+   "cited_links": 7,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "AI model release announced October 2026",
+    "new LLM launch this week October 13-18 2026",
+    "Gemini 4 Argon general availability Gemini API",
+    "Meta Muse Spark Open open-weight model release"
+   ],
+   "domains_cited": [
+    "letsdatascience.com",
+    "toolhalla.ai",
+    "thenewstack.io",
+    "khaleejtimes.com",
+    "bloomberg.com",
+    "llmgateway.io",
+    "riorundown.substack.com"
+   ],
+   "cited_urls": [
+    "https://letsdatascience.com/news/google-releases-gemini-4-argon-for-scientific-computing-644a49ff",
+    "https://toolhalla.ai/blog/gemini-4-argon-api-price-context-2026",
+    "https://thenewstack.io/meta-muse-spark-open/",
+    "https://www.khaleejtimes.com/business/tech/meta-open-ai-model-rival-chinese-competition",
+    "https://bloomberg.com/news/articles/2026-10-17/deepseek-pushes-out-updated-ai-model-it-says-is-faster-leaner",
+    "https://llmgateway.io/timeline",
+    "https://riorundown.substack.com/p/ai-news-oct-18-2026-open-models-and"
+   ]
+  },
+  {
+   "language": "ja",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 1,
+   "input_tokens": 183103,
+   "output_tokens": 11386,
+   "helper_model_input_tokens": 23155,
+   "searches": 0,
+   "searches_in_english": 0,
+   "searches_in_question_language": 0,
+   "page_opens": 8,
+   "seconds": 82,
+   "cited_links": 4,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [],
+   "domains_cited": [
+    "platform.claude.com",
+    "claude.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://claude.com/pricing",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ]
+  },
+  {
+   "language": "ja",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 2,
+   "input_tokens": 183366,
+   "output_tokens": 12366,
+   "helper_model_input_tokens": 23198,
+   "searches": 0,
+   "searches_in_english": 0,
+   "searches_in_question_language": 0,
+   "page_opens": 8,
+   "seconds": 59,
+   "cited_links": 4,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [],
+   "domains_cited": [
+    "claude.com",
+    "platform.claude.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://claude.com/pricing",
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://developers.openai.com/api/docs/pricing（platform.openai.com/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ]
+  },
+  {
+   "language": "ja",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 1,
+   "input_tokens": 838383,
+   "output_tokens": 13863,
+   "helper_model_input_tokens": 185593,
+   "searches": 3,
+   "searches_in_english": 3,
+   "searches_in_question_language": 0,
+   "page_opens": 11,
+   "seconds": 107,
+   "cited_links": 6,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "Korean vs English token count tokenizer premium GPT-4o o200k cl100k",
+    "Claude tokenizer Korean tokens compared to English ratio",
+    "\"Language Model Tokenizers Introduce Unfairness Between Languages\" Petrov Korean"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "dev.to",
+    "proceedings.neurips.cc",
+    "github.com",
+    "hiai.korea.ac.kr"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
+    "https://dev.to/synthorai/which-llm-is-cheapest-for-your-language-tokenizer-costs-measured-1k5m",
+    "https://proceedings.neurips.cc/paper_files/paper/2023/hash/74bb24dca8334adce292883b4b651eda-Abstract.html",
+    "https://github.com/AleksandarPetrov/tokenization-fairness",
+    "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf"
+   ]
+  },
+  {
+   "language": "ja",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 2,
+   "input_tokens": 224570,
+   "output_tokens": 11077,
+   "helper_model_input_tokens": 46959,
+   "searches": 3,
+   "searches_in_english": 3,
+   "searches_in_question_language": 0,
+   "page_opens": 2,
+   "seconds": 73,
+   "cited_links": 7,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "ja",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "Korean vs English token count ratio GPT-4o o200k tokenizer Claude tokenizer",
+    "Petrov \"Language Model Tokenizers Introduce Unfairness Between Languages\" Korean premium",
+    "Claude tokenizer Korean tokens per character compared English measurement"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "dev.to",
+    "proceedings.neurips.cc",
+    "github.com",
+    "hiai.korea.ac.kr",
+    "docs.anthropic.com",
+    "arxiv.org"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
+    "https://proceedings.neurips.cc/paper_files/paper/2023/hash/74bb24dca8334adce292883b4b651eda-Abstract.html",
+    "https://github.com/AleksandarPetrov/tokenization-fairness",
+    "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf",
+    "https://docs.anthropic.com/en/docs/build-with-claude/token-counting",
+    "https://arxiv.org/abs/2305.15425v1"
+   ]
+  },
+  {
+   "language": "es",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 1,
+   "input_tokens": 124473,
+   "output_tokens": 1112,
+   "helper_model_input_tokens": 14824,
+   "searches": 1,
+   "searches_in_english": 1,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 17,
+   "cited_links": 2,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "fact_answer_20_usd": true,
+   "cited_official_page": false,
+   "search_queries": [
+    "Claude Pro plan price per month US"
+   ],
+   "domains_cited": [
+    "ssdnodes.com",
+    "morphllm.com"
+   ],
+   "cited_urls": [
+    "https://www.ssdnodes.com/learn/claude-pro-price-and-limits",
+    "https://www.morphllm.com/claude-code-pricing"
+   ]
+  },
+  {
+   "language": "es",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 2,
+   "input_tokens": 124512,
+   "output_tokens": 1178,
+   "helper_model_input_tokens": 14945,
+   "searches": 1,
+   "searches_in_english": 1,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 14,
+   "cited_links": 2,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "fact_answer_20_usd": true,
+   "cited_official_page": false,
+   "search_queries": [
+    "Claude Pro plan price per month US"
+   ],
+   "domains_cited": [
+    "ssdnodes.com",
+    "wearetandem.ai"
+   ],
+   "cited_urls": [
+    "https://www.ssdnodes.com/learn/claude-pro-price-and-limits",
+    "https://www.wearetandem.ai/en/blog/tools/claude-max-pro-pricing-plans"
+   ]
+  },
+  {
+   "language": "es",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 1,
+   "input_tokens": 283799,
+   "output_tokens": 9505,
+   "helper_model_input_tokens": 83500,
+   "searches": 6,
+   "searches_in_english": 6,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 55,
+   "cited_links": 3,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "new AI model release announced October 2026",
+    "AI model launch this week October 13-18 2026",
+    "Meta Muse Spark Open open-weight announcement",
+    "Gemini 4 Argon generally available Gemini API blog",
+    "DeepSeek V4.1 Flash release",
+    "xAI Grok Voice 3.0"
+   ],
+   "domains_cited": [
+    "techrepublic.com",
+    "letsdatascience.com",
+    "techenclave.com"
+   ],
+   "cited_urls": [
+    "https://www.techrepublic.com/article/news-meta-muse-spark-open-apple-mac-studio/",
+    "https://letsdatascience.com/news/google-releases-gemini-4-argon-for-scientific-computing-644a49ff",
+    "https://techenclave.com/news/items/xai-releases-grok-voice-3-and-upgrades-the-latest-api-alias"
+   ]
+  },
+  {
+   "language": "es",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 2,
+   "input_tokens": 141485,
+   "output_tokens": 3343,
+   "helper_model_input_tokens": 30096,
+   "searches": 2,
+   "searches_in_english": 2,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 23,
+   "cited_links": 5,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "AI model launch announced October 2026",
+    "new AI model released this week October 13-18 2026"
+   ],
+   "domains_cited": [
+    "techcrunch.com",
+    "bloomberg.com",
+    "aiweekly.co",
+    "llmgateway.io",
+    "opper.ai"
+   ],
+   "cited_urls": [
+    "https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs/",
+    "https://bloomberg.com/news/articles/2026-10-17/deepseek-pushes-out-updated-ai-model-it-says-is-faster-leaner",
+    "https://aiweekly.co/ai-news-today",
+    "https://llmgateway.io/timeline",
+    "https://opper.ai/model-releases"
+   ]
+  },
+  {
+   "language": "es",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 1,
+   "input_tokens": 176188,
+   "output_tokens": 18122,
+   "helper_model_input_tokens": 23212,
+   "searches": 0,
+   "searches_in_english": 0,
+   "searches_in_question_language": 0,
+   "page_opens": 6,
+   "seconds": 73,
+   "cited_links": 3,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [],
+   "domains_cited": [
+    "platform.claude.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ]
+  },
+  {
+   "language": "es",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 2,
+   "input_tokens": 174111,
+   "output_tokens": 13250,
+   "helper_model_input_tokens": 23199,
+   "searches": 0,
+   "searches_in_english": 0,
+   "searches_in_question_language": 0,
+   "page_opens": 6,
+   "seconds": 57,
+   "cited_links": 3,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [],
+   "domains_cited": [
+    "platform.claude.com",
+    "developers.openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ]
+  },
+  {
+   "language": "es",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 1,
+   "input_tokens": 168255,
+   "output_tokens": 6828,
+   "helper_model_input_tokens": 54148,
+   "searches": 3,
+   "searches_in_english": 3,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 39,
+   "cited_links": 8,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "Korean vs English token count ratio GPT-4o o200k tokenizer",
+    "Claude tokenizer Korean tokens compared to English ratio",
+    "\"Language Model Tokenizers Introduce Unfairness Between Languages\" Korean premium"
+   ],
+   "domains_cited": [
+    "jangwook.net",
+    "dev.to",
+    "hiai.korea.ac.kr",
+    "claudeissues.com",
+    "proceedings.neurips.cc",
+    "arxiv.org",
+    "github.com"
+   ],
+   "cited_urls": [
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
+    "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf",
+    "https://dev.to/synthorai/which-llm-is-cheapest-for-your-language-tokenizer-costs-measured-1k5m",
+    "https://claudeissues.com/issue/26401-feature-request-non-english-users-korean-japanese-cjk-face-structural-disadvanta",
+    "https://proceedings.neurips.cc/paper_files/paper/2023/hash/74bb24dca8334adce292883b4b651eda-Abstract.html",
+    "https://arxiv.org/pdf/2305.15425v1",
+    "https://github.com/AleksandarPetrov/tokenization-fairness"
+   ]
+  },
+  {
+   "language": "es",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 2,
+   "input_tokens": 138821,
+   "output_tokens": 5596,
+   "helper_model_input_tokens": 26378,
+   "searches": 2,
+   "searches_in_english": 2,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 39,
+   "cited_links": 7,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "es",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "Korean vs English token count ratio GPT-4o o200k tokenizer Claude tokenizer",
+    "tokenizer language premium Korean English tokens comparison study Claude OpenAI"
+   ],
+   "domains_cited": [
+    "blakecrosley.com",
+    "jangwook.net",
+    "dev.to",
+    "hiai.korea.ac.kr",
+    "arxiv.org",
+    "claudeissues.com"
+   ],
+   "cited_urls": [
+    "https://blakecrosley.com/blog/tokenization-visualizer",
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
+    "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf",
+    "https://arxiv.org/pdf/2601.09200",
+    "https://arxiv.org/pdf/2502.12560",
+    "https://claudeissues.com/issue/26401-feature-request-non-english-users-korean-japanese-cjk-face-structural-disadvanta"
+   ]
+  },
+  {
+   "language": "uk",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 1,
+   "input_tokens": 124766,
+   "output_tokens": 1149,
+   "helper_model_input_tokens": 15087,
+   "searches": 1,
+   "searches_in_english": 1,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 22,
+   "cited_links": 3,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "fact_answer_20_usd": true,
+   "cited_official_page": true,
+   "search_queries": [
+    "Claude Pro plan price per month US"
+   ],
+   "domains_cited": [
+    "claude.com",
+    "ssdnodes.com",
+    "wearetandem.ai"
+   ],
+   "cited_urls": [
+    "https://claude.com/pricing",
+    "https://www.ssdnodes.com/learn/claude-pro-price-and-limits",
+    "https://www.wearetandem.ai/en/blog/tools/claude-max-pro-pricing-plans"
+   ]
+  },
+  {
+   "language": "uk",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "run": 2,
+   "input_tokens": 124602,
+   "output_tokens": 1154,
+   "helper_model_input_tokens": 14972,
+   "searches": 1,
+   "searches_in_english": 1,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 15,
+   "cited_links": 3,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "fact_answer_20_usd": true,
+   "cited_official_page": false,
+   "search_queries": [
+    "Claude Pro plan price per month US"
+   ],
+   "domains_cited": [
+    "suprmind.ai",
+    "claudecoworkexpert.com",
+    "ssdnodes.com"
+   ],
+   "cited_urls": [
+    "https://suprmind.ai/hub/claude/pricing/",
+    "https://www.claudecoworkexpert.com/en/pricing/",
+    "https://www.ssdnodes.com/learn/claude-pro-price-and-limits"
+   ]
+  },
+  {
+   "language": "uk",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 1,
+   "input_tokens": 315019,
+   "output_tokens": 10706,
+   "helper_model_input_tokens": 112933,
+   "searches": 7,
+   "searches_in_english": 7,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 53,
+   "cited_links": 6,
+   "cited_in_question_language": 0,
+   "cited_other_language": 1,
+   "answer_language": "uk",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "AI model release announced October 2026",
+    "new AI model launch this week October 12-18 2026",
+    "DeepSeek V4.1 Flash release",
+    "xAI Grok Voice 3.0 announced",
+    "NVIDIA Nemotron 3.5 release October 2026",
+    "Meta Muse Wonder 1.0 launch",
+    "DeepSeek V4.1 Flash 1017 update October 17"
+   ],
+   "domains_cited": [
+    "es.euronews.com",
+    "yourstory.com",
+    "techcrunch.com",
+    "devx.com",
+    "llmgateway.io",
+    "thenextweb.com"
+   ],
+   "cited_urls": [
+    "https://es.euronews.com/2026/10/13/meta-lanza-muse-wonder-sus-modelos-de-ia-mas-potentes-hasta-ahora",
+    "https://yourstory.com/ai-story/muse-wonder-meta-ai-race-frontier-models",
+    "https://techcrunch.com/2026/10/15/meta-launches-an-open-weight-model-that-runs-on-macs/",
+    "https://www.devx.com/artificial-intelligence-ai/what-is-grok-voice-3-0-xai-speech-to-speech-model/",
+    "https://llmgateway.io/timeline",
+    "https://thenextweb.com/news/deepseek-v4-1-flash-launch-v4-pro-retired-price-cut"
+   ]
+  },
+  {
+   "language": "uk",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "run": 2,
+   "input_tokens": 139566,
+   "output_tokens": 3542,
+   "helper_model_input_tokens": 28181,
+   "searches": 2,
+   "searches_in_english": 2,
+   "searches_in_question_language": 0,
+   "page_opens": 0,
+   "seconds": 20,
+   "cited_links": 3,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "new AI model release announced October 2026",
+    "AI model launch this week October 12-18 2026"
+   ],
+   "domains_cited": [
+    "digitalapplied.com",
+    "aifront-page.com",
+    "llmgateway.io"
+   ],
+   "cited_urls": [
+    "https://www.digitalapplied.com/blog/ai-model-releases-october-2026-tracker",
+    "https://aifront-page.com/open-weights-october-2026-ai-model-launches/",
+    "https://llmgateway.io/timeline"
+   ]
+  },
+  {
+   "language": "uk",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 1,
+   "input_tokens": 171736,
+   "output_tokens": 11414,
+   "helper_model_input_tokens": 23204,
+   "searches": 0,
+   "searches_in_english": 0,
+   "searches_in_question_language": 0,
+   "page_opens": 6,
+   "seconds": 62,
+   "cited_links": 4,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [],
+   "domains_cited": [
+    "platform.claude.com",
+    "developers.openai.com",
+    "openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://developers.openai.com/api/docs/pricing",
+    "https://openai.com/api/pricing/",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ]
+  },
+  {
+   "language": "uk",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "run": 2,
+   "input_tokens": 201610,
+   "output_tokens": 13380,
+   "helper_model_input_tokens": 23200,
+   "searches": 0,
+   "searches_in_english": 0,
+   "searches_in_question_language": 0,
+   "page_opens": 9,
+   "seconds": 59,
+   "cited_links": 5,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [],
+   "domains_cited": [
+    "claude.com",
+    "platform.claude.com",
+    "developers.openai.com",
+    "openai.com",
+    "ai.google.dev"
+   ],
+   "cited_urls": [
+    "https://claude.com/pricing",
+    "https://platform.claude.com/docs/en/about-claude/pricing",
+    "https://developers.openai.com/api/docs/pricing.",
+    "https://openai.com/api/pricing/",
+    "https://ai.google.dev/gemini-api/docs/pricing"
+   ]
+  },
+  {
+   "language": "uk",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 1,
+   "input_tokens": 553400,
+   "output_tokens": 12027,
+   "helper_model_input_tokens": 127953,
+   "searches": 3,
+   "searches_in_english": 3,
+   "searches_in_question_language": 0,
+   "page_opens": 7,
+   "seconds": 107,
+   "cited_links": 6,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "Korean vs English token count ratio GPT-4o o200k cl100k tokenizer",
+    "Claude tokenizer Korean tokens compared to English ratio",
+    "\"Language Model Tokenizers Introduce Unfairness Between Languages\" Petrov Korean premium"
+   ],
+   "domains_cited": [
+    "proceedings.neurips.cc",
+    "github.com",
+    "jangwook.net",
+    "dev.to",
+    "hiai.korea.ac.kr"
+   ],
+   "cited_urls": [
+    "https://proceedings.neurips.cc/paper_files/paper/2023/hash/74bb24dca8334adce292883b4b651eda-Abstract.html",
+    "https://github.com/AleksandarPetrov/tokenization-fairness",
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://dev.to/synthorai/which-llm-is-cheapest-for-your-language-tokenizer-costs-measured-1k5m",
+    "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
+    "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf"
+   ]
+  },
+  {
+   "language": "uk",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "run": 2,
+   "input_tokens": 602815,
+   "output_tokens": 11603,
+   "helper_model_input_tokens": 112850,
+   "searches": 3,
+   "searches_in_english": 3,
+   "searches_in_question_language": 0,
+   "page_opens": 8,
+   "seconds": 100,
+   "cited_links": 9,
+   "cited_in_question_language": 0,
+   "cited_other_language": 0,
+   "answer_language": "uk",
+   "fact_answer_20_usd": null,
+   "cited_official_page": null,
+   "search_queries": [
+    "Korean vs English token count ratio GPT-4 cl100k o200k tokenizer",
+    "Claude tokenizer Korean tokens compared to English ratio",
+    "\"Language Model Tokenizers Introduce Unfairness Between Languages\" Korean premium"
+   ],
+   "domains_cited": [
+    "proceedings.neurips.cc",
+    "arxiv.org",
+    "github.com",
+    "aleksandarpetrov.github.io",
+    "jangwook.net",
+    "dev.to",
+    "hiai.korea.ac.kr",
+    "community.openai.com"
+   ],
+   "cited_urls": [
+    "https://proceedings.neurips.cc/paper_files/paper/2023/hash/74bb24dca8334adce292883b4b651eda-Abstract.html",
+    "https://arxiv.org/pdf/2305.15425v1",
+    "https://github.com/AleksandarPetrov/tokenization-fairness",
+    "https://aleksandarpetrov.github.io/tokenization-fairness/",
+    "https://jangwook.net/en/blog/en/multilingual-llm-token-tax-experiment/",
+    "https://dev.to/synthorai/which-llm-is-cheapest-for-your-language-tokenizer-costs-measured-1k5m",
+    "https://dev.to/claudeguide/korean-vs-english-do-you-pay-more-tokens-for-the-same-prompt-jm8",
+    "https://hiai.korea.ac.kr/wp-content/uploads/2024/12/Korean-Penalty-of-Large-Language-Models-Derived-by-the-Tokenizer_ICICPE_2024.pdf",
+    "https://community.openai.com/t/need-more-efficient-tokenizer-for-korean/286682"
+   ]
+  }
+ ]
+}
