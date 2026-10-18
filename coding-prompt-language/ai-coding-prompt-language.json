@@ -3,7 +3,7 @@
  "url": "https://tokensave.app/data/ai-coding-prompt-language",
  "license": "CC BY 4.0",
  "measured": "2026-10-18",
- "citation": "TokenSave (2026). Coding in your own language: does the prompt language change what Claude Code and Codex cost? [Data set]. https://tokensave.app/data/ai-coding-prompt-language",
+ "citation": "TokenSave (2026). Coding in your own language: does the prompt language change what Claude Code and Codex cost? [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23454308",
  "tools": {
   "claude_code": "Claude Code 2.1.295 (Opus 5.5), effort medium",
   "codex": "Codex CLI 0.162 (gpt-6-luna), effort medium"

@@ -6,6 +6,8 @@ The same brick-breaker task given to Claude Code and Codex in English, Korean, J
 
 - Source page, chart and method: https://tokensave.app/data/ai-coding-prompt-language
 - Related: Claude Code vs Codex same-task runs ([`../agents/`](../agents/)), web search by language ([`../search-language/`](../search-language/))
+- DOI (Zenodo): [10.5281/zenodo.23454308](https://doi.org/10.5281/zenodo.23454308)
+- Also on: [Hugging Face](https://huggingface.co/datasets/JOHNISKING/ai-coding-prompt-language) · [Kaggle](https://www.kaggle.com/datasets/johnisking/coding-prompt-language-claude-code-vs-codex)
 - Measured: 2026-10-18
 - License: CC BY 4.0
 
@@ -53,6 +55,6 @@ The same brick-breaker task given to Claude Code and Codex in English, Korean, J
 
 ## Citation
 
-TokenSave (2026). Coding in your own language: does the prompt language change what Claude Code and Codex cost? [Data set]. https://tokensave.app/data/ai-coding-prompt-language
+TokenSave (2026). Coding in your own language: does the prompt language change what Claude Code and Codex cost? [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23454308
 
 Check your own Claude Code usage at [tokensave.app](https://tokensave.app/claude-code-usage).
