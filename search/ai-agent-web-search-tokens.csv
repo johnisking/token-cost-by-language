@@ -1,0 +1,33 @@
+tool,question,question_type,search,run,input_tokens,output_tokens,helper_model_input_tokens,searches,page_opens,seconds,domains_seen_count,domains_seen_top,domains_cited
+claude_code,q1_fact,Simple fact,on,1,178656,2181,30210,2,0,28,12,support.claude.com morphllm.com claude.com geotoolbox.ai suprmind.ai wearetandem.ai aionx.co thecrunch.io,claude.com support.claude.com
+claude_code,q1_fact,Simple fact,on,2,122171,870,12690,1,0,18,3,support.claude.com claude.com anthropic.com,claude.com support.claude.com
+claude_code,q1_fact,Simple fact,off (no tools),1,2985,197,0,0,0,7,0,,anthropic.com claude.com
+claude_code,q1_fact,Simple fact,off (no tools),2,2985,194,0,0,0,6,0,,claude.com
+claude_code,q2_news,Recent news,on,1,209864,6354,56634,4,0,39,22,en.wikipedia.org letsdatascience.com eesel.ai pasqualepillitteri.it llmgateway.io aiagentsdirectory.com benchlm.ai clone-systems.com,blog.google es.euronews.com llmgateway.io research.meta.ai
+claude_code,q2_news,Recent news,on,2,150358,4192,38322,2,0,28,17,en.wikipedia.org llmgateway.io clone-systems.com capitalandcompute.net evertune.ai dev.to pricepertoken.com craai.substack.com,axios.com clone-systems.com dev.to
+claude_code,q2_news,Recent news,off (no tools),1,2982,486,0,0,0,14,0,,
+claude_code,q2_news,Recent news,off (no tools),2,2982,449,0,0,0,13,0,,
+claude_code,q3_compare,Price comparison,on,1,186932,17740,23187,0,8,79,24,platform.claude.com aistudio.google.com anthropic.com claude.ai claude.com support.claude.com ai.google.dev developers.openai.com,ai.google.dev claude.com developers.openai.com platform.claude.com
+claude_code,q3_compare,Price comparison,on,2,170488,12008,23189,0,5,48,15,platform.claude.com aistudio.google.com ai.google.dev developers.openai.com cloud.google.com platform.openai.com claude.com aws.amazon.com,ai.google.dev developers.openai.com platform.claude.com
+claude_code,q3_compare,Price comparison,off (no tools),1,2999,1386,0,0,0,20,0,,ai.google.dev anthropic.com cloud.google.com docs.claude.com openai.com platform.openai.com
+claude_code,q3_compare,Price comparison,off (no tools),2,2999,1401,0,0,0,17,0,,ai.google.dev anthropic.com docs.anthropic.com openai.com platform.openai.com
+claude_code,q4_geo,Research question,on,1,426565,12119,38942,3,8,85,48,github.com dev.to media2.dev.to assets.dev.to docs.github.com arxiv.org github.blog support.github.com,arxiv.org dev.to github.com hiai.korea.ac.kr jangwook.net proceedings.neurips.cc
+claude_code,q4_geo,Research question,on,2,317868,9992,101634,2,4,75,30,dev.to media2.dev.to assets.dev.to synthorai.io jangwook.net hiai.korea.ac.kr arxiv.org horadecodar.com.br,dev.to hiai.korea.ac.kr jangwook.net
+claude_code,q4_geo,Research question,off (no tools),1,2993,2127,0,0,0,24,0,,docs.anthropic.com openai.com
+claude_code,q4_geo,Research question,off (no tools),2,2993,2063,0,0,0,23,0,,docs.anthropic.com openai.com
+codex,q1_fact,Simple fact,on,1,33162,105,0,1,0,10,2,support.anthropic.com anthropic.com,support.anthropic.com
+codex,q1_fact,Simple fact,on,2,33429,110,0,1,0,9,2,anthropic.com support.anthropic.com,anthropic.com
+codex,q1_fact,Simple fact,off (no tools),1,10240,40,0,0,0,4,0,,anthropic.com
+codex,q1_fact,Simple fact,off (no tools),2,20850,98,0,0,0,6,0,,anthropic.com
+codex,q2_news,Recent news,on,1,68841,435,0,2,0,16,28,reddit.com en.wikipedia.org anthropic.com tomshardware.com openai.com arxiv.org axios.com techradar.com,about.fb.com artificialwatch.com themodelgap.com
+codex,q2_news,Recent news,on,2,67541,445,0,2,0,14,40,reddit.com en.wikipedia.org axios.com tomshardware.com arxiv.org nvidianews.nvidia.com techradar.com apnews.com,blog.google blogs.nvidia.com reflection.ai
+codex,q2_news,Recent news,off (no tools),1,34491,245,0,0,0,9,0,,
+codex,q2_news,Recent news,off (no tools),2,48358,342,0,0,0,12,0,,
+codex,q3_compare,Price comparison,on,1,93037,698,0,1,2,22,6,ai.google.dev anthropic.com developers.openai.com cdn.openai.com docs.anthropic.com discuss.ai.google.dev,ai.google.dev anthropic.com developers.openai.com
+codex,q3_compare,Price comparison,on,2,106132,661,0,3,0,22,10,ai.google.dev developers.openai.com cdn.openai.com anthropic.com docs.anthropic.com openai.com discuss.ai.google.dev deploymentsafety.openai.com,ai.google.dev anthropic.com developers.openai.com
+codex,q3_compare,Price comparison,off (no tools),1,48409,602,0,0,0,16,0,,ai.google.dev anthropic.com openai.com
+codex,q3_compare,Price comparison,off (no tools),2,62492,729,0,0,0,16,0,,ai.google.dev anthropic.com openai.com
+codex,q4_geo,Research question,on,1,66519,568,0,2,0,18,20,reddit.com platform.openai.com arxiv.org github.com aclanthology.org ioptera.com zolamir.com ttlab.hopto.org,huggingface.co platform.claude.com platform.openai.com zolamir.com
+codex,q4_geo,Research question,on,2,103718,619,0,2,1,21,21,anthropic.com reddit.com arxiv.org jangwook.net platform.openai.com aclanthology.org openreview.net docs.anthropic.com,jangwook.net platform.claude.com platform.openai.com
+codex,q4_geo,Research question,off (no tools),1,34625,632,0,0,0,12,0,,docs.anthropic.com help.openai.com platform.openai.com
+codex,q4_geo,Research question,off (no tools),2,20857,882,0,0,0,13,0,,docs.anthropic.com github.com platform.openai.com

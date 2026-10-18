@@ -1,0 +1,772 @@
+{
+ "title": "Web search in Claude Code and Codex: tokens, searches and sources per question",
+ "url": "https://tokensave.app/data/ai-agent-web-search-tokens",
+ "license": "CC BY 4.0",
+ "measured": "2026-10-18",
+ "citation": "TokenSave (2026). Web search in Claude Code and Codex: tokens, searches and sources per question [Data set]. https://tokensave.app/data/ai-agent-web-search-tokens",
+ "questions": {
+  "q1_fact": {
+   "type": "Simple fact",
+   "prompt": "What is the current monthly price of the Claude Pro plan in the United States? Answer in one sentence and cite your source."
+  },
+  "q2_news": {
+   "type": "Recent news",
+   "prompt": "Summarize the three most important AI model releases announced in the past 7 days, one sentence each, with a source link for each."
+  },
+  "q3_compare": {
+   "type": "Price comparison",
+   "prompt": "Compare the current API prices per million input and output tokens of the flagship models from Anthropic, OpenAI and Google. Use official pricing pages and cite them."
+  },
+  "q4_geo": {
+   "type": "Research question",
+   "prompt": "How many more tokens does Korean text need than the same English text on OpenAI and Claude tokenizers? Give numbers and cite your sources."
+  }
+ },
+ "rows": [
+  {
+   "tool": "claude_code",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "search": "on",
+   "run": 1,
+   "input_tokens": 178656,
+   "output_tokens": 2181,
+   "helper_model_input_tokens": 30210,
+   "searches": 2,
+   "page_opens": 0,
+   "seconds": 28,
+   "domains_seen_top": [
+    "support.claude.com",
+    "morphllm.com",
+    "claude.com",
+    "geotoolbox.ai",
+    "suprmind.ai",
+    "wearetandem.ai",
+    "aionx.co",
+    "thecrunch.io"
+   ],
+   "domains_seen_count": 12,
+   "domains_cited": [
+    "claude.com",
+    "support.claude.com"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "search": "on",
+   "run": 2,
+   "input_tokens": 122171,
+   "output_tokens": 870,
+   "helper_model_input_tokens": 12690,
+   "searches": 1,
+   "page_opens": 0,
+   "seconds": 18,
+   "domains_seen_top": [
+    "support.claude.com",
+    "claude.com",
+    "anthropic.com"
+   ],
+   "domains_seen_count": 3,
+   "domains_cited": [
+    "claude.com",
+    "support.claude.com"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "search": "off (no tools)",
+   "run": 1,
+   "input_tokens": 2985,
+   "output_tokens": 197,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 7,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": [
+    "anthropic.com",
+    "claude.com"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "search": "off (no tools)",
+   "run": 2,
+   "input_tokens": 2985,
+   "output_tokens": 194,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 6,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": [
+    "claude.com"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "search": "on",
+   "run": 1,
+   "input_tokens": 209864,
+   "output_tokens": 6354,
+   "helper_model_input_tokens": 56634,
+   "searches": 4,
+   "page_opens": 0,
+   "seconds": 39,
+   "domains_seen_top": [
+    "en.wikipedia.org",
+    "letsdatascience.com",
+    "eesel.ai",
+    "pasqualepillitteri.it",
+    "llmgateway.io",
+    "aiagentsdirectory.com",
+    "benchlm.ai",
+    "clone-systems.com"
+   ],
+   "domains_seen_count": 22,
+   "domains_cited": [
+    "blog.google",
+    "es.euronews.com",
+    "llmgateway.io",
+    "research.meta.ai"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "search": "on",
+   "run": 2,
+   "input_tokens": 150358,
+   "output_tokens": 4192,
+   "helper_model_input_tokens": 38322,
+   "searches": 2,
+   "page_opens": 0,
+   "seconds": 28,
+   "domains_seen_top": [
+    "en.wikipedia.org",
+    "llmgateway.io",
+    "clone-systems.com",
+    "capitalandcompute.net",
+    "evertune.ai",
+    "dev.to",
+    "pricepertoken.com",
+    "craai.substack.com"
+   ],
+   "domains_seen_count": 17,
+   "domains_cited": [
+    "axios.com",
+    "clone-systems.com",
+    "dev.to"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "search": "off (no tools)",
+   "run": 1,
+   "input_tokens": 2982,
+   "output_tokens": 486,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 14,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": []
+  },
+  {
+   "tool": "claude_code",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "search": "off (no tools)",
+   "run": 2,
+   "input_tokens": 2982,
+   "output_tokens": 449,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 13,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": []
+  },
+  {
+   "tool": "claude_code",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "search": "on",
+   "run": 1,
+   "input_tokens": 186932,
+   "output_tokens": 17740,
+   "helper_model_input_tokens": 23187,
+   "searches": 0,
+   "page_opens": 8,
+   "seconds": 79,
+   "domains_seen_top": [
+    "platform.claude.com",
+    "aistudio.google.com",
+    "anthropic.com",
+    "claude.ai",
+    "claude.com",
+    "support.claude.com",
+    "ai.google.dev",
+    "developers.openai.com"
+   ],
+   "domains_seen_count": 24,
+   "domains_cited": [
+    "ai.google.dev",
+    "claude.com",
+    "developers.openai.com",
+    "platform.claude.com"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "search": "on",
+   "run": 2,
+   "input_tokens": 170488,
+   "output_tokens": 12008,
+   "helper_model_input_tokens": 23189,
+   "searches": 0,
+   "page_opens": 5,
+   "seconds": 48,
+   "domains_seen_top": [
+    "platform.claude.com",
+    "aistudio.google.com",
+    "ai.google.dev",
+    "developers.openai.com",
+    "cloud.google.com",
+    "platform.openai.com",
+    "claude.com",
+    "aws.amazon.com"
+   ],
+   "domains_seen_count": 15,
+   "domains_cited": [
+    "ai.google.dev",
+    "developers.openai.com",
+    "platform.claude.com"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "search": "off (no tools)",
+   "run": 1,
+   "input_tokens": 2999,
+   "output_tokens": 1386,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 20,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": [
+    "ai.google.dev",
+    "anthropic.com",
+    "cloud.google.com",
+    "docs.claude.com",
+    "openai.com",
+    "platform.openai.com"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "search": "off (no tools)",
+   "run": 2,
+   "input_tokens": 2999,
+   "output_tokens": 1401,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 17,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": [
+    "ai.google.dev",
+    "anthropic.com",
+    "docs.anthropic.com",
+    "openai.com",
+    "platform.openai.com"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "search": "on",
+   "run": 1,
+   "input_tokens": 426565,
+   "output_tokens": 12119,
+   "helper_model_input_tokens": 38942,
+   "searches": 3,
+   "page_opens": 8,
+   "seconds": 85,
+   "domains_seen_top": [
+    "github.com",
+    "dev.to",
+    "media2.dev.to",
+    "assets.dev.to",
+    "docs.github.com",
+    "arxiv.org",
+    "github.blog",
+    "support.github.com"
+   ],
+   "domains_seen_count": 48,
+   "domains_cited": [
+    "arxiv.org",
+    "dev.to",
+    "github.com",
+    "hiai.korea.ac.kr",
+    "jangwook.net",
+    "proceedings.neurips.cc"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "search": "on",
+   "run": 2,
+   "input_tokens": 317868,
+   "output_tokens": 9992,
+   "helper_model_input_tokens": 101634,
+   "searches": 2,
+   "page_opens": 4,
+   "seconds": 75,
+   "domains_seen_top": [
+    "dev.to",
+    "media2.dev.to",
+    "assets.dev.to",
+    "synthorai.io",
+    "jangwook.net",
+    "hiai.korea.ac.kr",
+    "arxiv.org",
+    "horadecodar.com.br"
+   ],
+   "domains_seen_count": 30,
+   "domains_cited": [
+    "dev.to",
+    "hiai.korea.ac.kr",
+    "jangwook.net"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "search": "off (no tools)",
+   "run": 1,
+   "input_tokens": 2993,
+   "output_tokens": 2127,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 24,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": [
+    "docs.anthropic.com",
+    "openai.com"
+   ]
+  },
+  {
+   "tool": "claude_code",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "search": "off (no tools)",
+   "run": 2,
+   "input_tokens": 2993,
+   "output_tokens": 2063,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 23,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": [
+    "docs.anthropic.com",
+    "openai.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "search": "on",
+   "run": 1,
+   "input_tokens": 33162,
+   "output_tokens": 105,
+   "helper_model_input_tokens": 0,
+   "searches": 1,
+   "page_opens": 0,
+   "seconds": 10,
+   "domains_seen_top": [
+    "support.anthropic.com",
+    "anthropic.com"
+   ],
+   "domains_seen_count": 2,
+   "domains_cited": [
+    "support.anthropic.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "search": "on",
+   "run": 2,
+   "input_tokens": 33429,
+   "output_tokens": 110,
+   "helper_model_input_tokens": 0,
+   "searches": 1,
+   "page_opens": 0,
+   "seconds": 9,
+   "domains_seen_top": [
+    "anthropic.com",
+    "support.anthropic.com"
+   ],
+   "domains_seen_count": 2,
+   "domains_cited": [
+    "anthropic.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "search": "off (no tools)",
+   "run": 1,
+   "input_tokens": 10240,
+   "output_tokens": 40,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 4,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": [
+    "anthropic.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q1_fact",
+   "question_type": "Simple fact",
+   "search": "off (no tools)",
+   "run": 2,
+   "input_tokens": 20850,
+   "output_tokens": 98,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 6,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": [
+    "anthropic.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "search": "on",
+   "run": 1,
+   "input_tokens": 68841,
+   "output_tokens": 435,
+   "helper_model_input_tokens": 0,
+   "searches": 2,
+   "page_opens": 0,
+   "seconds": 16,
+   "domains_seen_top": [
+    "reddit.com",
+    "en.wikipedia.org",
+    "anthropic.com",
+    "tomshardware.com",
+    "openai.com",
+    "arxiv.org",
+    "axios.com",
+    "techradar.com"
+   ],
+   "domains_seen_count": 28,
+   "domains_cited": [
+    "about.fb.com",
+    "artificialwatch.com",
+    "themodelgap.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "search": "on",
+   "run": 2,
+   "input_tokens": 67541,
+   "output_tokens": 445,
+   "helper_model_input_tokens": 0,
+   "searches": 2,
+   "page_opens": 0,
+   "seconds": 14,
+   "domains_seen_top": [
+    "reddit.com",
+    "en.wikipedia.org",
+    "axios.com",
+    "tomshardware.com",
+    "arxiv.org",
+    "nvidianews.nvidia.com",
+    "techradar.com",
+    "apnews.com"
+   ],
+   "domains_seen_count": 40,
+   "domains_cited": [
+    "blog.google",
+    "blogs.nvidia.com",
+    "reflection.ai"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "search": "off (no tools)",
+   "run": 1,
+   "input_tokens": 34491,
+   "output_tokens": 245,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 9,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": []
+  },
+  {
+   "tool": "codex",
+   "question": "q2_news",
+   "question_type": "Recent news",
+   "search": "off (no tools)",
+   "run": 2,
+   "input_tokens": 48358,
+   "output_tokens": 342,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 12,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": []
+  },
+  {
+   "tool": "codex",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "search": "on",
+   "run": 1,
+   "input_tokens": 93037,
+   "output_tokens": 698,
+   "helper_model_input_tokens": 0,
+   "searches": 1,
+   "page_opens": 2,
+   "seconds": 22,
+   "domains_seen_top": [
+    "ai.google.dev",
+    "anthropic.com",
+    "developers.openai.com",
+    "cdn.openai.com",
+    "docs.anthropic.com",
+    "discuss.ai.google.dev"
+   ],
+   "domains_seen_count": 6,
+   "domains_cited": [
+    "ai.google.dev",
+    "anthropic.com",
+    "developers.openai.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "search": "on",
+   "run": 2,
+   "input_tokens": 106132,
+   "output_tokens": 661,
+   "helper_model_input_tokens": 0,
+   "searches": 3,
+   "page_opens": 0,
+   "seconds": 22,
+   "domains_seen_top": [
+    "ai.google.dev",
+    "developers.openai.com",
+    "cdn.openai.com",
+    "anthropic.com",
+    "docs.anthropic.com",
+    "openai.com",
+    "discuss.ai.google.dev",
+    "deploymentsafety.openai.com"
+   ],
+   "domains_seen_count": 10,
+   "domains_cited": [
+    "ai.google.dev",
+    "anthropic.com",
+    "developers.openai.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "search": "off (no tools)",
+   "run": 1,
+   "input_tokens": 48409,
+   "output_tokens": 602,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 16,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": [
+    "ai.google.dev",
+    "anthropic.com",
+    "openai.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q3_compare",
+   "question_type": "Price comparison",
+   "search": "off (no tools)",
+   "run": 2,
+   "input_tokens": 62492,
+   "output_tokens": 729,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 16,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": [
+    "ai.google.dev",
+    "anthropic.com",
+    "openai.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "search": "on",
+   "run": 1,
+   "input_tokens": 66519,
+   "output_tokens": 568,
+   "helper_model_input_tokens": 0,
+   "searches": 2,
+   "page_opens": 0,
+   "seconds": 18,
+   "domains_seen_top": [
+    "reddit.com",
+    "platform.openai.com",
+    "arxiv.org",
+    "github.com",
+    "aclanthology.org",
+    "ioptera.com",
+    "zolamir.com",
+    "ttlab.hopto.org"
+   ],
+   "domains_seen_count": 20,
+   "domains_cited": [
+    "huggingface.co",
+    "platform.claude.com",
+    "platform.openai.com",
+    "zolamir.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "search": "on",
+   "run": 2,
+   "input_tokens": 103718,
+   "output_tokens": 619,
+   "helper_model_input_tokens": 0,
+   "searches": 2,
+   "page_opens": 1,
+   "seconds": 21,
+   "domains_seen_top": [
+    "anthropic.com",
+    "reddit.com",
+    "arxiv.org",
+    "jangwook.net",
+    "platform.openai.com",
+    "aclanthology.org",
+    "openreview.net",
+    "docs.anthropic.com"
+   ],
+   "domains_seen_count": 21,
+   "domains_cited": [
+    "jangwook.net",
+    "platform.claude.com",
+    "platform.openai.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "search": "off (no tools)",
+   "run": 1,
+   "input_tokens": 34625,
+   "output_tokens": 632,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 12,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": [
+    "docs.anthropic.com",
+    "help.openai.com",
+    "platform.openai.com"
+   ]
+  },
+  {
+   "tool": "codex",
+   "question": "q4_geo",
+   "question_type": "Research question",
+   "search": "off (no tools)",
+   "run": 2,
+   "input_tokens": 20857,
+   "output_tokens": 882,
+   "helper_model_input_tokens": 0,
+   "searches": 0,
+   "page_opens": 0,
+   "seconds": 13,
+   "domains_seen_top": [],
+   "domains_seen_count": 0,
+   "domains_cited": [
+    "docs.anthropic.com",
+    "github.com",
+    "platform.openai.com"
+   ]
+  }
+ ]
+}
