@@ -5,6 +5,8 @@ The same coding prompt run once at each effort level in Claude Code: Claude Opus
 **Headline:** the task used 6,299 output tokens and $0.56 at medium on Opus 5.5, and 160,033 tokens and $5.25 at max. High cost only 34% more than medium; the jump starts at xhigh.
 
 - Source page, chart and method: https://tokensave.app/data/claude-effort-cost
+- DOI (Zenodo): [10.5281/zenodo.23446567](https://doi.org/10.5281/zenodo.23446567)
+- Also on: [Hugging Face](https://huggingface.co/datasets/JOHNISKING/claude-effort-cost) · [Kaggle](https://www.kaggle.com/datasets/johnisking/claude-effort-levels-tokens-time-and-cost)
 - Measured: 2026-10-09
 - License: CC BY 4.0
 
@@ -47,6 +49,6 @@ The same coding prompt run once at each effort level in Claude Code: Claude Opus
 
 ## Citation
 
-TokenSave (2026). Claude effort levels: tokens, time and cost for the same coding task [Data set]. https://tokensave.app/data/claude-effort-cost
+TokenSave (2026). Claude effort levels: tokens, time and cost for the same coding task [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23446567
 
 Estimate coding agent costs at [tokensave.app](https://tokensave.app/).

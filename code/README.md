@@ -6,6 +6,8 @@ Two small programs (an inventory class and Dijkstra's shortest path) written in 
 
 - Source page, chart and method: https://tokensave.app/data/token-cost-by-programming-language
 - Related: token cost by data format (https://tokensave.app/data/token-cost-by-format)
+- DOI (Zenodo): [10.5281/zenodo.23446563](https://doi.org/10.5281/zenodo.23446563)
+- Also on: [Hugging Face](https://huggingface.co/datasets/JOHNISKING/token-cost-by-programming-language) · [Kaggle](https://www.kaggle.com/datasets/johnisking/token-cost-by-programming-language)
 - Measured: 2026-10-18
 - License: CC BY 4.0
 
@@ -52,6 +54,6 @@ Two small programs (an inventory class and Dijkstra's shortest path) written in 
 
 ## Citation
 
-TokenSave (2026). Token cost by programming language: the same programs in 10 languages on Claude, Gemini and GPT [Data set]. https://tokensave.app/data/token-cost-by-programming-language
+TokenSave (2026). Token cost by programming language: the same programs in 10 languages on Claude, Gemini and GPT [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23446563
 
 Count tokens for your own code at [tokensave.app](https://tokensave.app/).

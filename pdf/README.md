@@ -6,6 +6,8 @@ Input tokens for text, table and scanned PDF pages (1 to 10 pages) on Claude Opu
 
 - Source page, chart and method: https://tokensave.app/data/pdf-token-cost
 - Related: image token cost by resolution (https://tokensave.app/data/image-token-cost)
+- DOI (Zenodo): [10.5281/zenodo.23446565](https://doi.org/10.5281/zenodo.23446565)
+- Also on: [Hugging Face](https://huggingface.co/datasets/JOHNISKING/pdf-token-cost) · [Kaggle](https://www.kaggle.com/datasets/johnisking/pdf-token-cost-per-page-claude-vs-gemini)
 - Measured: 2026-10-18
 - License: CC BY 4.0
 
@@ -49,6 +51,6 @@ Input tokens for text, table and scanned PDF pages (1 to 10 pages) on Claude Opu
 
 ## Citation
 
-TokenSave (2026). PDF token cost per page: Claude vs Gemini, and PDF vs pasted text [Data set]. https://tokensave.app/data/pdf-token-cost
+TokenSave (2026). PDF token cost per page: Claude vs Gemini, and PDF vs pasted text [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23446565
 
 Count tokens for your own text at [tokensave.app](https://tokensave.app/).
