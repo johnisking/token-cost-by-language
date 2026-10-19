@@ -28,6 +28,7 @@ The same small coding task (a brick-breaker game in one HTML file) run five time
 - `raw-logs-and-setup.zip`: the raw stream-json log of every run, every generated `index.html`, the run script, the hook, the hook settings and the skill
 - `build_combined.py`: rebuilds the table from the raw logs
 - `check_works.py`: the headless browser check
+- `analysis.ipynb`: notebook that reproduces the medians and the tokens-vs-cost chart
 
 ## Results
 
