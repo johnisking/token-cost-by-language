@@ -1,0 +1,36 @@
+condition,run,input_tokens,cache_read_tokens,output_tokens,api_cost_usd,seconds,tool_calls,subagent_tool_calls,used_subagent,used_skill,file_chars,works,tools,subagent_tools
+default,1,78140,51772,6907,0.359,58,1,0,False,False,12467,True,"{""Write"": 1}",{}
+default,2,78829,51772,7438,0.376,60,1,0,False,False,13375,True,"{""Write"": 1}",{}
+default,3,78723,58793,7364,0.318,236,1,0,False,False,13599,True,"{""Write"": 1}",{}
+default,4,78713,51772,7323,0.372,61,1,0,False,False,11251,True,"{""Write"": 1}",{}
+default,5,79861,51772,8496,0.405,77,1,0,False,False,13517,True,"{""Write"": 1}",{}
+safemode,1,48172,37681,4891,0.189,42,1,0,False,False,8510,True,"{""Write"": 1}",{}
+safemode,2,47818,39510,4658,0.168,42,1,0,False,False,7872,True,"{""Write"": 1}",{}
+safemode,3,47863,39510,4604,0.167,37,1,0,False,False,7921,True,"{""Write"": 1}",{}
+safemode,4,73923,65421,4718,0.175,38,2,0,False,False,7738,True,"{""Edit"": 1, ""Write"": 1}",{}
+safemode,5,48063,39510,4791,0.172,38,1,0,False,False,8321,True,"{""Write"": 1}",{}
+minimal,1,8218,1915,4676,0.144,41,1,0,False,False,7964,True,"{""Write"": 1}",{}
+minimal,2,8214,3439,4691,0.133,45,1,0,False,False,7904,True,"{""Write"": 1}",{}
+minimal,3,7857,3439,4320,0.122,65,1,0,False,False,7338,True,"{""Write"": 1}",{}
+minimal,4,9209,3439,5963,0.166,50,1,0,False,False,9895,True,"{""Write"": 1}",{}
+minimal,5,7979,3439,4457,0.126,42,1,0,False,False,7550,True,"{""Write"": 1}",{}
+subagent,1,402166,324909,14934,0.85,205,3,5,True,False,19761,True,"{""Agent"": 1, ""Bash"": 1, ""Read"": 1}","{""Bash"": 3, ""PowerShell"": 1, ""Write"": 1}"
+subagent,2,507286,442656,13604,0.75,135,2,9,True,False,16658,True,"{""Agent"": 1, ""Bash"": 1}","{""Bash"": 4, ""PowerShell"": 3, ""Write"": 2}"
+subagent,3,646540,579390,15486,0.829,157,3,11,True,False,18313,True,"{""Agent"": 1, ""Bash"": 2}","{""Bash"": 6, ""PowerShell"": 3, ""Write"": 2}"
+subagent,4,699803,622012,17142,0.953,191,6,10,True,False,15867,True,"{""Agent"": 1, ""Bash"": 3, ""PowerShell"": 1, ""Read"": 1}","{""Bash"": 4, ""PowerShell"": 3, ""Write"": 3}"
+subagent,5,534125,465928,17444,0.85,178,2,10,True,False,17900,True,"{""Agent"": 1, ""Glob"": 1}","{""Bash"": 5, ""PowerShell"": 1, ""Read"": 1, ""Write"": 3}"
+plan,1,206047,176144,8298,0.44,74,4,0,False,False,10994,True,"{""Bash"": 1, ""Edit"": 1, ""Write"": 2}",{}
+plan,2,246736,215860,9315,0.476,85,4,0,False,False,12082,True,"{""Bash"": 1, ""Glob"": 1, ""Write"": 2}",{}
+plan,3,245562,214983,9013,0.468,84,4,0,False,False,12493,True,"{""Bash"": 1, ""Glob"": 1, ""Write"": 2}",{}
+plan,4,248072,216461,10119,0.499,97,4,0,False,False,13066,True,"{""Bash"": 1, ""Glob"": 1, ""Write"": 2}",{}
+plan,5,159787,131176,7233,0.4,75,2,0,False,False,9774,True,"{""Write"": 2}",{}
+skill,1,158195,131068,6719,0.378,55,3,0,False,True,11240,True,"{""Bash"": 1, ""Skill"": 1, ""Write"": 1}",{}
+skill,2,158450,131214,6828,0.381,60,3,0,False,True,11601,True,"{""Bash"": 1, ""Skill"": 1, ""Write"": 1}",{}
+skill,3,158393,131027,6740,0.38,55,4,0,False,True,11143,True,"{""Bash"": 1, ""Edit"": 1, ""Skill"": 1, ""Write"": 1}",{}
+skill,4,158828,131232,7150,0.39,89,4,0,False,True,11282,True,"{""Bash"": 1, ""Edit"": 1, ""Skill"": 1, ""Write"": 1}",{}
+skill,5,157819,130885,6483,0.371,55,3,0,False,True,10982,True,"{""Bash"": 1, ""Skill"": 1, ""Write"": 1}",{}
+hook,1,117910,92608,5486,0.331,56,2,0,False,False,9046,True,"{""Bash"": 1, ""Write"": 1}",{}
+hook,2,165208,137429,7675,0.403,65,4,0,False,False,11935,True,"{""Bash"": 1, ""Edit"": 2, ""Write"": 1}",{}
+hook,3,121403,94076,7393,0.385,65,3,0,False,False,12013,True,"{""Bash"": 1, ""Edit"": 1, ""Write"": 1}",{}
+hook,4,123617,95390,8453,0.414,71,2,0,False,False,13036,True,"{""Bash"": 1, ""Write"": 1}",{}
+hook,5,121553,94431,7379,0.383,66,2,0,False,False,12866,True,"{""Bash"": 1, ""Write"": 1}",{}

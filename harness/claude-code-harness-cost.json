@@ -1,0 +1,883 @@
+{
+ "title": "What the Claude Code harness costs: plugins, subagents, plan mode, skills and hooks on the same task",
+ "url": "https://tokensave.app/data/claude-code-harness-cost",
+ "license": "CC BY 4.0",
+ "measured": "2026-10-19",
+ "citation": "TokenSave (2026). What the Claude Code harness costs: plugins, subagents, plan mode, skills and hooks on the same task [Data set]. https://tokensave.app/data/claude-code-harness-cost",
+ "tool": "Claude Code 2.1.295 (Opus 5.5), effort medium, claude -p --output-format stream-json, no MCP servers",
+ "conditions": {
+  "default": "Default Claude Code",
+  "safemode": "--safe-mode (no personal plugins, skills, hooks or CLAUDE.md)",
+  "minimal": "Minimal harness (one-line system prompt, Write and Read only)",
+  "subagent": "Asked to delegate to a subagent",
+  "plan": "Plan mode, then implement",
+  "skill": "One project skill (html-canvas-games)",
+  "hook": "PostToolUse hook that sends a check message back"
+ },
+ "prompt": "Make a brick-breaker game that runs in the browser as a single file named index.html in the current folder. It needs 2 levels, a score display and 3 lives, and it must be playable with the keyboard and the mouse. Write the file and finish.",
+ "subagent_prompt": "Make a brick-breaker game that runs in the browser as a single file named index.html in the current folder. It needs 2 levels, a score display and 3 lives, and it must be playable with the keyboard and the mouse. Delegate the implementation to a subagent with the Agent tool. Write the file and finish.",
+ "rows": [
+  {
+   "condition": "default",
+   "run": 1,
+   "input_tokens": 78140,
+   "cache_read_tokens": 51772,
+   "output_tokens": 6907,
+   "api_cost_usd": 0.359,
+   "models": {
+    "claude-opus-5-5": 78140
+   },
+   "seconds": 58,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 12467,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "default",
+   "run": 2,
+   "input_tokens": 78829,
+   "cache_read_tokens": 51772,
+   "output_tokens": 7438,
+   "api_cost_usd": 0.376,
+   "models": {
+    "claude-opus-5-5": 78829
+   },
+   "seconds": 60,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 13375,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "default",
+   "run": 3,
+   "input_tokens": 78723,
+   "cache_read_tokens": 58793,
+   "output_tokens": 7364,
+   "api_cost_usd": 0.318,
+   "models": {
+    "claude-opus-5-5": 78723
+   },
+   "seconds": 236,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 13599,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "default",
+   "run": 4,
+   "input_tokens": 78713,
+   "cache_read_tokens": 51772,
+   "output_tokens": 7323,
+   "api_cost_usd": 0.372,
+   "models": {
+    "claude-opus-5-5": 78713
+   },
+   "seconds": 61,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 11251,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "default",
+   "run": 5,
+   "input_tokens": 79861,
+   "cache_read_tokens": 51772,
+   "output_tokens": 8496,
+   "api_cost_usd": 0.405,
+   "models": {
+    "claude-opus-5-5": 79861
+   },
+   "seconds": 77,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 13517,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "safemode",
+   "run": 1,
+   "input_tokens": 48172,
+   "cache_read_tokens": 37681,
+   "output_tokens": 4891,
+   "api_cost_usd": 0.189,
+   "models": {
+    "claude-opus-5-5": 48172
+   },
+   "seconds": 42,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 8510,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "safemode",
+   "run": 2,
+   "input_tokens": 47818,
+   "cache_read_tokens": 39510,
+   "output_tokens": 4658,
+   "api_cost_usd": 0.168,
+   "models": {
+    "claude-opus-5-5": 47818
+   },
+   "seconds": 42,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 7872,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "safemode",
+   "run": 3,
+   "input_tokens": 47863,
+   "cache_read_tokens": 39510,
+   "output_tokens": 4604,
+   "api_cost_usd": 0.167,
+   "models": {
+    "claude-opus-5-5": 47863
+   },
+   "seconds": 37,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 7921,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "safemode",
+   "run": 4,
+   "input_tokens": 73923,
+   "cache_read_tokens": 65421,
+   "output_tokens": 4718,
+   "api_cost_usd": 0.175,
+   "models": {
+    "claude-opus-5-5": 73923
+   },
+   "seconds": 38,
+   "tool_calls": 2,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1,
+    "Edit": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 7738,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "safemode",
+   "run": 5,
+   "input_tokens": 48063,
+   "cache_read_tokens": 39510,
+   "output_tokens": 4791,
+   "api_cost_usd": 0.172,
+   "models": {
+    "claude-opus-5-5": 48063
+   },
+   "seconds": 38,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 8321,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "minimal",
+   "run": 1,
+   "input_tokens": 8218,
+   "cache_read_tokens": 1915,
+   "output_tokens": 4676,
+   "api_cost_usd": 0.144,
+   "models": {
+    "claude-opus-5-5": 8218
+   },
+   "seconds": 41,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 7964,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "minimal",
+   "run": 2,
+   "input_tokens": 8214,
+   "cache_read_tokens": 3439,
+   "output_tokens": 4691,
+   "api_cost_usd": 0.133,
+   "models": {
+    "claude-opus-5-5": 8214
+   },
+   "seconds": 45,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 7904,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "minimal",
+   "run": 3,
+   "input_tokens": 7857,
+   "cache_read_tokens": 3439,
+   "output_tokens": 4320,
+   "api_cost_usd": 0.122,
+   "models": {
+    "claude-opus-5-5": 7857
+   },
+   "seconds": 65,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 7338,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "minimal",
+   "run": 4,
+   "input_tokens": 9209,
+   "cache_read_tokens": 3439,
+   "output_tokens": 5963,
+   "api_cost_usd": 0.166,
+   "models": {
+    "claude-opus-5-5": 9209
+   },
+   "seconds": 50,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 9895,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "minimal",
+   "run": 5,
+   "input_tokens": 7979,
+   "cache_read_tokens": 3439,
+   "output_tokens": 4457,
+   "api_cost_usd": 0.126,
+   "models": {
+    "claude-opus-5-5": 7979
+   },
+   "seconds": 42,
+   "tool_calls": 1,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 7550,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "subagent",
+   "run": 1,
+   "input_tokens": 402166,
+   "cache_read_tokens": 324909,
+   "output_tokens": 14934,
+   "api_cost_usd": 0.85,
+   "models": {
+    "claude-opus-5-5": 402166
+   },
+   "seconds": 205,
+   "tool_calls": 3,
+   "subagent_tool_calls": 5,
+   "tools": {
+    "Agent": 1,
+    "Bash": 1,
+    "Read": 1
+   },
+   "subagent_tools": {
+    "Write": 1,
+    "Bash": 3,
+    "PowerShell": 1
+   },
+   "used_subagent": true,
+   "used_skill": false,
+   "file_chars": 19761,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "subagent",
+   "run": 2,
+   "input_tokens": 507286,
+   "cache_read_tokens": 442656,
+   "output_tokens": 13604,
+   "api_cost_usd": 0.75,
+   "models": {
+    "claude-opus-5-5": 507286
+   },
+   "seconds": 135,
+   "tool_calls": 2,
+   "subagent_tool_calls": 9,
+   "tools": {
+    "Agent": 1,
+    "Bash": 1
+   },
+   "subagent_tools": {
+    "Write": 2,
+    "Bash": 4,
+    "PowerShell": 3
+   },
+   "used_subagent": true,
+   "used_skill": false,
+   "file_chars": 16658,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "subagent",
+   "run": 3,
+   "input_tokens": 646540,
+   "cache_read_tokens": 579390,
+   "output_tokens": 15486,
+   "api_cost_usd": 0.829,
+   "models": {
+    "claude-opus-5-5": 646540
+   },
+   "seconds": 157,
+   "tool_calls": 3,
+   "subagent_tool_calls": 11,
+   "tools": {
+    "Agent": 1,
+    "Bash": 2
+   },
+   "subagent_tools": {
+    "Write": 2,
+    "Bash": 6,
+    "PowerShell": 3
+   },
+   "used_subagent": true,
+   "used_skill": false,
+   "file_chars": 18313,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "subagent",
+   "run": 4,
+   "input_tokens": 699803,
+   "cache_read_tokens": 622012,
+   "output_tokens": 17142,
+   "api_cost_usd": 0.953,
+   "models": {
+    "claude-opus-5-5": 699803
+   },
+   "seconds": 191,
+   "tool_calls": 6,
+   "subagent_tool_calls": 10,
+   "tools": {
+    "Agent": 1,
+    "Bash": 3,
+    "Read": 1,
+    "PowerShell": 1
+   },
+   "subagent_tools": {
+    "Write": 3,
+    "Bash": 4,
+    "PowerShell": 3
+   },
+   "used_subagent": true,
+   "used_skill": false,
+   "file_chars": 15867,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "subagent",
+   "run": 5,
+   "input_tokens": 534125,
+   "cache_read_tokens": 465928,
+   "output_tokens": 17444,
+   "api_cost_usd": 0.85,
+   "models": {
+    "claude-opus-5-5": 534125
+   },
+   "seconds": 178,
+   "tool_calls": 2,
+   "subagent_tool_calls": 10,
+   "tools": {
+    "Agent": 1,
+    "Glob": 1
+   },
+   "subagent_tools": {
+    "Write": 3,
+    "Bash": 5,
+    "Read": 1,
+    "PowerShell": 1
+   },
+   "used_subagent": true,
+   "used_skill": false,
+   "file_chars": 17900,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "plan",
+   "run": 1,
+   "input_tokens": 206047,
+   "cache_read_tokens": 176144,
+   "output_tokens": 8298,
+   "api_cost_usd": 0.44,
+   "models": {
+    "claude-opus-5-5": 206047
+   },
+   "seconds": 74,
+   "tool_calls": 4,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 2,
+    "Edit": 1,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 10994,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "plan",
+   "run": 2,
+   "input_tokens": 246736,
+   "cache_read_tokens": 215860,
+   "output_tokens": 9315,
+   "api_cost_usd": 0.476,
+   "models": {
+    "claude-opus-5-5": 246736
+   },
+   "seconds": 85,
+   "tool_calls": 4,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Glob": 1,
+    "Write": 2,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 12082,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "plan",
+   "run": 3,
+   "input_tokens": 245562,
+   "cache_read_tokens": 214983,
+   "output_tokens": 9013,
+   "api_cost_usd": 0.468,
+   "models": {
+    "claude-opus-5-5": 245562
+   },
+   "seconds": 84,
+   "tool_calls": 4,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Glob": 1,
+    "Write": 2,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 12493,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "plan",
+   "run": 4,
+   "input_tokens": 248072,
+   "cache_read_tokens": 216461,
+   "output_tokens": 10119,
+   "api_cost_usd": 0.499,
+   "models": {
+    "claude-opus-5-5": 248072
+   },
+   "seconds": 97,
+   "tool_calls": 4,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Glob": 1,
+    "Write": 2,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 13066,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "plan",
+   "run": 5,
+   "input_tokens": 159787,
+   "cache_read_tokens": 131176,
+   "output_tokens": 7233,
+   "api_cost_usd": 0.4,
+   "models": {
+    "claude-opus-5-5": 159787
+   },
+   "seconds": 75,
+   "tool_calls": 2,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 2
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 9774,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "skill",
+   "run": 1,
+   "input_tokens": 158195,
+   "cache_read_tokens": 131068,
+   "output_tokens": 6719,
+   "api_cost_usd": 0.378,
+   "models": {
+    "claude-opus-5-5": 158195
+   },
+   "seconds": 55,
+   "tool_calls": 3,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Skill": 1,
+    "Write": 1,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": true,
+   "file_chars": 11240,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "skill",
+   "run": 2,
+   "input_tokens": 158450,
+   "cache_read_tokens": 131214,
+   "output_tokens": 6828,
+   "api_cost_usd": 0.381,
+   "models": {
+    "claude-opus-5-5": 158450
+   },
+   "seconds": 60,
+   "tool_calls": 3,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Skill": 1,
+    "Write": 1,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": true,
+   "file_chars": 11601,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "skill",
+   "run": 3,
+   "input_tokens": 158393,
+   "cache_read_tokens": 131027,
+   "output_tokens": 6740,
+   "api_cost_usd": 0.38,
+   "models": {
+    "claude-opus-5-5": 158393
+   },
+   "seconds": 55,
+   "tool_calls": 4,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Skill": 1,
+    "Write": 1,
+    "Edit": 1,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": true,
+   "file_chars": 11143,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "skill",
+   "run": 4,
+   "input_tokens": 158828,
+   "cache_read_tokens": 131232,
+   "output_tokens": 7150,
+   "api_cost_usd": 0.39,
+   "models": {
+    "claude-opus-5-5": 158828
+   },
+   "seconds": 89,
+   "tool_calls": 4,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Skill": 1,
+    "Write": 1,
+    "Edit": 1,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": true,
+   "file_chars": 11282,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "skill",
+   "run": 5,
+   "input_tokens": 157819,
+   "cache_read_tokens": 130885,
+   "output_tokens": 6483,
+   "api_cost_usd": 0.371,
+   "models": {
+    "claude-opus-5-5": 157819
+   },
+   "seconds": 55,
+   "tool_calls": 3,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Skill": 1,
+    "Write": 1,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": true,
+   "file_chars": 10982,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "hook",
+   "run": 1,
+   "input_tokens": 117910,
+   "cache_read_tokens": 92608,
+   "output_tokens": 5486,
+   "api_cost_usd": 0.331,
+   "models": {
+    "claude-opus-5-5": 117910
+   },
+   "seconds": 56,
+   "tool_calls": 2,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 9046,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "hook",
+   "run": 2,
+   "input_tokens": 165208,
+   "cache_read_tokens": 137429,
+   "output_tokens": 7675,
+   "api_cost_usd": 0.403,
+   "models": {
+    "claude-opus-5-5": 165208
+   },
+   "seconds": 65,
+   "tool_calls": 4,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1,
+    "Edit": 2,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 11935,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "hook",
+   "run": 3,
+   "input_tokens": 121403,
+   "cache_read_tokens": 94076,
+   "output_tokens": 7393,
+   "api_cost_usd": 0.385,
+   "models": {
+    "claude-opus-5-5": 121403
+   },
+   "seconds": 65,
+   "tool_calls": 3,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1,
+    "Edit": 1,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 12013,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "hook",
+   "run": 4,
+   "input_tokens": 123617,
+   "cache_read_tokens": 95390,
+   "output_tokens": 8453,
+   "api_cost_usd": 0.414,
+   "models": {
+    "claude-opus-5-5": 123617
+   },
+   "seconds": 71,
+   "tool_calls": 2,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 13036,
+   "works": true,
+   "page_errors": []
+  },
+  {
+   "condition": "hook",
+   "run": 5,
+   "input_tokens": 121553,
+   "cache_read_tokens": 94431,
+   "output_tokens": 7379,
+   "api_cost_usd": 0.383,
+   "models": {
+    "claude-opus-5-5": 121553
+   },
+   "seconds": 66,
+   "tool_calls": 2,
+   "subagent_tool_calls": 0,
+   "tools": {
+    "Write": 1,
+    "Bash": 1
+   },
+   "subagent_tools": {},
+   "used_subagent": false,
+   "used_skill": false,
+   "file_chars": 12866,
+   "works": true,
+   "page_errors": []
+  }
+ ]
+}
