@@ -23,7 +23,7 @@ The same small coding task (a brick-breaker game in one HTML file) run five time
 
 - `claude-code-harness-cost.csv`: one row per run with `condition, run, input_tokens, cache_read_tokens, output_tokens, api_cost_usd, seconds, tool_calls, subagent_tool_calls, used_subagent, used_skill, file_chars, works, tools, subagent_tools`
 - `claude-code-harness-cost.json`: the same data plus the prompts and the settings
-- `raw-logs-and-setup.zip` (on Zenodo): the raw stream-json log of every run, every generated `index.html`, the run script, the hook, the hook settings and the skill
+- `raw-logs-and-setup.zip`: the raw stream-json log of every run, every generated `index.html`, the run script, the hook, the hook settings and the skill
 - `build_combined.py`: rebuilds the table from the raw logs
 - `check_works.py`: the headless browser check
 
