@@ -6,6 +6,8 @@ The same small coding task (a brick-breaker game in one HTML file) run five time
 
 - Source page, chart and method: https://tokensave.app/data/claude-code-harness-cost
 - Related: Claude Code vs Codex startup tokens and the same task (https://tokensave.app/data/claude-code-vs-codex-tokens)
+- DOI (Zenodo): [10.5281/zenodo.23465633](https://doi.org/10.5281/zenodo.23465633)
+- Also on: [Hugging Face](https://huggingface.co/datasets/JOHNISKING/claude-code-harness-cost) · [Kaggle](https://www.kaggle.com/datasets/johnisking/claude-code-harness-cost-plugins-subagents)
 - Measured: 2026-10-19
 - License: CC BY 4.0
 
