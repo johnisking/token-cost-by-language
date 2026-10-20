@@ -98,3 +98,7 @@ TokenSave (2026). Token cost by language on Claude, Gemini and GPT: 41 languages
 ```
 
 Count tokens for your own text at [tokensave.app](https://tokensave.app/).
+
+## Update 2026-10-20: Claude Haiku 5.5
+
+Claude Haiku 5.5 (released 2026-10-07) was measured on the same 41 prompts with the same method (Claude Code 2.1.295, `claude -p`, nonessential traffic off, minus a one-character baseline). It gave **identical counts to Claude Opus/Sonnet 5.5 in every language**, so the `claude55` column covers Opus, Sonnet and Haiku 5.5. Compared with Haiku 4.5, English needs 34% more tokens (35 → 47) and other Latin-script languages 37–43% more, while Korean, Japanese, Chinese, Hindi, Russian and Ukrainian are unchanged; across all 41 prompts the total is 9% higher. Raw output and script: `haiku-5-5/`. Index built from this data: https://tokensave.app/data/language-tax-index (v1.1).

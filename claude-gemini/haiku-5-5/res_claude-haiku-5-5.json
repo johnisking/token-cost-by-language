@@ -1,0 +1,265 @@
+{
+ "_base": {
+  "total": 18987,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "en": {
+  "total": 19034,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "zh-CN": {
+  "total": 19041,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "id": {
+  "total": 19067,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "es": {
+  "total": 19056,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "pt": {
+  "total": 19056,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "fa": {
+  "total": 19079,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "de": {
+  "total": 19082,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "ar": {
+  "total": 19076,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "fr": {
+  "total": 19057,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "nl": {
+  "total": 19068,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "ru": {
+  "total": 19058,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "sv": {
+  "total": 19054,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "no": {
+  "total": 19056,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "zh-TW": {
+  "total": 19047,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "vi": {
+  "total": 19075,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "da": {
+  "total": 19058,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "it": {
+  "total": 19065,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "ko": {
+  "total": 19076,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "fi": {
+  "total": 19083,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "tr": {
+  "total": 19077,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "hi": {
+  "total": 19097,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "fil": {
+  "total": 19071,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "ro": {
+  "total": 19061,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "he": {
+  "total": 19073,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "ur": {
+  "total": 19103,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "gu": {
+  "total": 19129,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "mr": {
+  "total": 19111,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "bn": {
+  "total": 19129,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "th": {
+  "total": 19106,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "hu": {
+  "total": 19075,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "ja": {
+  "total": 19058,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "kn": {
+  "total": 19305,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "ml": {
+  "total": 19199,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "uk": {
+  "total": 19067,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "pl": {
+  "total": 19081,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "ta": {
+  "total": 19163,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "cs": {
+  "total": 19073,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "sk": {
+  "total": 19078,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "te": {
+  "total": 19145,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "el": {
+  "total": 19104,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "pa": {
+  "total": 19303,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "_base_after": {
+  "total": 18987,
+  "model": [
+   "claude-haiku-5-5"
+  ]
+ },
+ "_meta": {
+  "measured": "2026-10-20",
+  "tool": "Claude Code 2.1.295 (claude -p, --system-prompt 'Reply with OK.', no MCP, CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1)",
+  "count": "input + cache read + cache write, minus baseline message 'a'"
+ }
+}
