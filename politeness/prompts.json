@@ -1,0 +1,43 @@
+{
+ "_levels": {
+  "ko": ["banmal (해체)", "haeyo (해요체)", "formal (하십시오체·주시겠어요)", "formal + greeting and thanks"],
+  "ja": ["plain (普通体)", "desu/masu (丁寧語)", "keigo (尊敬語・謙譲語)", "keigo + greeting and thanks"],
+  "en": ["plain imperative", "please", "could you please + thank you", "greeting + apology + thanks"]
+ },
+ "ko": [
+  ["회의 일정이 바뀌었다고 알리는 메일 제목 3개 추천해 줘.", "회의 일정이 바뀌었다고 알리는 메일 제목 3개 추천해 주세요.", "회의 일정 변경을 안내하는 메일 제목 3개를 추천해 주시겠습니까?", "안녕하세요! 바쁘신데 죄송하지만, 회의 일정 변경을 안내하는 메일 제목 3개를 추천해 주실 수 있을까요? 미리 감사드립니다."],
+  ["파이썬 리스트에서 중복을 없애는 방법 알려 줘.", "파이썬 리스트에서 중복을 없애는 방법 알려 주세요.", "파이썬 리스트에서 중복을 제거하는 방법을 알려 주시겠습니까?", "안녕하세요! 혹시 시간 괜찮으시면 파이썬 리스트에서 중복을 제거하는 방법을 알려 주실 수 있을까요? 감사합니다."],
+  ["주말에 서울에 비 오면 갈 만한 실내 데이트 코스 3개 짜 줘.", "주말에 서울에 비 오면 갈 만한 실내 데이트 코스 3개 짜 주세요.", "주말에 서울에 비가 오면 갈 만한 실내 데이트 코스 3개를 짜 주시겠습니까?", "안녕하세요! 이번 주말에 서울에 비가 온다고 하는데, 갈 만한 실내 데이트 코스 3개를 짜 주실 수 있을까요? 정말 감사합니다."],
+  ["\"Thank you for your patience\"를 자연스러운 한국어로 번역해 줘.", "\"Thank you for your patience\"를 자연스러운 한국어로 번역해 주세요.", "\"Thank you for your patience\"를 자연스러운 한국어로 번역해 주시겠습니까?", "안녕하세요! 죄송하지만 \"Thank you for your patience\"를 자연스러운 한국어로 번역해 주실 수 있을까요? 감사합니다."],
+  ["회의록 요약할 때 쓸 템플릿 하나 만들어 줘.", "회의록 요약할 때 쓸 템플릿 하나 만들어 주세요.", "회의록을 요약할 때 사용할 템플릿을 하나 만들어 주시겠습니까?", "안녕하세요! 바쁘시겠지만 회의록을 요약할 때 사용할 템플릿을 하나 만들어 주실 수 있을까요? 미리 감사드립니다."],
+  ["엑셀 VLOOKUP 쓰는 법 짧게 설명해 줘.", "엑셀 VLOOKUP 쓰는 법 짧게 설명해 주세요.", "엑셀 VLOOKUP 사용법을 짧게 설명해 주시겠습니까?", "안녕하세요! 혹시 엑셀 VLOOKUP 사용법을 짧게 설명해 주실 수 있을까요? 정말 감사합니다."],
+  ["\"AI 토큰 절약\"을 주제로 블로그 글 제목 5개 써 줘.", "\"AI 토큰 절약\"을 주제로 블로그 글 제목 5개 써 주세요.", "\"AI 토큰 절약\"을 주제로 블로그 글 제목 5개를 써 주시겠습니까?", "안녕하세요! 죄송하지만 \"AI 토큰 절약\"을 주제로 블로그 글 제목 5개를 써 주실 수 있을까요? 감사합니다."],
+  ["신입 개발자 자기소개 3문장으로 써 줘.", "신입 개발자 자기소개 3문장으로 써 주세요.", "신입 개발자 자기소개를 3문장으로 써 주시겠습니까?", "안녕하세요! 번거로우시겠지만 신입 개발자 자기소개를 3문장으로 써 주실 수 있을까요? 미리 감사드립니다."],
+  ["이 문장 맞춤법 고쳐 줘: \"오늘 회의는 않 하기로 했읍니다.\"", "이 문장 맞춤법 고쳐 주세요: \"오늘 회의는 않 하기로 했읍니다.\"", "다음 문장의 맞춤법을 고쳐 주시겠습니까? \"오늘 회의는 않 하기로 했읍니다.\"", "안녕하세요! 혹시 다음 문장의 맞춤법을 고쳐 주실 수 있을까요? \"오늘 회의는 않 하기로 했읍니다.\" 감사합니다."],
+  ["재택근무 집중력 높이는 팁 3개 알려 줘.", "재택근무 집중력 높이는 팁 3개 알려 주세요.", "재택근무할 때 집중력을 높이는 팁 3가지를 알려 주시겠습니까?", "안녕하세요! 바쁘신데 죄송하지만 재택근무할 때 집중력을 높이는 팁 3가지를 알려 주실 수 있을까요? 정말 감사합니다."]
+ ],
+ "ja": [
+  ["会議の日程変更を知らせるメールの件名を3つ考えて。", "会議の日程変更を知らせるメールの件名を3つ考えてください。", "会議の日程変更をお知らせするメールの件名を3つご提案いただけますでしょうか。", "お疲れ様です。お忙しいところ恐縮ですが、会議の日程変更をお知らせするメールの件名を3つご提案いただけますでしょうか。よろしくお願いいたします。"],
+  ["Pythonのリストから重複を消す方法を教えて。", "Pythonのリストから重複を消す方法を教えてください。", "Pythonのリストから重複を削除する方法をお教えいただけますでしょうか。", "お疲れ様です。もしお時間がございましたら、Pythonのリストから重複を削除する方法をお教えいただけますでしょうか。よろしくお願いいたします。"],
+  ["週末にソウルで雨が降ったときの室内デートコースを3つ考えて。", "週末にソウルで雨が降ったときの室内デートコースを3つ考えてください。", "週末にソウルで雨が降った場合の室内デートコースを3つご提案いただけますでしょうか。", "こんにちは。今週末ソウルは雨の予報なのですが、室内デートコースを3つご提案いただけますでしょうか。本当にありがとうございます。"],
+  ["「Thank you for your patience」を自然な日本語に訳して。", "「Thank you for your patience」を自然な日本語に訳してください。", "「Thank you for your patience」を自然な日本語に訳していただけますでしょうか。", "お疲れ様です。恐れ入りますが、「Thank you for your patience」を自然な日本語に訳していただけますでしょうか。よろしくお願いいたします。"],
+  ["議事録をまとめるときのテンプレートを1つ作って。", "議事録をまとめるときのテンプレートを1つ作ってください。", "議事録をまとめる際のテンプレートを1つ作成していただけますでしょうか。", "お疲れ様です。お忙しいところ恐縮ですが、議事録をまとめる際のテンプレートを1つ作成していただけますでしょうか。よろしくお願いいたします。"],
+  ["ExcelのVLOOKUPの使い方を短く説明して。", "ExcelのVLOOKUPの使い方を短く説明してください。", "ExcelのVLOOKUPの使い方を簡潔にご説明いただけますでしょうか。", "お疲れ様です。もし可能でしたら、ExcelのVLOOKUPの使い方を簡潔にご説明いただけますでしょうか。本当にありがとうございます。"],
+  ["「AIトークン節約」をテーマにブログ記事のタイトルを5つ書いて。", "「AIトークン節約」をテーマにブログ記事のタイトルを5つ書いてください。", "「AIトークン節約」をテーマにしたブログ記事のタイトルを5つご提案いただけますでしょうか。", "お疲れ様です。恐れ入りますが、「AIトークン節約」をテーマにしたブログ記事のタイトルを5つご提案いただけますでしょうか。よろしくお願いいたします。"],
+  ["新人エンジニアの自己紹介を3文で書いて。", "新人エンジニアの自己紹介を3文で書いてください。", "新人エンジニアの自己紹介を3文で作成していただけますでしょうか。", "お疲れ様です。お手数をおかけしますが、新人エンジニアの自己紹介を3文で作成していただけますでしょうか。よろしくお願いいたします。"],
+  ["この文の間違いを直して：「今日の会議わ中止することになりまいた。」", "この文の間違いを直してください：「今日の会議わ中止することになりまいた。」", "次の文の誤りを修正していただけますでしょうか。「今日の会議わ中止することになりまいた。」", "お疲れ様です。恐れ入りますが、次の文の誤りを修正していただけますでしょうか。「今日の会議わ中止することになりまいた。」よろしくお願いいたします。"],
+  ["在宅勤務で集中力を上げるコツを3つ教えて。", "在宅勤務で集中力を上げるコツを3つ教えてください。", "在宅勤務で集中力を高めるコツを3つお教えいただけますでしょうか。", "お疲れ様です。お忙しいところ恐縮ですが、在宅勤務で集中力を高めるコツを3つお教えいただけますでしょうか。本当にありがとうございます。"]
+ ],
+ "en": [
+  ["Suggest 3 email subject lines announcing a meeting schedule change.", "Please suggest 3 email subject lines announcing a meeting schedule change.", "Could you please suggest 3 email subject lines announcing a meeting schedule change? Thank you.", "Hi! Sorry to bother you, but could you please suggest 3 email subject lines announcing a meeting schedule change? Thanks so much in advance!"],
+  ["Tell me how to remove duplicates from a Python list.", "Please tell me how to remove duplicates from a Python list.", "Could you please tell me how to remove duplicates from a Python list? Thank you.", "Hi! If you have a moment, could you please tell me how to remove duplicates from a Python list? Thanks so much!"],
+  ["Plan 3 indoor date ideas in Seoul for a rainy weekend.", "Please plan 3 indoor date ideas in Seoul for a rainy weekend.", "Could you please plan 3 indoor date ideas in Seoul for a rainy weekend? Thank you.", "Hi! It's supposed to rain in Seoul this weekend. Could you please plan 3 indoor date ideas? Thank you so much!"],
+  ["Translate \"Thank you for your patience\" into natural Korean.", "Please translate \"Thank you for your patience\" into natural Korean.", "Could you please translate \"Thank you for your patience\" into natural Korean? Thank you.", "Hi! Sorry to bother you, but could you please translate \"Thank you for your patience\" into natural Korean? Thanks a lot!"],
+  ["Make a template for summarizing meeting notes.", "Please make a template for summarizing meeting notes.", "Could you please make a template for summarizing meeting notes? Thank you.", "Hi! I know you're busy, but could you please make a template for summarizing meeting notes? Thanks so much in advance!"],
+  ["Briefly explain how to use VLOOKUP in Excel.", "Please briefly explain how to use VLOOKUP in Excel.", "Could you please briefly explain how to use VLOOKUP in Excel? Thank you.", "Hi! If possible, could you please briefly explain how to use VLOOKUP in Excel? Thank you so much!"],
+  ["Write 5 blog post titles about saving AI tokens.", "Please write 5 blog post titles about saving AI tokens.", "Could you please write 5 blog post titles about saving AI tokens? Thank you.", "Hi! Sorry to bother you, but could you please write 5 blog post titles about saving AI tokens? Thanks a lot!"],
+  ["Write a 3-sentence self-introduction for a junior developer.", "Please write a 3-sentence self-introduction for a junior developer.", "Could you please write a 3-sentence self-introduction for a junior developer? Thank you.", "Hi! Sorry for the trouble, but could you please write a 3-sentence self-introduction for a junior developer? Thanks so much in advance!"],
+  ["Fix the spelling in this sentence: \"We desided not to have the meating today.\"", "Please fix the spelling in this sentence: \"We desided not to have the meating today.\"", "Could you please fix the spelling in this sentence? \"We desided not to have the meating today.\" Thank you.", "Hi! If you have a moment, could you please fix the spelling in this sentence? \"We desided not to have the meating today.\" Thanks a lot!"],
+  ["Give me 3 tips for staying focused when working from home.", "Please give me 3 tips for staying focused when working from home.", "Could you please give me 3 tips for staying focused when working from home? Thank you.", "Hi! Sorry to bother you, but could you please give me 3 tips for staying focused when working from home? Thank you so much!"]
+ ]
+}

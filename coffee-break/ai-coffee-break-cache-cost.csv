@@ -1,0 +1,8 @@
+wait_min,rep,actual_gap_s,turn1_cost_usd,turn2_cost_usd,turn2_first_call_cache_read,turn2_first_call_cache_write,turn2_first_call_cache_write_1h,turn2_first_call_cache_write_5m,turn2_cache_write_total,turn2_cache_read_total,turn2_model_calls,cache_hit
+0,1,0,0.3439,0.0409,41765,589,589,0,1431,84119,2,True
+4,1,240,0.3649,0.0418,42578,498,498,0,1390,85654,2,True
+6,1,360,0.3757,0.0424,42983,471,471,0,1339,86437,2,True
+15,1,900,0.3929,0.0397,43372,462,462,0,1259,87206,2,True
+30,1,1800,0.3749,0.0439,42923,515,515,0,1440,86361,2,True
+55,1,3300,0.4162,0.0454,44393,521,521,0,1506,89307,2,True
+65,1,3900,0.3785,0.2547,15925,27660,27660,0,28510,59510,2,False

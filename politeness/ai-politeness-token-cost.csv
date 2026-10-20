@@ -1,0 +1,361 @@
+model,rep,language,request,level,level_name,prompt_tokens,gpt_o200k_tokens,gpt_cl100k_tokens,output_tokens,answer_chars,cost_usd,seconds,prompt
+claude-opus-5-5,1,ko,1,0,banmal (해체),34,21,30,336,338,0.006856,5.4,회의 일정이 바뀌었다고 알리는 메일 제목 3개 추천해 줘.
+claude-opus-5-5,1,ko,1,1,haeyo (해요체),35,20,30,346,349,0.00706,6.0,회의 일정이 바뀌었다고 알리는 메일 제목 3개 추천해 주세요.
+claude-opus-5-5,1,ko,1,2,formal (하십시오체·주시겠어요),36,20,30,363,370,0.007404,5.7,회의 일정 변경을 안내하는 메일 제목 3개를 추천해 주시겠습니까?
+claude-opus-5-5,1,ko,1,3,formal + greeting and thanks,72,39,64,367,372,0.007628,5.5,"안녕하세요! 바쁘신데 죄송하지만, 회의 일정 변경을 안내하는 메일 제목 3개를 추천해 주실 수 있을까요? 미리 감사드립니다."
+claude-opus-5-5,1,ko,2,0,banmal (해체),27,17,25,832,1166,0.016748,8.4,파이썬 리스트에서 중복을 없애는 방법 알려 줘.
+claude-opus-5-5,1,ko,2,1,haeyo (해요체),28,16,25,943,1320,0.018972,10.0,파이썬 리스트에서 중복을 없애는 방법 알려 주세요.
+claude-opus-5-5,1,ko,2,2,formal (하십시오체·주시겠어요),34,19,31,1016,1361,0.020456,10.0,파이썬 리스트에서 중복을 제거하는 방법을 알려 주시겠습니까?
+claude-opus-5-5,1,ko,2,3,formal + greeting and thanks,66,33,55,907,1346,0.018404,9.1,안녕하세요! 혹시 시간 괜찮으시면 파이썬 리스트에서 중복을 제거하는 방법을 알려 주실 수 있을까요? 감사합니다.
+claude-opus-5-5,1,ko,3,0,banmal (해체),37,25,32,2003,1498,0.040208,23.4,주말에 서울에 비 오면 갈 만한 실내 데이트 코스 3개 짜 줘.
+claude-opus-5-5,1,ko,3,1,haeyo (해요체),38,24,32,2009,1431,0.040332,23.3,주말에 서울에 비 오면 갈 만한 실내 데이트 코스 3개 짜 주세요.
+claude-opus-5-5,1,ko,3,2,formal (하십시오체·주시겠어요),44,29,40,1451,1407,0.029196,19.0,주말에 서울에 비가 오면 갈 만한 실내 데이트 코스 3개를 짜 주시겠습니까?
+claude-opus-5-5,1,ko,3,3,formal + greeting and thanks,73,40,64,1322,1323,0.026732,19.8,"안녕하세요! 이번 주말에 서울에 비가 온다고 하는데, 갈 만한 실내 데이트 코스 3개를 짜 주실 수 있을까요? 정말 감사합니다."
+claude-opus-5-5,1,ko,4,0,banmal (해체),29,20,26,395,416,0.008016,12.3,"""Thank you for your patience""를 자연스러운 한국어로 번역해 줘."
+claude-opus-5-5,1,ko,4,1,haeyo (해요체),30,19,26,369,398,0.0075,10.0,"""Thank you for your patience""를 자연스러운 한국어로 번역해 주세요."
+claude-opus-5-5,1,ko,4,2,formal (하십시오체·주시겠어요),34,22,32,384,411,0.007816,18.7,"""Thank you for your patience""를 자연스러운 한국어로 번역해 주시겠습니까?"
+claude-opus-5-5,1,ko,4,3,formal + greeting and thanks,58,32,51,398,415,0.008192,10.5,"안녕하세요! 죄송하지만 ""Thank you for your patience""를 자연스러운 한국어로 번역해 주실 수 있을까요? 감사합니다."
+claude-opus-5-5,1,ko,5,0,banmal (해체),28,17,27,1163,1190,0.023372,19.2,회의록 요약할 때 쓸 템플릿 하나 만들어 줘.
+claude-opus-5-5,1,ko,5,1,haeyo (해요체),29,16,27,1135,1162,0.022816,19.0,회의록 요약할 때 쓸 템플릿 하나 만들어 주세요.
+claude-opus-5-5,1,ko,5,2,formal (하십시오체·주시겠어요),35,20,34,1050,1024,0.02114,15.4,회의록을 요약할 때 사용할 템플릿을 하나 만들어 주시겠습니까?
+claude-opus-5-5,1,ko,5,3,formal + greeting and thanks,66,35,62,954,995,0.019344,14.2,안녕하세요! 바쁘시겠지만 회의록을 요약할 때 사용할 템플릿을 하나 만들어 주실 수 있을까요? 미리 감사드립니다.
+claude-opus-5-5,1,ko,6,0,banmal (해체),30,17,22,631,714,0.01274,14.1,엑셀 VLOOKUP 쓰는 법 짧게 설명해 줘.
+claude-opus-5-5,1,ko,6,1,haeyo (해요체),31,16,22,518,588,0.010484,10.4,엑셀 VLOOKUP 쓰는 법 짧게 설명해 주세요.
+claude-opus-5-5,1,ko,6,2,formal (하십시오체·주시겠어요),33,19,26,622,705,0.012572,10.3,엑셀 VLOOKUP 사용법을 짧게 설명해 주시겠습니까?
+claude-opus-5-5,1,ko,6,3,formal + greeting and thanks,57,28,44,760,818,0.015428,14.1,안녕하세요! 혹시 엑셀 VLOOKUP 사용법을 짧게 설명해 주실 수 있을까요? 정말 감사합니다.
+claude-opus-5-5,1,ko,7,0,banmal (해체),33,22,33,342,296,0.006972,9.8,"""AI 토큰 절약""을 주제로 블로그 글 제목 5개 써 줘."
+claude-opus-5-5,1,ko,7,1,haeyo (해요체),34,21,33,305,300,0.006236,9.7,"""AI 토큰 절약""을 주제로 블로그 글 제목 5개 써 주세요."
+claude-opus-5-5,1,ko,7,2,formal (하십시오체·주시겠어요),39,25,40,328,318,0.006716,10.1,"""AI 토큰 절약""을 주제로 블로그 글 제목 5개를 써 주시겠습니까?"
+claude-opus-5-5,1,ko,7,3,formal + greeting and thanks,63,35,59,303,296,0.006312,7.0,"안녕하세요! 죄송하지만 ""AI 토큰 절약""을 주제로 블로그 글 제목 5개를 써 주실 수 있을까요? 감사합니다."
+claude-opus-5-5,1,ko,8,0,banmal (해체),22,16,21,164,151,0.003368,8.3,신입 개발자 자기소개 3문장으로 써 줘.
+claude-opus-5-5,1,ko,8,1,haeyo (해요체),23,15,21,231,182,0.004712,12.7,신입 개발자 자기소개 3문장으로 써 주세요.
+claude-opus-5-5,1,ko,8,2,formal (하십시오체·주시겠어요),28,19,28,216,162,0.004432,12.8,신입 개발자 자기소개를 3문장으로 써 주시겠습니까?
+claude-opus-5-5,1,ko,8,3,formal + greeting and thanks,59,35,57,279,266,0.005816,8.2,안녕하세요! 번거로우시겠지만 신입 개발자 자기소개를 3문장으로 써 주실 수 있을까요? 미리 감사드립니다.
+claude-opus-5-5,1,ko,9,0,banmal (해체),39,24,35,338,339,0.006916,12.4,"이 문장 맞춤법 고쳐 줘: ""오늘 회의는 않 하기로 했읍니다."""
+claude-opus-5-5,1,ko,9,1,haeyo (해요체),40,23,35,318,317,0.00652,9.9,"이 문장 맞춤법 고쳐 주세요: ""오늘 회의는 않 하기로 했읍니다."""
+claude-opus-5-5,1,ko,9,2,formal (하십시오체·주시겠어요),47,28,44,334,331,0.006868,8.4,"다음 문장의 맞춤법을 고쳐 주시겠습니까? ""오늘 회의는 않 하기로 했읍니다."""
+claude-opus-5-5,1,ko,9,3,formal + greeting and thanks,68,35,59,349,365,0.007252,13.8,"안녕하세요! 혹시 다음 문장의 맞춤법을 고쳐 주실 수 있을까요? ""오늘 회의는 않 하기로 했읍니다."" 감사합니다."
+claude-opus-5-5,1,ko,10,0,banmal (해체),24,17,29,529,473,0.010676,10.8,재택근무 집중력 높이는 팁 3개 알려 줘.
+claude-opus-5-5,1,ko,10,1,haeyo (해요체),25,16,29,488,470,0.00986,10.3,재택근무 집중력 높이는 팁 3개 알려 주세요.
+claude-opus-5-5,1,ko,10,2,formal (하십시오체·주시겠어요),35,22,40,555,531,0.01124,13.7,재택근무할 때 집중력을 높이는 팁 3가지를 알려 주시겠습니까?
+claude-opus-5-5,1,ko,10,3,formal + greeting and thanks,69,37,70,609,582,0.012456,10.1,안녕하세요! 바쁘신데 죄송하지만 재택근무할 때 집중력을 높이는 팁 3가지를 알려 주실 수 있을까요? 정말 감사합니다.
+claude-opus-5-5,1,ja,1,0,plain (普通体),24,18,26,265,282,0.005396,11.7,会議の日程変更を知らせるメールの件名を3つ考えて。
+claude-opus-5-5,1,ja,1,1,desu/masu (丁寧語),25,19,27,273,300,0.00556,11.2,会議の日程変更を知らせるメールの件名を3つ考えてください。
+claude-opus-5-5,1,ja,1,2,keigo (尊敬語・謙譲語),33,25,37,391,408,0.007952,8.6,会議の日程変更をお知らせするメールの件名を3つご提案いただけますでしょうか。
+claude-opus-5-5,1,ja,1,3,keigo + greeting and thanks,67,44,75,343,363,0.007128,7.3,お疲れ様です。お忙しいところ恐縮ですが、会議の日程変更をお知らせするメールの件名を3つご提案いただけますでしょうか。よろしくお願いいたします。
+claude-opus-5-5,1,ja,2,0,plain (普通体),19,16,19,818,1193,0.016436,14.5,Pythonのリストから重複を消す方法を教えて。
+claude-opus-5-5,1,ja,2,1,desu/masu (丁寧語),20,17,20,918,1394,0.01844,11.9,Pythonのリストから重複を消す方法を教えてください。
+claude-opus-5-5,1,ja,2,2,keigo (尊敬語・謙譲語),29,23,31,1138,1708,0.022876,17.5,Pythonのリストから重複を削除する方法をお教えいただけますでしょうか。
+claude-opus-5-5,1,ja,2,3,keigo + greeting and thanks,59,42,63,804,1189,0.016316,11.3,お疲れ様です。もしお時間がございましたら、Pythonのリストから重複を削除する方法をお教えいただけますでしょうか。よろしくお願いいたします。
+claude-opus-5-5,1,ja,3,0,plain (普通体),28,26,34,1588,1219,0.031872,24.4,週末にソウルで雨が降ったときの室内デートコースを3つ考えて。
+claude-opus-5-5,1,ja,3,1,desu/masu (丁寧語),29,27,35,1851,1365,0.037136,28.2,週末にソウルで雨が降ったときの室内デートコースを3つ考えてください。
+claude-opus-5-5,1,ja,3,2,keigo (尊敬語・謙譲語),36,31,44,1481,1468,0.029764,21.7,週末にソウルで雨が降った場合の室内デートコースを3つご提案いただけますでしょうか。
+claude-opus-5-5,1,ja,3,3,keigo + greeting and thanks,55,37,53,1205,1275,0.02432,18.5,こんにちは。今週末ソウルは雨の予報なのですが、室内デートコースを3つご提案いただけますでしょうか。本当にありがとうございます。
+claude-opus-5-5,1,ja,4,0,plain (普通体),21,15,20,251,300,0.005104,9.0,「Thank you for your patience」を自然な日本語に訳して。
+claude-opus-5-5,1,ja,4,1,desu/masu (丁寧語),22,15,21,385,452,0.007788,9.9,「Thank you for your patience」を自然な日本語に訳してください。
+claude-opus-5-5,1,ja,4,2,keigo (尊敬語・謙譲語),29,20,30,440,508,0.008916,9.1,「Thank you for your patience」を自然な日本語に訳していただけますでしょうか。
+claude-opus-5-5,1,ja,4,3,keigo + greeting and thanks,57,37,59,363,420,0.007488,9.3,お疲れ様です。恐れ入りますが、「Thank you for your patience」を自然な日本語に訳していただけますでしょうか。よろしくお願いいたします。
+claude-opus-5-5,1,ja,5,0,plain (普通体),21,18,24,963,1046,0.019344,13.8,議事録をまとめるときのテンプレートを1つ作って。
+claude-opus-5-5,1,ja,5,1,desu/masu (丁寧語),23,19,25,991,1132,0.019912,16.3,議事録をまとめるときのテンプレートを1つ作ってください。
+claude-opus-5-5,1,ja,5,2,keigo (尊敬語・謙譲語),30,23,35,932,1006,0.01876,12.7,議事録をまとめる際のテンプレートを1つ作成していただけますでしょうか。
+claude-opus-5-5,1,ja,5,3,keigo + greeting and thanks,64,42,73,911,983,0.018476,14.4,お疲れ様です。お忙しいところ恐縮ですが、議事録をまとめる際のテンプレートを1つ作成していただけますでしょうか。よろしくお願いいたします。
+claude-opus-5-5,1,ja,6,0,plain (普通体),22,15,19,408,475,0.008248,10.0,ExcelのVLOOKUPの使い方を短く説明して。
+claude-opus-5-5,1,ja,6,1,desu/masu (丁寧語),23,15,20,464,569,0.009372,10.9,ExcelのVLOOKUPの使い方を短く説明してください。
+claude-opus-5-5,1,ja,6,2,keigo (尊敬語・謙譲語),34,21,31,821,1003,0.016556,11.5,ExcelのVLOOKUPの使い方を簡潔にご説明いただけますでしょうか。
+claude-opus-5-5,1,ja,6,3,keigo + greeting and thanks,61,35,54,716,880,0.014564,10.6,お疲れ様です。もし可能でしたら、ExcelのVLOOKUPの使い方を簡潔にご説明いただけますでしょうか。本当にありがとうございます。
+claude-opus-5-5,1,ja,7,0,plain (普通体),31,20,31,272,310,0.005564,9.7,「AIトークン節約」をテーマにブログ記事のタイトルを5つ書いて。
+claude-opus-5-5,1,ja,7,1,desu/masu (丁寧語),32,21,32,279,309,0.005708,7.6,「AIトークン節約」をテーマにブログ記事のタイトルを5つ書いてください。
+claude-opus-5-5,1,ja,7,2,keigo (尊敬語・謙譲語),41,27,41,478,488,0.009724,11.6,「AIトークン節約」をテーマにしたブログ記事のタイトルを5つご提案いただけますでしょうか。
+claude-opus-5-5,1,ja,7,3,keigo + greeting and thanks,69,44,70,445,483,0.009176,10.0,お疲れ様です。恐れ入りますが、「AIトークン節約」をテーマにしたブログ記事のタイトルを5つご提案いただけますでしょうか。よろしくお願いいたします。
+claude-opus-5-5,1,ja,8,0,plain (普通体),20,16,23,181,159,0.0037,7.5,新人エンジニアの自己紹介を3文で書いて。
+claude-opus-5-5,1,ja,8,1,desu/masu (丁寧語),21,17,24,114,128,0.002364,5.5,新人エンジニアの自己紹介を3文で書いてください。
+claude-opus-5-5,1,ja,8,2,keigo (尊敬語・謙譲語),28,22,32,250,214,0.005112,9.5,新人エンジニアの自己紹介を3文で作成していただけますでしょうか。
+claude-opus-5-5,1,ja,8,3,keigo + greeting and thanks,58,44,64,215,196,0.004532,6.1,お疲れ様です。お手数をおかけしますが、新人エンジニアの自己紹介を3文で作成していただけますでしょうか。よろしくお願いいたします。
+claude-opus-5-5,1,ja,9,0,plain (普通体),27,24,32,164,184,0.003388,6.9,この文の間違いを直して：「今日の会議わ中止することになりまいた。」
+claude-opus-5-5,1,ja,9,1,desu/masu (丁寧語),28,24,33,191,223,0.003932,7.3,この文の間違いを直してください：「今日の会議わ中止することになりまいた。」
+claude-opus-5-5,1,ja,9,2,keigo (尊敬語・謙譲語),37,31,42,203,242,0.004208,6.0,次の文の誤りを修正していただけますでしょうか。「今日の会議わ中止することになりまいた。」
+claude-opus-5-5,1,ja,9,3,keigo + greeting and thanks,65,49,72,222,259,0.0047,6.3,お疲れ様です。恐れ入りますが、次の文の誤りを修正していただけますでしょうか。「今日の会議わ中止することになりまいた。」よろしくお願いいたします。
+claude-opus-5-5,1,ja,10,0,plain (普通体),23,18,27,509,535,0.010272,10.4,在宅勤務で集中力を上げるコツを3つ教えて。
+claude-opus-5-5,1,ja,10,1,desu/masu (丁寧語),24,19,28,509,549,0.010276,10.0,在宅勤務で集中力を上げるコツを3つ教えてください。
+claude-opus-5-5,1,ja,10,2,keigo (尊敬語・謙譲語),31,24,36,486,515,0.009844,9.5,在宅勤務で集中力を高めるコツを3つお教えいただけますでしょうか。
+claude-opus-5-5,1,ja,10,3,keigo + greeting and thanks,64,40,68,537,554,0.010996,11.5,お疲れ様です。お忙しいところ恐縮ですが、在宅勤務で集中力を高めるコツを3つお教えいただけますでしょうか。本当にありがとうございます。
+claude-opus-5-5,1,en,1,0,plain imperative,23,12,13,202,510,0.004132,5.7,Suggest 3 email subject lines announcing a meeting schedule change.
+claude-opus-5-5,1,en,1,1,please,24,13,13,228,643,0.004656,9.0,Please suggest 3 email subject lines announcing a meeting schedule change.
+claude-opus-5-5,1,en,1,2,could you please + thank you,31,18,18,192,519,0.003964,11.5,Could you please suggest 3 email subject lines announcing a meeting schedule change? Thank you.
+claude-opus-5-5,1,en,1,3,greeting + apology + thanks,49,29,29,192,540,0.004036,13.2,"Hi! Sorry to bother you, but could you please suggest 3 email subject lines announcing a meeting schedule change? Thanks so much in advance!"
+claude-opus-5-5,1,en,2,0,plain imperative,17,11,11,603,1329,0.012128,11.4,Tell me how to remove duplicates from a Python list.
+claude-opus-5-5,1,en,2,1,please,18,12,12,902,1893,0.018112,14.3,Please tell me how to remove duplicates from a Python list.
+claude-opus-5-5,1,en,2,2,could you please + thank you,25,17,17,569,1295,0.01148,11.0,Could you please tell me how to remove duplicates from a Python list? Thank you.
+claude-opus-5-5,1,en,2,3,greeting + apology + thanks,37,26,26,562,1311,0.011388,9.3,"Hi! If you have a moment, could you please tell me how to remove duplicates from a Python list? Thanks so much!"
+claude-opus-5-5,1,en,3,0,plain imperative,26,13,13,827,1942,0.016644,17.4,Plan 3 indoor date ideas in Seoul for a rainy weekend.
+claude-opus-5-5,1,en,3,1,please,27,14,14,1812,2590,0.036348,24.8,Please plan 3 indoor date ideas in Seoul for a rainy weekend.
+claude-opus-5-5,1,en,3,2,could you please + thank you,34,19,19,1683,2458,0.033796,28.3,Could you please plan 3 indoor date ideas in Seoul for a rainy weekend? Thank you.
+claude-opus-5-5,1,en,3,3,greeting + apology + thanks,45,26,27,702,1600,0.01422,15.5,Hi! It's supposed to rain in Seoul this weekend. Could you please plan 3 indoor date ideas? Thank you so much!
+claude-opus-5-5,1,en,4,0,plain imperative,19,12,12,313,647,0.006336,9.8,"Translate ""Thank you for your patience"" into natural Korean."
+claude-opus-5-5,1,en,4,1,please,20,13,13,429,912,0.00866,9.9,"Please translate ""Thank you for your patience"" into natural Korean."
+claude-opus-5-5,1,en,4,2,could you please + thank you,27,18,18,466,944,0.009428,8.4,"Could you please translate ""Thank you for your patience"" into natural Korean? Thank you."
+claude-opus-5-5,1,en,4,3,greeting + apology + thanks,43,27,27,422,924,0.008612,9.0,"Hi! Sorry to bother you, but could you please translate ""Thank you for your patience"" into natural Korean? Thanks a lot!"
+claude-opus-5-5,1,en,5,0,plain imperative,14,9,9,870,1865,0.017456,14.6,Make a template for summarizing meeting notes.
+claude-opus-5-5,1,en,5,1,please,15,10,10,1032,2052,0.0207,12.5,Please make a template for summarizing meeting notes.
+claude-opus-5-5,1,en,5,2,could you please + thank you,22,15,15,1027,2281,0.020628,16.6,Could you please make a template for summarizing meeting notes? Thank you.
+claude-opus-5-5,1,en,5,3,greeting + apology + thanks,38,26,27,854,1855,0.017232,12.0,"Hi! I know you're busy, but could you please make a template for summarizing meeting notes? Thanks so much in advance!"
+claude-opus-5-5,1,en,6,0,plain imperative,20,12,12,586,1233,0.0118,10.1,Briefly explain how to use VLOOKUP in Excel.
+claude-opus-5-5,1,en,6,1,please,21,12,12,686,1384,0.013804,9.2,Please briefly explain how to use VLOOKUP in Excel.
+claude-opus-5-5,1,en,6,2,could you please + thank you,28,17,17,694,1503,0.013992,9.3,Could you please briefly explain how to use VLOOKUP in Excel? Thank you.
+claude-opus-5-5,1,en,6,3,greeting + apology + thanks,37,24,24,754,1625,0.015228,9.6,"Hi! If possible, could you please briefly explain how to use VLOOKUP in Excel? Thank you so much!"
+claude-opus-5-5,1,en,7,0,plain imperative,18,11,11,193,391,0.003932,5.3,Write 5 blog post titles about saving AI tokens.
+claude-opus-5-5,1,en,7,1,please,19,12,12,201,447,0.004096,8.0,Please write 5 blog post titles about saving AI tokens.
+claude-opus-5-5,1,en,7,2,could you please + thank you,26,17,17,260,595,0.005304,7.1,Could you please write 5 blog post titles about saving AI tokens? Thank you.
+claude-opus-5-5,1,en,7,3,greeting + apology + thanks,42,26,26,281,645,0.005788,5.9,"Hi! Sorry to bother you, but could you please write 5 blog post titles about saving AI tokens? Thanks a lot!"
+claude-opus-5-5,1,en,8,0,plain imperative,20,14,14,197,596,0.00402,6.8,Write a 3-sentence self-introduction for a junior developer.
+claude-opus-5-5,1,en,8,1,please,21,15,15,224,731,0.004564,6.9,Please write a 3-sentence self-introduction for a junior developer.
+claude-opus-5-5,1,en,8,2,could you please + thank you,28,20,20,282,751,0.005752,6.9,Could you please write a 3-sentence self-introduction for a junior developer? Thank you.
+claude-opus-5-5,1,en,8,3,greeting + apology + thanks,47,31,31,246,690,0.005108,5.6,"Hi! Sorry for the trouble, but could you please write a 3-sentence self-introduction for a junior developer? Thanks so much in advance!"
+claude-opus-5-5,1,en,9,0,plain imperative,24,19,19,44,113,0.000976,4.2,"Fix the spelling in this sentence: ""We desided not to have the meating today."""
+claude-opus-5-5,1,en,9,1,please,25,20,20,62,153,0.00134,4.9,"Please fix the spelling in this sentence: ""We desided not to have the meating today."""
+claude-opus-5-5,1,en,9,2,could you please + thank you,32,25,25,71,189,0.001548,4.5,"Could you please fix the spelling in this sentence? ""We desided not to have the meating today."" Thank you."
+claude-opus-5-5,1,en,9,3,greeting + apology + thanks,45,34,34,50,132,0.00118,4.0,"Hi! If you have a moment, could you please fix the spelling in this sentence? ""We desided not to have the meating today."" Thanks a lot!"
+claude-opus-5-5,1,en,10,0,plain imperative,17,13,13,341,1005,0.006888,6.9,Give me 3 tips for staying focused when working from home.
+claude-opus-5-5,1,en,10,1,please,18,14,14,332,992,0.006712,6.3,Please give me 3 tips for staying focused when working from home.
+claude-opus-5-5,1,en,10,2,could you please + thank you,25,19,19,295,871,0.006,6.2,Could you please give me 3 tips for staying focused when working from home? Thank you.
+claude-opus-5-5,1,en,10,3,greeting + apology + thanks,40,29,29,260,743,0.00536,5.2,"Hi! Sorry to bother you, but could you please give me 3 tips for staying focused when working from home? Thank you so much!"
+claude-opus-5-5,2,ko,1,0,banmal (해체),34,21,30,334,332,0.006816,16.5,회의 일정이 바뀌었다고 알리는 메일 제목 3개 추천해 줘.
+claude-opus-5-5,2,ko,1,1,haeyo (해요체),35,20,30,328,333,0.0067,12.3,회의 일정이 바뀌었다고 알리는 메일 제목 3개 추천해 주세요.
+claude-opus-5-5,2,ko,1,2,formal (하십시오체·주시겠어요),36,20,30,426,426,0.008664,13.2,회의 일정 변경을 안내하는 메일 제목 3개를 추천해 주시겠습니까?
+claude-opus-5-5,2,ko,1,3,formal + greeting and thanks,72,39,64,425,423,0.008788,11.1,"안녕하세요! 바쁘신데 죄송하지만, 회의 일정 변경을 안내하는 메일 제목 3개를 추천해 주실 수 있을까요? 미리 감사드립니다."
+claude-opus-5-5,2,ko,2,0,banmal (해체),27,17,25,1023,1360,0.020568,13.5,파이썬 리스트에서 중복을 없애는 방법 알려 줘.
+claude-opus-5-5,2,ko,2,1,haeyo (해요체),28,16,25,994,1442,0.019992,13.1,파이썬 리스트에서 중복을 없애는 방법 알려 주세요.
+claude-opus-5-5,2,ko,2,2,formal (하십시오체·주시겠어요),34,19,31,1018,1359,0.020496,12.0,파이썬 리스트에서 중복을 제거하는 방법을 알려 주시겠습니까?
+claude-opus-5-5,2,ko,2,3,formal + greeting and thanks,66,33,55,1013,1323,0.020524,12.9,안녕하세요! 혹시 시간 괜찮으시면 파이썬 리스트에서 중복을 제거하는 방법을 알려 주실 수 있을까요? 감사합니다.
+claude-opus-5-5,2,ko,3,0,banmal (해체),37,25,32,1624,1211,0.032628,22.3,주말에 서울에 비 오면 갈 만한 실내 데이트 코스 3개 짜 줘.
+claude-opus-5-5,2,ko,3,1,haeyo (해요체),38,24,32,2131,1457,0.042772,27.3,주말에 서울에 비 오면 갈 만한 실내 데이트 코스 3개 짜 주세요.
+claude-opus-5-5,2,ko,3,2,formal (하십시오체·주시겠어요),44,29,40,2337,1371,0.046916,33.2,주말에 서울에 비가 오면 갈 만한 실내 데이트 코스 3개를 짜 주시겠습니까?
+claude-opus-5-5,2,ko,3,3,formal + greeting and thanks,73,40,64,1549,916,0.031272,24.0,"안녕하세요! 이번 주말에 서울에 비가 온다고 하는데, 갈 만한 실내 데이트 코스 3개를 짜 주실 수 있을까요? 정말 감사합니다."
+claude-opus-5-5,2,ko,4,0,banmal (해체),29,20,26,418,447,0.008476,11.2,"""Thank you for your patience""를 자연스러운 한국어로 번역해 줘."
+claude-opus-5-5,2,ko,4,1,haeyo (해요체),30,19,26,366,395,0.00744,6.8,"""Thank you for your patience""를 자연스러운 한국어로 번역해 주세요."
+claude-opus-5-5,2,ko,4,2,formal (하십시오체·주시겠어요),34,22,32,363,369,0.007396,7.5,"""Thank you for your patience""를 자연스러운 한국어로 번역해 주시겠습니까?"
+claude-opus-5-5,2,ko,4,3,formal + greeting and thanks,58,32,51,341,341,0.007052,9.4,"안녕하세요! 죄송하지만 ""Thank you for your patience""를 자연스러운 한국어로 번역해 주실 수 있을까요? 감사합니다."
+claude-opus-5-5,2,ko,5,0,banmal (해체),28,17,27,1060,1126,0.021312,14.1,회의록 요약할 때 쓸 템플릿 하나 만들어 줘.
+claude-opus-5-5,2,ko,5,1,haeyo (해요체),29,16,27,1045,1087,0.021016,14.8,회의록 요약할 때 쓸 템플릿 하나 만들어 주세요.
+claude-opus-5-5,2,ko,5,2,formal (하십시오체·주시겠어요),35,20,34,1083,1100,0.0218,13.4,회의록을 요약할 때 사용할 템플릿을 하나 만들어 주시겠습니까?
+claude-opus-5-5,2,ko,5,3,formal + greeting and thanks,66,35,62,1092,1095,0.022104,16.6,안녕하세요! 바쁘시겠지만 회의록을 요약할 때 사용할 템플릿을 하나 만들어 주실 수 있을까요? 미리 감사드립니다.
+claude-opus-5-5,2,ko,6,0,banmal (해체),30,17,22,526,579,0.01064,8.5,엑셀 VLOOKUP 쓰는 법 짧게 설명해 줘.
+claude-opus-5-5,2,ko,6,1,haeyo (해요체),31,16,22,575,656,0.011624,8.5,엑셀 VLOOKUP 쓰는 법 짧게 설명해 주세요.
+claude-opus-5-5,2,ko,6,2,formal (하십시오체·주시겠어요),33,19,26,657,703,0.013272,9.9,엑셀 VLOOKUP 사용법을 짧게 설명해 주시겠습니까?
+claude-opus-5-5,2,ko,6,3,formal + greeting and thanks,57,28,44,735,803,0.014928,11.0,안녕하세요! 혹시 엑셀 VLOOKUP 사용법을 짧게 설명해 주실 수 있을까요? 정말 감사합니다.
+claude-opus-5-5,2,ko,7,0,banmal (해체),33,22,33,308,298,0.006292,6.4,"""AI 토큰 절약""을 주제로 블로그 글 제목 5개 써 줘."
+claude-opus-5-5,2,ko,7,1,haeyo (해요체),34,21,33,345,302,0.007036,7.1,"""AI 토큰 절약""을 주제로 블로그 글 제목 5개 써 주세요."
+claude-opus-5-5,2,ko,7,2,formal (하십시오체·주시겠어요),39,25,40,362,351,0.007396,7.3,"""AI 토큰 절약""을 주제로 블로그 글 제목 5개를 써 주시겠습니까?"
+claude-opus-5-5,2,ko,7,3,formal + greeting and thanks,63,35,59,336,327,0.006972,6.2,"안녕하세요! 죄송하지만 ""AI 토큰 절약""을 주제로 블로그 글 제목 5개를 써 주실 수 있을까요? 감사합니다."
+claude-opus-5-5,2,ko,8,0,banmal (해체),22,16,21,229,179,0.004668,5.9,신입 개발자 자기소개 3문장으로 써 줘.
+claude-opus-5-5,2,ko,8,1,haeyo (해요체),23,15,21,225,178,0.004592,5.4,신입 개발자 자기소개 3문장으로 써 주세요.
+claude-opus-5-5,2,ko,8,2,formal (하십시오체·주시겠어요),28,19,28,207,151,0.004252,5.8,신입 개발자 자기소개를 3문장으로 써 주시겠습니까?
+claude-opus-5-5,2,ko,8,3,formal + greeting and thanks,59,35,57,244,227,0.005116,5.3,안녕하세요! 번거로우시겠지만 신입 개발자 자기소개를 3문장으로 써 주실 수 있을까요? 미리 감사드립니다.
+claude-opus-5-5,2,ko,9,0,banmal (해체),39,24,35,326,315,0.006676,5.7,"이 문장 맞춤법 고쳐 줘: ""오늘 회의는 않 하기로 했읍니다."""
+claude-opus-5-5,2,ko,9,1,haeyo (해요체),40,23,35,297,294,0.0061,5.4,"이 문장 맞춤법 고쳐 주세요: ""오늘 회의는 않 하기로 했읍니다."""
+claude-opus-5-5,2,ko,9,2,formal (하십시오체·주시겠어요),47,28,44,441,355,0.009008,7.8,"다음 문장의 맞춤법을 고쳐 주시겠습니까? ""오늘 회의는 않 하기로 했읍니다."""
+claude-opus-5-5,2,ko,9,3,formal + greeting and thanks,68,35,59,345,322,0.007172,5.5,"안녕하세요! 혹시 다음 문장의 맞춤법을 고쳐 주실 수 있을까요? ""오늘 회의는 않 하기로 했읍니다."" 감사합니다."
+claude-opus-5-5,2,ko,10,0,banmal (해체),24,17,29,346,337,0.007016,6.1,재택근무 집중력 높이는 팁 3개 알려 줘.
+claude-opus-5-5,2,ko,10,1,haeyo (해요체),25,16,29,492,480,0.00994,7.8,재택근무 집중력 높이는 팁 3개 알려 주세요.
+claude-opus-5-5,2,ko,10,2,formal (하십시오체·주시겠어요),35,22,40,515,496,0.01044,7.8,재택근무할 때 집중력을 높이는 팁 3가지를 알려 주시겠습니까?
+claude-opus-5-5,2,ko,10,3,formal + greeting and thanks,69,37,70,645,609,0.013176,9.2,안녕하세요! 바쁘신데 죄송하지만 재택근무할 때 집중력을 높이는 팁 3가지를 알려 주실 수 있을까요? 정말 감사합니다.
+claude-opus-5-5,2,ja,1,0,plain (普通体),24,18,26,278,271,0.005656,6.2,会議の日程変更を知らせるメールの件名を3つ考えて。
+claude-opus-5-5,2,ja,1,1,desu/masu (丁寧語),25,19,27,388,419,0.00786,6.5,会議の日程変更を知らせるメールの件名を3つ考えてください。
+claude-opus-5-5,2,ja,1,2,keigo (尊敬語・謙譲語),33,25,37,421,414,0.008552,7.0,会議の日程変更をお知らせするメールの件名を3つご提案いただけますでしょうか。
+claude-opus-5-5,2,ja,1,3,keigo + greeting and thanks,67,44,75,383,409,0.007928,6.4,お疲れ様です。お忙しいところ恐縮ですが、会議の日程変更をお知らせするメールの件名を3つご提案いただけますでしょうか。よろしくお願いいたします。
+claude-opus-5-5,2,ja,2,0,plain (普通体),19,16,19,1053,1605,0.021136,11.0,Pythonのリストから重複を消す方法を教えて。
+claude-opus-5-5,2,ja,2,1,desu/masu (丁寧語),20,17,20,841,1298,0.0169,8.8,Pythonのリストから重複を消す方法を教えてください。
+claude-opus-5-5,2,ja,2,2,keigo (尊敬語・謙譲語),29,23,31,1148,1656,0.023076,12.4,Pythonのリストから重複を削除する方法をお教えいただけますでしょうか。
+claude-opus-5-5,2,ja,2,3,keigo + greeting and thanks,59,42,63,1008,1529,0.020396,10.9,お疲れ様です。もしお時間がございましたら、Pythonのリストから重複を削除する方法をお教えいただけますでしょうか。よろしくお願いいたします。
+claude-opus-5-5,2,ja,3,0,plain (普通体),28,26,34,1933,1359,0.038772,24.5,週末にソウルで雨が降ったときの室内デートコースを3つ考えて。
+claude-opus-5-5,2,ja,3,1,desu/masu (丁寧語),29,27,35,1855,1506,0.037216,25.0,週末にソウルで雨が降ったときの室内デートコースを3つ考えてください。
+claude-opus-5-5,2,ja,3,2,keigo (尊敬語・謙譲語),36,31,44,1911,1484,0.038364,22.9,週末にソウルで雨が降った場合の室内デートコースを3つご提案いただけますでしょうか。
+claude-opus-5-5,2,ja,3,3,keigo + greeting and thanks,55,37,53,1041,1067,0.02104,14.7,こんにちは。今週末ソウルは雨の予報なのですが、室内デートコースを3つご提案いただけますでしょうか。本当にありがとうございます。
+claude-opus-5-5,2,ja,4,0,plain (普通体),21,15,20,365,418,0.007384,6.1,「Thank you for your patience」を自然な日本語に訳して。
+claude-opus-5-5,2,ja,4,1,desu/masu (丁寧語),22,15,21,342,403,0.006928,5.4,「Thank you for your patience」を自然な日本語に訳してください。
+claude-opus-5-5,2,ja,4,2,keigo (尊敬語・謙譲語),29,20,30,311,363,0.006336,5.3,「Thank you for your patience」を自然な日本語に訳していただけますでしょうか。
+claude-opus-5-5,2,ja,4,3,keigo + greeting and thanks,57,37,59,413,475,0.008488,6.4,お疲れ様です。恐れ入りますが、「Thank you for your patience」を自然な日本語に訳していただけますでしょうか。よろしくお願いいたします。
+claude-opus-5-5,2,ja,5,0,plain (普通体),21,18,24,919,986,0.018464,12.4,議事録をまとめるときのテンプレートを1つ作って。
+claude-opus-5-5,2,ja,5,1,desu/masu (丁寧語),23,19,25,1146,1100,0.023012,12.9,議事録をまとめるときのテンプレートを1つ作ってください。
+claude-opus-5-5,2,ja,5,2,keigo (尊敬語・謙譲語),30,23,35,933,1035,0.01878,10.9,議事録をまとめる際のテンプレートを1つ作成していただけますでしょうか。
+claude-opus-5-5,2,ja,5,3,keigo + greeting and thanks,64,42,73,911,986,0.018476,10.8,お疲れ様です。お忙しいところ恐縮ですが、議事録をまとめる際のテンプレートを1つ作成していただけますでしょうか。よろしくお願いいたします。
+claude-opus-5-5,2,ja,6,0,plain (普通体),22,15,19,429,502,0.008668,6.3,ExcelのVLOOKUPの使い方を短く説明して。
+claude-opus-5-5,2,ja,6,1,desu/masu (丁寧語),23,15,20,489,601,0.009872,7.3,ExcelのVLOOKUPの使い方を短く説明してください。
+claude-opus-5-5,2,ja,6,2,keigo (尊敬語・謙譲語),34,21,31,788,977,0.015896,9.4,ExcelのVLOOKUPの使い方を簡潔にご説明いただけますでしょうか。
+claude-opus-5-5,2,ja,6,3,keigo + greeting and thanks,61,35,54,719,895,0.014624,8.0,お疲れ様です。もし可能でしたら、ExcelのVLOOKUPの使い方を簡潔にご説明いただけますでしょうか。本当にありがとうございます。
+claude-opus-5-5,2,ja,7,0,plain (普通体),31,20,31,291,316,0.005944,8.1,「AIトークン節約」をテーマにブログ記事のタイトルを5つ書いて。
+claude-opus-5-5,2,ja,7,1,desu/masu (丁寧語),32,21,32,274,304,0.005608,5.4,「AIトークン節約」をテーマにブログ記事のタイトルを5つ書いてください。
+claude-opus-5-5,2,ja,7,2,keigo (尊敬語・謙譲語),41,27,41,508,535,0.010324,7.6,「AIトークン節約」をテーマにしたブログ記事のタイトルを5つご提案いただけますでしょうか。
+claude-opus-5-5,2,ja,7,3,keigo + greeting and thanks,69,44,70,428,476,0.008836,8.2,お疲れ様です。恐れ入りますが、「AIトークン節約」をテーマにしたブログ記事のタイトルを5つご提案いただけますでしょうか。よろしくお願いいたします。
+claude-opus-5-5,2,ja,8,0,plain (普通体),20,16,23,106,119,0.0022,4.1,新人エンジニアの自己紹介を3文で書いて。
+claude-opus-5-5,2,ja,8,1,desu/masu (丁寧語),21,17,24,164,140,0.003364,4.3,新人エンジニアの自己紹介を3文で書いてください。
+claude-opus-5-5,2,ja,8,2,keigo (尊敬語・謙譲語),28,22,32,232,215,0.004752,4.3,新人エンジニアの自己紹介を3文で作成していただけますでしょうか。
+claude-opus-5-5,2,ja,8,3,keigo + greeting and thanks,58,44,64,227,244,0.004772,4.1,お疲れ様です。お手数をおかけしますが、新人エンジニアの自己紹介を3文で作成していただけますでしょうか。よろしくお願いいたします。
+claude-opus-5-5,2,ja,9,0,plain (普通体),27,24,32,126,144,0.002628,4.0,この文の間違いを直して：「今日の会議わ中止することになりまいた。」
+claude-opus-5-5,2,ja,9,1,desu/masu (丁寧語),28,24,33,131,153,0.002732,3.2,この文の間違いを直してください：「今日の会議わ中止することになりまいた。」
+claude-opus-5-5,2,ja,9,2,keigo (尊敬語・謙譲語),37,31,42,198,226,0.004108,5.0,次の文の誤りを修正していただけますでしょうか。「今日の会議わ中止することになりまいた。」
+claude-opus-5-5,2,ja,9,3,keigo + greeting and thanks,65,49,72,215,240,0.00456,9.5,お疲れ様です。恐れ入りますが、次の文の誤りを修正していただけますでしょうか。「今日の会議わ中止することになりまいた。」よろしくお願いいたします。
+claude-opus-5-5,2,ja,10,0,plain (普通体),23,18,27,424,465,0.008572,8.1,在宅勤務で集中力を上げるコツを3つ教えて。
+claude-opus-5-5,2,ja,10,1,desu/masu (丁寧語),24,19,28,558,590,0.011256,7.9,在宅勤務で集中力を上げるコツを3つ教えてください。
+claude-opus-5-5,2,ja,10,2,keigo (尊敬語・謙譲語),31,24,36,523,568,0.010584,8.0,在宅勤務で集中力を高めるコツを3つお教えいただけますでしょうか。
+claude-opus-5-5,2,ja,10,3,keigo + greeting and thanks,64,40,68,495,523,0.010156,6.6,お疲れ様です。お忙しいところ恐縮ですが、在宅勤務で集中力を高めるコツを3つお教えいただけますでしょうか。本当にありがとうございます。
+claude-opus-5-5,2,en,1,0,plain imperative,23,12,13,237,582,0.004832,5.0,Suggest 3 email subject lines announcing a meeting schedule change.
+claude-opus-5-5,2,en,1,1,please,24,13,13,255,680,0.005196,4.4,Please suggest 3 email subject lines announcing a meeting schedule change.
+claude-opus-5-5,2,en,1,2,could you please + thank you,31,18,18,188,516,0.003884,4.3,Could you please suggest 3 email subject lines announcing a meeting schedule change? Thank you.
+claude-opus-5-5,2,en,1,3,greeting + apology + thanks,49,29,29,182,511,0.003836,4.2,"Hi! Sorry to bother you, but could you please suggest 3 email subject lines announcing a meeting schedule change? Thanks so much in advance!"
+claude-opus-5-5,2,en,2,0,plain imperative,17,11,11,664,1503,0.013348,8.1,Tell me how to remove duplicates from a Python list.
+claude-opus-5-5,2,en,2,1,please,18,12,12,728,1580,0.014632,7.7,Please tell me how to remove duplicates from a Python list.
+claude-opus-5-5,2,en,2,2,could you please + thank you,25,17,17,655,1466,0.0132,6.9,Could you please tell me how to remove duplicates from a Python list? Thank you.
+claude-opus-5-5,2,en,2,3,greeting + apology + thanks,37,26,26,503,1107,0.010208,6.0,"Hi! If you have a moment, could you please tell me how to remove duplicates from a Python list? Thanks so much!"
+claude-opus-5-5,2,en,3,0,plain imperative,26,13,13,967,2146,0.019444,13.0,Plan 3 indoor date ideas in Seoul for a rainy weekend.
+claude-opus-5-5,2,en,3,1,please,27,14,14,1081,2237,0.021728,15.8,Please plan 3 indoor date ideas in Seoul for a rainy weekend.
+claude-opus-5-5,2,en,3,2,could you please + thank you,34,19,19,1531,2562,0.030756,21.8,Could you please plan 3 indoor date ideas in Seoul for a rainy weekend? Thank you.
+claude-opus-5-5,2,en,3,3,greeting + apology + thanks,45,26,27,864,1848,0.01746,12.1,Hi! It's supposed to rain in Seoul this weekend. Could you please plan 3 indoor date ideas? Thank you so much!
+claude-opus-5-5,2,en,4,0,plain imperative,19,12,12,523,1119,0.010536,8.4,"Translate ""Thank you for your patience"" into natural Korean."
+claude-opus-5-5,2,en,4,1,please,20,13,13,335,689,0.00678,6.4,"Please translate ""Thank you for your patience"" into natural Korean."
+claude-opus-5-5,2,en,4,2,could you please + thank you,27,18,18,425,848,0.008608,6.2,"Could you please translate ""Thank you for your patience"" into natural Korean? Thank you."
+claude-opus-5-5,2,en,4,3,greeting + apology + thanks,43,27,27,489,1121,0.009952,7.9,"Hi! Sorry to bother you, but could you please translate ""Thank you for your patience"" into natural Korean? Thanks a lot!"
+claude-opus-5-5,2,en,5,0,plain imperative,14,9,9,1032,2065,0.020696,13.3,Make a template for summarizing meeting notes.
+claude-opus-5-5,2,en,5,1,please,15,10,10,1065,2214,0.02136,13.1,Please make a template for summarizing meeting notes.
+claude-opus-5-5,2,en,5,2,could you please + thank you,22,15,15,1077,2316,0.021628,11.0,Could you please make a template for summarizing meeting notes? Thank you.
+claude-opus-5-5,2,en,5,3,greeting + apology + thanks,38,26,27,905,1774,0.018252,10.9,"Hi! I know you're busy, but could you please make a template for summarizing meeting notes? Thanks so much in advance!"
+claude-opus-5-5,2,en,6,0,plain imperative,20,12,12,604,1331,0.01216,7.1,Briefly explain how to use VLOOKUP in Excel.
+claude-opus-5-5,2,en,6,1,please,21,12,12,621,1316,0.012504,7.9,Please briefly explain how to use VLOOKUP in Excel.
+claude-opus-5-5,2,en,6,2,could you please + thank you,28,17,17,560,1191,0.011312,6.5,Could you please briefly explain how to use VLOOKUP in Excel? Thank you.
+claude-opus-5-5,2,en,6,3,greeting + apology + thanks,37,24,24,756,1664,0.015268,8.3,"Hi! If possible, could you please briefly explain how to use VLOOKUP in Excel? Thank you so much!"
+claude-opus-5-5,2,en,7,0,plain imperative,18,11,11,211,466,0.004292,4.8,Write 5 blog post titles about saving AI tokens.
+claude-opus-5-5,2,en,7,1,please,19,12,12,219,469,0.004456,4.6,Please write 5 blog post titles about saving AI tokens.
+claude-opus-5-5,2,en,7,2,could you please + thank you,26,17,17,272,631,0.005544,4.4,Could you please write 5 blog post titles about saving AI tokens? Thank you.
+claude-opus-5-5,2,en,7,3,greeting + apology + thanks,42,26,26,254,589,0.005248,8.6,"Hi! Sorry to bother you, but could you please write 5 blog post titles about saving AI tokens? Thanks a lot!"
+claude-opus-5-5,2,en,8,0,plain imperative,20,14,14,187,473,0.00382,4.4,Write a 3-sentence self-introduction for a junior developer.
+claude-opus-5-5,2,en,8,1,please,21,15,15,195,606,0.003984,5.5,Please write a 3-sentence self-introduction for a junior developer.
+claude-opus-5-5,2,en,8,2,could you please + thank you,28,20,20,239,656,0.004892,5.3,Could you please write a 3-sentence self-introduction for a junior developer? Thank you.
+claude-opus-5-5,2,en,8,3,greeting + apology + thanks,47,31,31,249,656,0.005168,7.1,"Hi! Sorry for the trouble, but could you please write a 3-sentence self-introduction for a junior developer? Thanks so much in advance!"
+claude-opus-5-5,2,en,9,0,plain imperative,24,19,19,38,100,0.000856,2.6,"Fix the spelling in this sentence: ""We desided not to have the meating today."""
+claude-opus-5-5,2,en,9,1,please,25,20,20,50,132,0.0011,9.2,"Please fix the spelling in this sentence: ""We desided not to have the meating today."""
+claude-opus-5-5,2,en,9,2,could you please + thank you,32,25,25,57,141,0.001268,3.0,"Could you please fix the spelling in this sentence? ""We desided not to have the meating today."" Thank you."
+claude-opus-5-5,2,en,9,3,greeting + apology + thanks,45,34,34,50,132,0.00118,4.7,"Hi! If you have a moment, could you please fix the spelling in this sentence? ""We desided not to have the meating today."" Thanks a lot!"
+claude-opus-5-5,2,en,10,0,plain imperative,17,13,13,332,982,0.006708,6.1,Give me 3 tips for staying focused when working from home.
+claude-opus-5-5,2,en,10,1,please,18,14,14,317,926,0.006412,5.8,Please give me 3 tips for staying focused when working from home.
+claude-opus-5-5,2,en,10,2,could you please + thank you,25,19,19,273,858,0.00556,9.1,Could you please give me 3 tips for staying focused when working from home? Thank you.
+claude-opus-5-5,2,en,10,3,greeting + apology + thanks,40,29,29,325,938,0.00666,6.3,"Hi! Sorry to bother you, but could you please give me 3 tips for staying focused when working from home? Thank you so much!"
+claude-haiku-5-5,1,ko,1,0,banmal (해체),34,21,30,324,273,0.000165,10.2,회의 일정이 바뀌었다고 알리는 메일 제목 3개 추천해 줘.
+claude-haiku-5-5,1,ko,1,1,haeyo (해요체),35,20,30,323,322,0.000165,6.1,회의 일정이 바뀌었다고 알리는 메일 제목 3개 추천해 주세요.
+claude-haiku-5-5,1,ko,1,2,formal (하십시오체·주시겠어요),36,20,30,344,345,0.000176,7.4,회의 일정 변경을 안내하는 메일 제목 3개를 추천해 주시겠습니까?
+claude-haiku-5-5,1,ko,1,3,formal + greeting and thanks,72,39,64,306,251,0.00016,6.0,"안녕하세요! 바쁘신데 죄송하지만, 회의 일정 변경을 안내하는 메일 제목 3개를 추천해 주실 수 있을까요? 미리 감사드립니다."
+claude-haiku-5-5,1,ko,2,0,banmal (해체),27,17,25,1208,1760,0.000607,13.3,파이썬 리스트에서 중복을 없애는 방법 알려 줘.
+claude-haiku-5-5,1,ko,2,1,haeyo (해요체),28,16,25,1402,1873,0.000704,12.2,파이썬 리스트에서 중복을 없애는 방법 알려 주세요.
+claude-haiku-5-5,1,ko,2,2,formal (하십시오체·주시겠어요),34,19,31,1241,1661,0.000624,13.2,파이썬 리스트에서 중복을 제거하는 방법을 알려 주시겠습니까?
+claude-haiku-5-5,1,ko,2,3,formal + greeting and thanks,66,33,55,961,1199,0.000487,8.8,안녕하세요! 혹시 시간 괜찮으시면 파이썬 리스트에서 중복을 제거하는 방법을 알려 주실 수 있을까요? 감사합니다.
+claude-haiku-5-5,1,ko,3,0,banmal (해체),37,25,32,1802,1113,0.000905,15.6,주말에 서울에 비 오면 갈 만한 실내 데이트 코스 3개 짜 줘.
+claude-haiku-5-5,1,ko,3,1,haeyo (해요체),38,24,32,1687,1089,0.000847,14.8,주말에 서울에 비 오면 갈 만한 실내 데이트 코스 3개 짜 주세요.
+claude-haiku-5-5,1,ko,3,2,formal (하십시오체·주시겠어요),44,29,40,1858,1053,0.000933,16.7,주말에 서울에 비가 오면 갈 만한 실내 데이트 코스 3개를 짜 주시겠습니까?
+claude-haiku-5-5,1,ko,3,3,formal + greeting and thanks,73,40,64,1679,883,0.000847,17.3,"안녕하세요! 이번 주말에 서울에 비가 온다고 하는데, 갈 만한 실내 데이트 코스 3개를 짜 주실 수 있을까요? 정말 감사합니다."
+claude-haiku-5-5,1,ko,4,0,banmal (해체),29,20,26,282,310,0.000144,6.0,"""Thank you for your patience""를 자연스러운 한국어로 번역해 줘."
+claude-haiku-5-5,1,ko,4,1,haeyo (해요체),30,19,26,215,161,0.000111,6.9,"""Thank you for your patience""를 자연스러운 한국어로 번역해 주세요."
+claude-haiku-5-5,1,ko,4,2,formal (하십시오체·주시겠어요),34,22,32,311,277,0.000159,4.7,"""Thank you for your patience""를 자연스러운 한국어로 번역해 주시겠습니까?"
+claude-haiku-5-5,1,ko,4,3,formal + greeting and thanks,58,32,51,231,260,0.000121,5.0,"안녕하세요! 죄송하지만 ""Thank you for your patience""를 자연스러운 한국어로 번역해 주실 수 있을까요? 감사합니다."
+claude-haiku-5-5,1,ko,5,0,banmal (해체),28,17,27,840,917,0.000423,6.9,회의록 요약할 때 쓸 템플릿 하나 만들어 줘.
+claude-haiku-5-5,1,ko,5,1,haeyo (해요체),29,16,27,820,915,0.000413,7.9,회의록 요약할 때 쓸 템플릿 하나 만들어 주세요.
+claude-haiku-5-5,1,ko,5,2,formal (하십시오체·주시겠어요),35,20,34,897,991,0.000452,7.3,회의록을 요약할 때 사용할 템플릿을 하나 만들어 주시겠습니까?
+claude-haiku-5-5,1,ko,5,3,formal + greeting and thanks,66,35,62,961,1101,0.000487,7.6,안녕하세요! 바쁘시겠지만 회의록을 요약할 때 사용할 템플릿을 하나 만들어 주실 수 있을까요? 미리 감사드립니다.
+claude-haiku-5-5,1,ko,6,0,banmal (해체),30,17,22,642,638,0.000324,6.7,엑셀 VLOOKUP 쓰는 법 짧게 설명해 줘.
+claude-haiku-5-5,1,ko,6,1,haeyo (해요체),31,16,22,568,569,0.000287,6.1,엑셀 VLOOKUP 쓰는 법 짧게 설명해 주세요.
+claude-haiku-5-5,1,ko,6,2,formal (하십시오체·주시겠어요),33,19,26,647,658,0.000327,7.5,엑셀 VLOOKUP 사용법을 짧게 설명해 주시겠습니까?
+claude-haiku-5-5,1,ko,6,3,formal + greeting and thanks,57,28,44,660,659,0.000336,5.7,안녕하세요! 혹시 엑셀 VLOOKUP 사용법을 짧게 설명해 주실 수 있을까요? 정말 감사합니다.
+claude-haiku-5-5,1,ko,7,0,banmal (해체),33,22,33,300,261,0.000153,4.3,"""AI 토큰 절약""을 주제로 블로그 글 제목 5개 써 줘."
+claude-haiku-5-5,1,ko,7,1,haeyo (해요체),34,21,33,232,192,0.000119,4.4,"""AI 토큰 절약""을 주제로 블로그 글 제목 5개 써 주세요."
+claude-haiku-5-5,1,ko,7,2,formal (하십시오체·주시겠어요),39,25,40,315,279,0.000161,7.3,"""AI 토큰 절약""을 주제로 블로그 글 제목 5개를 써 주시겠습니까?"
+claude-haiku-5-5,1,ko,7,3,formal + greeting and thanks,63,35,59,195,195,0.000104,4.4,"안녕하세요! 죄송하지만 ""AI 토큰 절약""을 주제로 블로그 글 제목 5개를 써 주실 수 있을까요? 감사합니다."
+claude-haiku-5-5,1,ko,8,0,banmal (해체),22,16,21,159,153,8.2e-05,3.9,신입 개발자 자기소개 3문장으로 써 줘.
+claude-haiku-5-5,1,ko,8,1,haeyo (해요체),23,15,21,410,381,0.000207,5.4,신입 개발자 자기소개 3문장으로 써 주세요.
+claude-haiku-5-5,1,ko,8,2,formal (하십시오체·주시겠어요),28,19,28,205,188,0.000105,4.3,신입 개발자 자기소개를 3문장으로 써 주시겠습니까?
+claude-haiku-5-5,1,ko,8,3,formal + greeting and thanks,59,35,57,306,279,0.000159,5.4,안녕하세요! 번거로우시겠지만 신입 개발자 자기소개를 3문장으로 써 주실 수 있을까요? 미리 감사드립니다.
+claude-haiku-5-5,1,ko,9,0,banmal (해체),39,24,35,324,163,0.000166,4.7,"이 문장 맞춤법 고쳐 줘: ""오늘 회의는 않 하기로 했읍니다."""
+claude-haiku-5-5,1,ko,9,1,haeyo (해요체),40,23,35,305,183,0.000157,4.1,"이 문장 맞춤법 고쳐 주세요: ""오늘 회의는 않 하기로 했읍니다."""
+claude-haiku-5-5,1,ko,9,2,formal (하십시오체·주시겠어요),47,28,44,343,207,0.000176,4.9,"다음 문장의 맞춤법을 고쳐 주시겠습니까? ""오늘 회의는 않 하기로 했읍니다."""
+claude-haiku-5-5,1,ko,9,3,formal + greeting and thanks,68,35,59,314,172,0.000164,4.6,"안녕하세요! 혹시 다음 문장의 맞춤법을 고쳐 주실 수 있을까요? ""오늘 회의는 않 하기로 했읍니다."" 감사합니다."
+claude-haiku-5-5,1,ko,10,0,banmal (해체),24,17,29,394,386,0.000199,6.7,재택근무 집중력 높이는 팁 3개 알려 줘.
+claude-haiku-5-5,1,ko,10,1,haeyo (해요체),25,16,29,511,500,0.000258,5.9,재택근무 집중력 높이는 팁 3개 알려 주세요.
+claude-haiku-5-5,1,ko,10,2,formal (하십시오체·주시겠어요),35,22,40,462,455,0.000235,5.2,재택근무할 때 집중력을 높이는 팁 3가지를 알려 주시겠습니까?
+claude-haiku-5-5,1,ko,10,3,formal + greeting and thanks,69,37,70,482,466,0.000248,5.1,안녕하세요! 바쁘신데 죄송하지만 재택근무할 때 집중력을 높이는 팁 3가지를 알려 주실 수 있을까요? 정말 감사합니다.
+claude-haiku-5-5,1,ja,1,0,plain (普通体),24,18,26,237,179,0.000121,4.0,会議の日程変更を知らせるメールの件名を3つ考えて。
+claude-haiku-5-5,1,ja,1,1,desu/masu (丁寧語),25,19,27,262,216,0.000133,4.3,会議の日程変更を知らせるメールの件名を3つ考えてください。
+claude-haiku-5-5,1,ja,1,2,keigo (尊敬語・謙譲語),33,25,37,285,315,0.000146,5.3,会議の日程変更をお知らせするメールの件名を3つご提案いただけますでしょうか。
+claude-haiku-5-5,1,ja,1,3,keigo + greeting and thanks,67,44,75,231,185,0.000122,3.6,お疲れ様です。お忙しいところ恐縮ですが、会議の日程変更をお知らせするメールの件名を3つご提案いただけますでしょうか。よろしくお願いいたします。
+claude-haiku-5-5,1,ja,2,0,plain (普通体),19,16,19,799,1068,0.000401,6.8,Pythonのリストから重複を消す方法を教えて。
+claude-haiku-5-5,1,ja,2,1,desu/masu (丁寧語),20,17,20,704,885,0.000354,6.3,Pythonのリストから重複を消す方法を教えてください。
+claude-haiku-5-5,1,ja,2,2,keigo (尊敬語・謙譲語),29,23,31,936,1415,0.000471,6.2,Pythonのリストから重複を削除する方法をお教えいただけますでしょうか。
+claude-haiku-5-5,1,ja,2,3,keigo + greeting and thanks,59,42,63,666,846,0.000339,5.6,お疲れ様です。もしお時間がございましたら、Pythonのリストから重複を削除する方法をお教えいただけますでしょうか。よろしくお願いいたします。
+claude-haiku-5-5,1,ja,3,0,plain (普通体),28,26,34,1660,1030,0.000833,12.4,週末にソウルで雨が降ったときの室内デートコースを3つ考えて。
+claude-haiku-5-5,1,ja,3,1,desu/masu (丁寧語),29,27,35,1519,753,0.000762,12.9,週末にソウルで雨が降ったときの室内デートコースを3つ考えてください。
+claude-haiku-5-5,1,ja,3,2,keigo (尊敬語・謙譲語),36,31,44,1618,1148,0.000813,11.8,週末にソウルで雨が降った場合の室内デートコースを3つご提案いただけますでしょうか。
+claude-haiku-5-5,1,ja,3,3,keigo + greeting and thanks,55,37,53,1813,936,0.000912,13.3,こんにちは。今週末ソウルは雨の予報なのですが、室内デートコースを3つご提案いただけますでしょうか。本当にありがとうございます。
+claude-haiku-5-5,1,ja,4,0,plain (普通体),21,15,20,291,254,0.000148,3.7,「Thank you for your patience」を自然な日本語に訳して。
+claude-haiku-5-5,1,ja,4,1,desu/masu (丁寧語),22,15,21,177,184,9.1e-05,2.9,「Thank you for your patience」を自然な日本語に訳してください。
+claude-haiku-5-5,1,ja,4,2,keigo (尊敬語・謙譲語),29,20,30,353,352,0.000179,3.6,「Thank you for your patience」を自然な日本語に訳していただけますでしょうか。
+claude-haiku-5-5,1,ja,4,3,keigo + greeting and thanks,57,37,59,420,408,0.000216,5.2,お疲れ様です。恐れ入りますが、「Thank you for your patience」を自然な日本語に訳していただけますでしょうか。よろしくお願いいたします。
+claude-haiku-5-5,1,ja,5,0,plain (普通体),21,18,24,623,774,0.000314,4.7,議事録をまとめるときのテンプレートを1つ作って。
+claude-haiku-5-5,1,ja,5,1,desu/masu (丁寧語),23,19,25,704,856,0.000354,5.6,議事録をまとめるときのテンプレートを1つ作ってください。
+claude-haiku-5-5,1,ja,5,2,keigo (尊敬語・謙譲語),30,23,35,619,762,0.000313,4.5,議事録をまとめる際のテンプレートを1つ作成していただけますでしょうか。
+claude-haiku-5-5,1,ja,5,3,keigo + greeting and thanks,64,42,73,884,1018,0.000448,6.3,お疲れ様です。お忙しいところ恐縮ですが、議事録をまとめる際のテンプレートを1つ作成していただけますでしょうか。よろしくお願いいたします。
+claude-haiku-5-5,1,ja,6,0,plain (普通体),22,15,19,486,520,0.000245,4.3,ExcelのVLOOKUPの使い方を短く説明して。
+claude-haiku-5-5,1,ja,6,1,desu/masu (丁寧語),23,15,20,521,545,0.000263,4.7,ExcelのVLOOKUPの使い方を短く説明してください。
+claude-haiku-5-5,1,ja,6,2,keigo (尊敬語・謙譲語),34,21,31,599,625,0.000303,4.9,ExcelのVLOOKUPの使い方を簡潔にご説明いただけますでしょうか。
+claude-haiku-5-5,1,ja,6,3,keigo + greeting and thanks,61,35,54,731,845,0.000372,5.7,お疲れ様です。もし可能でしたら、ExcelのVLOOKUPの使い方を簡潔にご説明いただけますでしょうか。本当にありがとうございます。
+claude-haiku-5-5,1,ja,7,0,plain (普通体),31,20,31,304,277,0.000155,3.5,「AIトークン節約」をテーマにブログ記事のタイトルを5つ書いて。
+claude-haiku-5-5,1,ja,7,1,desu/masu (丁寧語),32,21,32,192,217,9.9e-05,3.0,「AIトークン節約」をテーマにブログ記事のタイトルを5つ書いてください。
+claude-haiku-5-5,1,ja,7,2,keigo (尊敬語・謙譲語),41,27,41,258,283,0.000133,3.3,「AIトークン節約」をテーマにしたブログ記事のタイトルを5つご提案いただけますでしょうか。
+claude-haiku-5-5,1,ja,7,3,keigo + greeting and thanks,69,44,70,275,301,0.000144,3.4,お疲れ様です。恐れ入りますが、「AIトークン節約」をテーマにしたブログ記事のタイトルを5つご提案いただけますでしょうか。よろしくお願いいたします。
+claude-haiku-5-5,1,ja,8,0,plain (普通体),20,16,23,172,179,8.8e-05,2.8,新人エンジニアの自己紹介を3文で書いて。
+claude-haiku-5-5,1,ja,8,1,desu/masu (丁寧語),21,17,24,209,127,0.000107,2.7,新人エンジニアの自己紹介を3文で書いてください。
+claude-haiku-5-5,1,ja,8,2,keigo (尊敬語・謙譲語),28,22,32,283,200,0.000144,3.5,新人エンジニアの自己紹介を3文で作成していただけますでしょうか。
+claude-haiku-5-5,1,ja,8,3,keigo + greeting and thanks,58,44,64,256,186,0.000134,3.2,お疲れ様です。お手数をおかけしますが、新人エンジニアの自己紹介を3文で作成していただけますでしょうか。よろしくお願いいたします。
+claude-haiku-5-5,1,ja,9,0,plain (普通体),27,24,32,212,80,0.000109,2.8,この文の間違いを直して：「今日の会議わ中止することになりまいた。」
+claude-haiku-5-5,1,ja,9,1,desu/masu (丁寧語),28,24,33,233,113,0.000119,2.7,この文の間違いを直してください：「今日の会議わ中止することになりまいた。」
+claude-haiku-5-5,1,ja,9,2,keigo (尊敬語・謙譲語),37,31,42,192,103,0.0001,2.5,次の文の誤りを修正していただけますでしょうか。「今日の会議わ中止することになりまいた。」
+claude-haiku-5-5,1,ja,9,3,keigo + greeting and thanks,65,49,72,216,109,0.000115,3.0,お疲れ様です。恐れ入りますが、次の文の誤りを修正していただけますでしょうか。「今日の会議わ中止することになりまいた。」よろしくお願いいたします。
+claude-haiku-5-5,1,ja,10,0,plain (普通体),23,18,27,339,373,0.000172,4.0,在宅勤務で集中力を上げるコツを3つ教えて。
+claude-haiku-5-5,1,ja,10,1,desu/masu (丁寧語),24,19,28,308,343,0.000156,3.2,在宅勤務で集中力を上げるコツを3つ教えてください。
+claude-haiku-5-5,1,ja,10,2,keigo (尊敬語・謙譲語),31,24,36,389,414,0.000198,3.9,在宅勤務で集中力を高めるコツを3つお教えいただけますでしょうか。
+claude-haiku-5-5,1,ja,10,3,keigo + greeting and thanks,64,40,68,340,368,0.000176,3.7,お疲れ様です。お忙しいところ恐縮ですが、在宅勤務で集中力を高めるコツを3つお教えいただけますでしょうか。本当にありがとうございます。
+claude-haiku-5-5,1,en,1,0,plain imperative,23,12,13,119,266,6.2e-05,2.5,Suggest 3 email subject lines announcing a meeting schedule change.
+claude-haiku-5-5,1,en,1,1,please,24,13,13,95,198,5e-05,2.4,Please suggest 3 email subject lines announcing a meeting schedule change.
+claude-haiku-5-5,1,en,1,2,could you please + thank you,31,18,18,104,244,5.5e-05,2.5,Could you please suggest 3 email subject lines announcing a meeting schedule change? Thank you.
+claude-haiku-5-5,1,en,1,3,greeting + apology + thanks,49,29,29,127,313,6.8e-05,2.2,"Hi! Sorry to bother you, but could you please suggest 3 email subject lines announcing a meeting schedule change? Thanks so much in advance!"
+claude-haiku-5-5,1,en,2,0,plain imperative,17,11,11,702,1465,0.000353,4.8,Tell me how to remove duplicates from a Python list.
+claude-haiku-5-5,1,en,2,1,please,18,12,12,647,1336,0.000325,4.3,Please tell me how to remove duplicates from a Python list.
+claude-haiku-5-5,1,en,2,2,could you please + thank you,25,17,17,552,1098,0.000278,4.9,Could you please tell me how to remove duplicates from a Python list? Thank you.
+claude-haiku-5-5,1,en,2,3,greeting + apology + thanks,37,26,26,553,1389,0.00028,4.8,"Hi! If you have a moment, could you please tell me how to remove duplicates from a Python list? Thanks so much!"
+claude-haiku-5-5,1,en,3,0,plain imperative,26,13,13,1299,1933,0.000652,8.8,Plan 3 indoor date ideas in Seoul for a rainy weekend.
+claude-haiku-5-5,1,en,3,1,please,27,14,14,1578,2281,0.000792,10.8,Please plan 3 indoor date ideas in Seoul for a rainy weekend.
+claude-haiku-5-5,1,en,3,2,could you please + thank you,34,19,19,1510,1994,0.000758,10.5,Could you please plan 3 indoor date ideas in Seoul for a rainy weekend? Thank you.
+claude-haiku-5-5,1,en,3,3,greeting + apology + thanks,45,26,27,933,1205,0.000471,7.1,Hi! It's supposed to rain in Seoul this weekend. Could you please plan 3 indoor date ideas? Thank you so much!
+claude-haiku-5-5,1,en,4,0,plain imperative,19,12,12,126,62,6.5e-05,2.5,"Translate ""Thank you for your patience"" into natural Korean."
+claude-haiku-5-5,1,en,4,1,please,20,13,13,189,108,9.7e-05,2.5,"Please translate ""Thank you for your patience"" into natural Korean."
+claude-haiku-5-5,1,en,4,2,could you please + thank you,27,18,18,247,131,0.000126,3.0,"Could you please translate ""Thank you for your patience"" into natural Korean? Thank you."
+claude-haiku-5-5,1,en,4,3,greeting + apology + thanks,43,27,27,166,327,8.7e-05,2.5,"Hi! Sorry to bother you, but could you please translate ""Thank you for your patience"" into natural Korean? Thanks a lot!"
+claude-haiku-5-5,1,en,5,0,plain imperative,14,9,9,881,1929,0.000442,5.7,Make a template for summarizing meeting notes.
+claude-haiku-5-5,1,en,5,1,please,15,10,10,852,1886,0.000427,6.1,Please make a template for summarizing meeting notes.
+claude-haiku-5-5,1,en,5,2,could you please + thank you,22,15,15,743,1479,0.000374,4.7,Could you please make a template for summarizing meeting notes? Thank you.
+claude-haiku-5-5,1,en,5,3,greeting + apology + thanks,38,26,27,639,1380,0.000323,4.7,"Hi! I know you're busy, but could you please make a template for summarizing meeting notes? Thanks so much in advance!"
+claude-haiku-5-5,1,en,6,0,plain imperative,20,12,12,432,1037,0.000218,3.7,Briefly explain how to use VLOOKUP in Excel.
+claude-haiku-5-5,1,en,6,1,please,21,12,12,456,1160,0.00023,3.5,Please briefly explain how to use VLOOKUP in Excel.
+claude-haiku-5-5,1,en,6,2,could you please + thank you,28,17,17,573,1391,0.000289,4.1,Could you please briefly explain how to use VLOOKUP in Excel? Thank you.
+claude-haiku-5-5,1,en,6,3,greeting + apology + thanks,37,24,24,550,1430,0.000279,4.4,"Hi! If possible, could you please briefly explain how to use VLOOKUP in Excel? Thank you so much!"
+claude-haiku-5-5,1,en,7,0,plain imperative,18,11,11,182,387,9.3e-05,2.6,Write 5 blog post titles about saving AI tokens.
+claude-haiku-5-5,1,en,7,1,please,19,12,12,181,380,9.2e-05,2.5,Please write 5 blog post titles about saving AI tokens.
+claude-haiku-5-5,1,en,7,2,could you please + thank you,26,17,17,172,355,8.9e-05,2.7,Could you please write 5 blog post titles about saving AI tokens? Thank you.
+claude-haiku-5-5,1,en,7,3,greeting + apology + thanks,42,26,26,202,460,0.000105,2.6,"Hi! Sorry to bother you, but could you please write 5 blog post titles about saving AI tokens? Thanks a lot!"
+claude-haiku-5-5,1,en,8,0,plain imperative,20,14,14,112,369,5.8e-05,2.2,Write a 3-sentence self-introduction for a junior developer.
+claude-haiku-5-5,1,en,8,1,please,21,15,15,121,397,6.3e-05,2.8,Please write a 3-sentence self-introduction for a junior developer.
+claude-haiku-5-5,1,en,8,2,could you please + thank you,28,20,20,113,360,5.9e-05,2.7,Could you please write a 3-sentence self-introduction for a junior developer? Thank you.
+claude-haiku-5-5,1,en,8,3,greeting + apology + thanks,47,31,31,108,352,5.9e-05,2.3,"Hi! Sorry for the trouble, but could you please write a 3-sentence self-introduction for a junior developer? Thanks so much in advance!"
+claude-haiku-5-5,1,en,9,0,plain imperative,24,19,19,15,43,1e-05,2.1,"Fix the spelling in this sentence: ""We desided not to have the meating today."""
+claude-haiku-5-5,1,en,9,1,please,25,20,20,68,43,3.6e-05,2.0,"Please fix the spelling in this sentence: ""We desided not to have the meating today."""
+claude-haiku-5-5,1,en,9,2,could you please + thank you,32,25,25,15,43,1.1e-05,2.2,"Could you please fix the spelling in this sentence? ""We desided not to have the meating today."" Thank you."
+claude-haiku-5-5,1,en,9,3,greeting + apology + thanks,45,34,34,25,71,1.7e-05,2.4,"Hi! If you have a moment, could you please fix the spelling in this sentence? ""We desided not to have the meating today."" Thanks a lot!"
+claude-haiku-5-5,1,en,10,0,plain imperative,17,13,13,233,711,0.000118,3.0,Give me 3 tips for staying focused when working from home.
+claude-haiku-5-5,1,en,10,1,please,18,14,14,240,730,0.000122,3.5,Please give me 3 tips for staying focused when working from home.
+claude-haiku-5-5,1,en,10,2,could you please + thank you,25,19,19,243,739,0.000124,3.3,Could you please give me 3 tips for staying focused when working from home? Thank you.
+claude-haiku-5-5,1,en,10,3,greeting + apology + thanks,40,29,29,235,699,0.000121,2.8,"Hi! Sorry to bother you, but could you please give me 3 tips for staying focused when working from home? Thank you so much!"
