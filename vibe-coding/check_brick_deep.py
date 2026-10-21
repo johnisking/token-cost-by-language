@@ -117,11 +117,11 @@ def lives_check(pw, path, tmp):
     seq = []
     for i in range(900):                                   # up to 90 s of game time, paddle parked in a corner
         p.mouse.move(r[0] + 3, r[1] + r[3] - 5); p.clock.run_for(100)
-        if i % 10 == 0: p.keyboard.press('Space')            # serve again after a lost ball
-        v = p.evaluate(PROBE)
-        if v is not None and (not seq or seq[-1] != v): seq.append(v)
+        v = p.evaluate(PROBE)                                # read lives before any key press,
+        if v is not None and (not seq or seq[-1] != v): seq.append(v)   # so a restart key cannot hide the 0
         if v is not None and v <= 0: break
-        if len(seq) >= 2 and seq[-1] > seq[-2]: break      # game over screen restarted the game
+        if len(seq) >= 2 and seq[-1] > seq[-2]: break      # lives went back up without a recorded 0
+        if i % 10 == 0: p.keyboard.press('Space')            # serve again after a lost ball
     b.close()
     return seq
 
@@ -141,7 +141,7 @@ def main():
                 levels_seen=sorted(play['level']),
                 level2=2 in play['level'],
                 lives_sequence=seq,
-                lives_ok=len(seq) >= 3 and seq[0] == 3 and seq[1] == 2 and seq[2] == 1 and (0 in seq or len(seq) > 3 and seq[3] == 3),
+                lives_ok=seq[:4] == [3, 2, 1, 0],
                 script_errors=errors[:3])
             print(d, out[d], file=sys.stderr, flush=True)
     shutil.rmtree(tmp, ignore_errors=True)
