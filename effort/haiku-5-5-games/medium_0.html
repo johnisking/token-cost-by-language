@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brick Breaker</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #0b0f1a; color: #e6edf7; font-family: system-ui, -apple-system, sans-serif; }
+  body { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; }
+  canvas { background: #111827; border: 2px solid #334155; border-radius: 8px; width: min(800px, 96vw); height: auto; max-height: 88vh; box-shadow: 0 0 30px rgba(56, 189, 248, 0.15); }
+  #hint { font-size: 14px; color: #94a3b8; text-align: center; }
+</style>
+</head>
+<body>
+<canvas id="game" width="800" height="600"></canvas>
+<div id="hint">Mouse or ← / → (A / D) to move · Click or Space to launch · P to pause · R to restart</div>
+<script>
+(() => {
+  const W = 800, H = 600;
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+
+  const PADDLE_W = 110, PADDLE_H = 14, PADDLE_Y = H - 40, PADDLE_SPEED = 9;
+  const BALL_R = 8;
+  const MAX_LIVES = 3;
+  const COLS = 10, BRICK_H = 22, BRICK_GAP = 6, BRICK_TOP = 80, MARGIN = 30;
+  const BRICK_W = (W - MARGIN * 2 - (COLS - 1) * BRICK_GAP) / COLS;
+
+  // Each character is a brick: '.' = empty, '1'/'2'/'3' = number of hits needed.
+  const LEVELS = [
+    {
+      speed: 5,
+      rows: [
+        '1111111111',
+        '2222222222',
+        '1212121212',
+        '.11.11.11.',
+      ],
+    },
+    {
+      speed: 6,
+      rows: [
+        '3333333333',
+        '2.3..3..2.',
+        '.23333332.',
+        '3.2.22.2.3',
+        '1111111111',
+      ],
+    },
+  ];
+
+  const HP_COLORS = {
+    1: ['#22d3ee', '#0e7490'],
+    2: ['#a78bfa', '#5b21b6'],
+    3: ['#fb7185', '#9f1239'],
+  };
+
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  let mode = 'ready';   // ready | playing | paused | levelclear | gameover | win
+  let level = 0;
+  let score = 0;
+  let lives = MAX_LIVES;
+  let bricks = [];
+  const paddle = { x: W / 2 - PADDLE_W / 2 };
+  const ball = { x: 0, y: 0, vx: 0, vy: 0 };
+  const keys = { left: false, right: false };
+
+  function buildLevel(i) {
+    bricks = [];
+    LEVELS[i].rows.forEach((row, r) => {
+      [...row].forEach((ch, c) => {
+        if (ch === '.') return;
+        bricks.push({
+          x: MARGIN + c * (BRICK_W + BRICK_GAP),
+          y: BRICK_TOP + r * (BRICK_H + BRICK_GAP),
+          w: BRICK_W,
+          h: BRICK_H,
+          hp: Number(ch),
+        });
+      });
+    });
+  }
+
+  function resetBall() {
+    ball.vx = 0;
+    ball.vy = 0;
+    ball.x = paddle.x + PADDLE_W / 2;
+    ball.y = PADDLE_Y - BALL_R - 1;
+  }
+
+  function launch() {
+    const speed = LEVELS[level].speed;
+    const angle = (Math.random() * 0.5 - 0.25); // slight random tilt
+    ball.vx = speed * Math.sin(angle);
+    ball.vy = -speed * Math.cos(angle);
+    mode = 'playing';
+  }
+
+  function startLevel(i) {
+    level = i;
+    buildLevel(i);
+    paddle.x = W / 2 - PADDLE_W / 2;
+    resetBall();
+    mode = 'ready';
+  }
+
+  function newGame() {
+    score = 0;
+    lives = MAX_LIVES;
+    startLevel(0);
+  }
+
+  function loseLife() {
+    lives--;
+    if (lives <= 0) {
+      mode = 'gameover';
+      ball.vx = ball.vy = 0;
+    } else {
+      resetBall();
+      mode = 'ready';
+    }
+  }
+
+  // Main action: launch / continue / restart depending on state
+  function action() {
+    switch (mode) {
+      case 'ready':      launch(); break;
+      case 'paused':     mode = 'playing'; break;
+      case 'levelclear': startLevel(level + 1); break;
+      case 'gameover':
+      case 'win':        newGame(); break;
+    }
+  }
+
+  function togglePause() {
+    if (mode === 'playing') mode = 'paused';
+    else if (mode === 'paused') mode = 'playing';
+  }
+
+  function update(f) {
+    // Keyboard paddle movement
+    const dir = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
+    if (dir) paddle.x += dir * PADDLE_SPEED * f;
+    paddle.x = clamp(paddle.x, 0, W - PADDLE_W);
+
+    if (mode === 'ready') {
+      resetBall();
+      return;
+    }
+    if (mode !== 'playing') return;
+
+    // Move ball
+    ball.x += ball.vx * f;
+    ball.y += ball.vy * f;
+
+    // Walls
+    if (ball.x - BALL_R < 0) { ball.x = BALL_R; ball.vx = Math.abs(ball.vx); }
+    if (ball.x + BALL_R > W) { ball.x = W - BALL_R; ball.vx = -Math.abs(ball.vx); }
+    if (ball.y - BALL_R < 0) { ball.y = BALL_R; ball.vy = Math.abs(ball.vy); }
+
+    // Paddle
+    if (ball.vy > 0 &&
+        ball.y + BALL_R >= PADDLE_Y &&
+        ball.y - BALL_R <= PADDLE_Y + PADDLE_H &&
+        ball.x >= paddle.x - BALL_R &&
+        ball.x <= paddle.x + PADDLE_W + BALL_R) {
+      // Hit position decides the bounce angle (edges bounce sideways)
+      const t = clamp((ball.x - (paddle.x + PADDLE_W / 2)) / (PADDLE_W / 2), -1, 1);
+      const angle = t * 1.0;
+      const speed = LEVELS[level].speed;
+      ball.vx = speed * Math.sin(angle);
+      ball.vy = -speed * Math.cos(angle);
+      ball.y = PADDLE_Y - BALL_R;
+    }
+
+    // Bricks (one brick per frame to keep bounces predictable)
+    for (const b of bricks) {
+      if (b.hp <= 0) continue;
+      const cx = clamp(ball.x, b.x, b.x + b.w);
+      const cy = clamp(ball.y, b.y, b.y + b.h);
+      const dx = ball.x - cx;
+      const dy = ball.y - cy;
+      if (dx * dx + dy * dy > BALL_R * BALL_R) continue;
+
+      if (Math.abs(dx) > Math.abs(dy)) {
+        if (dx * ball.vx < 0) ball.vx = -ball.vx;
+      } else if (dy * ball.vy < 0 || (dx === 0 && dy === 0)) {
+        ball.vy = -ball.vy;
+      }
+      b.hp--;
+      score += 10;
+      break;
+    }
+
+    // Level cleared?
+    if (bricks.every(b => b.hp <= 0)) {
+      mode = level < LEVELS.length - 1 ? 'levelclear' : 'win';
+      ball.vx = ball.vy = 0;
+      return;
+    }
+
+    // Ball fell past the paddle
+    if (ball.y - BALL_R > H) loseLife();
+  }
+
+  // ---------- Drawing ----------
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+  }
+
+  function drawBricks() {
+    for (const b of bricks) {
+      if (b.hp <= 0) continue;
+      const [light, dark] = HP_COLORS[b.hp];
+      const grad = ctx.createLinearGradient(0, b.y, 0, b.y + b.h);
+      grad.addColorStop(0, light);
+      grad.addColorStop(1, dark);
+      ctx.fillStyle = grad;
+      roundRect(b.x, b.y, b.w, b.h, 4);
+      ctx.fill();
+    }
+  }
+
+  function drawPaddle() {
+    const grad = ctx.createLinearGradient(0, PADDLE_Y, 0, PADDLE_Y + PADDLE_H);
+    grad.addColorStop(0, '#f1f5f9');
+    grad.addColorStop(1, '#64748b');
+    ctx.fillStyle = grad;
+    ctx.shadowColor = 'rgba(148, 163, 184, 0.6)';
+    ctx.shadowBlur = 12;
+    roundRect(paddle.x, PADDLE_Y, PADDLE_W, PADDLE_H, 7);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  function drawBall() {
+    ctx.save();
+    ctx.shadowColor = '#fff';
+    ctx.shadowBlur = 14;
+    ctx.fillStyle = '#ffffff';
+    ctx.beginPath();
+    ctx.arc(ball.x, ball.y, BALL_R, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawHUD() {
+    ctx.font = 'bold 18px system-ui, sans-serif';
+    ctx.textBaseline = 'middle';
+
+    ctx.fillStyle = '#e2e8f0';
+    ctx.textAlign = 'left';
+    ctx.fillText(`Score: ${score}`, MARGIN, 35);
+
+    ctx.textAlign = 'center';
+    ctx.fillText(`Level ${level + 1} / ${LEVELS.length}`, W / 2, 35);
+
+    ctx.textAlign = 'right';
+    ctx.fillText('Lives', W - MARGIN - MAX_LIVES * 22 - 8, 35);
+    for (let i = 0; i < MAX_LIVES; i++) {
+      ctx.beginPath();
+      ctx.arc(W - MARGIN - i * 22 - 8, 35, 7, 0, Math.PI * 2);
+      ctx.fillStyle = i < lives ? '#fbbf24' : '#334155';
+      ctx.fill();
+    }
+  }
+
+  function overlay(title, sub) {
+    ctx.fillStyle = 'rgba(2, 6, 23, 0.7)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#f8fafc';
+    ctx.font = 'bold 42px system-ui, sans-serif';
+    ctx.fillText(title, W / 2, H / 2 - 20);
+    ctx.font = '18px system-ui, sans-serif';
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText(sub, W / 2, H / 2 + 26);
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    drawBricks();
+    drawPaddle();
+    drawBall();
+    drawHUD();
+
+    if (mode === 'ready') {
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.font = '18px system-ui, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('Click or press Space to launch', W / 2, H / 2 + 60);
+    } else if (mode === 'paused') {
+      overlay('PAUSED', 'Press P or click to continue');
+    } else if (mode === 'levelclear') {
+      overlay(`Level ${level + 1} Cleared!`, 'Click or press Space for the next level');
+    } else if (mode === 'gameover') {
+      overlay('GAME OVER', `Final score: ${score} — click or press Enter to play again`);
+    } else if (mode === 'win') {
+      overlay('YOU WIN!', `Final score: ${score} — click or press Enter to play again`);
+    }
+  }
+
+  // ---------- Input ----------
+  window.addEventListener('keydown', e => {
+    switch (e.code) {
+      case 'ArrowLeft': case 'KeyA':
+        keys.left = true; e.preventDefault(); break;
+      case 'ArrowRight': case 'KeyD':
+        keys.right = true; e.preventDefault(); break;
+      case 'Space':
+        e.preventDefault();
+        if (!e.repeat) action();
+        break;
+      case 'Enter':
+        if (!e.repeat) action();
+        break;
+      case 'KeyP':
+        if (!e.repeat) togglePause();
+        break;
+      case 'KeyR':
+        if (!e.repeat) newGame();
+        break;
+    }
+  });
+
+  window.addEventListener('keyup', e => {
+    if (e.code === 'ArrowLeft' || e.code === 'KeyA') keys.left = false;
+    if (e.code === 'ArrowRight' || e.code === 'KeyD') keys.right = false;
+  });
+
+  window.addEventListener('blur', () => { keys.left = false; keys.right = false; });
+
+  canvas.addEventListener('mousemove', e => {
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX - rect.left) * (W / rect.width);
+    paddle.x = x - PADDLE_W / 2;
+  });
+
+  canvas.addEventListener('mousedown', e => {
+    if (e.button === 0) action();
+  });
+
+  // Keep the paddle under the mouse-clamped position
+  canvas.addEventListener('contextmenu', e => e.preventDefault());
+
+  // ---------- Loop ----------
+  let last = performance.now();
+  function frame(now) {
+    const dt = Math.min((now - last) / 1000, 0.05);
+    last = now;
+    update(dt * 60);
+    draw();
+    requestAnimationFrame(frame);
+  }
+
+  newGame();
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

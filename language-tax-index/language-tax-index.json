@@ -1,7 +1,7 @@
 {
  "title": "TokenSave Language Tax Index: extra tokens per language on Claude, Gemini and GPT",
- "version": "1.1",
- "date": "2026-10-20",
+ "version": "1.2",
+ "date": "2026-10-21",
  "url": "https://tokensave.app/data/language-tax-index",
  "license": "CC BY 4.0",
  "definition": "tax = tokens for the language / tokens for English on the same tokenizer - 1, in percent",
@@ -10,6 +10,7 @@
   "gpt": "GPT (o200k, GPT-4o and later)",
   "claude55": "Claude 5.5 (Opus, Sonnet, Haiku)",
   "claude45": "Claude Haiku 4.5",
+  "gemini_4_argon": "Gemini 4 Argon",
   "cl100k": "GPT-4 / GPT-3.5 (cl100k, legacy)"
  },
  "summary": {
@@ -73,6 +74,21 @@
    ],
    "en": 35
   },
+  "gemini_4_argon": {
+   "label": "Gemini 4 Argon",
+   "family": "Google",
+   "current": true,
+   "median": 41,
+   "low": [
+    -3,
+    "Chinese (Simplified)"
+   ],
+   "high": [
+    132,
+    "Punjabi"
+   ],
+   "en": 34
+  },
   "cl100k": {
    "label": "GPT-4 / GPT-3.5 (cl100k, legacy)",
    "family": "OpenAI",
@@ -91,6 +107,11 @@
  },
  "history": [
   {
+   "version": "1.2",
+   "date": "2026-10-21",
+   "note": "Added Gemini 4 Argon, measured on all 41 prompts in Google AI Studio: a new tokenizer. Its median tax equals Gemini 3.x (+41%), but East Asian languages got cheaper (Korean 48 to 41 tokens, Japanese 46 to 42) and most Indian languages more expensive (Kannada 58 to 72, Hindi 41 to 48, Tamil 52 to 63). English is unchanged at 34."
+  },
+  {
    "version": "1.1",
    "date": "2026-10-20",
    "note": "Added Claude Haiku 5.5 (released 2026-10-07), measured on all 41 prompts: identical counts to Opus and Sonnet 5.5 in every language, so it joins the Claude 5.5 column. Versus Haiku 4.5, English needs 34% more tokens (35 to 47) while Korean, Japanese, Chinese, Hindi, Russian and Ukrainian are unchanged."
@@ -108,7 +129,7 @@
   "https://doi.org/10.5281/zenodo.23427148",
   "https://doi.org/10.5281/zenodo.23428350"
  ],
- "citation": "TokenSave (2026). TokenSave Language Tax Index, version 1.1 (2026-10-20). https://tokensave.app/data/language-tax-index",
+ "citation": "TokenSave (2026). TokenSave Language Tax Index, version 1.2 (2026-10-21). https://tokensave.app/data/language-tax-index",
  "rows": [
   {
    "code": "en",
@@ -121,6 +142,8 @@
    "claude55_tax": 0,
    "claude45": 35,
    "claude45_tax": 0,
+   "gemini_4_argon": 34,
+   "gemini_4_argon_tax": 0,
    "cl100k": 34,
    "cl100k_tax": 0
   },
@@ -135,6 +158,8 @@
    "claude55_tax": 15,
    "claude45": 54,
    "claude45_tax": 54,
+   "gemini_4_argon": 33,
+   "gemini_4_argon_tax": -3,
    "cl100k": 52,
    "cl100k_tax": 53
   },
@@ -149,6 +174,8 @@
    "claude55_tax": 70,
    "claude45": 56,
    "claude45_tax": 60,
+   "gemini_4_argon": 35,
+   "gemini_4_argon_tax": 3,
    "cl100k": 47,
    "cl100k_tax": 38
   },
@@ -163,6 +190,8 @@
    "claude55_tax": 47,
    "claude45": 49,
    "claude45_tax": 40,
+   "gemini_4_argon": 39,
+   "gemini_4_argon_tax": 15,
    "cl100k": 44,
    "cl100k_tax": 29
   },
@@ -177,6 +206,8 @@
    "claude55_tax": 47,
    "claude45": 54,
    "claude45_tax": 54,
+   "gemini_4_argon": 43,
+   "gemini_4_argon_tax": 26,
    "cl100k": 48,
    "cl100k_tax": 41
   },
@@ -191,6 +222,8 @@
    "claude55_tax": 96,
    "claude45": 92,
    "claude45_tax": 163,
+   "gemini_4_argon": 38,
+   "gemini_4_argon_tax": 12,
    "cl100k": 95,
    "cl100k_tax": 179
   },
@@ -205,6 +238,8 @@
    "claude55_tax": 89,
    "claude45": 89,
    "claude45_tax": 154,
+   "gemini_4_argon": 45,
+   "gemini_4_argon_tax": 32,
    "cl100k": 103,
    "cl100k_tax": 203
   },
@@ -219,6 +254,8 @@
    "claude55_tax": 102,
    "claude45": 67,
    "claude45_tax": 91,
+   "gemini_4_argon": 46,
+   "gemini_4_argon_tax": 35,
    "cl100k": 51,
    "cl100k_tax": 50
   },
@@ -233,6 +270,8 @@
    "claude55_tax": 72,
    "claude45": 61,
    "claude45_tax": 74,
+   "gemini_4_argon": 47,
+   "gemini_4_argon_tax": 38,
    "cl100k": 59,
    "cl100k_tax": 74
   },
@@ -247,6 +286,8 @@
    "claude55_tax": 49,
    "claude45": 59,
    "claude45_tax": 69,
+   "gemini_4_argon": 48,
+   "gemini_4_argon_tax": 41,
    "cl100k": 49,
    "cl100k_tax": 44
   },
@@ -261,6 +302,8 @@
    "claude55_tax": 47,
    "claude45": 55,
    "claude45_tax": 57,
+   "gemini_4_argon": 48,
+   "gemini_4_argon_tax": 41,
    "cl100k": 53,
    "cl100k_tax": 56
   },
@@ -275,6 +318,8 @@
    "claude55_tax": 51,
    "claude45": 71,
    "claude45_tax": 103,
+   "gemini_4_argon": 43,
+   "gemini_4_argon_tax": 26,
    "cl100k": 73,
    "cl100k_tax": 115
   },
@@ -289,6 +334,8 @@
    "claude55_tax": 43,
    "claude45": 51,
    "claude45_tax": 46,
+   "gemini_4_argon": 46,
+   "gemini_4_argon_tax": 35,
    "cl100k": 51,
    "cl100k_tax": 50
   },
@@ -303,6 +350,8 @@
    "claude55_tax": 28,
    "claude45": 60,
    "claude45_tax": 71,
+   "gemini_4_argon": 37,
+   "gemini_4_argon_tax": 9,
    "cl100k": 72,
    "cl100k_tax": 112
   },
@@ -317,6 +366,8 @@
    "claude55_tax": 51,
    "claude45": 56,
    "claude45_tax": 60,
+   "gemini_4_argon": 47,
+   "gemini_4_argon_tax": 38,
    "cl100k": 54,
    "cl100k_tax": 59
   },
@@ -331,6 +382,8 @@
    "claude55_tax": 87,
    "claude45": 82,
    "claude45_tax": 134,
+   "gemini_4_argon": 42,
+   "gemini_4_argon_tax": 24,
    "cl100k": 79,
    "cl100k_tax": 132
   },
@@ -345,6 +398,8 @@
    "claude55_tax": 66,
    "claude45": 57,
    "claude45_tax": 63,
+   "gemini_4_argon": 46,
+   "gemini_4_argon_tax": 35,
    "cl100k": 54,
    "cl100k_tax": 59
   },
@@ -359,6 +414,8 @@
    "claude55_tax": 104,
    "claude45": 70,
    "claude45_tax": 100,
+   "gemini_4_argon": 53,
+   "gemini_4_argon_tax": 56,
    "cl100k": 69,
    "cl100k_tax": 103
   },
@@ -373,6 +430,8 @@
    "claude55_tax": 89,
    "claude45": 89,
    "claude45_tax": 154,
+   "gemini_4_argon": 41,
+   "gemini_4_argon_tax": 21,
    "cl100k": 85,
    "cl100k_tax": 150
   },
@@ -387,6 +446,8 @@
    "claude55_tax": 91,
    "claude45": 72,
    "claude45_tax": 106,
+   "gemini_4_argon": 44,
+   "gemini_4_argon_tax": 29,
    "cl100k": 70,
    "cl100k_tax": 106
   },
@@ -401,6 +462,8 @@
    "claude55_tax": 134,
    "claude45": 110,
    "claude45_tax": 214,
+   "gemini_4_argon": 48,
+   "gemini_4_argon_tax": 41,
    "cl100k": 156,
    "cl100k_tax": 359
   },
@@ -415,6 +478,8 @@
    "claude55_tax": 79,
    "claude45": 60,
    "claude45_tax": 71,
+   "gemini_4_argon": 53,
+   "gemini_4_argon_tax": 56,
    "cl100k": 60,
    "cl100k_tax": 76
   },
@@ -429,6 +494,8 @@
    "claude55_tax": 57,
    "claude45": 59,
    "claude45_tax": 69,
+   "gemini_4_argon": 49,
+   "gemini_4_argon_tax": 44,
    "cl100k": 60,
    "cl100k_tax": 76
   },
@@ -443,6 +510,8 @@
    "claude55_tax": 83,
    "claude45": 86,
    "claude45_tax": 146,
+   "gemini_4_argon": 58,
+   "gemini_4_argon_tax": 71,
    "cl100k": 128,
    "cl100k_tax": 276
   },
@@ -457,6 +526,8 @@
    "claude55_tax": 202,
    "claude45": 142,
    "claude45_tax": 306,
+   "gemini_4_argon": 64,
+   "gemini_4_argon_tax": 88,
    "cl100k": 244,
    "cl100k_tax": 618
   },
@@ -471,6 +542,8 @@
    "claude55_tax": 147,
    "claude45": 116,
    "claude45_tax": 231,
+   "gemini_4_argon": 56,
+   "gemini_4_argon_tax": 65,
    "cl100k": 144,
    "cl100k_tax": 324
   },
@@ -485,6 +558,8 @@
    "claude55_tax": 164,
    "claude45": 124,
    "claude45_tax": 254,
+   "gemini_4_argon": 51,
+   "gemini_4_argon_tax": 50,
    "cl100k": 167,
    "cl100k_tax": 391
   },
@@ -499,6 +574,8 @@
    "claude55_tax": 202,
    "claude45": 142,
    "claude45_tax": 306,
+   "gemini_4_argon": 46,
+   "gemini_4_argon_tax": 35,
    "cl100k": 207,
    "cl100k_tax": 509
   },
@@ -513,6 +590,8 @@
    "claude55_tax": 87,
    "claude45": 69,
    "claude45_tax": 97,
+   "gemini_4_argon": 59,
+   "gemini_4_argon_tax": 74,
    "cl100k": 77,
    "cl100k_tax": 126
   },
@@ -527,6 +606,8 @@
    "claude55_tax": 153,
    "claude45": 119,
    "claude45_tax": 240,
+   "gemini_4_argon": 42,
+   "gemini_4_argon_tax": 24,
    "cl100k": 126,
    "cl100k_tax": 271
   },
@@ -541,6 +622,8 @@
    "claude55_tax": 51,
    "claude45": 71,
    "claude45_tax": 103,
+   "gemini_4_argon": 42,
+   "gemini_4_argon_tax": 24,
    "cl100k": 75,
    "cl100k_tax": 121
   },
@@ -555,6 +638,8 @@
    "claude55_tax": 577,
    "claude45": 318,
    "claude45_tax": 809,
+   "gemini_4_argon": 72,
+   "gemini_4_argon_tax": 112,
    "cl100k": 318,
    "cl100k_tax": 835
   },
@@ -569,6 +654,8 @@
    "claude55_tax": 351,
    "claude45": 212,
    "claude45_tax": 506,
+   "gemini_4_argon": 71,
+   "gemini_4_argon_tax": 109,
    "cl100k": 343,
    "cl100k_tax": 909
   },
@@ -583,6 +670,8 @@
    "claude55_tax": 100,
    "claude45": 73,
    "claude45_tax": 109,
+   "gemini_4_argon": 54,
+   "gemini_4_argon_tax": 59,
    "cl100k": 72,
    "cl100k_tax": 112
   },
@@ -597,6 +686,8 @@
    "claude55_tax": 70,
    "claude45": 80,
    "claude45_tax": 129,
+   "gemini_4_argon": 59,
+   "gemini_4_argon_tax": 74,
    "cl100k": 107,
    "cl100k_tax": 215
   },
@@ -611,6 +702,8 @@
    "claude55_tax": 274,
    "claude45": 176,
    "claude45_tax": 403,
+   "gemini_4_argon": 63,
+   "gemini_4_argon_tax": 85,
    "cl100k": 288,
    "cl100k_tax": 747
   },
@@ -625,6 +718,8 @@
    "claude55_tax": 83,
    "claude45": 70,
    "claude45_tax": 100,
+   "gemini_4_argon": 62,
+   "gemini_4_argon_tax": 82,
    "cl100k": 88,
    "cl100k_tax": 159
   },
@@ -639,6 +734,8 @@
    "claude55_tax": 94,
    "claude45": 73,
    "claude45_tax": 109,
+   "gemini_4_argon": 62,
+   "gemini_4_argon_tax": 82,
    "cl100k": 86,
    "cl100k_tax": 153
   },
@@ -653,6 +750,8 @@
    "claude55_tax": 236,
    "claude45": 158,
    "claude45_tax": 351,
+   "gemini_4_argon": 69,
+   "gemini_4_argon_tax": 103,
    "cl100k": 319,
    "cl100k_tax": 838
   },
@@ -667,6 +766,8 @@
    "claude55_tax": 149,
    "claude45": 117,
    "claude45_tax": 234,
+   "gemini_4_argon": 69,
+   "gemini_4_argon_tax": 103,
    "cl100k": 168,
    "cl100k_tax": 394
   },
@@ -681,6 +782,8 @@
    "claude55_tax": 572,
    "claude45": 316,
    "claude45_tax": 803,
+   "gemini_4_argon": 79,
+   "gemini_4_argon_tax": 132,
    "cl100k": 252,
    "cl100k_tax": 641
   }
