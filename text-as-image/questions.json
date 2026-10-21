@@ -1,0 +1,414 @@
+{
+ "prose_en": [
+  {
+   "q": "ticket T745: build hash",
+   "a": "f8b52d716bc9",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T745: timeout in ms",
+   "a": "8947",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T396: build hash",
+   "a": "e41481f0e9ec",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T396: timeout in ms",
+   "a": "88550",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T213: build hash",
+   "a": "ef0281a30632",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T213: timeout in ms",
+   "a": "90132",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T401: build hash",
+   "a": "f4b96838e9cb",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T401: timeout in ms",
+   "a": "83505",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T203: build hash",
+   "a": "635e391399e7",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T203: timeout in ms",
+   "a": "53770",
+   "type": "planted_num"
+  }
+ ],
+ "prose_ko": [
+  {
+   "q": "ticket T341: build hash",
+   "a": "fa810098480a",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T341: timeout in ms",
+   "a": "19043",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T379: build hash",
+   "a": "10929b9185c5",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T379: timeout in ms",
+   "a": "20434",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T106: build hash",
+   "a": "278951ee0142",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T106: timeout in ms",
+   "a": "94392",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T954: build hash",
+   "a": "17e09abeeb5c",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T954: timeout in ms",
+   "a": "34013",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T850: build hash",
+   "a": "60d8bcd2d560",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T850: timeout in ms",
+   "a": "90061",
+   "type": "planted_num"
+  }
+ ],
+ "prose_ja": [
+  {
+   "q": "ticket T123: build hash",
+   "a": "9ee468419470",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T123: timeout in ms",
+   "a": "28194",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T774: build hash",
+   "a": "728f0a2615ef",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T774: timeout in ms",
+   "a": "80019",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T281: build hash",
+   "a": "0a5d63bac6da",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T281: timeout in ms",
+   "a": "61514",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T608: build hash",
+   "a": "4bca4532b646",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T608: timeout in ms",
+   "a": "2116",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T665: build hash",
+   "a": "8f21afbf9ca9",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T665: timeout in ms",
+   "a": "67687",
+   "type": "planted_num"
+  }
+ ],
+ "code": [
+  {
+   "q": "ticket T427: build hash",
+   "a": "5febaef1929e",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T427: timeout in ms",
+   "a": "56136",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T703: build hash",
+   "a": "6a4a159d997d",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T703: timeout in ms",
+   "a": "15547",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T661: build hash",
+   "a": "1fadb24bf9e4",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T661: timeout in ms",
+   "a": "52522",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T359: build hash",
+   "a": "6091a65ba028",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T359: timeout in ms",
+   "a": "90327",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T717: build hash",
+   "a": "067bc0ca79c0",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T717: timeout in ms",
+   "a": "36484",
+   "type": "planted_num"
+  }
+ ],
+ "json": [
+  {
+   "q": "ticket T676: build hash",
+   "a": "a1f29e660186",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T676: timeout in ms",
+   "a": "30141",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T847: build hash",
+   "a": "29497bb25f3d",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T847: timeout in ms",
+   "a": "32349",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T626: build hash",
+   "a": "110641d41cfd",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T626: timeout in ms",
+   "a": "25092",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T868: build hash",
+   "a": "4b38f0bdf166",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T868: timeout in ms",
+   "a": "92290",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T206: build hash",
+   "a": "87fd3e9ea480",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T206: timeout in ms",
+   "a": "43404",
+   "type": "planted_num"
+  },
+  {
+   "q": "record created 2026-10-13T04:56:00Z: id",
+   "a": "req_709b2b8ff97e92994a",
+   "type": "natural_hex"
+  },
+  {
+   "q": "record created 2026-10-13T04:56:00Z: output_tokens",
+   "a": "2135",
+   "type": "natural_num"
+  },
+  {
+   "q": "record created 2026-10-08T05:34:00Z: id",
+   "a": "req_0c5c3f3523980c711f",
+   "type": "natural_hex"
+  },
+  {
+   "q": "record created 2026-10-08T05:34:00Z: output_tokens",
+   "a": "1549",
+   "type": "natural_num"
+  },
+  {
+   "q": "record created 2026-10-01T23:50:00Z: id",
+   "a": "req_0df6a463cc446fa6db",
+   "type": "natural_hex"
+  },
+  {
+   "q": "record created 2026-10-01T23:50:00Z: output_tokens",
+   "a": "6071",
+   "type": "natural_num"
+  },
+  {
+   "q": "record created 2026-10-15T19:45:00Z: id",
+   "a": "req_5ef536073e51af45eb",
+   "type": "natural_hex"
+  },
+  {
+   "q": "record created 2026-10-15T19:45:00Z: output_tokens",
+   "a": "7186",
+   "type": "natural_num"
+  },
+  {
+   "q": "record created 2026-10-17T08:20:00Z: id",
+   "a": "req_28ea57a16b80463812",
+   "type": "natural_hex"
+  },
+  {
+   "q": "record created 2026-10-17T08:20:00Z: output_tokens",
+   "a": "6513",
+   "type": "natural_num"
+  }
+ ],
+ "log": [
+  {
+   "q": "ticket T819: build hash",
+   "a": "3ba8fc2fcd3b",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T819: timeout in ms",
+   "a": "29599",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T768: build hash",
+   "a": "cd128944c984",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T768: timeout in ms",
+   "a": "65854",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T160: build hash",
+   "a": "ed70e075e14e",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T160: timeout in ms",
+   "a": "89507",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T193: build hash",
+   "a": "c897d165ad26",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T193: timeout in ms",
+   "a": "15069",
+   "type": "planted_num"
+  },
+  {
+   "q": "ticket T934: build hash",
+   "a": "af796020efab",
+   "type": "planted_hex"
+  },
+  {
+   "q": "ticket T934: timeout in ms",
+   "a": "98682",
+   "type": "planted_num"
+  },
+  {
+   "q": "log line at 2026-10-20T10:31:39Z: req id",
+   "a": "8f8427b9e8d2",
+   "type": "natural_hex"
+  },
+  {
+   "q": "log line at 2026-10-20T10:31:39Z: latency_ms",
+   "a": "1820",
+   "type": "natural_num"
+  },
+  {
+   "q": "log line at 2026-10-20T13:45:47Z: req id",
+   "a": "aaafc84270cd",
+   "type": "natural_hex"
+  },
+  {
+   "q": "log line at 2026-10-20T13:45:47Z: latency_ms",
+   "a": "2825",
+   "type": "natural_num"
+  },
+  {
+   "q": "log line at 2026-10-20T10:39:35Z: req id",
+   "a": "d53a6690fa52",
+   "type": "natural_hex"
+  },
+  {
+   "q": "log line at 2026-10-20T10:39:35Z: latency_ms",
+   "a": "631",
+   "type": "natural_num"
+  },
+  {
+   "q": "log line at 2026-10-20T12:26:55Z: req id",
+   "a": "eb20061b2f9c",
+   "type": "natural_hex"
+  },
+  {
+   "q": "log line at 2026-10-20T12:26:55Z: latency_ms",
+   "a": "2350",
+   "type": "natural_num"
+  },
+  {
+   "q": "log line at 2026-10-20T10:26:59Z: req id",
+   "a": "c5c65f592b9d",
+   "type": "natural_hex"
+  },
+  {
+   "q": "log line at 2026-10-20T10:26:59Z: latency_ms",
+   "a": "3881",
+   "type": "natural_num"
+  }
+ ]
+}
