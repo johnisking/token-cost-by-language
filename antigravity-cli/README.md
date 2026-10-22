@@ -1,5 +1,7 @@
 # Antigravity CLI vs Claude Code vs Codex: startup tokens, MCP tools and the same coding task
 
+DOI: https://doi.org/10.5281/zenodo.23569397
+
 Measured 2026-10-22 on Windows 11 with Claude Code 2.1.295 (Opus 5.5), Codex CLI 0.162.0-alpha.17.2 (gpt-6-luna) and Google's Antigravity CLI 1.4.5 (`agy`) with Gemini 4 Argon and with Claude Opus 5.5. 44 runs. License: CC BY 4.0.
 
 Page with tables, chart and method: https://tokensave.app/data/antigravity-cli-vs-claude-code-vs-codex
@@ -26,3 +28,5 @@ Page with tables, chart and method: https://tokensave.app/data/antigravity-cli-v
 - `check_brick_deep.json`: checker output.
 
 Earlier Claude Code vs Codex dataset: https://tokensave.app/data/claude-code-vs-codex-tokens
+
+Cite: TokenSave (2026). Antigravity CLI vs Claude Code vs Codex: startup tokens, MCP tools and the same coding task [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23569397
