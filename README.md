@@ -27,6 +27,7 @@ Summary report of all datasets: [`tokensave-report-2026-1.pdf`](tokensave-report
 - [`agent-instructions/`](agent-instructions/): CLAUDE.md and AGENTS.md size — tokens and cost per request for 0–50 KB instruction files in Claude Code and Codex (measured 2026-10-18, DOI [10.5281/zenodo.23453217](https://doi.org/10.5281/zenodo.23453217)). A 50 KB CLAUDE.md adds 15,985 tokens per request; Codex ignores AGENTS.md text past 32 KiB.
 - [`coding-prompt-language/`](coding-prompt-language/): the same coding task prompted in English, Korean, Japanese, Spanish and Ukrainian in Claude Code and Codex (measured 2026-10-18, DOI [10.5281/zenodo.23454308](https://doi.org/10.5281/zenodo.23454308)). Almost the same tokens in every language; the game text and comments follow the prompt.
 - [`harness/`](harness/): what the Claude Code harness costs — the same coding task under seven settings: default, safe mode, a minimal harness, a subagent, plan mode, a project skill and a hook (measured 2026-10-19, DOI [10.5281/zenodo.23465633](https://doi.org/10.5281/zenodo.23465633)). The harness is about 90% of the input tokens; a subagent cost 128% more.
+- [`antigravity-cli/`](antigravity-cli/): Google's Antigravity CLI (with Gemini 4 Argon and with Claude Opus 5.5) vs Claude Code vs Codex: startup tokens, 1 to 30 MCP tools and the same coding task (measured 2026-10-22). The same Opus 5.5 read 68% to 88% fewer input tokens in Antigravity than in Claude Code.
 
 ## Files
 

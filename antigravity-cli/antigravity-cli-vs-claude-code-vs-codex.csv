@@ -1,0 +1,45 @@
+tool,test,mcp_tools,run,input_tokens_reported,cache_read_tokens,output_tokens,seconds,api_cost_usd,file_lines,check_score,check_level2,check_lives,game_ok,check_note,tool_label
+agyg,game,,1,13672,6797,7012,90,,686,True,True,True,True,,Antigravity + Gemini 4 Argon
+agyg,game,,2,12148,6796,5467,70,,522,True,True,True,True,,Antigravity + Gemini 4 Argon
+agyg,game,,3,13302,6796,6641,82,,616,True,True,True,True,,Antigravity + Gemini 4 Argon
+agyg,startup,0,1,6747,0,5,20,,,,,,,,Antigravity + Gemini 4 Argon
+agyg,startup,0,2,6743,0,5,14,,,,,,,,Antigravity + Gemini 4 Argon
+agyg,startup,10,1,7241,0,5,17,,,,,,,,Antigravity + Gemini 4 Argon
+agyg,startup,10,2,7243,0,5,10,,,,,,,,Antigravity + Gemini 4 Argon
+agyg,startup,1,1,7202,0,5,16,,,,,,,,Antigravity + Gemini 4 Argon
+agyg,startup,1,2,7201,0,5,10,,,,,,,,Antigravity + Gemini 4 Argon
+agyg,startup,30,1,7329,0,5,16,,,,,,,,Antigravity + Gemini 4 Argon
+agyg,startup,30,2,7326,0,5,9,,,,,,,,Antigravity + Gemini 4 Argon
+agyo,game,,1,9770,15385,4310,41,,225,True,True,True,True,,Antigravity + Opus 5.5
+agyo,game,,2,9800,15380,4390,44,,232,True,True,True,True,,Antigravity + Opus 5.5
+agyo,game,,3,9896,15377,4434,42,,251,True,True,True,True,,Antigravity + Opus 5.5
+agyo,startup,0,1,5327,5167,4,8,,,,,,,,Antigravity + Opus 5.5
+agyo,startup,0,2,5325,5167,4,8,,,,,,,,Antigravity + Opus 5.5
+agyo,startup,10,1,5660,5583,4,6,,,,,,,,Antigravity + Opus 5.5
+agyo,startup,10,2,5664,5583,4,7,,,,,,,,Antigravity + Opus 5.5
+agyo,startup,1,1,5608,5583,4,8,,,,,,,,Antigravity + Opus 5.5
+agyo,startup,1,2,5600,5583,4,8,,,,,,,,Antigravity + Opus 5.5
+agyo,startup,30,1,5743,5583,4,8,,,,,,,,Antigravity + Opus 5.5
+agyo,startup,30,2,5743,5583,4,7,,,,,,,,Antigravity + Opus 5.5
+claude,game,,1,79316,51766,7897,62,0.3887,513,True,True,True,True,,Claude Code + Opus 5.5
+claude,game,,2,77868,51766,6595,52,0.3511,421,True,True,True,True,,Claude Code + Opus 5.5
+claude,game,,3,78830,51766,7447,60,0.3758,420,True,True,True,True,,Claude Code + Opus 5.5
+claude,startup,0,1,35781,15923,4,6,0.1621,,,,,,,Claude Code + Opus 5.5
+claude,startup,0,2,35781,15923,4,4,0.1621,,,,,,,Claude Code + Opus 5.5
+claude,startup,10,1,35917,15923,4,4,0.1632,,,,,,,Claude Code + Opus 5.5
+claude,startup,10,2,35917,15923,4,6,0.1632,,,,,,,Claude Code + Opus 5.5
+claude,startup,1,1,35794,15923,4,5,0.1622,,,,,,,Claude Code + Opus 5.5
+claude,startup,1,2,35794,15923,4,5,0.1622,,,,,,,Claude Code + Opus 5.5
+claude,startup,30,1,36169,15923,4,8,0.1652,,,,,,,Claude Code + Opus 5.5
+claude,startup,30,2,36169,15923,4,6,0.1652,,,,,,,Claude Code + Opus 5.5
+codex,game,,1,70704,60032,7118,75,,29,False,True,True,True,checker missed scoring (ball hit 32 bricks in a manual hook); lives 3-2-1-0 confirmed,Codex + gpt-6-luna
+codex,game,,2,48362,37248,3468,72,,46,False,True,False,True,checker missed scoring (10 bricks hit in a manual hook); lives 3-2-1-0 confirmed with a moving paddle (scripts/l2.js),Codex + gpt-6-luna
+codex,game,,3,47975,37248,3103,57,,51,True,True,True,True,,Codex + gpt-6-luna
+codex,startup,0,1,15018,7680,5,8,,,,,,,,Codex + gpt-6-luna
+codex,startup,0,2,14618,0,5,7,,,,,,,,Codex + gpt-6-luna
+codex,startup,10,1,14618,0,5,10,,,,,,,,Codex + gpt-6-luna
+codex,startup,10,2,14618,14208,5,9,,,,,,,,Codex + gpt-6-luna
+codex,startup,1,1,14618,0,5,8,,,,,,,,Codex + gpt-6-luna
+codex,startup,1,2,14618,7680,5,7,,,,,,,,Codex + gpt-6-luna
+codex,startup,30,1,14618,7680,5,8,,,,,,,,Codex + gpt-6-luna
+codex,startup,30,2,14618,0,5,10,,,,,,,,Codex + gpt-6-luna
