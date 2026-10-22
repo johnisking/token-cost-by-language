@@ -1,0 +1,484 @@
+{
+ "n_objects": 34,
+ "objects": {
+  "ChaseCam": {
+   "type": "CAMERA",
+   "colors": [],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 0
+  },
+  "Sun": {
+   "type": "LIGHT",
+   "colors": [],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 0
+  },
+  "Track": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.06,
+     0.06,
+     0.07
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 144
+  },
+  "Kerb_Outer": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.8,
+     0.05,
+     0.05
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 144
+  },
+  "Kerb_Inner": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.8,
+     0.05,
+     0.05
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 144
+  },
+  "CenterLine": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.9,
+     0.9,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 144
+  },
+  "Ground": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.12,
+     0.35,
+     0.08
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 1
+  },
+  "StartLine": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.9,
+     0.9,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 1
+  },
+  "RaceCar": {
+   "type": "EMPTY",
+   "colors": [],
+   "anim": true,
+   "constraints": [],
+   "parent": null,
+   "faces": 0
+  },
+  "Chassis": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.95,
+     0.45,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "Nose": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.95,
+     0.45,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "Pod_L": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.95,
+     0.45,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "Pod_R": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.95,
+     0.45,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "EngineCover": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.05,
+     0.25,
+     0.8
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "Cockpit": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.03,
+     0.03,
+     0.035
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "Visor": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.1,
+     0.2,
+     0.35
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "Helmet": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.05,
+     0.25,
+     0.8
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 40
+  },
+  "FrontWing": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.05,
+     0.25,
+     0.8
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "FW_End_L": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.03,
+     0.03,
+     0.035
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "FW_End_R": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.03,
+     0.03,
+     0.035
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "RearWing": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.05,
+     0.25,
+     0.8
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "RW_End_L": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.03,
+     0.03,
+     0.035
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "RW_End_R": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.03,
+     0.03,
+     0.035
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "RW_Pylon": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.03,
+     0.03,
+     0.035
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "Wheel_FL": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 12
+  },
+  "Hub_FL": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.03,
+     0.03,
+     0.035
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 8
+  },
+  "Wheel_FR": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 12
+  },
+  "Hub_FR": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.03,
+     0.03,
+     0.035
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 8
+  },
+  "Wheel_RL": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 12
+  },
+  "Hub_RL": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.03,
+     0.03,
+     0.035
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 8
+  },
+  "Wheel_RR": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 12
+  },
+  "Hub_RR": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.03,
+     0.03,
+     0.035
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 8
+  },
+  "Arm_1.55": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.03,
+     0.03,
+     0.035
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  },
+  "Arm_-1.35": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.03,
+     0.03,
+     0.035
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "RaceCar",
+   "faces": 6
+  }
+ },
+ "camera": "ChaseCam",
+ "camera_anim": true,
+ "frame_start": 1,
+ "frame_end": 120,
+ "fps": 24,
+ "engine": "BLENDER_EEVEE",
+ "res": [
+  1280,
+  720
+ ],
+ "animated_objects": [
+  "RaceCar",
+  "Wheel_FL",
+  "Hub_FL",
+  "Wheel_FR",
+  "Hub_FR",
+  "Wheel_RL",
+  "Hub_RL",
+  "Wheel_RR",
+  "Hub_RR"
+ ]
+}

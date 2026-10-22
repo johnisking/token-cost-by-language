@@ -1,0 +1,73 @@
+mode,task,run,input_tokens,output_tokens,api_cost_usd,requests,seconds,tool_calls,max_text_result_chars,images,image_tokens_est,user_prompt_chars,refused_too_large,passed_check,task_label,calls
+base,build,1,125801,2312,0.2318,5,61,4,342,1,176,732,False,True,Build a table and four chairs,ToolSearch get_scene_info execute_blender_code look
+base,build,2,125273,2128,0.2261,5,31,4,342,1,176,498,False,True,Build a table and four chairs,ToolSearch get_scene_info execute_blender_code look
+base,build,3,125996,2509,0.2373,5,32,4,342,1,176,732,False,True,Build a table and four chairs,ToolSearch get_scene_info execute_blender_code look
+base,build,4,125753,2345,0.2323,5,31,4,338,1,176,732,False,True,Build a table and four chairs,ToolSearch get_scene_info execute_blender_code look
+base,build,5,124994,2002,0.2226,5,37,4,342,1,176,732,False,True,Build a table and four chairs,ToolSearch get_scene_info execute_blender_code look
+base,infoL,1,122143,1075,0.1947,5,27,4,2347,0,0,378,False,True,Describe a city block (580 objects),ToolSearch get_scene_info execute_blender_code get_scene_info
+base,infoL,2,120370,946,0.188,5,21,5,2157,0,0,98,False,True,Describe a city block (580 objects),ToolSearch get_scene_info get_scene_info get_scene_info get_scene_info
+base,infoL,3,94901,854,0.1785,4,19,4,2157,0,0,98,False,True,Describe a city block (580 objects),ToolSearch get_scene_info get_scene_info get_scene_info
+base,infoL,4,94869,1101,0.1831,4,21,4,2157,0,0,126,False,True,Describe a city block (580 objects),ToolSearch get_scene_info get_scene_info get_scene_info
+base,infoL,5,147058,1308,0.2066,6,24,5,2157,0,0,294,False,True,Describe a city block (580 objects),ToolSearch get_scene_info ToolSearch execute_blender_code get_scene_info
+base,infoS,1,69819,629,0.1624,3,16,2,1203,0,0,126,False,True,Describe a small room (13 objects),ToolSearch get_scene_info
+base,infoS,2,69932,663,0.164,3,17,2,1401,0,0,98,False,True,Describe a small room (13 objects),ToolSearch get_scene_info
+base,infoS,3,69269,586,0.1598,3,21,2,1410,0,0,98,False,True,Describe a small room (13 objects),ToolSearch get_scene_info
+base,infoS,4,69866,654,0.1633,3,15,2,1281,0,0,126,False,True,Describe a small room (13 objects),ToolSearch get_scene_info
+base,infoS,5,69146,629,0.1597,3,20,2,1212,0,0,98,False,True,Describe a small room (13 objects),ToolSearch get_scene_info
+base,props,1,238705,2484,0.8384,6,32,7,32355,0,0,1266,True,True,Probe: print every property of 580 objects,ToolSearch execute_blender_code execute_blender_code execute_blender_code execute_blender_code execute_blender_code execute_blender_code
+base,props,2,244349,2929,0.8862,6,36,7,34921,0,0,1434,True,True,Probe: print every property of 580 objects,ToolSearch execute_blender_code execute_blender_code execute_blender_code execute_blender_code execute_blender_code execute_blender_code
+base,props,3,245293,3156,0.8944,6,37,7,34776,0,0,1434,True,True,Probe: print every property of 580 objects,ToolSearch execute_blender_code execute_blender_code execute_blender_code execute_blender_code execute_blender_code execute_blender_code
+base,race,1,453756,10615,0.5613,14,106,13,410,4,2473,6576,False,True,"Showcase: racing car, circuit, 5 s chase camera",ToolSearch get_scene_info execute_blender_code execute_blender_code execute_blender_code look execute_blender_code execute_blender_code look execute_blender_code look look execute_blender_code
+base,race,2,303797,8824,0.4648,10,95,9,410,2,1036,4384,False,True,"Showcase: racing car, circuit, 5 s chase camera",ToolSearch get_scene_info execute_blender_code execute_blender_code look execute_blender_code execute_blender_code look execute_blender_code
+base,race,3,238517,9504,0.4719,8,97,9,427,2,1103,4384,False,True,"Showcase: racing car, circuit, 5 s chase camera",ToolSearch get_scene_info execute_blender_code execute_blender_code execute_blender_code look execute_blender_code execute_blender_code look
+base,race,4,204114,8092,0.4199,7,83,6,410,2,792,2740,False,True,"Showcase: racing car, circuit, 5 s chase camera",ToolSearch get_scene_info execute_blender_code execute_blender_code look look
+base,race,5,266463,8179,0.438,9,86,8,410,2,1103,3836,False,True,"Showcase: racing car, circuit, 5 s chase camera",ToolSearch get_scene_info execute_blender_code execute_blender_code look execute_blender_code look execute_blender_code
+base,red,1,124982,1165,0.2052,5,19,5,996,1,307,368,False,True,"Make the chairs red, then look",ToolSearch get_scene_info execute_blender_code execute_blender_code look
+base,red,2,124064,910,0.1954,5,18,4,794,1,307,276,False,True,"Make the chairs red, then look",ToolSearch get_scene_info execute_blender_code look
+base,red,3,124866,1099,0.2032,5,19,5,996,1,307,368,False,True,"Make the chairs red, then look",ToolSearch get_scene_info execute_blender_code execute_blender_code look
+base,red,4,124533,845,0.1955,5,16,4,996,1,307,276,False,True,"Make the chairs red, then look",ToolSearch get_scene_info execute_blender_code look
+base,red,5,124802,972,0.1991,5,19,4,996,1,307,276,False,True,"Make the chairs red, then look",ToolSearch get_scene_info execute_blender_code look
+base,sides,1,161266,2406,0.2722,6,37,5,1028,2,2818,544,False,True,Look at the table from four sides,ToolSearch get_scene_info look look execute_blender_code
+base,sides,2,99733,1066,0.1983,4,21,3,856,1,795,328,False,True,Look at the table from four sides,ToolSearch get_scene_info look
+base,sides,3,99662,847,0.1934,4,19,3,856,1,795,272,False,True,Look at the table from four sides,ToolSearch get_scene_info look
+base,sides,4,99689,947,0.1956,4,20,3,856,1,795,272,False,True,Look at the table from four sides,ToolSearch get_scene_info look
+base,sides,5,100240,949,0.2001,4,18,3,856,1,1409,272,False,True,Look at the table from four sides,ToolSearch get_scene_info look
+base,verts,1,91508,959,0.1697,4,21,3,1508,0,0,278,True,True,"Probe: print every vertex (19,042)",ToolSearch execute_blender_code execute_blender_code
+base,verts,2,91694,872,0.1694,4,21,3,1508,0,0,278,True,True,"Probe: print every vertex (19,042)",ToolSearch execute_blender_code execute_blender_code
+base,verts,3,91514,1143,0.1734,4,22,3,201,0,0,222,False,True,"Probe: print every vertex (19,042)",ToolSearch execute_blender_code execute_blender_code
+diet,build,1,122905,2347,0.2276,5,30,4,342,1,176,732,False,True,Build a table and four chairs,ToolSearch get_scene_info execute_blender_code look
+diet,build,2,117615,2138,0.2099,5,50,4,233,0,0,732,False,True,Build a table and four chairs,ToolSearch get_scene_info execute_blender_code execute_blender_code
+diet,build,3,122835,2274,0.2255,5,30,4,342,1,176,732,False,True,Build a table and four chairs,ToolSearch get_scene_info execute_blender_code look
+diet,build,4,92364,2101,0.2007,4,40,3,233,0,0,488,False,True,Build a table and four chairs,ToolSearch get_scene_info execute_blender_code
+diet,build,5,91980,1822,0.192,4,52,3,233,0,0,488,False,True,Build a table and four chairs,ToolSearch get_scene_info execute_blender_code
+diet,infoL,1,92535,1113,0.1785,4,34,4,2157,0,0,196,False,True,Describe a city block (580 objects),ToolSearch get_scene_info get_scene_info get_scene_info
+diet,infoL,2,92277,798,0.1702,4,18,3,2157,0,0,196,False,True,Describe a city block (580 objects),ToolSearch get_scene_info get_scene_info
+diet,infoL,3,117897,1027,0.186,5,31,5,2347,0,0,196,False,True,Describe a city block (580 objects),ToolSearch get_scene_info get_scene_info get_scene_info get_scene_info
+diet,infoL,4,92542,1042,0.1772,4,22,4,2157,0,0,196,False,True,Describe a city block (580 objects),ToolSearch get_scene_info get_scene_info get_scene_info
+diet,infoL,5,92605,898,0.1748,4,17,4,2157,0,0,294,False,True,Describe a city block (580 objects),ToolSearch get_scene_info get_scene_info get_scene_info
+diet,infoS,1,67418,581,0.1541,3,14,2,1281,0,0,98,False,True,Describe a small room (13 objects),ToolSearch get_scene_info
+diet,infoS,2,67418,677,0.156,3,22,2,1281,0,0,98,False,True,Describe a small room (13 objects),ToolSearch get_scene_info
+diet,infoS,3,67418,612,0.1547,3,15,2,1281,0,0,98,False,True,Describe a small room (13 objects),ToolSearch get_scene_info
+diet,infoS,4,67418,560,0.1537,3,13,2,1281,0,0,98,False,True,Describe a small room (13 objects),ToolSearch get_scene_info
+diet,infoS,5,67418,603,0.1545,3,14,2,1281,0,0,98,False,True,Describe a small room (13 objects),ToolSearch get_scene_info
+diet,props,4,67871,772,0.1643,3,17,2,3112,0,0,239,False,True,Probe: print every property of 580 objects,ToolSearch execute_blender_code
+diet,props,5,68177,839,0.1681,3,19,2,3345,0,0,239,False,True,Probe: print every property of 580 objects,ToolSearch execute_blender_code
+diet,props,6,67846,816,0.165,3,20,2,3040,0,0,239,False,True,Probe: print every property of 580 objects,ToolSearch execute_blender_code
+diet,race,1,340941,10350,0.5077,11,111,10,410,3,800,3288,False,True,"Showcase: racing car, circuit, 5 s chase camera",ToolSearch get_scene_info execute_blender_code execute_blender_code look execute_blender_code execute_blender_code look look execute_blender_code
+diet,race,2,225610,8456,0.4244,8,84,8,410,2,354,3836,False,True,"Showcase: racing car, circuit, 5 s chase camera",ToolSearch get_scene_info execute_blender_code execute_blender_code execute_blender_code execute_blender_code look look
+diet,race,3,223762,8012,0.4125,8,85,7,410,2,533,3288,False,True,"Showcase: racing car, circuit, 5 s chase camera",ToolSearch get_scene_info execute_blender_code execute_blender_code look execute_blender_code look
+diet,race,4,258507,9031,0.4474,9,101,9,410,2,354,4384,False,True,"Showcase: racing car, circuit, 5 s chase camera",ToolSearch get_scene_info execute_blender_code execute_blender_code execute_blender_code execute_blender_code look execute_blender_code look
+diet,race,5,257503,8502,0.4334,9,84,9,410,2,443,4384,False,True,"Showcase: racing car, circuit, 5 s chase camera",ToolSearch get_scene_info execute_blender_code execute_blender_code execute_blender_code execute_blender_code look look execute_blender_code
+diet,red,1,121011,888,0.1889,5,21,4,785,1,197,276,False,True,"Make the chairs red, then look",ToolSearch get_scene_info execute_blender_code look
+diet,red,2,120244,835,0.1856,5,20,4,502,1,197,276,False,True,"Make the chairs red, then look",ToolSearch get_scene_info execute_blender_code look
+diet,red,3,121025,935,0.1899,5,24,4,785,1,197,276,False,True,"Make the chairs red, then look",ToolSearch get_scene_info execute_blender_code look
+diet,red,4,120991,867,0.1885,5,28,4,794,1,197,276,False,True,"Make the chairs red, then look",ToolSearch get_scene_info execute_blender_code look
+diet,red,5,120961,854,0.1881,5,27,4,785,1,197,357,False,True,"Make the chairs red, then look",ToolSearch get_scene_info execute_blender_code look
+diet,sides,1,120504,926,0.1907,5,25,4,856,2,710,272,False,True,Look at the table from four sides,ToolSearch look get_scene_info look
+diet,sides,2,151711,1678,0.2258,6,26,6,856,3,1060,680,False,True,Look at the table from four sides,ToolSearch get_scene_info look look execute_blender_code look
+diet,sides,3,95726,1005,0.185,4,29,3,856,1,355,272,False,True,Look at the table from four sides,ToolSearch get_scene_info look
+diet,sides,4,97279,1040,0.1918,4,24,4,856,2,710,492,False,True,Look at the table from four sides,ToolSearch get_scene_info look look
+diet,sides,5,95678,918,0.1828,4,22,3,856,1,355,272,False,True,Look at the table from four sides,ToolSearch get_scene_info look
+diet,verts,4,67996,391,0.1581,3,15,2,3394,0,0,139,False,True,"Probe: print every vertex (19,042)",ToolSearch execute_blender_code
+diet,verts,5,90641,601,0.1692,4,20,3,3419,0,0,278,False,True,"Probe: print every vertex (19,042)",ToolSearch execute_blender_code execute_blender_code
+diet,verts,6,90624,617,0.1695,4,21,3,3419,0,0,278,False,True,"Probe: print every vertex (19,042)",ToolSearch execute_blender_code execute_blender_code

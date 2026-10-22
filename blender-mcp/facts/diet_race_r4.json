@@ -1,0 +1,444 @@
+{
+ "n_objects": 31,
+ "objects": {
+  "Sun": {
+   "type": "LIGHT",
+   "colors": [],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 0
+  },
+  "Track": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.05,
+     0.05,
+     0.055
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 166
+  },
+  "Curb_Inner": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.8,
+     0.05,
+     0.04
+    ],
+    [
+     0.9,
+     0.9,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 166
+  },
+  "Curb_Outer": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.8,
+     0.05,
+     0.04
+    ],
+    [
+     0.9,
+     0.9,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 166
+  },
+  "CenterLine": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.9,
+     0.9,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 166
+  },
+  "Ground": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.1,
+     0.35,
+     0.08
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 1
+  },
+  "StartLine": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.9,
+     0.9,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 1
+  },
+  "Car": {
+   "type": "EMPTY",
+   "colors": [],
+   "anim": true,
+   "constraints": [],
+   "parent": null,
+   "faces": 0
+  },
+  "Car_Body": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.05,
+     0.35,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 18
+  },
+  "Car_Canopy": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.03,
+     0.05
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 14
+  },
+  "Car_SidePod_R": {
+   "type": "MESH",
+   "colors": [
+    [
+     1.0,
+     0.55,
+     0.0
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 10
+  },
+  "Car_SidePod_L": {
+   "type": "MESH",
+   "colors": [
+    [
+     1.0,
+     0.55,
+     0.0
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 10
+  },
+  "Car_Stripe": {
+   "type": "MESH",
+   "colors": [
+    [
+     1.0,
+     0.55,
+     0.0
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 10
+  },
+  "Car_Splitter": {
+   "type": "MESH",
+   "colors": [
+    [
+     1.0,
+     0.55,
+     0.0
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 6
+  },
+  "Car_Wing": {
+   "type": "MESH",
+   "colors": [
+    [
+     1.0,
+     0.55,
+     0.0
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 6
+  },
+  "Car_Strut_-1": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 6
+  },
+  "Car_Endplate_-1": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.05,
+     0.35,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 6
+  },
+  "Car_Strut_1": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 6
+  },
+  "Car_Endplate_1": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.05,
+     0.35,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 6
+  },
+  "Car_Wheel_0": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 12
+  },
+  "Car_Hub_0": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.6,
+     0.6,
+     0.62
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car_Wheel_0",
+   "faces": 8
+  },
+  "Car_Wheel_1": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 12
+  },
+  "Car_Hub_1": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.6,
+     0.6,
+     0.62
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car_Wheel_1",
+   "faces": 8
+  },
+  "Car_Wheel_2": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 12
+  },
+  "Car_Hub_2": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.6,
+     0.6,
+     0.62
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car_Wheel_2",
+   "faces": 8
+  },
+  "Car_Wheel_3": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 12
+  },
+  "Car_Hub_3": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.6,
+     0.6,
+     0.62
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car_Wheel_3",
+   "faces": 8
+  },
+  "Car_Light_-1": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.9,
+     0.9,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 6
+  },
+  "Car_Light_1": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.9,
+     0.9,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 6
+  },
+  "ChaseCam": {
+   "type": "CAMERA",
+   "colors": [],
+   "anim": false,
+   "constraints": [
+    "TRACK_TO"
+   ],
+   "parent": "Car",
+   "faces": 0
+  },
+  "ChaseTarget": {
+   "type": "EMPTY",
+   "colors": [],
+   "anim": false,
+   "constraints": [],
+   "parent": "Car",
+   "faces": 0
+  }
+ },
+ "camera": "ChaseCam",
+ "camera_anim": true,
+ "frame_start": 1,
+ "frame_end": 120,
+ "fps": 24,
+ "engine": "BLENDER_EEVEE",
+ "res": [
+  1280,
+  720
+ ],
+ "animated_objects": [
+  "Car",
+  "Car_Wheel_0",
+  "Car_Wheel_1",
+  "Car_Wheel_2",
+  "Car_Wheel_3"
+ ]
+}

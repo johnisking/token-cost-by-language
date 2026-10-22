@@ -1,0 +1,122 @@
+{
+ "n_objects": 7,
+ "objects": {
+  "Camera": {
+   "type": "CAMERA",
+   "colors": [],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 0
+  },
+  "Sun": {
+   "type": "LIGHT",
+   "colors": [],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 0
+  },
+  "Table": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.45,
+     0.26,
+     0.12
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 54
+  },
+  "Chair 1": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.45,
+     0.26,
+     0.12
+    ],
+    [
+     0.6,
+     0.38,
+     0.2
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 42
+  },
+  "Chair 2": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.45,
+     0.26,
+     0.12
+    ],
+    [
+     0.6,
+     0.38,
+     0.2
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 42
+  },
+  "Chair 3": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.45,
+     0.26,
+     0.12
+    ],
+    [
+     0.6,
+     0.38,
+     0.2
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 42
+  },
+  "Chair 4": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.45,
+     0.26,
+     0.12
+    ],
+    [
+     0.6,
+     0.38,
+     0.2
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 42
+  }
+ },
+ "camera": "Camera",
+ "camera_anim": false,
+ "frame_start": 1,
+ "frame_end": 250,
+ "fps": 24,
+ "engine": "BLENDER_EEVEE",
+ "res": [
+  1280,
+  720
+ ],
+ "animated_objects": []
+}

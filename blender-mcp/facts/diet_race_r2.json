@@ -1,0 +1,408 @@
+{
+ "n_objects": 28,
+ "objects": {
+  "Camera": {
+   "type": "CAMERA",
+   "colors": [],
+   "anim": true,
+   "constraints": [
+    "TRACK_TO"
+   ],
+   "parent": null,
+   "faces": 0
+  },
+  "Sun": {
+   "type": "LIGHT",
+   "colors": [],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 0
+  },
+  "Ground": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.08,
+     0.3,
+     0.06
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 1
+  },
+  "Track": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.05,
+     0.05,
+     0.055
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 171
+  },
+  "CurbLeft": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.8,
+     0.05,
+     0.03
+    ],
+    [
+     0.9,
+     0.9,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 61
+  },
+  "CurbRight": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.8,
+     0.05,
+     0.03
+    ],
+    [
+     0.9,
+     0.9,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 61
+  },
+  "EdgeLineL": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.95,
+     0.95,
+     0.95
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 171
+  },
+  "EdgeLineR": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.95,
+     0.95,
+     0.95
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 171
+  },
+  "StartLine": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.95,
+     0.95,
+     0.95
+    ],
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 20
+  },
+  "CarRig": {
+   "type": "EMPTY",
+   "colors": [],
+   "anim": true,
+   "constraints": [],
+   "parent": null,
+   "faces": 0
+  },
+  "CarBody": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.05,
+     0.35,
+     0.9
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 28
+  },
+  "Canopy": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.03
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 16
+  },
+  "Splitter": {
+   "type": "MESH",
+   "colors": [
+    [
+     1.0,
+     0.55,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 12
+  },
+  "WingBlade": {
+   "type": "MESH",
+   "colors": [
+    [
+     1.0,
+     0.55,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 12
+  },
+  "WingStrut0": {
+   "type": "MESH",
+   "colors": [
+    [
+     1.0,
+     0.55,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 12
+  },
+  "WingStrut1": {
+   "type": "MESH",
+   "colors": [
+    [
+     1.0,
+     0.55,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 12
+  },
+  "Stripe": {
+   "type": "MESH",
+   "colors": [
+    [
+     1.0,
+     0.55,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 12
+  },
+  "SidePod0": {
+   "type": "MESH",
+   "colors": [
+    [
+     1.0,
+     0.55,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 12
+  },
+  "SidePod1": {
+   "type": "MESH",
+   "colors": [
+    [
+     1.0,
+     0.55,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 12
+  },
+  "Wheel0": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 10
+  },
+  "Rim0": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.6,
+     0.6,
+     0.62
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Wheel0",
+   "faces": 8
+  },
+  "Wheel1": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 10
+  },
+  "Rim1": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.6,
+     0.6,
+     0.62
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Wheel1",
+   "faces": 8
+  },
+  "Wheel2": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 10
+  },
+  "Rim2": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.6,
+     0.6,
+     0.62
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Wheel2",
+   "faces": 8
+  },
+  "Wheel3": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.02,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": true,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 10
+  },
+  "Rim3": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.6,
+     0.6,
+     0.62
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": "Wheel3",
+   "faces": 8
+  },
+  "CamTarget": {
+   "type": "EMPTY",
+   "colors": [],
+   "anim": false,
+   "constraints": [],
+   "parent": "CarRig",
+   "faces": 0
+  }
+ },
+ "camera": "Camera",
+ "camera_anim": true,
+ "frame_start": 1,
+ "frame_end": 120,
+ "fps": 24,
+ "engine": "BLENDER_EEVEE",
+ "res": [
+  1280,
+  720
+ ],
+ "animated_objects": [
+  "Camera",
+  "CarRig",
+  "Wheel0",
+  "Wheel1",
+  "Wheel2",
+  "Wheel3"
+ ]
+}

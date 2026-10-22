@@ -1,0 +1,24 @@
+{
+ "n_objects": 580,
+ "objects": {
+  "Camera": {
+   "type": "CAMERA",
+   "colors": [],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 0
+  }
+ },
+ "camera": "Camera",
+ "camera_anim": false,
+ "frame_start": 1,
+ "frame_end": 250,
+ "fps": 24,
+ "engine": "BLENDER_EEVEE",
+ "res": [
+  1280,
+  720
+ ],
+ "animated_objects": []
+}

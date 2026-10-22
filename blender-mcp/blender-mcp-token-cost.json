@@ -1,0 +1,2388 @@
+{
+ "title": "Blender MCP token cost: 72 Claude Code runs, from a table and chairs to a racing scene",
+ "url": "https://tokensave.app/data/blender-mcp-token-cost",
+ "license": "CC BY 4.0",
+ "citation": "TokenSave (2026). Blender MCP token cost: 72 Claude Code runs, from a table and chairs to a racing scene [Data set]. https://tokensave.app/data/blender-mcp-token-cost",
+ "measured": "2026-10-22",
+ "setup": "Claude Code 2.1.295, Opus 5.5, effort medium, Windows 11; Blender 5.2.2 LTS; MCP for Blender (mcp-for-blender via uvx, add-on 1.8); tokensave-mcp-diet 0.3.0",
+ "tasks": {
+  "infoS": "Describe a small room (13 objects)",
+  "infoL": "Describe a city block (580 objects)",
+  "build": "Build a table and four chairs",
+  "red": "Make the chairs red, then look",
+  "sides": "Look at the table from four sides",
+  "verts": "Probe: print every vertex (19,042)",
+  "props": "Probe: print every property of 580 objects",
+  "race": "Showcase: racing car, circuit, 5 s chase camera"
+ },
+ "rows": [
+  {
+   "run": "base_build_r1",
+   "mode": "base",
+   "task": "build",
+   "rep": 1,
+   "input_tokens": 125801,
+   "output_tokens": 2312,
+   "api_cost_usd": 0.2318,
+   "requests": 5,
+   "max_request_input": 27457,
+   "seconds": 61,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 342,
+   "images": 1,
+   "image_sizes": [
+    [
+     516,
+     256
+    ]
+   ],
+   "image_tokens_est": 176,
+   "user_prompt_chars": 732,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_build_r2",
+   "mode": "base",
+   "task": "build",
+   "rep": 2,
+   "input_tokens": 125273,
+   "output_tokens": 2128,
+   "api_cost_usd": 0.2261,
+   "requests": 5,
+   "max_request_input": 27222,
+   "seconds": 31,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 342,
+   "images": 1,
+   "image_sizes": [
+    [
+     516,
+     256
+    ]
+   ],
+   "image_tokens_est": 176,
+   "user_prompt_chars": 498,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_build_r3",
+   "mode": "base",
+   "task": "build",
+   "rep": 3,
+   "input_tokens": 125996,
+   "output_tokens": 2509,
+   "api_cost_usd": 0.2373,
+   "requests": 5,
+   "max_request_input": 27662,
+   "seconds": 32,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 342,
+   "images": 1,
+   "image_sizes": [
+    [
+     516,
+     256
+    ]
+   ],
+   "image_tokens_est": 176,
+   "user_prompt_chars": 732,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_build_r4",
+   "mode": "base",
+   "task": "build",
+   "rep": 4,
+   "input_tokens": 125753,
+   "output_tokens": 2345,
+   "api_cost_usd": 0.2323,
+   "requests": 5,
+   "max_request_input": 27440,
+   "seconds": 31,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 338,
+   "images": 1,
+   "image_sizes": [
+    [
+     516,
+     256
+    ]
+   ],
+   "image_tokens_est": 176,
+   "user_prompt_chars": 732,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_build_r5",
+   "mode": "base",
+   "task": "build",
+   "rep": 5,
+   "input_tokens": 124994,
+   "output_tokens": 2002,
+   "api_cost_usd": 0.2226,
+   "requests": 5,
+   "max_request_input": 27100,
+   "seconds": 37,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 342,
+   "images": 1,
+   "image_sizes": [
+    [
+     516,
+     256
+    ]
+   ],
+   "image_tokens_est": 176,
+   "user_prompt_chars": 732,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_infoL_r1",
+   "mode": "base",
+   "task": "infoL",
+   "rep": 1,
+   "input_tokens": 122143,
+   "output_tokens": 1075,
+   "api_cost_usd": 0.1947,
+   "requests": 5,
+   "max_request_input": 25968,
+   "seconds": 27,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 2347,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 378,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a simple city made of blocks:\n- **Ground:** a flat plane, 200 × 200 m, centered at the origin.\n- **Buildings:** 576 box buildings set out in a grid spaced 8 m apart, from about −92 to +92 on both X and Y. They're 4–7 m wide and about 8–56 m tall.\n- **BigMesh:** a 6 m object with 19,200 faces, floating at (0, 0, 70) above the center of the city.\n- **Sun:** one sun light at (4, −4, 8), ",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_infoL_r2",
+   "mode": "base",
+   "task": "infoL",
+   "rep": 2,
+   "input_tokens": 120370,
+   "output_tokens": 946,
+   "api_cost_usd": 0.188,
+   "requests": 5,
+   "max_request_input": 25496,
+   "seconds": 21,
+   "tool_calls": 5,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "get_scene_info",
+    "get_scene_info",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 2157,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 98,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a procedural city block with 580 objects:\n- **Ground:** a 200 × 200 m plane centred at the origin.\n- **Buildings:** 576 box meshes named \"Building XX-YY\", laid out on an 8 m grid from about −92 to +92 on X and Y. Heights range from about 8 m to 56 m. That's 577 of the 578 meshes; I didn't look up what the last one is.\n- **Light:** one Sun lamp at (4, −4, 8), at 1 W and pointing straig",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_infoL_r3",
+   "mode": "base",
+   "task": "infoL",
+   "rep": 3,
+   "input_tokens": 94901,
+   "output_tokens": 854,
+   "api_cost_usd": 0.1785,
+   "requests": 4,
+   "max_request_input": 25162,
+   "seconds": 19,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "get_scene_info",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 2157,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 98,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a procedural city block with 580 objects:\n- **Ground**: a 200 × 200 plane at the origin.\n- **Buildings**: about 577 box meshes named \"Building XX-YY\", laid out on a grid spaced 8 units apart from −92 to +92. They're roughly 4–7 units wide and vary in height from about 8 to 56 units. I only listed the first 20, so I'm assuming the rest are buildings from the naming pattern.\n- **Sun**: ",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_infoL_r4",
+   "mode": "base",
+   "task": "infoL",
+   "rep": 4,
+   "input_tokens": 94869,
+   "output_tokens": 1101,
+   "api_cost_usd": 0.1831,
+   "requests": 4,
+   "max_request_input": 25120,
+   "seconds": 21,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "get_scene_info",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 2157,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 126,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "- **Scene contents:** 580 objects: 578 meshes, 1 Sun light and 1 camera. Rendering uses EEVEE at 1280×720.\n- **Layout:** It looks like a city block. There's a flat 200×200 `Ground` plane at the origin with buildings (`Building XX-YY`) in a grid 8 units apart, starting at (−92, −92). They are about 4–7 units wide and range from about 8 to 56 units tall. I only listed 20 objects, so I'm assuming the",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_infoL_r5",
+   "mode": "base",
+   "task": "infoL",
+   "rep": 5,
+   "input_tokens": 147058,
+   "output_tokens": 1308,
+   "api_cost_usd": 0.2066,
+   "requests": 6,
+   "max_request_input": 26260,
+   "seconds": 24,
+   "tool_calls": 5,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "ToolSearch",
+    "execute_blender_code",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 2157,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 294,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a procedural city of 580 objects:\n- **Ground:** a 200 × 200 m plane at the origin.\n- **Buildings:** 576 boxes in a 24 × 24 grid spaced 8 m apart, covering about −92 to +92 on X and Y. They range from about 6 m to 60 m tall.\n- **BigMesh:** a 6 m mesh with 19,200 faces, floating at (0, 0, 70) above the center of the city.\n- **Sun:** one sun light at (4, −4, 8).\n\n**Camera:** at (120, −12",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_infoS_r1",
+   "mode": "base",
+   "task": "infoS",
+   "rep": 1,
+   "input_tokens": 69819,
+   "output_tokens": 629,
+   "api_cost_usd": 0.1624,
+   "requests": 3,
+   "max_request_input": 24323,
+   "seconds": 16,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 1203,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 126,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a simple furnished room with 13 objects:\n\n- **Room:** an 8×8 m floor, a 3 m tall back wall and a 3.2×2.4 m rug.\n- **Furniture:** a dining table (1.6×0.9 m) with four chairs around it (front, back, left and right, each turned toward the table), a 2.2 m sofa and a 2 m tall shelf.\n- **Lights:** a 10 W point light (Ceiling Lamp) at 2.6 m height and a Sun light.\n- **Camera:** at (5.5, −5.5",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_infoS_r2",
+   "mode": "base",
+   "task": "infoS",
+   "rep": 2,
+   "input_tokens": 69932,
+   "output_tokens": 663,
+   "api_cost_usd": 0.164,
+   "requests": 3,
+   "max_request_input": 24436,
+   "seconds": 17,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 1401,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 98,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a small room: a floor (8×8 m), a back wall, a table with 4 chairs around it, a sofa, a shelf and a rug. That's 10 meshes in total.\n\nIt has two lights: a 10 W point lamp hanging over the table at 2.6 m, and a 1 W sun at (4, -4, 8).\n\nThe camera is at (5.5, -5.5, 3.2), front-right of the room and a bit above it. It's tilted 71° down and turned 45°, so it looks diagonally down toward the ",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_infoS_r3",
+   "mode": "base",
+   "task": "infoS",
+   "rep": 3,
+   "input_tokens": 69269,
+   "output_tokens": 586,
+   "api_cost_usd": 0.1598,
+   "requests": 3,
+   "max_request_input": 24109,
+   "seconds": 21,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 1410,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 98,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a simple room with 10 meshes, 2 lights and 1 camera:\n\n- **Room and furniture:** a Floor (8×8 m), a back wall, a rug, a table with 4 chairs around it, a sofa and a shelf.\n- **Lights:** a 10 W point light called \"Ceiling Lamp\" at (0, 0, 2.6) and a sun light at (4, −4, 8).\n- **Camera:** at **(5.5, −5.5, 3.2)**, rotated (71°, 0°, 45°). That puts it at the front-right corner, looking down ",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_infoS_r4",
+   "mode": "base",
+   "task": "infoS",
+   "rep": 4,
+   "input_tokens": 69866,
+   "output_tokens": 654,
+   "api_cost_usd": 0.1633,
+   "requests": 3,
+   "max_request_input": 24370,
+   "seconds": 15,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 1281,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 126,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a small furnished room:\n- **Room:** an 8×8 m floor, a 3 m tall back wall and a 3.2×2.4 m rug.\n- **Furniture:** a table (1.6×0.9 m) with four chairs around it, one on each side at ±0.85 m (Y) and ±1.15 m (X), plus a sofa and a 2 m tall shelf.\n- **Lights:** a ceiling lamp at (0, 0, 2.6) and a sun at (4, −4, 8).\n- **Camera:** \"Camera\" is at **(5.5, −5.5, 3.2)**, rotated (71°, 0°, 45°). T",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_infoS_r5",
+   "mode": "base",
+   "task": "infoS",
+   "rep": 5,
+   "input_tokens": 69146,
+   "output_tokens": 629,
+   "api_cost_usd": 0.1597,
+   "requests": 3,
+   "max_request_input": 23986,
+   "seconds": 20,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 1212,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 98,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a simple furnished room with 13 objects:\n\n- **Room:** a Floor (8×8 m), a back wall and a rug.\n- **Furniture:** a table with 4 chairs around it (one on each side, all facing the table), plus a sofa and a shelf.\n- **Lights:** a 10 W point light called \"Ceiling Lamp\" at (0, 0, 2.6), and a sun light at (4, -4, 8).\n- **Camera:** at **(5.5, -5.5, 3.2)** with rotation (71°, 0°, 45°). It sits",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_props_r1",
+   "mode": "base",
+   "task": "props",
+   "rep": 1,
+   "input_tokens": 238705,
+   "output_tokens": 2484,
+   "api_cost_usd": 0.8384,
+   "requests": 6,
+   "max_request_input": 101891,
+   "seconds": 32,
+   "tool_calls": 7,
+   "calls": [
+    "ToolSearch",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 32355,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 1266,
+   "refused_too_large": true,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_props_r2",
+   "mode": "base",
+   "task": "props",
+   "rep": 2,
+   "input_tokens": 244349,
+   "output_tokens": 2929,
+   "api_cost_usd": 0.8862,
+   "requests": 6,
+   "max_request_input": 106744,
+   "seconds": 36,
+   "tool_calls": 7,
+   "calls": [
+    "ToolSearch",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 34921,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 1434,
+   "refused_too_large": true,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_props_r3",
+   "mode": "base",
+   "task": "props",
+   "rep": 3,
+   "input_tokens": 245293,
+   "output_tokens": 3156,
+   "api_cost_usd": 0.8944,
+   "requests": 6,
+   "max_request_input": 107187,
+   "seconds": 37,
+   "tool_calls": 7,
+   "calls": [
+    "ToolSearch",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 34776,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 1434,
+   "refused_too_large": true,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_race_r1",
+   "mode": "base",
+   "task": "race",
+   "rep": 1,
+   "input_tokens": 453756,
+   "output_tokens": 10615,
+   "api_cost_usd": 0.5613,
+   "requests": 14,
+   "max_request_input": 39997,
+   "seconds": 106,
+   "tool_calls": 13,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "execute_blender_code",
+    "look",
+    "look",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 410,
+   "images": 4,
+   "image_sizes": [
+    [
+     1031,
+     514
+    ],
+    [
+     1031,
+     514
+    ],
+    [
+     904,
+     678
+    ],
+    [
+     604,
+     300
+    ]
+   ],
+   "image_tokens_est": 2473,
+   "user_prompt_chars": 6576,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_race_r2",
+   "mode": "base",
+   "task": "race",
+   "rep": 2,
+   "input_tokens": 303797,
+   "output_tokens": 8824,
+   "api_cost_usd": 0.4648,
+   "requests": 10,
+   "max_request_input": 36066,
+   "seconds": 95,
+   "tool_calls": 9,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 410,
+   "images": 2,
+   "image_sizes": [
+    [
+     604,
+     604
+    ],
+    [
+     908,
+     454
+    ]
+   ],
+   "image_tokens_est": 1036,
+   "user_prompt_chars": 4384,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_race_r3",
+   "mode": "base",
+   "task": "race",
+   "rep": 3,
+   "input_tokens": 238517,
+   "output_tokens": 9504,
+   "api_cost_usd": 0.4719,
+   "requests": 8,
+   "max_request_input": 36908,
+   "seconds": 97,
+   "tool_calls": 9,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 427,
+   "images": 2,
+   "image_sizes": [
+    [
+     644,
+     644
+    ],
+    [
+     908,
+     454
+    ]
+   ],
+   "image_tokens_est": 1103,
+   "user_prompt_chars": 4384,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_race_r4",
+   "mode": "base",
+   "task": "race",
+   "rep": 4,
+   "input_tokens": 204114,
+   "output_tokens": 8092,
+   "api_cost_usd": 0.4199,
+   "requests": 7,
+   "max_request_input": 34750,
+   "seconds": 83,
+   "tool_calls": 6,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "look"
+   ],
+   "max_text_result_chars": 410,
+   "images": 2,
+   "image_sizes": [
+    [
+     908,
+     454
+    ],
+    [
+     604,
+     300
+    ]
+   ],
+   "image_tokens_est": 792,
+   "user_prompt_chars": 2740,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_race_r5",
+   "mode": "base",
+   "task": "race",
+   "rep": 5,
+   "input_tokens": 266463,
+   "output_tokens": 8179,
+   "api_cost_usd": 0.438,
+   "requests": 9,
+   "max_request_input": 35242,
+   "seconds": 86,
+   "tool_calls": 8,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "execute_blender_code",
+    "look",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 410,
+   "images": 2,
+   "image_sizes": [
+    [
+     644,
+     644
+    ],
+    [
+     908,
+     454
+    ]
+   ],
+   "image_tokens_est": 1103,
+   "user_prompt_chars": 3836,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_red_r1",
+   "mode": "base",
+   "task": "red",
+   "rep": 1,
+   "input_tokens": 124982,
+   "output_tokens": 1165,
+   "api_cost_usd": 0.2052,
+   "requests": 5,
+   "max_request_input": 27011,
+   "seconds": 19,
+   "tool_calls": 5,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 996,
+   "images": 1,
+   "image_sizes": [
+    [
+     640,
+     360
+    ]
+   ],
+   "image_tokens_est": 307,
+   "user_prompt_chars": 368,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "All four chairs now have a new red material and look correctly red through the camera; nothing else in the scene was changed.",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_red_r2",
+   "mode": "base",
+   "task": "red",
+   "rep": 2,
+   "input_tokens": 124064,
+   "output_tokens": 910,
+   "api_cost_usd": 0.1954,
+   "requests": 5,
+   "max_request_input": 26437,
+   "seconds": 18,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 794,
+   "images": 1,
+   "image_sizes": [
+    [
+     640,
+     360
+    ]
+   ],
+   "image_tokens_est": 307,
+   "user_prompt_chars": 276,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "All four chairs now use a new red material, and the camera view shows them clearly red.",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_red_r3",
+   "mode": "base",
+   "task": "red",
+   "rep": 3,
+   "input_tokens": 124866,
+   "output_tokens": 1099,
+   "api_cost_usd": 0.2032,
+   "requests": 5,
+   "max_request_input": 26936,
+   "seconds": 19,
+   "tool_calls": 5,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 996,
+   "images": 1,
+   "image_sizes": [
+    [
+     640,
+     360
+    ]
+   ],
+   "image_tokens_est": 307,
+   "user_prompt_chars": 368,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "All four chairs now use a new red material, and in the camera view they all show up red with nothing else changed (the pink rug was already that colour).",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_red_r4",
+   "mode": "base",
+   "task": "red",
+   "rep": 4,
+   "input_tokens": 124533,
+   "output_tokens": 845,
+   "api_cost_usd": 0.1955,
+   "requests": 5,
+   "max_request_input": 26597,
+   "seconds": 16,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 996,
+   "images": 1,
+   "image_sizes": [
+    [
+     640,
+     360
+    ]
+   ],
+   "image_tokens_est": 307,
+   "user_prompt_chars": 276,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "All four chairs are red now, and they look right through the camera.",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_red_r5",
+   "mode": "base",
+   "task": "red",
+   "rep": 5,
+   "input_tokens": 124802,
+   "output_tokens": 972,
+   "api_cost_usd": 0.1991,
+   "requests": 5,
+   "max_request_input": 26733,
+   "seconds": 19,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 996,
+   "images": 1,
+   "image_sizes": [
+    [
+     640,
+     360
+    ]
+   ],
+   "image_tokens_est": 307,
+   "user_prompt_chars": 276,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "All four chairs now use a new red material, and the camera view shows them all red.",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_sides_r1",
+   "mode": "base",
+   "task": "sides",
+   "rep": 1,
+   "input_tokens": 161266,
+   "output_tokens": 2406,
+   "api_cost_usd": 0.2722,
+   "requests": 6,
+   "max_request_input": 31490,
+   "seconds": 37,
+   "tool_calls": 5,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "look",
+    "look",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 1028,
+   "images": 2,
+   "image_sizes": [
+    [
+     1028,
+     1028
+    ],
+    [
+     1028,
+     1028
+    ]
+   ],
+   "image_tokens_est": 2818,
+   "user_prompt_chars": 544,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "No side shows all four chairs. Each chair sits straight out from the middle of one side of the table, so the chair on the far side always hides behind the near chair and the table. I checked this with the four renders and with ray casts from each direction.\n\n- **Front:** No. Chair 2 (the far one) is hidden behind Chair 1. At most a sliver of it shows.\n- **Back:** No. Chair 1 is hidden behind Chair",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_sides_r2",
+   "mode": "base",
+   "task": "sides",
+   "rep": 2,
+   "input_tokens": 99733,
+   "output_tokens": 1066,
+   "api_cost_usd": 0.1983,
+   "requests": 4,
+   "max_request_input": 27031,
+   "seconds": 21,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "look"
+   ],
+   "max_text_result_chars": 856,
+   "images": 1,
+   "image_sizes": [
+    [
+     772,
+     772
+    ]
+   ],
+   "image_tokens_est": 795,
+   "user_prompt_chars": 328,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "Here's what each view shows. I framed the table and chairs from each side in solid shading.\n\n- **Front:** No. Only 3 chairs show, because the far chair (Chair 2) is hidden behind the near chair (Chair 1) and the table.\n- **Back:** No. No chairs show, because the back wall is between the viewpoint and the table.\n- **Left:** No. Only 3 chairs show, because the far chair (Chair 4) is hidden behind th",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_sides_r3",
+   "mode": "base",
+   "task": "sides",
+   "rep": 3,
+   "input_tokens": 99662,
+   "output_tokens": 847,
+   "api_cost_usd": 0.1934,
+   "requests": 4,
+   "max_request_input": 26970,
+   "seconds": 19,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "look"
+   ],
+   "max_text_result_chars": 856,
+   "images": 1,
+   "image_sizes": [
+    [
+     772,
+     772
+    ]
+   ],
+   "image_tokens_est": 795,
+   "user_prompt_chars": 272,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "Here's what each side shows:\n\n- **Front:** No. Only 3 chairs show, because the chair at the far side is hidden directly behind the near chair.\n- **Back:** No. None of the chairs show, because the back wall blocks the view completely.\n- **Left:** No. Only 3 chairs show, because the far chair is hidden behind the near one.\n- **Right:** No. Only 3 chairs show, because the far chair is hidden behind t",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_sides_r4",
+   "mode": "base",
+   "task": "sides",
+   "rep": 4,
+   "input_tokens": 99689,
+   "output_tokens": 947,
+   "api_cost_usd": 0.1956,
+   "requests": 4,
+   "max_request_input": 26997,
+   "seconds": 20,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "look"
+   ],
+   "max_text_result_chars": 856,
+   "images": 1,
+   "image_sizes": [
+    [
+     772,
+     772
+    ]
+   ],
+   "image_tokens_est": 795,
+   "user_prompt_chars": 272,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "Here's what each view shows:\n\n- **Front:** No. Only 3 chairs show, because the near chair (Chair 1) hides Chair 2 on the far side.\n- **Back:** No. None of the chairs show, because the back wall blocks the view completely.\n- **Left:** No. Only 3 chairs show, because Chair 3 in front hides Chair 4 on the far side.\n- **Right:** No. Only 3 chairs show, because Chair 4 in front hides Chair 3 on the far",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_sides_r5",
+   "mode": "base",
+   "task": "sides",
+   "rep": 5,
+   "input_tokens": 100240,
+   "output_tokens": 949,
+   "api_cost_usd": 0.2001,
+   "requests": 4,
+   "max_request_input": 27548,
+   "seconds": 18,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "look"
+   ],
+   "max_text_result_chars": 856,
+   "images": 1,
+   "image_sizes": [
+    [
+     1028,
+     1028
+    ]
+   ],
+   "image_tokens_est": 1409,
+   "user_prompt_chars": 272,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "For every side, one chair is completely hidden behind the chair closest to the camera. They're lined up across the table and are the same height.\n\n- **Front:** No, only 3 are visible. Chair 2 is hidden behind Chair 1.\n- **Back:** No, only 3 are visible. Chair 1 is hidden behind Chair 2.\n- **Left:** No, only 3 are visible. Chair 4 is hidden behind Chair 3.\n- **Right:** No, only 3 are visible. Chair",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_verts_r1",
+   "mode": "base",
+   "task": "verts",
+   "rep": 1,
+   "input_tokens": 91508,
+   "output_tokens": 959,
+   "api_cost_usd": 0.1697,
+   "requests": 4,
+   "max_request_input": 23854,
+   "seconds": 21,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "execute_blender_code",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 1508,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 278,
+   "refused_too_large": true,
+   "tool_errors": 0,
+   "answer": "I printed all 19,042 vertices of BigMesh in world space. The output was too big to show here, so the tool saved it in full to `C:\\Users\\USER\\.claude\\projects\\C--Users-USER-Downloads-mcp-diet-blender-runs-base-verts-r1\\fc967608-7e9a-40f1-8d91-143f862556c2\\tool-results\\mcp-blender-execute_blender_code-1792664509474.txt`.\n\ndone",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_verts_r2",
+   "mode": "base",
+   "task": "verts",
+   "rep": 2,
+   "input_tokens": 91694,
+   "output_tokens": 872,
+   "api_cost_usd": 0.1694,
+   "requests": 4,
+   "max_request_input": 24027,
+   "seconds": 21,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "execute_blender_code",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 1508,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 278,
+   "refused_too_large": true,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "base_verts_r3",
+   "mode": "base",
+   "task": "verts",
+   "rep": 3,
+   "input_tokens": 91514,
+   "output_tokens": 1143,
+   "api_cost_usd": 0.1734,
+   "requests": 4,
+   "max_request_input": 23859,
+   "seconds": 22,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "execute_blender_code",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 201,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 222,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_build_r1",
+   "mode": "diet",
+   "task": "build",
+   "rep": 1,
+   "input_tokens": 122905,
+   "output_tokens": 2347,
+   "api_cost_usd": 0.2276,
+   "requests": 5,
+   "max_request_input": 26905,
+   "seconds": 30,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 342,
+   "images": 1,
+   "image_sizes": [
+    [
+     516,
+     256
+    ]
+   ],
+   "image_tokens_est": 176,
+   "user_prompt_chars": 732,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_build_r2",
+   "mode": "diet",
+   "task": "build",
+   "rep": 2,
+   "input_tokens": 117615,
+   "output_tokens": 2138,
+   "api_cost_usd": 0.2099,
+   "requests": 5,
+   "max_request_input": 25313,
+   "seconds": 50,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 233,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 732,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_build_r3",
+   "mode": "diet",
+   "task": "build",
+   "rep": 3,
+   "input_tokens": 122835,
+   "output_tokens": 2274,
+   "api_cost_usd": 0.2255,
+   "requests": 5,
+   "max_request_input": 26832,
+   "seconds": 30,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 342,
+   "images": 1,
+   "image_sizes": [
+    [
+     516,
+     256
+    ]
+   ],
+   "image_tokens_est": 176,
+   "user_prompt_chars": 732,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_build_r4",
+   "mode": "diet",
+   "task": "build",
+   "rep": 4,
+   "input_tokens": 92364,
+   "output_tokens": 2101,
+   "api_cost_usd": 0.2007,
+   "requests": 4,
+   "max_request_input": 24869,
+   "seconds": 40,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 233,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 488,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_build_r5",
+   "mode": "diet",
+   "task": "build",
+   "rep": 5,
+   "input_tokens": 91980,
+   "output_tokens": 1822,
+   "api_cost_usd": 0.192,
+   "requests": 4,
+   "max_request_input": 24485,
+   "seconds": 52,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 233,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 488,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_infoL_r1",
+   "mode": "diet",
+   "task": "infoL",
+   "rep": 1,
+   "input_tokens": 92535,
+   "output_tokens": 1113,
+   "api_cost_usd": 0.1785,
+   "requests": 4,
+   "max_request_input": 24562,
+   "seconds": 34,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "get_scene_info",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 2157,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 196,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a procedural city block.\n\n- **Contents:** 580 objects in total. There is a 200×200 m ground plane, about 577 box-shaped buildings, one camera and one light called \"Sun\". I only listed the first 20 objects; the rest are all named like \"Building XX-YY\", so I'm assuming they're buildings too.\n- **Buildings:** They sit on a grid 8 m apart, starting at (-92, -92). Each is about 4–7 m wide ",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_infoL_r2",
+   "mode": "diet",
+   "task": "infoL",
+   "rep": 2,
+   "input_tokens": 92277,
+   "output_tokens": 798,
+   "api_cost_usd": 0.1702,
+   "requests": 4,
+   "max_request_input": 24304,
+   "seconds": 18,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 2157,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 196,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a procedural city block with 580 objects:\n- **Ground**: a 200×200 m plane at the origin.\n- **577 other meshes**: the 20 I listed are all boxy buildings named `Building XX-YY`, placed on an 8 m grid from about −92 to +92 in X and Y. They range from about 8 m to 56 m tall. I'm assuming the rest are buildings too, but I only listed those 20.\n- **Sun**: one sun light, currently the active",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_infoL_r3",
+   "mode": "diet",
+   "task": "infoL",
+   "rep": 3,
+   "input_tokens": 117897,
+   "output_tokens": 1027,
+   "api_cost_usd": 0.186,
+   "requests": 5,
+   "max_request_input": 25095,
+   "seconds": 31,
+   "tool_calls": 5,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "get_scene_info",
+    "get_scene_info",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 2347,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 196,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene (`work.blend`, Eevee, 1280×720) is a simple city block layout:\n\n- **Ground:** a flat 200×200 m plane centered at the origin.\n- **Buildings:** 576 plain box meshes named \"Building XX-YY\", laid out on a 24×24 grid with 8 m spacing, from about (-92, -92) to (92, 92). They're roughly 4–7 m wide and about 8–56 m tall.\n- **One more mesh:** the scene has 578 meshes, so one isn't a building or t",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_infoL_r4",
+   "mode": "diet",
+   "task": "infoL",
+   "rep": 4,
+   "input_tokens": 92542,
+   "output_tokens": 1042,
+   "api_cost_usd": 0.1772,
+   "requests": 4,
+   "max_request_input": 24569,
+   "seconds": 22,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "get_scene_info",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 2157,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 196,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "It's a city-block scene, rendered with EEVEE at 1280×720:\n\n- **Ground:** a flat 200×200 plane centred at the origin.\n- **Buildings:** 578 meshes in total. The 19 objects I listed (Ground aside) are box-shaped buildings named like \"Building 00-00\", set 8 units apart starting at (-92, -92). They're about 4–7 units wide and 8–56 tall. The other ~558 objects probably follow the same grid, but I didn't",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_infoL_r5",
+   "mode": "diet",
+   "task": "infoL",
+   "rep": 5,
+   "input_tokens": 92605,
+   "output_tokens": 898,
+   "api_cost_usd": 0.1748,
+   "requests": 4,
+   "max_request_input": 24632,
+   "seconds": 17,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "get_scene_info",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 2157,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 294,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a procedural city block with 580 objects:\n- **Ground:** a 200 × 200 m plane at the origin.\n- **578 meshes:** the Ground plus objects named `Building XX-YY`. They are boxes set on a grid 8 m apart, about 4–7 m wide and 8–56 m tall. I only looked at the first 20 objects, so I haven't checked that all of the rest are buildings.\n- **1 Sun light** at (4, −4, 8), strength 1.0, pointing stra",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_infoS_r1",
+   "mode": "diet",
+   "task": "infoS",
+   "rep": 1,
+   "input_tokens": 67418,
+   "output_tokens": 581,
+   "api_cost_usd": 0.1541,
+   "requests": 3,
+   "max_request_input": 23436,
+   "seconds": 14,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 1281,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 98,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a small room with a dining set: a floor (8×8 m), a back wall, a rug, a table with four chairs around it (one on each side), a sofa and a shelf. It has 10 meshes in total.\n\nThere are two lights: a ceiling lamp at 2.6 m above the table and a sun at (4, −4, 8).\n\nThe camera is at **(5.5, −5.5, 3.2)**, in front of the room and to the right, about 3.2 m up. It is rotated (71°, 0°, 45°), so ",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_infoS_r2",
+   "mode": "diet",
+   "task": "infoS",
+   "rep": 2,
+   "input_tokens": 67418,
+   "output_tokens": 677,
+   "api_cost_usd": 0.156,
+   "requests": 3,
+   "max_request_input": 23436,
+   "seconds": 22,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 1281,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 98,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a furnished room with 10 meshes, 2 lights and 1 camera:\n\n- **Room:** an 8×8 m floor, a back wall 3 m tall and a 3.2×2.4 m rug.\n- **Furniture:** a table (1.6×0.9 m) with four chairs around it, one on each side and all facing it, plus a sofa (2.2 m wide) and a shelf (2 m tall).\n- **Lights:** a ceiling lamp at 2.6 m height and a sun at (4, -4, 8).\n- **Camera:** at (5.5, -5.5, 3.2), rotat",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_infoS_r3",
+   "mode": "diet",
+   "task": "infoS",
+   "rep": 3,
+   "input_tokens": 67418,
+   "output_tokens": 612,
+   "api_cost_usd": 0.1547,
+   "requests": 3,
+   "max_request_input": 23436,
+   "seconds": 15,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 1281,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 98,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a small furnished room:\n- **Room:** an 8×8 m floor, a back wall 3 m tall, and a 3.2×2.4 m rug.\n- **Furniture:** a dining table (1.6×0.9 m) with 4 chairs facing it from each side, a sofa (2.2 m wide) and a 2 m tall shelf.\n- **Lights:** a ceiling lamp at (0, 0, 2.6) and a sun at (4, −4, 8).\n- **Camera:** at **(5.5, −5.5, 3.2)**, rotated (71°, 0°, 45°). That puts it in the front-right co",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_infoS_r4",
+   "mode": "diet",
+   "task": "infoS",
+   "rep": 4,
+   "input_tokens": 67418,
+   "output_tokens": 560,
+   "api_cost_usd": 0.1537,
+   "requests": 3,
+   "max_request_input": 23436,
+   "seconds": 13,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 1281,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 98,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a small furnished room with 13 objects:\n- **Room and furniture:** Floor (8×8 m), back wall, table, 4 chairs around the table (front, back, left and right), sofa, shelf and rug.\n- **Lights:** a ceiling lamp at (0, 0, 2.6) and a sun at (4, -4, 8).\n- **Camera:** at (5.5, -5.5, 3.2), about 3.2 m up in the front-right corner. It's tilted down (71° on X) and turned 45° on Z, so it looks dia",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_infoS_r5",
+   "mode": "diet",
+   "task": "infoS",
+   "rep": 5,
+   "input_tokens": 67418,
+   "output_tokens": 603,
+   "api_cost_usd": 0.1545,
+   "requests": 3,
+   "max_request_input": 23436,
+   "seconds": 14,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info"
+   ],
+   "max_text_result_chars": 1281,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 98,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "The scene is a furnished room with 13 objects:\n\n- **Room:** an 8×8 m floor, a back wall 3 m tall and a 3.2×2.4 m rug.\n- **Furniture:** a table with four chairs around it (one on each side), a sofa and a 2 m shelf.\n- **Lights:** a ceiling lamp at 2.6 m and a sun light at (4, -4, 8).\n- **Camera:** it's at **(5.5, -5.5, 3.2)**, rotated (71°, 0°, 45°). That puts it at the front-right corner, looking d",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_props_r4",
+   "mode": "diet",
+   "task": "props",
+   "rep": 4,
+   "input_tokens": 67871,
+   "output_tokens": 772,
+   "api_cost_usd": 0.1643,
+   "requests": 3,
+   "max_request_input": 24246,
+   "seconds": 17,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 3112,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 239,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_props_r5",
+   "mode": "diet",
+   "task": "props",
+   "rep": 5,
+   "input_tokens": 68177,
+   "output_tokens": 839,
+   "api_cost_usd": 0.1681,
+   "requests": 3,
+   "max_request_input": 24552,
+   "seconds": 19,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 3345,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 239,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_props_r6",
+   "mode": "diet",
+   "task": "props",
+   "rep": 6,
+   "input_tokens": 67846,
+   "output_tokens": 816,
+   "api_cost_usd": 0.165,
+   "requests": 3,
+   "max_request_input": 24221,
+   "seconds": 20,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 3040,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 239,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_race_r1",
+   "mode": "diet",
+   "task": "race",
+   "rep": 1,
+   "input_tokens": 340941,
+   "output_tokens": 10350,
+   "api_cost_usd": 0.5077,
+   "requests": 11,
+   "max_request_input": 36704,
+   "seconds": 111,
+   "tool_calls": 10,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "look",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 410,
+   "images": 3,
+   "image_sizes": [
+    [
+     516,
+     516
+    ],
+    [
+     518,
+     258
+    ],
+    [
+     516,
+     388
+    ]
+   ],
+   "image_tokens_est": 800,
+   "user_prompt_chars": 3288,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_race_r2",
+   "mode": "diet",
+   "task": "race",
+   "rep": 2,
+   "input_tokens": 225610,
+   "output_tokens": 8456,
+   "api_cost_usd": 0.4244,
+   "requests": 8,
+   "max_request_input": 33838,
+   "seconds": 84,
+   "tool_calls": 8,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "look"
+   ],
+   "max_text_result_chars": 410,
+   "images": 2,
+   "image_sizes": [
+    [
+     518,
+     258
+    ],
+    [
+     516,
+     256
+    ]
+   ],
+   "image_tokens_est": 354,
+   "user_prompt_chars": 3836,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_race_r3",
+   "mode": "diet",
+   "task": "race",
+   "rep": 3,
+   "input_tokens": 223762,
+   "output_tokens": 8012,
+   "api_cost_usd": 0.4125,
+   "requests": 8,
+   "max_request_input": 33499,
+   "seconds": 85,
+   "tool_calls": 7,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 410,
+   "images": 2,
+   "image_sizes": [
+    [
+     516,
+     516
+    ],
+    [
+     518,
+     258
+    ]
+   ],
+   "image_tokens_est": 533,
+   "user_prompt_chars": 3288,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_race_r4",
+   "mode": "diet",
+   "task": "race",
+   "rep": 4,
+   "input_tokens": 258507,
+   "output_tokens": 9031,
+   "api_cost_usd": 0.4474,
+   "requests": 9,
+   "max_request_input": 34466,
+   "seconds": 101,
+   "tool_calls": 9,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 410,
+   "images": 2,
+   "image_sizes": [
+    [
+     518,
+     258
+    ],
+    [
+     516,
+     256
+    ]
+   ],
+   "image_tokens_est": 354,
+   "user_prompt_chars": 4384,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_race_r5",
+   "mode": "diet",
+   "task": "race",
+   "rep": 5,
+   "input_tokens": 257503,
+   "output_tokens": 8502,
+   "api_cost_usd": 0.4334,
+   "requests": 9,
+   "max_request_input": 34062,
+   "seconds": 84,
+   "tool_calls": 9,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "execute_blender_code",
+    "look",
+    "look",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 410,
+   "images": 2,
+   "image_sizes": [
+    [
+     516,
+     388
+    ],
+    [
+     516,
+     256
+    ]
+   ],
+   "image_tokens_est": 443,
+   "user_prompt_chars": 4384,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_red_r1",
+   "mode": "diet",
+   "task": "red",
+   "rep": 1,
+   "input_tokens": 121011,
+   "output_tokens": 888,
+   "api_cost_usd": 0.1889,
+   "requests": 5,
+   "max_request_input": 25741,
+   "seconds": 21,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 785,
+   "images": 1,
+   "image_sizes": [
+    [
+     512,
+     288
+    ]
+   ],
+   "image_tokens_est": 197,
+   "user_prompt_chars": 276,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "All four chairs now use a new red material, and the camera view shows each of them red.",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_red_r2",
+   "mode": "diet",
+   "task": "red",
+   "rep": 2,
+   "input_tokens": 120244,
+   "output_tokens": 835,
+   "api_cost_usd": 0.1856,
+   "requests": 5,
+   "max_request_input": 25466,
+   "seconds": 20,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 502,
+   "images": 1,
+   "image_sizes": [
+    [
+     512,
+     288
+    ]
+   ],
+   "image_tokens_est": 197,
+   "user_prompt_chars": 276,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "All four chairs now use a new red material, and the camera view shows them all red; nothing else was changed.",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_red_r3",
+   "mode": "diet",
+   "task": "red",
+   "rep": 3,
+   "input_tokens": 121025,
+   "output_tokens": 935,
+   "api_cost_usd": 0.1899,
+   "requests": 5,
+   "max_request_input": 25749,
+   "seconds": 24,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 785,
+   "images": 1,
+   "image_sizes": [
+    [
+     512,
+     288
+    ]
+   ],
+   "image_tokens_est": 197,
+   "user_prompt_chars": 276,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "All four chairs now use a new red material, and the camera view shows each of them red.",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_red_r4",
+   "mode": "diet",
+   "task": "red",
+   "rep": 4,
+   "input_tokens": 120991,
+   "output_tokens": 867,
+   "api_cost_usd": 0.1885,
+   "requests": 5,
+   "max_request_input": 25742,
+   "seconds": 28,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 794,
+   "images": 1,
+   "image_sizes": [
+    [
+     512,
+     288
+    ]
+   ],
+   "image_tokens_est": 197,
+   "user_prompt_chars": 276,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "All four chairs now use a new red material, and the camera view shows them red with the rest of the scene unchanged.",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_red_r5",
+   "mode": "diet",
+   "task": "red",
+   "rep": 5,
+   "input_tokens": 120961,
+   "output_tokens": 854,
+   "api_cost_usd": 0.1881,
+   "requests": 5,
+   "max_request_input": 25718,
+   "seconds": 27,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 785,
+   "images": 1,
+   "image_sizes": [
+    [
+     512,
+     288
+    ]
+   ],
+   "image_tokens_est": 197,
+   "user_prompt_chars": 357,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "All four chairs are now red, and in the camera view all four look correct and nothing else changed colour.",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_sides_r1",
+   "mode": "diet",
+   "task": "sides",
+   "rep": 1,
+   "input_tokens": 120504,
+   "output_tokens": 926,
+   "api_cost_usd": 0.1907,
+   "requests": 5,
+   "max_request_input": 25890,
+   "seconds": 25,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "look",
+    "get_scene_info",
+    "look"
+   ],
+   "max_text_result_chars": 856,
+   "images": 2,
+   "image_sizes": [
+    [
+     516,
+     516
+    ],
+    [
+     516,
+     516
+    ]
+   ],
+   "image_tokens_est": 710,
+   "user_prompt_chars": 272,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "**None of the four sides shows all four chairs.**\n\n- **Front:** No. Three chairs show; the far-side chair (Chair 2) is hidden behind the near chair and the table.\n- **Back:** No. The back wall is between the camera and the table, so no chairs show at all.\n- **Left:** No. Three chairs show; the far-end chair (Chair 4) is hidden behind the near chair and the table.\n- **Right:** No. Three chairs show",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_sides_r2",
+   "mode": "diet",
+   "task": "sides",
+   "rep": 2,
+   "input_tokens": 151711,
+   "output_tokens": 1678,
+   "api_cost_usd": 0.2258,
+   "requests": 6,
+   "max_request_input": 27655,
+   "seconds": 26,
+   "tool_calls": 6,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "look",
+    "look",
+    "execute_blender_code",
+    "look"
+   ],
+   "max_text_result_chars": 856,
+   "images": 3,
+   "image_sizes": [
+    [
+     516,
+     516
+    ],
+    [
+     516,
+     516
+    ],
+    [
+     512,
+     512
+    ]
+   ],
+   "image_tokens_est": 1060,
+   "user_prompt_chars": 680,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "Not all four chairs are visible from any side. The chair nearest the camera blocks the one directly across the table from it:\n\n- **Front:** No. Chairs 1, 3 and 4 are visible, and Chair 2 is hidden behind Chair 1.\n- **Back:** No. Chairs 2, 3 and 4 are visible, and Chair 1 is hidden behind Chair 2.\n- **Left:** No. Chairs 3, 1 and 2 are visible, and Chair 4 is hidden behind Chair 3.\n- **Right:** No. ",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_sides_r3",
+   "mode": "diet",
+   "task": "sides",
+   "rep": 3,
+   "input_tokens": 95726,
+   "output_tokens": 1005,
+   "api_cost_usd": 0.185,
+   "requests": 4,
+   "max_request_input": 25583,
+   "seconds": 29,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "look"
+   ],
+   "max_text_result_chars": 856,
+   "images": 1,
+   "image_sizes": [
+    [
+     516,
+     516
+    ]
+   ],
+   "image_tokens_est": 355,
+   "user_prompt_chars": 272,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "Here's what each side shows, looking at the table and its chairs:\n\n- **Front:** No, only three. Chair 1 is nearest the camera and hides Chair 2 on the far side.\n- **Back:** No, none. The back wall stands between the camera and the table, so all you see is wall.\n- **Left:** No, only three. Chair 3 is nearest the camera and hides Chair 4 on the far side.\n- **Right:** No, only three. Chair 4 is neare",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_sides_r4",
+   "mode": "diet",
+   "task": "sides",
+   "rep": 4,
+   "input_tokens": 97279,
+   "output_tokens": 1040,
+   "api_cost_usd": 0.1918,
+   "requests": 4,
+   "max_request_input": 26326,
+   "seconds": 24,
+   "tool_calls": 4,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "look",
+    "look"
+   ],
+   "max_text_result_chars": 856,
+   "images": 2,
+   "image_sizes": [
+    [
+     516,
+     516
+    ],
+    [
+     516,
+     516
+    ]
+   ],
+   "image_tokens_est": 710,
+   "user_prompt_chars": 492,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "From the front, back, left and right, no side shows all four chairs:\n\n- **Front:** No. Three chairs show, and Chair 2 is hidden behind Chair 1 and the table.\n- **Back:** No. The back wall blocks the whole view, so none of the chairs show.\n- **Left:** No. Three chairs show, and Chair 4 is hidden behind Chair 3 and the table.\n- **Right:** No. Three chairs show, and Chair 3 is hidden behind Chair 4 a",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_sides_r5",
+   "mode": "diet",
+   "task": "sides",
+   "rep": 5,
+   "input_tokens": 95678,
+   "output_tokens": 918,
+   "api_cost_usd": 0.1828,
+   "requests": 4,
+   "max_request_input": 25535,
+   "seconds": 22,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "get_scene_info",
+    "look"
+   ],
+   "max_text_result_chars": 856,
+   "images": 1,
+   "image_sizes": [
+    [
+     516,
+     516
+    ]
+   ],
+   "image_tokens_est": 355,
+   "user_prompt_chars": 272,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "Only three of the four chairs show from the front, left and right. From the back the wall blocks the view completely.\n\n- **Front:** No. Three chairs show; the far chair (Chair 2) sits directly behind the near chair (Chair 1) and is hidden.\n- **Back:** No. The back wall is in the way, so no chairs or table are visible at all.\n- **Left:** No. Three chairs show; the far end chair is hidden behind the",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_verts_r4",
+   "mode": "diet",
+   "task": "verts",
+   "rep": 4,
+   "input_tokens": 67996,
+   "output_tokens": 391,
+   "api_cost_usd": 0.1581,
+   "requests": 3,
+   "max_request_input": 24425,
+   "seconds": 15,
+   "tool_calls": 2,
+   "calls": [
+    "ToolSearch",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 3394,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 139,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_verts_r5",
+   "mode": "diet",
+   "task": "verts",
+   "rep": 5,
+   "input_tokens": 90641,
+   "output_tokens": 601,
+   "api_cost_usd": 0.1692,
+   "requests": 4,
+   "max_request_input": 24733,
+   "seconds": 20,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "execute_blender_code",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 3419,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 278,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  },
+  {
+   "run": "diet_verts_r6",
+   "mode": "diet",
+   "task": "verts",
+   "rep": 6,
+   "input_tokens": 90624,
+   "output_tokens": 617,
+   "api_cost_usd": 0.1695,
+   "requests": 4,
+   "max_request_input": 24722,
+   "seconds": 21,
+   "tool_calls": 3,
+   "calls": [
+    "ToolSearch",
+    "execute_blender_code",
+    "execute_blender_code"
+   ],
+   "max_text_result_chars": 3419,
+   "images": 0,
+   "image_sizes": [],
+   "image_tokens_est": 0,
+   "user_prompt_chars": 278,
+   "refused_too_large": false,
+   "tool_errors": 0,
+   "answer": "done",
+   "is_error": false,
+   "passed_check": true
+  }
+ ]
+}

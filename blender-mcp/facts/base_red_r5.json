@@ -1,0 +1,180 @@
+{
+ "n_objects": 13,
+ "objects": {
+  "Floor": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.3,
+     0.3,
+     0.32
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 6
+  },
+  "Wall Back": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.85,
+     0.83,
+     0.78
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 6
+  },
+  "Table": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.45,
+     0.28,
+     0.15
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 30
+  },
+  "Chair 1": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.8,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 36
+  },
+  "Chair 2": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.8,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 36
+  },
+  "Chair 3": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.8,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 36
+  },
+  "Chair 4": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.8,
+     0.02,
+     0.02
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 36
+  },
+  "Sofa": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.2,
+     0.3,
+     0.5
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 6
+  },
+  "Shelf": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.45,
+     0.28,
+     0.15
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 6
+  },
+  "Rug": {
+   "type": "MESH",
+   "colors": [
+    [
+     0.6,
+     0.2,
+     0.2
+    ]
+   ],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 6
+  },
+  "Ceiling Lamp": {
+   "type": "LIGHT",
+   "colors": [],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 0
+  },
+  "Camera": {
+   "type": "CAMERA",
+   "colors": [],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 0
+  },
+  "Sun": {
+   "type": "LIGHT",
+   "colors": [],
+   "anim": false,
+   "constraints": [],
+   "parent": null,
+   "faces": 0
+  }
+ },
+ "camera": "Camera",
+ "camera_anim": false,
+ "frame_start": 1,
+ "frame_end": 250,
+ "fps": 24,
+ "engine": "BLENDER_EEVEE",
+ "res": [
+  1280,
+  720
+ ],
+ "animated_objects": []
+}
