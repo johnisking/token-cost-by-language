@@ -1,0 +1,148 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #1f2937;
+  background: #f3f4f6;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 20px;
+  background: #1f2937;
+  color: #fff;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+nav a {
+  margin-right: 12px;
+  padding: 4px 0;
+  color: #cbd5e1;
+  text-decoration: none;
+}
+
+nav a.active {
+  color: #fff;
+  border-bottom: 2px solid #60a5fa;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.view {
+  padding: 16px 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+.form,
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #4b5563;
+}
+
+input,
+select,
+button {
+  padding: 6px 8px;
+  font: inherit;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+}
+
+button {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+button.delete {
+  padding: 2px 8px;
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+.hint {
+  margin: -8px 0 16px;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.balance {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+th.sortable {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+tr.over {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+#message {
+  min-height: 1.2em;
+  margin: 0 0 12px;
+  color: #047857;
+}
+
+#message.error {
+  color: #b91c1c;
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-top: 16px;
+}

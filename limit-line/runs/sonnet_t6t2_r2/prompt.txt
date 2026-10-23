@@ -1,0 +1,6 @@
+The current folder is a checkout of marked, the Markdown parser (TypeScript sources in src/, tests in test/). A user reported the bug below. Find the cause in the source code and fix it in src/, without breaking any other behaviour. You do not need to add tests, and the folder has no node_modules, so do not try to install packages; you may still read the existing tests and specs. Change the files in place and finish.
+
+Bug report:
+"With GFM on, a bare URL after an image inside a link becomes a second link nested in the first. The Markdown
+[![logo](logo.png) www.example.com](https://target.example)
+renders as <p><a href="https://target.example"><img src="logo.png" alt="logo"> <a href="http://www.example.com">www.example.com</a></a></p>. Links must not contain other links: the text after the image should stay plain text inside the outer link, <p><a href="https://target.example"><img src="logo.png" alt="logo"> www.example.com</a></p>. The same happens with https:// URLs, email addresses and reference-style links and images."

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Budget</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Budget</h1>
+    <nav>
+      <a id="nav-transactions" href="#/transactions">Transactions</a>
+      <a id="nav-budgets" href="#/budgets">Budgets</a>
+      <a id="nav-reports" href="#/reports">Reports</a>
+    </nav>
+  </header>
+
+  <main>
+    <section id="view-transactions">
+      <p class="balance">Balance: <strong id="balance">0.00</strong></p>
+      <div class="form">
+        <input id="date" type="date" aria-label="Date">
+        <input id="description" type="text" placeholder="Description" aria-label="Description">
+        <input id="amount" type="number" step="0.01" placeholder="Amount" aria-label="Amount">
+        <input id="category" type="text" placeholder="Category" aria-label="Category">
+        <select id="repeat" aria-label="Repeat">
+          <option value="none">none</option>
+          <option value="week">week</option>
+          <option value="month">month</option>
+        </select>
+        <input id="until" type="date" aria-label="Repeat until">
+        <button id="add" type="button">Add</button>
+      </div>
+      <div class="form">
+        <input id="search" type="search" placeholder="Search description" aria-label="Search">
+        <button id="undo" type="button">Undo</button>
+        <button id="redo" type="button">Redo</button>
+        <label class="file">Import CSV <input id="import" type="file" accept=".csv,text/csv"></label>
+        <button id="export" type="button">Export CSV</button>
+      </div>
+      <table class="head">
+        <colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"></colgroup>
+        <tr><th>Date</th><th>Description</th><th id="sort-amount" class="sortable" title="Sort by amount, highest first">Amount (sort)</th><th>Category</th><th></th></tr>
+      </table>
+      <table id="list">
+        <colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"><col class="c5"></colgroup>
+        <tbody id="list-body"></tbody>
+      </table>
+    </section>
+
+    <section id="view-budgets" hidden>
+      <div class="form">
+        <input id="budget-category" type="text" placeholder="Category" aria-label="Budget category">
+        <input id="budget-limit" type="number" step="0.01" min="0" placeholder="Limit" aria-label="Budget limit">
+        <button id="budget-add" type="button">Add budget</button>
+        <label>Month <input id="budget-month" type="month"></label>
+      </div>
+      <table class="head">
+        <colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"></colgroup>
+        <tr><th>Category</th><th>Limit</th><th>Spent</th><th></th></tr>
+      </table>
+      <table id="budgets">
+        <colgroup><col class="c1"><col class="c2"><col class="c3"><col class="c4"></colgroup>
+        <tbody id="budgets-body"></tbody>
+      </table>
+    </section>
+
+    <section id="view-reports" hidden>
+      <div class="form">
+        <label>Month <input id="report-month" type="month"></label>
+      </div>
+      <table class="head">
+        <colgroup><col class="r1"><col class="r2"></colgroup>
+        <tr><th>Category</th><th>Total</th></tr>
+      </table>
+      <table id="report">
+        <colgroup><col class="r1"><col class="r2"></colgroup>
+        <tbody id="report-body"></tbody>
+      </table>
+      <canvas id="chart" width="640" height="300" aria-label="Expenses by category"></canvas>
+    </section>
+  </main>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

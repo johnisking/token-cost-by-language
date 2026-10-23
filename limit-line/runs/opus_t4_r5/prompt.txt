@@ -1,0 +1,20 @@
+Build a budget web app in the current folder, split into several files: index.html, styles.css, and JavaScript ES modules in a js/ folder. It must run when the folder is served by any static web server, with no build step and no external libraries. Dates are strings in the form YYYY-MM-DD. Requirements:
+
+Modules (other code may import them; tests will call them directly):
+1. js/csv.js exports parseCSV(text) and toCSV(items). Header row: date,description,amount,category. Fields may be quoted with double quotes and may contain commas, doubled quotes ("") and line breaks; both \n and \r\n line endings must work. parseCSV returns objects {date, description, amount, category} with amount as a number.
+2. js/summary.js exports summarize(items, range). range is optional {from, to} (inclusive dates); only items inside the range count. It returns {income, expense, balance, byCategory}: income is the sum of positive amounts, expense the sum of negative amounts as a positive number, balance = income - expense, byCategory maps each category to the sum of its amounts.
+3. js/recurring.js exports expandRecurring(rule, until). rule is {date, description, amount, category, every} with every "week" or "month". It returns one item per occurrence from rule.date up to and including until, without the every field. Monthly rules keep the day of month, or use the last day of the month when that day does not exist (a rule starting 2026-01-31 gives 2026-02-28, 2026-03-31, 2026-04-30).
+4. js/budget.js exports checkBudgets(items, budgets, month). budgets is an array of {category, limit} (limit is a positive number) and month is "YYYY-MM". It returns one entry per budget, in the same order: {category, limit, spent, over}, where spent is the expense of that category in that month as a positive number and over is true when spent > limit.
+5. js/history.js exports createHistory(initial), returning an object with state(), push(newState), undo(), redo(), canUndo() and canRedo(). push after an undo drops the redo steps. Keep at most 50 undo steps.
+
+Page:
+6. Three views switched by the URL hash: #/transactions (the default), #/budgets and #/reports, in elements with the ids #view-transactions, #view-budgets and #view-reports. Only the active view is visible. Links with the ids #nav-transactions, #nav-budgets and #nav-reports switch views.
+7. Transactions view: inputs #date, #description, #amount, #category, a select #repeat with the options none, week and month, an input #until, and a button #add. With repeat set to week or month, #add adds every occurrence up to #until. Transactions are listed as rows of a table with the id #list; each row has a delete button with the class "delete".
+8. Show the balance of all transactions in #balance with two decimals (for example 1234.50).
+9. An input #search filters the rows to those whose description contains the text, ignoring case. Clicking the header cell with the id #sort-amount sorts the rows by amount from highest to lowest.
+10. Buttons #undo and #redo undo and redo adding and deleting transactions.
+11. A file input #import adds the rows of a CSV file, and a button #export downloads all transactions as CSV.
+12. Budgets view: inputs #budget-category and #budget-limit and a button #budget-add add a budget; an input #budget-month (type month) picks the month. Each budget is a row in a table with the id #budgets that shows the category, the limit and the amount spent in that month; rows of budgets that are over their limit get the class "over".
+13. Reports view: an input #report-month (type month) and a table #report with one row per category, showing that category's total for the month with two decimals. A canvas #chart draws one bar per expense category of that month.
+14. Transactions and budgets are saved in localStorage and are still there after the page is reloaded.
+Write the files and finish.

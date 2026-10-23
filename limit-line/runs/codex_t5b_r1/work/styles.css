@@ -1,0 +1,23 @@
+* { box-sizing: border-box; }
+body { margin: 0; background: #f4f6f8; color: #202832; font: 14px/1.4 system-ui, sans-serif; }
+.sheet-app { max-width: 1180px; margin: 28px auto; padding: 0 18px; }
+.toolbar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+h1 { font-size: 20px; margin: 0; font-weight: 650; }
+.actions { display: flex; gap: 8px; }
+button { border: 1px solid #c8d0d9; border-radius: 5px; background: white; padding: 7px 12px; color: #263342; cursor: pointer; }
+button:hover { background: #edf3f9; border-color: #91a7bc; }
+.formula-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+#name-box { width: 58px; padding: 7px 8px; border: 1px solid #c8d0d9; border-radius: 4px; background: #fff; text-align: center; font-weight: 600; }
+#formula { min-width: 0; flex: 1; border: 1px solid #aab8c6; border-radius: 4px; padding: 7px 9px; font: inherit; }
+.hint { color: #73808d; font-size: 12px; white-space: nowrap; }
+.grid-wrap { overflow: auto; max-height: calc(100vh - 150px); border: 1px solid #c5ced7; background: white; }
+#grid { border-collapse: collapse; table-layout: fixed; min-width: 100%; }
+#grid th, #grid td { height: 29px; border-right: 1px solid #e0e5ea; border-bottom: 1px solid #e0e5ea; padding: 4px 7px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+#grid th { position: sticky; top: 0; z-index: 2; background: #edf1f5; color: #536170; font-weight: 600; text-align: center; }
+#grid th:first-child { left: 0; z-index: 3; width: 46px; }
+#grid th:not(:first-child) { min-width: 105px; }
+#grid tbody th { position: sticky; left: 0; z-index: 1; background: #f4f6f8; font-weight: 500; text-align: right; }
+#grid td { cursor: cell; }
+#grid td:hover { background: #f6faff; }
+#grid td.selected { outline: 2px solid #2878d0; outline-offset: -2px; background: #f4f9ff; }
+@media (max-width: 640px) { .sheet-app { margin: 14px auto; padding: 0 10px; } .toolbar { align-items: flex-start; flex-direction: column; } .actions { flex-wrap: wrap; } .hint { display: none; } }

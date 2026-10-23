@@ -1,0 +1,2 @@
+[agy] print timeout after 30m0s with turn in progress; returning partial output
+{"conversation_id":"2ccff879-4c5c-475b-8b08-080bac07a623","status":"SUCCESS","response":"","duration_seconds":1788.4612269,"num_turns":1,"usage":{"input_tokens":269879,"output_tokens":109542,"thinking_tokens":102225,"cache_read_tokens":7525027,"total_tokens":379421}}

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Budget — Money, made clear</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#/transactions" aria-label="Budget home"><span class="brand-mark">B</span><span>pocket<span class="brand-light">wise</span></span></a>
+    <nav aria-label="Main navigation">
+      <a id="nav-transactions" href="#/transactions">Transactions</a>
+      <a id="nav-budgets" href="#/budgets">Budgets</a>
+      <a id="nav-reports" href="#/reports">Reports</a>
+    </nav>
+    <span class="top-note"><span class="status-dot"></span> Your finances, in focus</span>
+  </header>
+
+  <main>
+    <section id="view-transactions" class="view">
+      <div class="page-heading"><div><p class="eyebrow">YOUR MONEY, AT A GLANCE</p><h1>Transactions</h1><p class="subheading">Keep track of every little thing.</p></div>
+        <div class="balance-card"><span>Current balance</span><strong id="balance">0.00</strong><i>Across all transactions</i></div>
+      </div>
+      <div class="panel add-panel">
+        <div class="section-title"><div><span class="icon-badge">＋</span><h2>Add a transaction</h2></div><span class="muted">Fields marked with * are required</span></div>
+        <form id="transaction-form" class="form-grid">
+          <label>Date *<input id="date" type="date" required></label>
+          <label>Description *<input id="description" type="text" placeholder="e.g. Weekly groceries" required></label>
+          <label>Amount *<div class="input-prefix"><span>$</span><input id="amount" type="number" step="0.01" placeholder="0.00" required></div></label>
+          <label>Category<select id="category"><option>Uncategorized</option><option>Food & dining</option><option>Transport</option><option>Housing</option><option>Shopping</option><option>Health</option><option>Income</option><option>Entertainment</option><option>Utilities</option></select></label>
+          <label>Repeat<select id="repeat"><option value="none">Does not repeat</option><option value="week">Every week</option><option value="month">Every month</option></select></label>
+          <label id="until-wrap" class="until-wrap">Repeat until<input id="until" type="date"></label>
+          <button id="add" class="button primary add-button" type="submit">Add transaction <span>→</span></button>
+        </form>
+      </div>
+      <div class="panel list-panel">
+        <div class="section-title list-title"><div><span class="icon-badge pale">↕</span><h2>All transactions</h2><span id="transaction-count" class="count-pill">0</span></div>
+          <div class="list-tools"><label class="search-box"><span>⌕</span><input id="search" type="search" placeholder="Search transactions…"></label><button id="undo" class="button subtle" type="button" title="Undo">↶ <span>Undo</span></button><button id="redo" class="button subtle" type="button" title="Redo">↷ <span>Redo</span></button><button id="export" class="button outline" type="button">↓ Export</button><label class="button outline file-button">↑ Import<input id="import" type="file" accept=".csv,text/csv"></label></div>
+        </div>
+        <div class="table-scroll"><table><thead><tr><th>Date</th><th>Description</th><th>Category</th><th id="sort-amount" class="sortable" tabindex="0" role="button">Amount <span>↕</span></th><th><span class="sr-only">Actions</span></th></tr></thead><tbody id="list"></tbody></table></div>
+        <p id="empty-state" class="empty-state">No transactions yet. Add one above to get started.</p>
+      </div>
+    </section>
+
+    <section id="view-budgets" class="view" hidden>
+      <div class="page-heading"><div><p class="eyebrow">MAKE EVERY DOLLAR COUNT</p><h1>Budgets</h1><p class="subheading">Set a monthly limit and stay on track.</p></div></div>
+      <div class="panel add-panel"><div class="section-title"><div><span class="icon-badge">＋</span><h2>Create a budget</h2></div></div>
+        <form id="budget-form" class="budget-form"><label>Category<input id="budget-category" type="text" placeholder="e.g. Food & dining" required></label><label>Monthly limit<div class="input-prefix"><span>$</span><input id="budget-limit" type="number" min="0.01" step="0.01" placeholder="0.00" required></div></label><label>Month<input id="budget-month" type="month"></label><button id="budget-add" class="button primary" type="submit">Add budget <span>→</span></button></form>
+      </div>
+      <div class="panel list-panel"><div class="section-title"><div><span class="icon-badge pale">◎</span><h2>Monthly budgets</h2></div></div>
+        <div class="table-scroll"><table><thead><tr><th>Category</th><th>Monthly limit</th><th>Spent this month</th><th>Status</th></tr></thead><tbody id="budgets"></tbody></table></div><p id="budgets-empty" class="empty-state">No budgets yet. Add a category limit above.</p>
+      </div>
+    </section>
+
+    <section id="view-reports" class="view" hidden>
+      <div class="page-heading"><div><p class="eyebrow">THE BIGGER PICTURE</p><h1>Reports</h1><p class="subheading">See where your money goes.</p></div><label class="month-picker">Reporting month<input id="report-month" type="month"></label></div>
+      <div class="report-grid"><div class="panel report-panel"><div class="section-title"><div><span class="icon-badge pale">▤</span><h2>Category breakdown</h2></div></div><div class="table-scroll"><table><thead><tr><th>Category</th><th>Total</th></tr></thead><tbody id="report"></tbody></table></div><p id="report-empty" class="empty-state">No transactions for this month.</p></div>
+        <div class="panel chart-panel"><div class="section-title"><div><span class="icon-badge pale">▥</span><h2>Expenses</h2></div></div><canvas id="chart" aria-label="Expenses by category chart"></canvas><p class="chart-caption">Spending by category</p></div></div>
+    </section>
+  </main>
+  <footer><span>pocketwise</span><span>Small steps add up.</span></footer>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

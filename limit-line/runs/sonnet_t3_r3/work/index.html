@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Expense Tracker</h1>
+    <p class="balance">Balance: <strong id="balance">0.00</strong></p>
+
+    <form id="form" onsubmit="return false">
+      <input id="date" type="date" aria-label="Date">
+      <input id="description" type="text" placeholder="Description" aria-label="Description">
+      <input id="amount" type="number" step="0.01" placeholder="Amount (negative = expense)" aria-label="Amount">
+      <input id="category" type="text" placeholder="Category" aria-label="Category">
+      <button id="add" type="button">Add</button>
+    </form>
+
+    <div class="toolbar">
+      <label>Filter <select id="filter"><option value="All">All</option></select></label>
+      <label>Import CSV <input id="import" type="file" accept=".csv,text/csv"></label>
+      <button id="export" type="button">Export CSV</button>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Date</th><th>Description</th><th>Amount</th><th>Category</th><th></th></tr>
+      </thead>
+      <tbody id="list"></tbody>
+    </table>
+
+    <h2>Expenses by category</h2>
+    <canvas id="chart" width="600" height="300"></canvas>
+  </main>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

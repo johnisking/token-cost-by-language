@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Budget Tracker</h1>
+    <nav class="nav-links">
+      <a id="nav-transactions" href="#/transactions">Transactions</a>
+      <a id="nav-budgets" href="#/budgets">Budgets</a>
+      <a id="nav-reports" href="#/reports">Reports</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <!-- Transactions View -->
+    <section id="view-transactions">
+      <div class="balance-card">
+        <span>Total Balance:</span>
+        <strong id="balance">0.00</strong>
+      </div>
+
+      <div class="form-card">
+        <h2>Add Transaction</h2>
+        <div class="form-grid">
+          <label>
+            Date
+            <input type="date" id="date" placeholder="YYYY-MM-DD">
+          </label>
+          <label>
+            Description
+            <input type="text" id="description" placeholder="Description">
+          </label>
+          <label>
+            Amount
+            <input type="number" id="amount" step="any" placeholder="0.00">
+          </label>
+          <label>
+            Category
+            <input type="text" id="category" placeholder="Category">
+          </label>
+          <label>
+            Repeat
+            <select id="repeat">
+              <option value="none">none</option>
+              <option value="week">week</option>
+              <option value="month">month</option>
+            </select>
+          </label>
+          <label>
+            Until
+            <input type="date" id="until" placeholder="YYYY-MM-DD">
+          </label>
+          <div class="form-actions">
+            <button type="button" id="add">Add</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="search-group">
+          <input type="text" id="search" placeholder="Search description...">
+        </div>
+        <div class="action-group">
+          <button type="button" id="undo">Undo</button>
+          <button type="button" id="redo">Redo</button>
+          <label class="file-label">
+            Import CSV
+            <input type="file" id="import" accept=".csv,text/csv">
+          </label>
+          <button type="button" id="export">Export CSV</button>
+        </div>
+      </div>
+
+      <table id="list" class="data-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th id="sort-amount" class="sortable">Amount</th>
+            <th>Category</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Budgets View -->
+    <section id="view-budgets" hidden style="display: none;">
+      <div class="form-card">
+        <h2>Budgets</h2>
+        <div class="form-grid">
+          <label>
+            Month
+            <input type="month" id="budget-month">
+          </label>
+          <label>
+            Category
+            <input type="text" id="budget-category" placeholder="Category">
+          </label>
+          <label>
+            Limit
+            <input type="number" id="budget-limit" step="any" placeholder="0.00">
+          </label>
+          <div class="form-actions">
+            <button type="button" id="budget-add">Add Budget</button>
+          </div>
+        </div>
+      </div>
+
+      <table id="budgets" class="data-table">
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <!-- Reports View -->
+    <section id="view-reports" hidden style="display: none;">
+      <div class="form-card">
+        <h2>Monthly Report</h2>
+        <div class="form-grid">
+          <label>
+            Month
+            <input type="month" id="report-month">
+          </label>
+        </div>
+      </div>
+
+      <table id="report" class="data-table">
+        <tbody></tbody>
+      </table>
+
+      <div class="chart-container">
+        <canvas id="chart" width="600" height="300"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

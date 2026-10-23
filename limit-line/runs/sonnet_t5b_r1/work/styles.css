@@ -1,0 +1,7 @@
+body { font: 14px sans-serif; margin: 0; }
+#toolbar { display: flex; gap: 6px; padding: 6px; position: sticky; top: 0; background: #f4f4f4; border-bottom: 1px solid #ccc; }
+#formula { flex: 1; font: inherit; padding: 3px 6px; }
+#grid { border-collapse: collapse; }
+#grid th { background: #eee; border: 1px solid #ccc; padding: 2px 8px; font-weight: normal; }
+#grid td { border: 1px solid #ddd; min-width: 80px; height: 22px; padding: 0 4px; white-space: nowrap; cursor: cell; }
+#grid td.selected { outline: 2px solid #1a73e8; outline-offset: -2px; background: #e8f0fe; }

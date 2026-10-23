@@ -1,0 +1,65 @@
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: #1f2933;
+  background: #f5f7fa;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  padding: 0.75rem 1.5rem;
+  background: #243b53;
+  color: #fff;
+}
+header h1 { margin: 0; font-size: 1.4rem; }
+nav { display: flex; gap: 0.5rem; }
+nav a {
+  color: #d9e2ec;
+  text-decoration: none;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+}
+nav a:hover { background: #334e68; }
+nav a.active { background: #486581; color: #fff; }
+.balance-box { margin-left: auto; font-weight: 600; }
+#balance { font-variant-numeric: tabular-nums; }
+
+main { max-width: 960px; margin: 0 auto; padding: 1rem 1.5rem 3rem; }
+
+.form-row, .toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+label { display: flex; flex-direction: column; font-size: 0.8rem; color: #52606d; gap: 0.2rem; }
+.toolbar label.file-label { flex-direction: row; align-items: center; gap: 0.4rem; }
+input, select, button { font: inherit; padding: 0.35rem 0.5rem; border: 1px solid #bcccdc; border-radius: 4px; }
+button { background: #fff; cursor: pointer; }
+button:hover:not(:disabled) { background: #e4e7eb; }
+button:disabled { opacity: 0.5; cursor: default; }
+button[type="submit"] { background: #2680c2; border-color: #2680c2; color: #fff; }
+button[type="submit"]:hover { background: #186faf; }
+#search { flex: 1; min-width: 12rem; }
+
+table { width: 100%; border-collapse: collapse; background: #fff; margin-bottom: 1rem; }
+th, td { padding: 0.45rem 0.6rem; border-bottom: 1px solid #e4e7eb; text-align: left; }
+th { background: #f0f4f8; font-size: 0.85rem; }
+th.sortable { cursor: pointer; user-select: none; }
+th.sortable:hover { background: #d9e2ec; }
+th.sorted::after { content: " \25BC"; font-size: 0.7em; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+td.neg { color: #c62828; }
+td.pos { color: #2e7d32; }
+tr.over td { background: #ffebee; color: #b71c1c; }
+button.delete { padding: 0.15rem 0.5rem; color: #b71c1c; }
+
+canvas { display: block; max-width: 100%; background: #fff; border: 1px solid #e4e7eb; }
+.empty { color: #829ab1; text-align: center; }

@@ -1,0 +1,117 @@
+:root {
+  font-family: system-ui, sans-serif;
+  color: #222;
+}
+
+body {
+  margin: 0;
+  padding: 12px;
+  background: #f4f5f7;
+}
+
+.toolbar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+button {
+  padding: 4px 10px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #eef3ff;
+}
+
+.formula-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.address {
+  min-width: 56px;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-family: monospace;
+  text-align: center;
+}
+
+#formula {
+  flex: 1;
+  padding: 4px 8px;
+  font: inherit;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.sheet-wrap {
+  max-height: 80vh;
+  overflow: auto;
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+#grid {
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+#grid th {
+  background: #eceef2;
+  border: 1px solid #ccc;
+  padding: 2px 4px;
+  font-weight: 600;
+  user-select: none;
+}
+
+#grid thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+#grid tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 40px;
+  text-align: center;
+}
+
+#grid thead th:first-child {
+  left: 0;
+  z-index: 3;
+  width: 40px;
+}
+
+#grid td {
+  width: 96px;
+  max-width: 96px;
+  height: 22px;
+  padding: 2px 4px;
+  border: 1px solid #ddd;
+  overflow: hidden;
+  white-space: nowrap;
+  cursor: cell;
+}
+
+#grid td.num {
+  text-align: right;
+}
+
+#grid td.copied {
+  background: #fff7d6;
+}
+
+#grid td.selected {
+  outline: 2px solid #1a73e8;
+  outline-offset: -2px;
+  background: #e8f0fe;
+}

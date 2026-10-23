@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Expense Tracker</h1>
+
+    <section class="balance-card">
+      <span>Balance</span>
+      <strong id="balance">0.00</strong>
+      <div class="totals">
+        <span>Income: <b id="income">0.00</b></span>
+        <span>Expense: <b id="expense">0.00</b></span>
+      </div>
+    </section>
+
+    <form id="form" class="card">
+      <label>Date <input type="date" id="date" required></label>
+      <label>Description <input type="text" id="description" required></label>
+      <label>Amount <input type="number" id="amount" step="0.01" required placeholder="-12.50 for expense"></label>
+      <label>Category <input type="text" id="category" required list="category-options"></label>
+      <datalist id="category-options"></datalist>
+      <button type="submit" id="add">Add</button>
+    </form>
+
+    <section class="card toolbar">
+      <label>Filter
+        <select id="filter">
+          <option value="All">All</option>
+        </select>
+      </label>
+      <label class="file">Import CSV <input type="file" id="import" accept=".csv,text/csv"></label>
+      <button type="button" id="export">Export CSV</button>
+    </section>
+
+    <section class="card">
+      <table>
+        <thead>
+          <tr><th>Date</th><th>Description</th><th class="num">Amount</th><th>Category</th><th></th></tr>
+        </thead>
+        <tbody id="list"></tbody>
+      </table>
+    </section>
+
+    <section class="card">
+      <h2>Expenses by category</h2>
+      <canvas id="chart" width="640" height="300"></canvas>
+    </section>
+  </main>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

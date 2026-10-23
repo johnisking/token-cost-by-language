@@ -1,0 +1,10 @@
+Make a brick-breaker game that runs in the browser as a single file named index.html in the current folder. Requirements:
+1. Five levels, each with a different brick layout. Clearing all bricks moves to the next level; clearing level 5 shows a screen with the text "You win".
+2. The player has 3 lives. Losing the ball costs one life; at 0 lives show a screen with the text "Game over".
+3. Breaking a brick adds points to the score.
+4. Draw the status bar text exactly in this form: "Score: N", "Lives: N", "Level: N", "Best: N".
+5. Press P to pause and resume; while paused, show the text "Paused" and nothing moves.
+6. Press N to skip to the next level (a testing shortcut).
+7. Save progress in localStorage: when the page is reloaded, the game continues from the saved level, and the best score is kept across reloads.
+8. Playable with the keyboard (arrow keys) and the mouse; press Space or click to launch the ball.
+Write the file and finish.

@@ -1,0 +1,186 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  color: #1f2937;
+  background-color: #f8fafc;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.toolbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #cbd5e1;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.toolbar-actions button {
+  padding: 5px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  background-color: #f8fafc;
+  color: #334155;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.toolbar-actions button:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+}
+
+.toolbar-actions button:active {
+  background-color: #e2e8f0;
+}
+
+.divider {
+  width: 1px;
+  height: 20px;
+  background-color: #e2e8f0;
+  margin: 0 4px;
+}
+
+.formula-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cell-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  height: 28px;
+  padding: 0 8px;
+  background-color: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #0f172a;
+  font-size: 12px;
+}
+
+.fx-label {
+  font-style: italic;
+  font-weight: 600;
+  color: #64748b;
+  user-select: none;
+}
+
+#formula {
+  flex: 1;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  color: #0f172a;
+  outline: none;
+}
+
+#formula:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.grid-wrapper {
+  flex: 1;
+  overflow: auto;
+  background-color: #ffffff;
+}
+
+#grid {
+  border-collapse: collapse;
+  table-layout: fixed;
+  user-select: none;
+}
+
+#grid th,
+#grid td {
+  border: 1px solid #e2e8f0;
+  height: 24px;
+  padding: 2px 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#grid th {
+  background-color: #f1f5f9;
+  color: #475569;
+  font-weight: 600;
+  text-align: center;
+  position: sticky;
+  z-index: 1;
+}
+
+#grid thead th {
+  top: 0;
+  z-index: 2;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+#grid thead th.corner-header {
+  left: 0;
+  z-index: 3;
+  width: 42px;
+  min-width: 42px;
+}
+
+#grid tbody th {
+  left: 0;
+  width: 42px;
+  min-width: 42px;
+  border-right: 1px solid #cbd5e1;
+}
+
+#grid td {
+  width: 96px;
+  min-width: 96px;
+  max-width: 96px;
+  background-color: #ffffff;
+  color: #0f172a;
+  cursor: cell;
+}
+
+#grid td.selected {
+  outline: 2px solid #2563eb;
+  outline-offset: -2px;
+  background-color: #eff6ff;
+  z-index: 1;
+}
+
+#grid td.copied {
+  outline: 2px dashed #0284c7;
+  outline-offset: -2px;
+}
+
+#grid td.error-cell {
+  color: #dc2626;
+  font-weight: 600;
+}

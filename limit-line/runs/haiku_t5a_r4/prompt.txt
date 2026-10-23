@@ -1,0 +1,16 @@
+The current folder holds an existing budget web app (index.html, styles.css and ES modules in js/). It runs when the folder is served by any static web server, with no build step and no external libraries. Read the code, fix the reported bugs and add the requested features. Keep everything else working as it does now, and keep all existing element ids, classes and module exports.
+
+Bug reports from users (the cause is not known yet):
+1. "I set my rent to repeat monthly from January 31st, but there is no rent in February or April."
+2. "I imported a CSV where one description has a line break inside quotes, and the import produced broken rows."
+3. "After I search or sort the list, clicking Delete sometimes removes a different transaction than the one I clicked."
+4. "I got a 30.00 refund in Food, and the Food budget now shows 30.00 more spent instead of ignoring it."
+5. "The balance shows 749.5 instead of 749.50."
+6. "When I reload the page while on #/budgets or #/reports, it always shows the transactions view."
+
+Features to add:
+A. Each transaction row gets an Edit button with the class "edit". Clicking it puts that transaction's date, description, amount and category into the form, and clicking #add then saves the changes to that transaction instead of adding a new one (the list keeps the same number of rows). A button with the id #cancel-edit leaves edit mode without changing anything. An edit can be undone with #undo, like adding and deleting.
+B. In the budgets view, inputs #rename-from and #rename-to and a button #rename rename a category: every transaction and every budget whose category is exactly the old name gets the new name. One click on #undo restores the old category names of the transactions.
+C. The #report table gets a third column with the change compared with the previous month for each category: this month's total minus the previous month's total, with a sign and two decimals (for example +12.50, -20.00, or 0.00 for no change). Categories that had transactions only in the previous month also get a row, with a total of 0.00.
+
+Change the files in place and finish.

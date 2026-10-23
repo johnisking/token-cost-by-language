@@ -1,0 +1,62 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 12px;
+  color: #222;
+}
+
+.toolbar, .formula-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+#selected {
+  min-width: 3em;
+  font-weight: bold;
+}
+
+#formula {
+  flex: 1;
+  font-family: monospace;
+  padding: 4px;
+}
+
+.grid-wrap {
+  overflow: auto;
+}
+
+#grid {
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+#grid th, #grid td {
+  border: 1px solid #ccc;
+  height: 22px;
+  padding: 0 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#grid th {
+  background: #f0f0f0;
+  font-weight: normal;
+  min-width: 32px;
+}
+
+#grid td {
+  width: 90px;
+  max-width: 90px;
+  cursor: cell;
+}
+
+#grid td.number {
+  text-align: right;
+}
+
+#grid td.selected {
+  outline: 2px solid #1a73e8;
+  outline-offset: -2px;
+}

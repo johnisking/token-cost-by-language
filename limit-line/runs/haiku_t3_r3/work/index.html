@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <h1>Expense Tracker</h1>
+
+    <section class="summary">
+      <span>Balance</span>
+      <strong id="balance">0.00</strong>
+    </section>
+
+    <section>
+      <h2>Add transaction</h2>
+      <form id="transaction-form" class="form">
+        <label>Date
+          <input type="date" id="date" required>
+        </label>
+        <label>Description
+          <input type="text" id="description" required>
+        </label>
+        <label>Amount
+          <input type="number" id="amount" step="0.01" required placeholder="e.g. 1200 income, -45.5 expense">
+        </label>
+        <label>Category
+          <input type="text" id="category" required>
+        </label>
+        <button type="submit" id="add">Add</button>
+      </form>
+    </section>
+
+    <section>
+      <div class="toolbar">
+        <h2>Transactions</h2>
+        <label>Category
+          <select id="filter"></select>
+        </label>
+      </div>
+      <table id="list">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Category</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+
+    <section class="io">
+      <label class="file-label">Import CSV
+        <input type="file" id="import" accept=".csv,text/csv">
+      </label>
+      <button type="button" id="export">Export CSV</button>
+    </section>
+
+    <section>
+      <h2>Expenses by category</h2>
+      <canvas id="chart" width="640" height="320"></canvas>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

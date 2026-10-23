@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Small Sheet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="sheet-app">
+    <header class="toolbar">
+      <h1>Small Sheet</h1>
+      <div class="actions">
+        <button id="undo" type="button" title="Undo">Undo</button>
+        <button id="redo" type="button" title="Redo">Redo</button>
+        <button id="copy" type="button" title="Remember selected cell">Copy</button>
+        <button id="paste" type="button" title="Copy into selected cell">Paste</button>
+        <button id="export" type="button">Export CSV</button>
+      </div>
+    </header>
+    <div class="formula-bar">
+      <span id="name-box" aria-live="polite">A1</span>
+      <input id="formula" aria-label="Cell contents" autocomplete="off" spellcheck="false">
+      <span class="hint">Enter to save and move down</span>
+    </div>
+    <div class="grid-wrap">
+      <table id="grid" aria-label="Spreadsheet"></table>
+    </div>
+  </main>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

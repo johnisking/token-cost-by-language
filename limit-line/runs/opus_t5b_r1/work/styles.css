@@ -1,0 +1,82 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 12px;
+  background: #f6f7f9;
+  color: #222;
+}
+
+.toolbar {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ref-label {
+  min-width: 40px;
+  font-weight: 600;
+  text-align: center;
+}
+
+#formula {
+  flex: 1;
+  padding: 5px 8px;
+  font-family: monospace;
+  font-size: 14px;
+}
+
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.grid-wrap {
+  overflow: auto;
+}
+
+#grid {
+  border-collapse: collapse;
+  background: #fff;
+  table-layout: fixed;
+}
+
+#grid th,
+#grid td {
+  border: 1px solid #d0d4da;
+  height: 22px;
+  padding: 0 4px;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#grid th {
+  background: #eceef1;
+  font-weight: 500;
+  color: #555;
+}
+
+#grid td {
+  width: 90px;
+  max-width: 90px;
+  cursor: cell;
+}
+
+#grid td.num {
+  text-align: right;
+}
+
+#grid td.err {
+  color: #c0392b;
+}
+
+#grid td.selected {
+  outline: 2px solid #2f6fdb;
+  outline-offset: -2px;
+}
+
+#grid td.copied {
+  background: #eaf1fd;
+}

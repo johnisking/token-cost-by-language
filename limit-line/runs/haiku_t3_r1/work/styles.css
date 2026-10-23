@@ -1,0 +1,181 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+h2 {
+  font-size: 1.1rem;
+  margin: 24px 0 12px;
+}
+
+section {
+  margin-bottom: 8px;
+}
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.card strong {
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+input,
+select,
+button {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  background: #fff;
+}
+
+button {
+  cursor: pointer;
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+button.delete {
+  background: #fee2e2;
+  border-color: #fecaca;
+  color: #b91c1c;
+  padding: 4px 10px;
+}
+
+button.delete:hover {
+  background: #fecaca;
+}
+
+.hint {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 8px 0 0;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 12px;
+}
+
+.button-like {
+  cursor: pointer;
+}
+
+.button-like input {
+  font-size: 0.85rem;
+  border: none;
+  padding: 0;
+}
+
+#export {
+  align-self: flex-end;
+}
+
+#status {
+  font-size: 0.85rem;
+  color: #15803d;
+  align-self: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+th {
+  background: #f8fafc;
+  font-size: 0.85rem;
+  color: #475569;
+}
+
+td.amount {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+td.positive {
+  color: #15803d;
+}
+
+td.negative {
+  color: #b91c1c;
+}
+
+#chart {
+  display: block;
+  width: 100%;
+  height: 260px;
+  background: #fff;
+  border-radius: 8px;
+}

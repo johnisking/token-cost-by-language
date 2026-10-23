@@ -1,0 +1,30 @@
+Build a small spreadsheet web app in the current folder: index.html, styles.css, js/engine.js and js/app.js. It must run when the folder is served by any static web server, with no build step and no external libraries. Tests will import js/engine.js directly and will also use the page.
+
+The grid has columns A to J and rows 1 to 30 (A1 to J30). Any reference outside that area is invalid.
+
+js/engine.js (an ES module with no DOM code) exports createSheet(), which returns an object with:
+- set(ref, raw): store the text a user typed into a cell (ref like "B3"). "" empties the cell. Text starting with "=" is a formula. Text that is a plain number (like "12", "-3.5", " 4 ") is a number. Anything else is text.
+- get(ref): the cell's value: a number, a string, true or false, "" for an empty cell, or one of the error strings "#DIV/0!", "#REF!", "#NAME?", "#VALUE!", "#CYCLE!", "#ERROR!".
+- raw(ref): the text stored by set ("" if empty).
+- display(ref): the value as shown in the grid. Numbers are rounded to at most 10 decimal places with trailing zeros removed (0.1+0.2 shows "0.3", 5 shows "5"). true/false show "TRUE"/"FALSE". Errors and text show as they are.
+- copy(from, to): put the formula of cell `from` into cell `to`, moving relative references by the same number of columns and rows as from `from` to `to`. A "$" before the column or the row keeps that part fixed ($A$1, $A1, A$1). If a moved reference would leave A1:J30, it becomes invalid and the cell shows "#REF!". Non-formula cells are copied as they are.
+- undo() and redo(): undo and redo set and copy, up to 100 steps. A new set or copy after an undo drops the redo steps.
+- toCSV(): the displayed values of the area from A1 to the last non-empty row and column, as CSV (fields with a comma, quote or line break are quoted; quotes are doubled), rows separated by "\n".
+
+Formulas:
+- Numbers, string literals in double quotes ("" inside a string is one quote), TRUE and FALSE, cell references (A1, $A$1, $A1, A$1, letters case-insensitive), parentheses.
+- Operators from lowest to highest priority: comparison (= <> < > <= >=), then & (joins text), then + and -, then * and /, then unary minus and plus, then ^. So -2^2 is -4 and 2*3^2 is 18. ^ is right-associative: 2^3^2 is 512. All other binary operators are left-associative: 10-4-3 is 3, 100/10/5 is 2.
+- Functions, names case-insensitive: SUM, AVERAGE, MIN, MAX, COUNT, IF, ROUND, ABS. SUM, AVERAGE, MIN, MAX and COUNT take any mix of numbers, references and ranges (A1:B3, in any corner order). In ranges they use only number cells and skip text and empty cells; COUNT counts number cells. AVERAGE with no numbers is #DIV/0!; MIN and MAX with no numbers are 0. IF(condition, a, b) evaluates only the branch it returns; a missing b means FALSE. ROUND(x, digits) rounds half away from zero (ROUND(2.5, 0) is 3, ROUND(-2.5, 0) is -3, ROUND(1234, -2) is 1200). ABS(x) is the absolute value.
+- An empty cell counts as 0 in arithmetic and as "" in &. TRUE and FALSE count as 1 and 0 in arithmetic. Text used in arithmetic is #VALUE!. & joins displayed values (="A"&1.50 is "A1.5").
+- = and <> compare numbers by value and text without regard to case; a number never equals a text. <, >, <= and >= work on two numbers or two texts (text compared without regard to case); a number against a text is #VALUE!.
+- Errors: division by zero is #DIV/0!; an invalid reference is #REF!; an unknown function name is #NAME?; a formula that cannot be parsed is #ERROR!. An error in any operand or in any cell of a range used by a function makes the result that error (the first one met from left to right), except inside the branch IF does not evaluate.
+- Cycles: every cell that is part of a reference cycle is #CYCLE!, and so is every cell that depends on one. When the cycle is broken, all these cells get normal values again.
+- Changing a cell updates every cell that depends on it, directly or through other cells.
+
+Page:
+- A table with the id #grid shows the 30 rows and 10 columns; each cell is a td with data-ref set to its reference (data-ref="A1") and shows display(ref).
+- Clicking a cell selects it. An input #formula shows the raw text of the selected cell; typing in it and pressing Enter stores it in the selected cell (set) and moves the selection one row down.
+- Buttons #undo and #redo undo and redo. Button #copy remembers the selected cell, and #paste copies it into the selected cell (copy(from, to)).
+- Button #export downloads toCSV() as a .csv file.
+- The raw text of all cells is saved in localStorage and is still there after the page is reloaded.
+Write the files and finish.

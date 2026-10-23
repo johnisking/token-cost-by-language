@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spreadsheet</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="toolbar">
+      <div class="toolbar-actions">
+        <button id="undo" type="button" title="Undo">Undo</button>
+        <button id="redo" type="button" title="Redo">Redo</button>
+        <div class="divider"></div>
+        <button id="copy" type="button" title="Copy cell">Copy</button>
+        <button id="paste" type="button" title="Paste cell">Paste</button>
+        <div class="divider"></div>
+        <button id="export" type="button" title="Export CSV">Export CSV</button>
+      </div>
+      <div class="formula-bar">
+        <span id="selected-ref" class="cell-badge">A1</span>
+        <span class="fx-label">fx</span>
+        <input id="formula" type="text" placeholder="Enter value or =formula..." autocomplete="off" spellcheck="false">
+      </div>
+    </header>
+
+    <main class="grid-wrapper">
+      <table id="grid"></table>
+    </main>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

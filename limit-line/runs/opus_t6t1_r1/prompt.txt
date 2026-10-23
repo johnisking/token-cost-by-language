@@ -1,0 +1,7 @@
+The current folder is a checkout of marked, the Markdown parser (TypeScript sources in src/, tests in test/). A user reported the bug below. Find the cause in the source code and fix it in src/, without breaking any other behaviour. You do not need to add tests, and the folder has no node_modules, so do not try to install packages; you may still read the existing tests and specs. Change the files in place and finish.
+
+Bug report:
+"A hard line break keeps the spaces or tabs that start the next line. The Markdown
+foo  
+     bar
+(the first line ends with two spaces) renders as <p>foo<br>     bar</p>, but the leading whitespace of the continuation line should be dropped: <p>foo<br>bar</p>. The same happens with a backslash hard break (foo\ followed by an indented line) and with tabs."

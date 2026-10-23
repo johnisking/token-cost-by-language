@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Budget App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Budget Tracker</h1>
+    <nav class="nav-links">
+      <a id="nav-transactions" href="#/transactions">Transactions</a>
+      <a id="nav-budgets" href="#/budgets">Budgets</a>
+      <a id="nav-reports" href="#/reports">Reports</a>
+    </nav>
+    <div class="balance-display">
+      Balance: <span id="balance">0.00</span>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Transactions View -->
+    <section id="view-transactions">
+      <h2>Transactions</h2>
+      <div class="form-row">
+        <input type="date" id="date" placeholder="YYYY-MM-DD" aria-label="Date">
+        <input type="text" id="description" placeholder="Description" aria-label="Description">
+        <input type="number" id="amount" step="any" placeholder="Amount" aria-label="Amount">
+        <input type="text" id="category" placeholder="Category" aria-label="Category">
+        <select id="repeat" aria-label="Repeat">
+          <option value="none">none</option>
+          <option value="week">week</option>
+          <option value="month">month</option>
+        </select>
+        <input type="date" id="until" placeholder="Until YYYY-MM-DD" aria-label="Until">
+        <button type="button" id="add">Add</button>
+        <button type="button" id="cancel-edit" hidden>Cancel edit</button>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" id="search" placeholder="Search description..." aria-label="Search">
+        <div class="toolbar-actions">
+          <button type="button" id="undo">Undo</button>
+          <button type="button" id="redo">Redo</button>
+          <label class="file-label">
+            Import CSV
+            <input type="file" id="import" accept=".csv,text/csv">
+          </label>
+          <button type="button" id="export">Export CSV</button>
+        </div>
+      </div>
+
+      <table id="list">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th id="sort-amount" class="sortable">Amount</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="list-body"></tbody>
+      </table>
+    </section>
+
+    <!-- Budgets View -->
+    <section id="view-budgets" class="hidden" hidden style="display: none;">
+      <h2>Budgets</h2>
+      <div class="form-row">
+        <label>
+          Month:
+          <input type="month" id="budget-month">
+        </label>
+        <input type="text" id="budget-category" placeholder="Category" aria-label="Budget Category">
+        <input type="number" id="budget-limit" step="any" placeholder="Limit" aria-label="Budget Limit">
+        <button type="button" id="budget-add">Add Budget</button>
+      </div>
+      <div class="form-row">
+        <input type="text" id="rename-from" placeholder="Rename category" aria-label="Rename from">
+        <input type="text" id="rename-to" placeholder="New name" aria-label="Rename to">
+        <button type="button" id="rename">Rename</button>
+      </div>
+
+      <table id="budgets">
+        <tbody id="budgets-body"></tbody>
+      </table>
+    </section>
+
+    <!-- Reports View -->
+    <section id="view-reports" class="hidden" hidden style="display: none;">
+      <h2>Monthly Report</h2>
+      <div class="form-row">
+        <label>
+          Month:
+          <input type="month" id="report-month">
+        </label>
+      </div>
+
+      <table id="report">
+        <tbody id="report-body"></tbody>
+      </table>
+
+      <div class="chart-container">
+        <canvas id="chart" width="600" height="300"></canvas>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

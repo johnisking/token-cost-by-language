@@ -1,0 +1,36 @@
+[hidden] { display: none !important; }
+
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  color: #222;
+  background: #f6f7f9;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 24px;
+  background: #264653;
+  color: #fff;
+}
+
+header h1 { margin: 0; font-size: 1.3rem; }
+nav a { color: #cfe3ea; margin-right: 16px; text-decoration: none; }
+nav a.active { color: #fff; font-weight: bold; border-bottom: 2px solid #fff; }
+
+main { max-width: 900px; margin: 0 auto; padding: 24px; }
+
+.form { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; align-items: center; }
+input, select, button { padding: 6px 8px; font: inherit; }
+button { cursor: pointer; }
+
+table { width: 100%; border-collapse: collapse; background: #fff; margin-bottom: 16px; }
+th, td { padding: 8px; border-bottom: 1px solid #e3e6ea; text-align: left; }
+th.sortable { cursor: pointer; text-decoration: underline; }
+
+tr.over td { background: #fde2e2; color: #9b1c1c; font-weight: bold; }
+.neg { color: #b00020; }
+
+canvas { max-width: 100%; background: #fff; border: 1px solid #e3e6ea; }

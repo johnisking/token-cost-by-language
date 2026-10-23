@@ -1,0 +1,10 @@
+body { font: 14px system-ui, sans-serif; margin: 0; }
+#toolbar { display: flex; gap: 6px; padding: 8px; position: sticky; top: 0; background: #f3f3f3; border-bottom: 1px solid #ccc; z-index: 2; }
+#formula { flex: 1; padding: 4px 6px; font: inherit; }
+#grid { border-collapse: collapse; }
+#grid th { background: #eee; border: 1px solid #ccc; padding: 2px 8px; font-weight: normal; position: sticky; top: 0; }
+#grid th:first-child { left: 0; }
+#grid td { border: 1px solid #ddd; min-width: 80px; height: 22px; padding: 0 4px; white-space: nowrap; cursor: cell; }
+#grid td.num { text-align: right; }
+#grid td.err { color: #b00020; }
+#grid td.selected { outline: 2px solid #1a73e8; outline-offset: -2px; background: #e8f0fe; }

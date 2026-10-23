@@ -1,0 +1,170 @@
+* {
+  box-sizing: border-box;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  color: #222;
+  background: #f5f6f8;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: #2f3e56;
+  color: #fff;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+}
+
+nav a {
+  color: #cfd8e8;
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+nav a:hover {
+  color: #fff;
+}
+
+nav a.active {
+  color: #fff;
+  background: #4a7bd0;
+}
+
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.view {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.form-row,
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+input,
+select,
+button {
+  font: inherit;
+  padding: 0.4rem 0.5rem;
+  border: 1px solid #c4cad4;
+  border-radius: 4px;
+  background: #fff;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: #eef2fa;
+}
+
+button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+#add,
+#budget-add {
+  background: #4a7bd0;
+  border-color: #4a7bd0;
+  color: #fff;
+}
+
+#add:hover,
+#budget-add:hover {
+  background: #3b66b5;
+}
+
+#status,
+#budget-status {
+  min-height: 1.2em;
+  color: #b3261e;
+  margin: 0.25rem 0 0.75rem;
+}
+
+.balance {
+  font-size: 1.1rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.75rem;
+}
+
+th,
+td {
+  padding: 0.5rem;
+  border-bottom: 1px solid #e3e7ee;
+  text-align: left;
+}
+
+th {
+  font-size: 0.85rem;
+  color: #555;
+  background: #f0f3f8;
+}
+
+th.sortable {
+  cursor: pointer;
+  user-select: none;
+}
+
+th.sortable:hover {
+  color: #4a7bd0;
+}
+
+tr.over {
+  background: #fdecea;
+  color: #8a1c14;
+}
+
+tr.over td:last-child {
+  font-weight: 600;
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+  margin-top: 1.25rem;
+}

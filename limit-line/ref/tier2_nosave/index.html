@@ -1,0 +1,62 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Ref</title><style>body{margin:0;background:#111}canvas{display:block;margin:auto;background:#000}</style></head><body>
+<canvas id="c" width="800" height="600"></canvas>
+<script>
+(() => {
+const c = document.getElementById('c'), ctx = c.getContext('2d');
+const W = 800, H = 600, PW = 110, PH = 12, R = 7;
+const LAYOUTS = [
+  (r, k) => true,
+  (r, k) => (r + k) % 2 === 0,
+  (r, k) => k % 3 !== 1,
+  (r, k) => r >= Math.abs(k - 5),
+  (r, k) => r % 2 === 0 || k % 2 === 0,
+];
+let level = 1, best = +(localStorage.getItem('ref_best') || 0);
+let score = 0, lives = 3, bricks = [], px = W / 2 - PW / 2, ball, state = 'serve', paused = false, keys = {};
+function build() {
+  bricks = [];
+  for (let r = 0; r < 5; r++) for (let k = 0; k < 11; k++) if (LAYOUTS[level - 1](r, k)) bricks.push({ x: 20 + k * 70, y: 60 + r * 28, w: 64, h: 20 });
+}
+function serve() { ball = { x: px + PW / 2, y: H - 40, vx: 220, vy: -320 }; state = 'serve'; }
+function save() {  if (score > best) { best = score; } localStorage.setItem('ref_best', best); }
+function nextLevel() { if (level >= 5) { state = 'win'; save(); return; } level++; save(); build(); serve(); }
+build(); serve();
+addEventListener('keydown', e => {
+  keys[e.code] = true;
+  if (e.code === 'Space' && state === 'serve') state = 'play';
+  if (e.code === 'KeyP' && (state === 'play' || state === 'serve')) paused = !paused;
+  if (e.code === 'KeyN' && state !== 'win' && state !== 'over') nextLevel();
+});
+addEventListener('keyup', e => keys[e.code] = false);
+c.addEventListener('mousemove', e => { const b = c.getBoundingClientRect(); px = Math.max(0, Math.min(W - PW, (e.clientX - b.left) * W / b.width - PW / 2)); });
+c.addEventListener('click', () => { if (state === 'serve') state = 'play'; });
+let last = performance.now();
+function step(t) {
+  const dt = Math.min(0.05, (t - last) / 1000); last = t;
+  if (!paused && (state === 'play' || state === 'serve')) {
+    if (keys.ArrowLeft) px = Math.max(0, px - 500 * dt); if (keys.ArrowRight) px = Math.min(W - PW, px + 500 * dt);
+    if (state === 'serve') { ball.x = px + PW / 2; ball.y = H - 40; }
+    else {
+      ball.x += ball.vx * dt; ball.y += ball.vy * dt;
+      if (ball.x < R || ball.x > W - R) ball.vx *= -1; if (ball.y < 40 + R) ball.vy = Math.abs(ball.vy);
+      if (ball.y > H - 30 - R && ball.y < H - 30 && ball.x > px && ball.x < px + PW && ball.vy > 0) { ball.vy *= -1; ball.vx = (ball.x - (px + PW / 2)) * 6; }
+      for (const b of bricks) if (!b.dead && ball.x > b.x && ball.x < b.x + b.w && ball.y > b.y && ball.y < b.y + b.h) { b.dead = true; ball.vy *= -1; score += 10; if (score > best) { best = score; save(); } break; }
+      if (bricks.every(b => b.dead)) nextLevel();
+      if (ball.y > H) { lives--; if (lives <= 0) { state = 'over'; save(); } else serve(); }
+    }
+  }
+  ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#4af'; for (const b of bricks) if (!b.dead) ctx.fillRect(b.x, b.y, b.w, b.h);
+  ctx.fillStyle = '#fff'; ctx.fillRect(px, H - 30, PW, PH);
+  ctx.beginPath(); ctx.arc(ball.x, ball.y, R, 0, Math.PI * 2); ctx.fill();
+  ctx.font = '18px sans-serif';
+  ctx.fillText('Score: ' + score, 10, 24); ctx.fillText('Lives: ' + lives, 180, 24); ctx.fillText('Level: ' + level, 330, 24); ctx.fillText('Best: ' + best, 480, 24);
+  ctx.font = '40px sans-serif';
+  if (paused) ctx.fillText('Paused', 330, 320);
+  if (state === 'over') ctx.fillText('Game over', 300, 320);
+  if (state === 'win') ctx.fillText('You win', 320, 320);
+  requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
+})();
+</script></body></html>

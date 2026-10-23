@@ -1,0 +1,76 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #f4f5f7;
+  color: #222;
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+h1 { margin-top: 0; }
+h2 { font-size: 1.1rem; margin: 0 0 12px; }
+
+.card, .balance-card {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.balance-card { text-align: center; }
+.balance-card > span { display: block; color: #666; }
+#balance { font-size: 2rem; }
+.totals { display: flex; justify-content: center; gap: 24px; margin-top: 8px; color: #555; }
+
+form, .toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.85rem;
+  color: #555;
+  gap: 4px;
+}
+
+input, select, button {
+  font: inherit;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background: #2f6fed;
+  color: #fff;
+  border-color: #2f6fed;
+  cursor: pointer;
+}
+button:hover { background: #2559c4; }
+
+button.delete {
+  background: transparent;
+  color: #c0392b;
+  border-color: #e3b3ad;
+  padding: 2px 8px;
+}
+button.delete:hover { background: #fbeaea; }
+
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 8px; border-bottom: 1px solid #eee; text-align: left; }
+.num { text-align: right; font-variant-numeric: tabular-nums; }
+.positive { color: #1e8449; }
+.negative { color: #c0392b; }
+
+canvas { width: 100%; height: auto; display: block; }

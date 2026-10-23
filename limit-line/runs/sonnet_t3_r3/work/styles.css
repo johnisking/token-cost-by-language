@@ -1,0 +1,59 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  background: #f5f5f5;
+  color: #222;
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+.balance {
+  font-size: 1.3rem;
+}
+
+form,
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+  align-items: center;
+}
+
+input,
+select,
+button {
+  padding: 6px 8px;
+  font: inherit;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+th,
+td {
+  padding: 6px 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.neg {
+  color: #c0392b;
+}
+
+.pos {
+  color: #27824f;
+}
+
+canvas {
+  max-width: 100%;
+  background: #fff;
+  border: 1px solid #ddd;
+}

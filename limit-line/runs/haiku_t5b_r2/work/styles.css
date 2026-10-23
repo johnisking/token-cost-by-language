@@ -1,0 +1,122 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  color: #222;
+  background: #f5f5f5;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+.toolbar h1 {
+  margin: 0 12px 0 0;
+  font-size: 18px;
+}
+
+button {
+  padding: 4px 10px;
+  font: inherit;
+  border: 1px solid #aaa;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #eee;
+}
+
+.formula-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: #fff;
+  border-bottom: 1px solid #ccc;
+}
+
+.ref-label {
+  min-width: 48px;
+  padding: 2px 6px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+  text-align: center;
+}
+
+#formula {
+  flex: 1;
+  max-width: 600px;
+  padding: 4px 6px;
+  font: inherit;
+  border: 1px solid #aaa;
+  border-radius: 3px;
+}
+
+.grid-wrap {
+  overflow: auto;
+  padding: 12px;
+}
+
+#grid {
+  border-collapse: collapse;
+  background: #fff;
+  table-layout: fixed;
+}
+
+#grid th {
+  position: sticky;
+  background: #eee;
+  font-weight: normal;
+  color: #555;
+  border: 1px solid #ccc;
+  padding: 2px 4px;
+}
+
+#grid thead th {
+  top: 0;
+  z-index: 1;
+  width: 110px;
+}
+
+#grid tbody th {
+  left: 0;
+  z-index: 1;
+  width: 44px;
+  text-align: center;
+}
+
+#grid td {
+  width: 110px;
+  height: 24px;
+  padding: 2px 6px;
+  border: 1px solid #ddd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: cell;
+}
+
+#grid td.number {
+  text-align: right;
+}
+
+#grid td.error {
+  color: #b00020;
+}
+
+#grid td.selected {
+  outline: 2px solid #1a73e8;
+  outline-offset: -2px;
+  background: #e8f0fe;
+}

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Brick Breaker</title>
+<style>
+  :root { color-scheme: dark; --ink:#eaf3ff; --muted:#9fb2cc; --panel:#101a2b; }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px; color:var(--ink); font:15px/1.45 system-ui,-apple-system,Segoe UI,sans-serif; background:radial-gradient(ellipse at 50% 0,#233b63 0,#10192b 48%,#080d17 100%); }
+  main { width:min(900px,100%); }
+  header { display:flex; justify-content:space-between; align-items:end; gap:16px; margin:0 0 14px; }
+  h1 { margin:0; font-size:clamp(24px,4vw,36px); letter-spacing:.04em; }
+  .hint { color:var(--muted); text-align:right; font-size:13px; }
+  .stats { display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; padding:12px 16px; margin-bottom:12px; background:#121e31; border:1px solid #2b3d59; border-radius:12px; font-weight:700; letter-spacing:.02em; }
+  .stats span { min-width:90px; }
+  .frame { position:relative; overflow:hidden; border:1px solid #344965; border-radius:16px; box-shadow:0 24px 70px #0008; background:#0a1220; }
+  canvas { display:block; width:100%; height:auto; aspect-ratio: 16 / 10; touch-action:none; }
+  .overlay { position:absolute; inset:0; display:grid; place-items:center; background:#07101dcc; text-align:center; padding:24px; }
+  .overlay[hidden] { display:none; }
+  .card { max-width:440px; padding:28px 34px; border:1px solid #506681; border-radius:16px; background:#111e31ee; box-shadow:0 12px 40px #0008; }
+  .card h2 { margin:0 0 8px; font-size:clamp(30px,6vw,48px); }
+  .card p { margin:0; color:#c1d0e4; }
+  .footer { color:var(--muted); text-align:center; font-size:12px; margin-top:12px; }
+  @media(max-width:540px){ body{padding:12px}.hint{max-width:150px}.stats{padding:10px}.stats span{min-width:calc(50% - 10px)} }
+</style>
+</head>
+<body>
+<main>
+  <header><h1>BRICK BREAKER</h1><div class="hint">Move: ← → or mouse<br>Launch: Space or click · Pause: P · Next level: N</div></header>
+  <div class="stats" aria-label="Game status"><span id="score">Score: 0</span><span id="lives">Lives: 3</span><span id="level">Level: 1</span><span id="best">Best: 0</span></div>
+  <div class="frame">
+    <canvas id="game" width="960" height="600" aria-label="Brick breaker game"></canvas>
+    <div class="overlay" id="overlay" hidden><div class="card"><h2 id="overlayTitle"></h2><p id="overlayText"></p></div></div>
+  </div>
+  <div class="footer">Break every brick to advance. Your progress is saved automatically.</div>
+</main>
+<script>
+(() => {
+  'use strict';
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const STORE = 'neonBrickBreakerSaveV1';
+  const palettes = ['#4ed8ff','#ff6b8a','#ffd166','#ab82ff','#70f0b3'];
+  const layouts = [
+    ['1111111111','1111111111','1111111111','1111111111'],
+    ['1100000011','1110000111','0111111110','0011111100','0001111000'],
+    ['1000000001','0100000010','0010000100','0001111000','0010000100','0100000010','1000000001'],
+    ['1111111111','1000000001','1011111101','1010000101','1011111101','1000000001','1111111111'],
+    ['1010101010','0101010101','1111111111','0011111100','0110110110','1100000011']
+  ];
+  let level=1, score=0, best=0, lives=3, bricks=[], paused=false, ended='', started=false;
+  let paddle={x:W/2-62,y:H-42,w:124,h:14,speed:8};
+  let ball={x:W/2,y:paddle.y-10,r:9,vx:4,vy:-5};
+  const keys=new Set();
+  function createBricks(n){
+    bricks=[]; const rows=layouts[n-1], cols=Math.max(...rows.map(r=>r.length));
+    const gap=8, margin=62, bw=(W-margin*2-gap*(cols-1))/cols, bh=22, top=72;
+    rows.forEach((row,ri)=>Array.from(row).forEach((cell,ci)=>{ if(cell==='1') bricks.push({x:margin+ci*(bw+gap),y:top+ri*(bh+gap),w:bw,h:bh,hp:1}); }));
+  }
+  function save(){ try { localStorage.setItem(STORE,JSON.stringify({level,score,lives,best,bricks:bricks.map(b=>({x:b.x,y:b.y,w:b.w,h:b.h,hp:b.hp}))})); } catch(_){} }
+  function load(){
+    try { const d=JSON.parse(localStorage.getItem(STORE)||'null'); if(!d)return;
+      best=Math.max(0,Number(d.best)||0); score=Math.max(0,Number(d.score)||0);
+      level=Math.min(5,Math.max(1,Number(d.level)||1)); lives=Math.min(3,Math.max(1,Number(d.lives)||3));
+      createBricks(level); if(Array.isArray(d.bricks)) bricks=d.bricks.filter(b=>[b.x,b.y,b.w,b.h].every(Number.isFinite)&&b.hp>0);
+    } catch(_) { createBricks(1); }
+  }
+  function resetBall(){ started=false; ball={x:paddle.x+paddle.w/2,y:paddle.y-10,r:9,vx:4+level*.25,vy:-5-level*.2}; }
+  function setOverlay(title,text=''){ document.getElementById('overlayTitle').textContent=title; document.getElementById('overlayText').textContent=text; document.getElementById('overlay').hidden=false; }
+  function hideOverlay(){document.getElementById('overlay').hidden=true;}
+  function updateStats(){ document.getElementById('score').textContent=`Score: ${score}`;document.getElementById('lives').textContent=`Lives: ${lives}`;document.getElementById('level').textContent=`Level: ${level}`;document.getElementById('best').textContent=`Best: ${best}`; }
+  function launch(){ if(ended){ if(ended==='win'||ended==='over'){newGame();} return; } if(paused)return; if(!started){started=true;hideOverlay();} }
+  function newGame(){level=1;score=0;lives=3;ended='';paused=false;createBricks(level);paddle.x=W/2-paddle.w/2;resetBall();hideOverlay();save();updateStats();}
+  function nextLevel(){ if(level>=5){ended='win';started=false;save();setOverlay('You win',`Final score: ${score} · Press Space or click to play again`);return;}
+    level++; createBricks(level); resetBall(); save(); updateStats(); }
+  function skipLevel(){ if(ended)return; if(level===5){ended='win';started=false;save();setOverlay('You win',`Final score: ${score} · Press Space or click to play again`);}
+    else {level++;createBricks(level);resetBall();save();updateStats();} }
+  function togglePause(){ if(ended)return; paused=!paused; if(paused){setOverlay('Paused','Press P to resume');}else hideOverlay(); }
+  function draw(){
+    const g=ctx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#101f35');g.addColorStop(1,'#08111e');ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+    ctx.strokeStyle='#ffffff09';ctx.lineWidth=1;for(let x=0;x<W;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    bricks.forEach(b=>{ctx.fillStyle=palettes[(level-1)%palettes.length];ctx.shadowColor=ctx.fillStyle;ctx.shadowBlur=12;roundRect(b.x,b.y,b.w,b.h,6);ctx.fill();ctx.shadowBlur=0;ctx.fillStyle='#ffffff55';roundRect(b.x+3,b.y+3,b.w-6,4,2);ctx.fill();});
+    ctx.fillStyle='#dbeaff';ctx.shadowColor='#77b8ff';ctx.shadowBlur=16;roundRect(paddle.x,paddle.y,paddle.w,paddle.h,8);ctx.fill();ctx.shadowBlur=0;
+    ctx.beginPath();ctx.arc(ball.x,ball.y,ball.r,0,Math.PI*2);ctx.fillStyle='#fff';ctx.shadowColor='#9be8ff';ctx.shadowBlur=18;ctx.fill();ctx.shadowBlur=0;
+    if(!started&&!ended&&!paused){ctx.fillStyle='#d8e8ff';ctx.font='16px system-ui';ctx.textAlign='center';ctx.fillText('Press Space or click to launch',W/2,H-90);}
+  }
+  function roundRect(x,y,w,h,r){ctx.beginPath();ctx.roundRect(x,y,w,h,r);}
+  function tick(){
+    if(!paused&&!ended){
+      if(keys.has('ArrowLeft'))paddle.x-=paddle.speed;if(keys.has('ArrowRight'))paddle.x+=paddle.speed;
+      paddle.x=Math.max(0,Math.min(W-paddle.w,paddle.x));
+      if(!started){ball.x=paddle.x+paddle.w/2;ball.y=paddle.y-ball.r-1;}
+      else {
+        ball.x+=ball.vx;ball.y+=ball.vy;
+        if(ball.x-ball.r<0){ball.x=ball.r;ball.vx=Math.abs(ball.vx);}if(ball.x+ball.r>W){ball.x=W-ball.r;ball.vx=-Math.abs(ball.vx);}if(ball.y-ball.r<0){ball.y=ball.r;ball.vy=Math.abs(ball.vy);}
+        if(ball.vy>0&&ball.y+ball.r>=paddle.y&&ball.y-ball.r<=paddle.y+paddle.h&&ball.x>=paddle.x&&ball.x<=paddle.x+paddle.w){
+          const hit=(ball.x-(paddle.x+paddle.w/2))/(paddle.w/2);ball.vx=hit*6;ball.vy=-Math.sqrt(Math.max(16,ball.vx*ball.vx+ball.vy*ball.vy));ball.y=paddle.y-ball.r;
+        }
+        for(let i=bricks.length-1;i>=0;i--){const b=bricks[i];if(ball.x+ball.r>b.x&&ball.x-ball.r<b.x+b.w&&ball.y+ball.r>b.y&&ball.y-ball.r<b.y+b.h){
+          const px=ball.x-ball.vx,py=ball.y-ball.vy;if(px+ball.r<=b.x||px-ball.r>=b.x+b.w)ball.vx*=-1;else ball.vy*=-1;
+          bricks.splice(i,1);score+=10*level;best=Math.max(best,score);updateStats();save();break;
+        }}
+        if(ball.y-ball.r>H){lives--;updateStats();if(lives<=0){lives=0;ended='over';started=false;save();setOverlay('Game over',`Score: ${score} · Press Space or click to play again`);}else{resetBall();save();}}
+        if(!bricks.length)nextLevel();
+      }
+    }
+    draw();requestAnimationFrame(tick);
+  }
+  window.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight',' ','Spacebar'].includes(e.key))e.preventDefault();keys.add(e.key);
+    if(e.key==='p'||e.key==='P')togglePause();if(e.key==='n'||e.key==='N')skipLevel();if(e.code==='Space')launch();});
+  window.addEventListener('keyup',e=>keys.delete(e.key));
+  canvas.addEventListener('pointermove',e=>{const r=canvas.getBoundingClientRect();paddle.x=(e.clientX-r.left)*(W/r.width)-paddle.w/2;paddle.x=Math.max(0,Math.min(W-paddle.w,paddle.x));});
+  canvas.addEventListener('pointerdown',e=>{e.preventDefault();launch();});
+  createBricks(1);load();resetBall();updateStats();tick();
+})();
+</script>
+</body>
+</html>

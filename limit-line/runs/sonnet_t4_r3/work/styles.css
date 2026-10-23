@@ -1,0 +1,23 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, sans-serif; margin: 0; color: #222; background: #f6f7f9; }
+header { display: flex; align-items: center; gap: 24px; padding: 12px 24px; background: #1f3a5f; color: #fff; }
+header h1 { margin: 0; font-size: 1.3rem; }
+nav a { color: #cfd8e6; text-decoration: none; margin-right: 16px; padding: 4px 0; }
+nav a.active { color: #fff; border-bottom: 2px solid #fff; }
+main { max-width: 900px; margin: 0 auto; padding: 16px; }
+section[hidden] { display: none; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+input, select, button { font: inherit; padding: 6px 8px; }
+button { cursor: pointer; }
+button:disabled { opacity: 0.5; cursor: default; }
+.balance { font-size: 1.2rem; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; background: #fff; }
+table.head { margin-top: 8px; }
+table.head th { background: #e4e8ee; text-align: left; }
+th, td { padding: 6px 8px; border-bottom: 1px solid #e4e8ee; text-align: left; overflow-wrap: anywhere; }
+th.sortable { cursor: pointer; user-select: none; }
+td.num { font-variant-numeric: tabular-nums; }
+tr.over td { background: #fde2e2; color: #9b1c1c; font-weight: 600; }
+#list td:last-child, #budgets td:last-child { width: 90px; }
+table.head th:last-child:nth-child(5), table.head th:last-child:nth-child(4) { width: 90px; }
+canvas { display: block; max-width: 100%; margin-top: 16px; background: #fff; border: 1px solid #e4e8ee; }

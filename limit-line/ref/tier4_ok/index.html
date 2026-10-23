@@ -1,0 +1,13 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Budget</title><link rel="stylesheet" href="styles.css"></head><body>
+<nav><a id="nav-transactions" href="#/transactions">Transactions</a> <a id="nav-budgets" href="#/budgets">Budgets</a> <a id="nav-reports" href="#/reports">Reports</a></nav>
+<section id="view-transactions">
+<input id="date" type="date"><input id="description"><input id="amount" type="number" step="0.01"><input id="category">
+<select id="repeat"><option>none</option><option>week</option><option>month</option></select><input id="until" type="date"><button id="add">Add</button>
+<button id="undo">Undo</button><button id="redo">Redo</button> Balance: <span id="balance">0.00</span>
+<input id="search" placeholder="Search"><input id="import" type="file"><button id="export">Export</button>
+<table id="list"><thead><tr><th>Date</th><th>Description</th><th id="sort-amount">Amount</th><th>Category</th><th></th></tr></thead><tbody></tbody></table>
+</section>
+<section id="view-budgets"><input id="budget-category"><input id="budget-limit" type="number"><button id="budget-add">Add budget</button><input id="budget-month" type="month">
+<table id="budgets"><thead><tr><th>Category</th><th>Limit</th><th>Spent</th></tr></thead><tbody></tbody></table></section>
+<section id="view-reports"><input id="report-month" type="month"><table id="report"><thead><tr><th>Category</th><th>Total</th></tr></thead><tbody></tbody></table><canvas id="chart" width="400" height="200"></canvas></section>
+<script type="module" src="js/app.js"></script></body></html>

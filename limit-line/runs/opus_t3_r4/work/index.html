@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expense Tracker</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Expense Tracker</h1>
+      <div class="totals">
+        <div class="total">
+          <span class="label">Balance</span>
+          <span id="balance" class="value">0.00</span>
+        </div>
+        <div class="total">
+          <span class="label">Income</span>
+          <span id="income" class="value pos">0.00</span>
+        </div>
+        <div class="total">
+          <span class="label">Expenses</span>
+          <span id="expense" class="value neg">0.00</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="card">
+      <h2>Add transaction</h2>
+      <form id="form" autocomplete="off">
+        <label>Date
+          <input type="date" id="date">
+        </label>
+        <label>Description
+          <input type="text" id="description" placeholder="e.g. Groceries">
+        </label>
+        <label>Amount
+          <input type="number" id="amount" step="0.01" placeholder="-25.00 or 1000">
+        </label>
+        <label>Category
+          <input type="text" id="category" list="category-options" placeholder="e.g. Food">
+          <datalist id="category-options"></datalist>
+        </label>
+        <button type="submit" id="add">Add</button>
+      </form>
+      <p class="hint">Use negative amounts for expenses and positive amounts for income.</p>
+      <p id="message" role="status"></p>
+    </section>
+
+    <section class="card">
+      <div class="toolbar">
+        <h2>Transactions</h2>
+        <label>Category
+          <select id="filter">
+            <option value="All">All</option>
+          </select>
+        </label>
+        <label class="file-button">Import CSV
+          <input type="file" id="import" accept=".csv,text/csv">
+        </label>
+        <button type="button" id="export">Export CSV</button>
+      </div>
+      <div class="table-wrap">
+        <table id="list">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th class="num">Amount</th>
+              <th>Category</th>
+              <th><span class="visually-hidden">Actions</span></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p id="empty" class="empty">No transactions.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Expenses by category</h2>
+      <canvas id="chart" width="600" height="260" role="img" aria-label="Bar chart of expenses by category"></canvas>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

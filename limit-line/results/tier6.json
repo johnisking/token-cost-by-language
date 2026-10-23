@@ -1,0 +1,460 @@
+{
+ "codex_t6t1_r1": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 1,
+   "removed": 1
+  },
+  "cases": "6/6 YYYYYY"
+ },
+ "codex_t6t2_r1": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 2,
+   "removed": 1
+  },
+  "cases": "6/7 YYYnYYY"
+ },
+ "codex_t6t3_r1": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 0,
+   "added": 0,
+   "removed": 0
+  },
+  "cases": "3/7 nnnYYYn",
+  "note": "Named the right cause, said it would fix the masking order, then ended the turn without editing."
+ },
+ "gemini_t6t1_r1": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 0,
+   "added": 0,
+   "removed": 0
+  },
+  "cases": "2/6 nnnnYY",
+  "note": "Re-run after node/git allow-rules; still ended on a denied command (Windows needs exact matches for quoted node -e lines) before editing."
+ },
+ "gemini_t6t2_r1": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 3,
+   "removed": 2
+  },
+  "cases": "6/7 YYYnYYY"
+ },
+ "gemini_t6t3_r1": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 0,
+   "added": 0,
+   "removed": 0
+  },
+  "cases": "3/7 nnnYYYn",
+  "note": "Re-run; ended on a denied command before editing (898 s)."
+ },
+ "haiku_t6t1_r1": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 1,
+   "removed": 1
+  },
+  "cases": "6/6 YYYYYY"
+ },
+ "haiku_t6t2_r1": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 3,
+   "removed": 1
+  },
+  "cases": "6/7 YYYnYYY"
+ },
+ "haiku_t6t3_r1": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 6,
+   "removed": 3
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "opus_t6t1_r1": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 1,
+   "removed": 1
+  },
+  "cases": "6/6 YYYYYY"
+ },
+ "opus_t6t2_r1": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 4,
+   "removed": 1
+  },
+  "cases": "6/7 YYYnYYY"
+ },
+ "opus_t6t3_r1": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 12,
+   "removed": 2
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "sonnet_t6t1_r1": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 1,
+   "removed": 1
+  },
+  "cases": "6/6 YYYYYY"
+ },
+ "sonnet_t6t2_r1": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 2,
+   "removed": 1
+  },
+  "cases": "6/7 YYYnYYY"
+ },
+ "sonnet_t6t3_r1": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 6,
+   "removed": 1
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "codex_t6t1_r2": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 1,
+   "removed": 1
+  },
+  "cases": "6/6 YYYYYY"
+ },
+ "codex_t6t2_r2": {
+  "build": true,
+  "solved": false,
+  "regressions": [
+   "link_in_link_text",
+   "link_in_link_text should pass"
+  ],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 1,
+   "removed": 1
+  },
+  "cases": "2/7 nnnnnYY"
+ },
+ "codex_t6t3_r2": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 24,
+   "removed": 2
+  },
+  "cases": "3/7 nnnYYYn"
+ },
+ "gemini_t6t1_r2": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 1,
+   "removed": 1
+  },
+  "cases": "6/6 YYYYYY"
+ },
+ "gemini_t6t2_r2": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 3,
+   "removed": 2
+  },
+  "cases": "6/7 YYYnYYY"
+ },
+ "gemini_t6t3_r2": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 0,
+   "added": 0,
+   "removed": 0
+  },
+  "cases": "3/7 nnnYYYn",
+  "note": "Ended on a denied command before editing (890 s)."
+ },
+ "haiku_t6t1_r2": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 1,
+   "removed": 1
+  },
+  "cases": "6/6 YYYYYY"
+ },
+ "haiku_t6t2_r2": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 3,
+   "removed": 1
+  },
+  "cases": "6/7 YYYnYYY"
+ },
+ "haiku_t6t3_r2": {
+  "build": true,
+  "solved": false,
+  "regressions": [
+   "Backslash escapes",
+   "Backslash escapes should pass example 22",
+   "Backslash escapes should pass example 23",
+   "Backslash escapes should pass example 24",
+   "Link reference definitions",
+   "Link reference definitions should pass example 202",
+   "Links",
+   "Links should pass example 495",
+   "Links should pass example 498",
+   "Links should pass example 500",
+   "Links should pass example 506",
+   "def_unbalanced_paren",
+   "def_unbalanced_paren should pass",
+   "link_unbalanced",
+   "link_unbalanced should pass"
+  ],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 6,
+   "removed": 2
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "opus_t6t1_r2": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 1,
+   "removed": 1
+  },
+  "cases": "6/6 YYYYYY"
+ },
+ "opus_t6t2_r2": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 4,
+   "removed": 1
+  },
+  "cases": "6/7 YYYnYYY"
+ },
+ "opus_t6t3_r2": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 12,
+   "removed": 2
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "sonnet_t6t1_r2": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 1,
+   "removed": 1
+  },
+  "cases": "6/6 YYYYYY"
+ },
+ "sonnet_t6t2_r2": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 2,
+   "removed": 1
+  },
+  "cases": "6/7 YYYnYYY"
+ },
+ "sonnet_t6t3_r2": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 6,
+   "removed": 1
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "geminifull_t6t1_r1": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 1,
+   "removed": 1
+  },
+  "cases": "6/6 YYYYYY"
+ },
+ "geminifull_t6t2_r1": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 3,
+   "removed": 2
+  },
+  "cases": "6/7 YYYnYYY"
+ },
+ "geminifull_t6t1_r2": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 1,
+   "removed": 1
+  },
+  "cases": "6/6 YYYYYY"
+ },
+ "geminifull_t6t2_r2": {
+  "build": true,
+  "solved": true,
+  "regressions": [],
+  "points": 1,
+  "diff": {
+   "files": 1,
+   "added": 3,
+   "removed": 2
+  },
+  "cases": "6/7 YYYnYYY"
+ },
+ "geminifull_t6t3_r1": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 0,
+   "added": 0,
+   "removed": 0
+  },
+  "cases": "3/7 nnnYYYn",
+  "note": "Full permissions (owner ran it); hit the 30-minute print timeout with no edit (7.5M cache-read tokens)."
+ },
+ "geminifull_t6t3_r2": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 0,
+   "added": 0,
+   "removed": 0
+  },
+  "cases": "3/7 nnnYYYn",
+  "note": "Excluded: Antigravity quota ran out after 637 s (429 RESOURCE_EXHAUSTED, resets in about 6 days); no edit.",
+  "excluded": true
+ }
+}

@@ -1,0 +1,10 @@
+Build a small expense tracker web app in the current folder, split into several files: index.html, styles.css, and JavaScript ES modules in a js/ folder. It must run when the folder is served by any static web server, with no build step and no external libraries. Requirements:
+1. js/csv.js exports parseCSV(text) and toCSV(items). The CSV has the header row date,description,amount,category; fields may be quoted with double quotes and may contain commas. parseCSV returns an array of objects {date, description, amount, category} with amount as a number.
+2. js/summary.js exports summarize(items), returning {income, expense, balance, byCategory}: income is the sum of positive amounts, expense the sum of negative amounts as a positive number, balance = income - expense, and byCategory maps each category to the sum of its amounts.
+3. The page has a form with inputs #date, #description, #amount, #category and a button #add. Adding a transaction shows it as a row in a table with the id #list, and each row has a delete button with the class "delete".
+4. Show the current balance in an element with the id #balance, formatted with two decimals (for example 1234.50).
+5. A select with the id #filter lists "All" plus every category; choosing a category shows only its rows in #list.
+6. A file input with the id #import loads a CSV file and adds its rows. A button #export downloads all transactions as a CSV file.
+7. Transactions are saved in localStorage and are still there after the page is reloaded.
+8. A canvas with the id #chart draws a bar per category of expenses.
+Write the files and finish.

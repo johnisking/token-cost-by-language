@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Brick Breaker</title>
+<style>
+  body { margin: 0; background: #111; color: #eee; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; }
+  #bar { width: 640px; display: flex; justify-content: space-between; padding: 8px 0; font-size: 18px; }
+  #wrap { position: relative; width: 640px; height: 480px; }
+  canvas { background: #1b1b2f; display: block; border: 1px solid #444; cursor: none; }
+  #overlay { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,.6); font-size: 44px; font-weight: bold; text-align: center; }
+  #overlay small { font-size: 16px; font-weight: normal; margin-top: 12px; }
+  #help { font-size: 13px; color: #999; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div id="bar"><span id="score">Score: 0</span><span id="lives">Lives: 3</span><span id="level">Level: 1</span><span id="best">Best: 0</span></div>
+<div id="wrap">
+  <canvas id="c" width="640" height="480"></canvas>
+  <div id="overlay"><div id="msg"></div><small id="sub"></small></div>
+</div>
+<div id="help">Arrows / mouse: move &middot; Space / click: launch &middot; P: pause &middot; N: next level</div>
+<script>
+(function () {
+  var W = 640, H = 480, KEY = 'brickbreaker-save';
+  var cv = document.getElementById('c'), ctx = cv.getContext('2d');
+  var ov = document.getElementById('overlay'), msg = document.getElementById('msg'), sub = document.getElementById('sub');
+  var COLS = 10, ROWS = 8, BW = 58, BH = 20, GAP = 4, OX = (W - (COLS * (BW + GAP) - GAP)) / 2, OY = 50;
+  var COLORS = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#1abc9c', '#3498db', '#9b59b6', '#ec407a'];
+
+  var layouts = [
+    function (r, c) { return r < 5; },
+    function (r, c) { return r < 7 && (r + c) % 2 === 0; },
+    function (r, c) { return r < 6 && c >= r && c < COLS - r; },
+    function (r, c) { return c % 3 !== 2 && r < 8; },
+    function (r, c) { return Math.abs(c - 4.5) + Math.abs(r - 3.5) <= 4.5 && !(r === 3 && (c === 4 || c === 5)); }
+  ];
+
+  var save = {};
+  try { save = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) { save = {}; }
+  var best = +save.best || 0;
+  var level = Math.min(5, Math.max(1, +save.level || 1));
+  var score = level > 1 ? (+save.score || 0) : 0;
+  var lives = 3, bricks = [], paused = false, state = 'ready'; // ready, play, over, win
+  var paddle = { w: 90, h: 12, x: (W - 90) / 2, y: H - 30 };
+  var ball = { x: 0, y: 0, r: 7, dx: 0, dy: 0 };
+  var keys = { left: false, right: false };
+
+  function persist() {
+    if (score > best) best = score;
+    try { localStorage.setItem(KEY, JSON.stringify({ level: level, score: score, best: best })); } catch (e) {}
+  }
+  function hud() {
+    document.getElementById('score').textContent = 'Score: ' + score;
+    document.getElementById('lives').textContent = 'Lives: ' + lives;
+    document.getElementById('level').textContent = 'Level: ' + level;
+    document.getElementById('best').textContent = 'Best: ' + best;
+  }
+  function overlay(text, subtext) {
+    if (text) { msg.textContent = text; sub.textContent = subtext || ''; ov.style.display = 'flex'; }
+    else ov.style.display = 'none';
+  }
+  function buildBricks() {
+    bricks = [];
+    for (var r = 0; r < ROWS; r++) for (var c = 0; c < COLS; c++)
+      if (layouts[level - 1](r, c)) bricks.push({ x: OX + c * (BW + GAP), y: OY + r * (BH + GAP), color: COLORS[r], alive: true });
+  }
+  function resetBall() {
+    state = 'ready'; ball.dx = ball.dy = 0;
+    ball.x = paddle.x + paddle.w / 2; ball.y = paddle.y - ball.r - 1;
+  }
+  function startLevel() { buildBricks(); resetBall(); persist(); hud(); }
+  function newGame() {
+    level = 1; score = 0; lives = 3; paused = false; overlay(null); startLevel();
+  }
+  function nextLevel() {
+    if (state === 'over' || state === 'win') return;
+    if (level >= 5) { win(); return; }
+    level++; startLevel();
+  }
+  function win() {
+    state = 'win'; persist();
+    var b = best; level = 1; var s = score; score = 0; persist(); score = s; best = b;
+    hud(); overlay('You win', 'Score: ' + score + ' — press Space or click to play again');
+  }
+  function gameOver() {
+    state = 'over'; var s = score; level = 1; score = 0; persist(); score = s;
+    hud(); overlay('Game over', 'Press Space or click to restart');
+  }
+  function launch() {
+    if (state === 'over' || state === 'win') { newGame(); return; }
+    if (paused || state !== 'ready') return;
+    var sp = 4.2 + level * 0.4, a = (Math.random() * 0.6 - 0.3);
+    ball.dx = sp * Math.sin(a); ball.dy = -sp * Math.cos(a); state = 'play';
+  }
+  function movePaddle(x) {
+    paddle.x = Math.max(0, Math.min(W - paddle.w, x));
+    if (state === 'ready') ball.x = paddle.x + paddle.w / 2;
+  }
+
+  document.addEventListener('keydown', function (e) {
+    var k = e.key;
+    if (k === 'ArrowLeft') { keys.left = true; e.preventDefault(); }
+    else if (k === 'ArrowRight') { keys.right = true; e.preventDefault(); }
+    else if (k === ' ' || k === 'Spacebar') { e.preventDefault(); launch(); }
+    else if (k === 'p' || k === 'P') {
+      if (state === 'over' || state === 'win') return;
+      paused = !paused; overlay(paused ? 'Paused' : null, paused ? 'Press P to resume' : '');
+    }
+    else if (k === 'n' || k === 'N') { if (!paused) nextLevel(); }
+  });
+  document.addEventListener('keyup', function (e) {
+    if (e.key === 'ArrowLeft') keys.left = false;
+    else if (e.key === 'ArrowRight') keys.right = false;
+  });
+  cv.addEventListener('mousemove', function (e) {
+    if (paused || state === 'over' || state === 'win') return;
+    var rc = cv.getBoundingClientRect();
+    movePaddle((e.clientX - rc.left) * (W / rc.width) - paddle.w / 2);
+  });
+  document.getElementById('wrap').addEventListener('click', launch);
+
+  function update() {
+    if (keys.left) movePaddle(paddle.x - 7);
+    if (keys.right) movePaddle(paddle.x + 7);
+    if (state !== 'play') return;
+    ball.x += ball.dx; ball.y += ball.dy;
+    if (ball.x < ball.r) { ball.x = ball.r; ball.dx = Math.abs(ball.dx); }
+    if (ball.x > W - ball.r) { ball.x = W - ball.r; ball.dx = -Math.abs(ball.dx); }
+    if (ball.y < ball.r) { ball.y = ball.r; ball.dy = Math.abs(ball.dy); }
+    if (ball.dy > 0 && ball.y + ball.r >= paddle.y && ball.y - ball.r <= paddle.y + paddle.h &&
+        ball.x >= paddle.x - ball.r && ball.x <= paddle.x + paddle.w + ball.r) {
+      var sp = Math.sqrt(ball.dx * ball.dx + ball.dy * ball.dy);
+      var rel = (ball.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2);
+      rel = Math.max(-1, Math.min(1, rel));
+      var a = rel * 1.05;
+      ball.dx = sp * Math.sin(a); ball.dy = -sp * Math.cos(a);
+      ball.y = paddle.y - ball.r;
+    }
+    for (var i = 0; i < bricks.length; i++) {
+      var b = bricks[i];
+      if (!b.alive) continue;
+      if (ball.x + ball.r > b.x && ball.x - ball.r < b.x + BW && ball.y + ball.r > b.y && ball.y - ball.r < b.y + BH) {
+        b.alive = false;
+        var ox = Math.min(ball.x + ball.r - b.x, b.x + BW - (ball.x - ball.r));
+        var oy = Math.min(ball.y + ball.r - b.y, b.y + BH - (ball.y - ball.r));
+        if (ox < oy) ball.dx = -ball.dx; else ball.dy = -ball.dy;
+        score += 10 * level; persist(); hud();
+        if (!bricks.some(function (q) { return q.alive; })) { nextLevel(); }
+        break;
+      }
+    }
+    if (state === 'play' && ball.y - ball.r > H) {
+      lives--;
+      if (lives <= 0) { lives = 0; gameOver(); }
+      else { resetBall(); hud(); }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    bricks.forEach(function (b) {
+      if (!b.alive) return;
+      ctx.fillStyle = b.color; ctx.fillRect(b.x, b.y, BW, BH);
+    });
+    ctx.fillStyle = '#ecf0f1'; ctx.fillRect(paddle.x, paddle.y, paddle.w, paddle.h);
+    ctx.beginPath(); ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2); ctx.fillStyle = '#fff'; ctx.fill();
+  }
+
+  function loop() {
+    if (!paused) update();
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  buildBricks(); resetBall(); persist(); hud();
+  loop();
+})();
+</script>
+</body>
+</html>

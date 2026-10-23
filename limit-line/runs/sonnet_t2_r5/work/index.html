@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Brick Breaker</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #111; display: flex; align-items: center; justify-content: center; }
+  canvas { background: #1b1b2f; border: 2px solid #444; max-width: 100%; cursor: none; }
+  .sr { position: absolute; left: -9999px; }
+</style>
+</head>
+<body>
+<canvas id="c" width="640" height="480"></canvas>
+<div class="sr" id="sr" aria-live="polite"></div>
+<script>
+(function () {
+  var W = 640, H = 480;
+  var canvas = document.getElementById('c');
+  var ctx = canvas.getContext('2d');
+  var sr = document.getElementById('sr');
+  var KEY = 'brickbreaker.v1';
+
+  // 10 columns; '#' = brick, '.' = empty, digits = tougher bricks (hits needed)
+  var LEVELS = [
+    ['##########', '##########', '##########', '##########'],
+    ['#.#.#.#.#.', '.#.#.#.#.#', '#.#.#.#.#.', '.#.#.#.#.#', '#.#.#.#.#.'],
+    ['....##....', '...####...', '..######..', '.########.', '##########'],
+    ['##########', '#........#', '#.######.#', '#.#....#.#', '#.######.#', '#........#', '##########'],
+    ['2222222222', '#.#.##.#.#', '2.2.22.2.2', '##########', '.2.2..2.2.', '#.#.##.#.#']
+  ];
+  var COLORS = ['#e74c3c', '#e67e22', '#f1c40f', '#2ecc71', '#3498db', '#9b59b6', '#1abc9c'];
+
+  var BR_COLS = 10, BR_W = 56, BR_H = 20, BR_GAP = 4, BR_TOP = 50;
+  var BR_LEFT = (W - (BR_COLS * BR_W + (BR_COLS - 1) * BR_GAP)) / 2;
+  var PAD_W = 90, PAD_H = 12, PAD_Y = H - 30, PAD_SPEED = 480;
+  var BALL_R = 7;
+
+  var state = {
+    score: 0, lives: 3, level: 1, best: 0,
+    mode: 'ready',   // ready (waiting launch), playing, over, win
+    paused: false
+  };
+  var bricks = [];
+  var pad = { x: (W - PAD_W) / 2 };
+  var ball = { x: 0, y: 0, vx: 0, vy: 0 };
+  var keys = { left: false, right: false };
+
+  function load() {
+    try {
+      var d = JSON.parse(localStorage.getItem(KEY) || '{}');
+      if (d.best > 0) state.best = d.best | 0;
+      if (d.level >= 1 && d.level <= LEVELS.length) state.level = d.level | 0;
+      if (d.level && d.score > 0) state.score = d.score | 0;
+      if (d.lives >= 1 && d.lives <= 3) state.lives = d.lives | 0;
+    } catch (e) {}
+  }
+  function save() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({
+        level: state.level, score: state.score, lives: state.lives, best: state.best
+      }));
+    } catch (e) {}
+  }
+
+  function buildLevel() {
+    bricks = [];
+    var rows = LEVELS[state.level - 1];
+    for (var r = 0; r < rows.length; r++) {
+      for (var c = 0; c < BR_COLS; c++) {
+        var ch = rows[r][c];
+        if (ch === '.') continue;
+        var hp = ch === '#' ? 1 : parseInt(ch, 10);
+        bricks.push({
+          x: BR_LEFT + c * (BR_W + BR_GAP),
+          y: BR_TOP + r * (BR_H + BR_GAP),
+          hp: hp, color: COLORS[r % COLORS.length], alive: true
+        });
+      }
+    }
+  }
+
+  function resetBall() {
+    state.mode = state.mode === 'playing' || state.mode === 'ready' ? 'ready' : state.mode;
+    ball.x = pad.x + PAD_W / 2;
+    ball.y = PAD_Y - BALL_R - 1;
+    ball.vx = ball.vy = 0;
+  }
+
+  function startLevel() {
+    buildLevel();
+    state.mode = 'ready';
+    resetBall();
+  }
+
+  function newGame() {
+    state.score = 0; state.lives = 3; state.level = 1;
+    state.paused = false;
+    startLevel();
+    save();
+  }
+
+  function nextLevel() {
+    if (state.level >= LEVELS.length) {
+      state.mode = 'win';
+      // finished: next session starts fresh
+      state.level = 1; state.score = state.score; // keep score displayed on win screen
+      try {
+        localStorage.setItem(KEY, JSON.stringify({ level: 1, score: 0, lives: 3, best: state.best }));
+      } catch (e) {}
+      return;
+    }
+    state.level++;
+    startLevel();
+    save();
+  }
+
+  function addScore(n) {
+    state.score += n;
+    if (state.score > state.best) state.best = state.score;
+    save();
+  }
+
+  function launch() {
+    if (state.mode === 'over' || state.mode === 'win') { newGame(); return; }
+    if (state.paused) return;
+    if (state.mode === 'ready') {
+      var speed = 300 + (state.level - 1) * 30;
+      var a = (Math.random() * 0.6 - 0.3);
+      ball.vx = speed * Math.sin(a);
+      ball.vy = -speed * Math.cos(a);
+      state.mode = 'playing';
+    }
+  }
+
+  function loseLife() {
+    state.lives--;
+    if (state.lives <= 0) {
+      state.lives = 0;
+      state.mode = 'over';
+      try {
+        localStorage.setItem(KEY, JSON.stringify({ level: 1, score: 0, lives: 3, best: state.best }));
+      } catch (e) {}
+      return;
+    }
+    state.mode = 'ready';
+    resetBall();
+    save();
+  }
+
+  function clampPad() {
+    if (pad.x < 0) pad.x = 0;
+    if (pad.x > W - PAD_W) pad.x = W - PAD_W;
+  }
+
+  function update(dt) {
+    if (state.paused || state.mode === 'over' || state.mode === 'win') return;
+    var dir = (keys.right ? 1 : 0) - (keys.left ? 1 : 0);
+    pad.x += dir * PAD_SPEED * dt;
+    clampPad();
+
+    if (state.mode === 'ready') {
+      ball.x = pad.x + PAD_W / 2;
+      ball.y = PAD_Y - BALL_R - 1;
+      return;
+    }
+
+    // sub-step to avoid tunnelling
+    var steps = 3;
+    for (var s = 0; s < steps; s++) {
+      ball.x += ball.vx * dt / steps;
+      ball.y += ball.vy * dt / steps;
+
+      if (ball.x < BALL_R) { ball.x = BALL_R; ball.vx = Math.abs(ball.vx); }
+      if (ball.x > W - BALL_R) { ball.x = W - BALL_R; ball.vx = -Math.abs(ball.vx); }
+      if (ball.y < BALL_R) { ball.y = BALL_R; ball.vy = Math.abs(ball.vy); }
+
+      // paddle
+      if (ball.vy > 0 && ball.y + BALL_R >= PAD_Y && ball.y + BALL_R <= PAD_Y + PAD_H + 6 &&
+          ball.x >= pad.x - BALL_R && ball.x <= pad.x + PAD_W + BALL_R) {
+        var hit = (ball.x - (pad.x + PAD_W / 2)) / (PAD_W / 2); // -1..1
+        hit = Math.max(-1, Math.min(1, hit));
+        var sp = Math.sqrt(ball.vx * ball.vx + ball.vy * ball.vy);
+        var ang = hit * 1.05; // radians from vertical
+        ball.vx = sp * Math.sin(ang);
+        ball.vy = -sp * Math.cos(ang);
+        ball.y = PAD_Y - BALL_R;
+      }
+
+      // bricks
+      for (var i = 0; i < bricks.length; i++) {
+        var b = bricks[i];
+        if (!b.alive) continue;
+        var cx = Math.max(b.x, Math.min(ball.x, b.x + BR_W));
+        var cy = Math.max(b.y, Math.min(ball.y, b.y + BR_H));
+        var dx = ball.x - cx, dy = ball.y - cy;
+        if (dx * dx + dy * dy > BALL_R * BALL_R) continue;
+
+        var ox = Math.min(ball.x + BALL_R - b.x, b.x + BR_W - (ball.x - BALL_R));
+        var oy = Math.min(ball.y + BALL_R - b.y, b.y + BR_H - (ball.y - BALL_R));
+        if (ox < oy) ball.vx = (ball.x < b.x + BR_W / 2) ? -Math.abs(ball.vx) : Math.abs(ball.vx);
+        else ball.vy = (ball.y < b.y + BR_H / 2) ? -Math.abs(ball.vy) : Math.abs(ball.vy);
+
+        b.hp--;
+        if (b.hp <= 0) { b.alive = false; addScore(10 * state.level); }
+        else addScore(5);
+        break;
+      }
+
+      if (ball.y - BALL_R > H) { loseLife(); return; }
+    }
+
+    if (!bricks.some(function (b) { return b.alive; })) nextLevel();
+  }
+
+  function statusLines() {
+    return ['Score: ' + state.score, 'Lives: ' + state.lives, 'Level: ' + state.level, 'Best: ' + state.best];
+  }
+
+  function overlay(text, sub) {
+    ctx.fillStyle = 'rgba(0,0,0,0.65)';
+    ctx.fillRect(0, 0, W, H);
+    ctx.fillStyle = '#fff';
+    ctx.textAlign = 'center';
+    ctx.font = 'bold 48px sans-serif';
+    ctx.fillText(text, W / 2, H / 2);
+    if (sub) { ctx.font = '18px sans-serif'; ctx.fillText(sub, W / 2, H / 2 + 36); }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // status bar
+    var lines = statusLines();
+    ctx.font = '16px sans-serif';
+    ctx.fillStyle = '#eee';
+    ctx.textBaseline = 'alphabetic';
+    ctx.textAlign = 'left'; ctx.fillText(lines[0], 12, 26);
+    ctx.textAlign = 'center'; ctx.fillText(lines[1], W * 0.4, 26);
+    ctx.fillText(lines[2], W * 0.6, 26);
+    ctx.textAlign = 'right'; ctx.fillText(lines[3], W - 12, 26);
+    ctx.strokeStyle = '#444';
+    ctx.beginPath(); ctx.moveTo(0, 36); ctx.lineTo(W, 36); ctx.stroke();
+    var txt = lines.join(' | ');
+    if (sr.textContent !== txt) sr.textContent = txt;
+
+    bricks.forEach(function (b) {
+      if (!b.alive) return;
+      ctx.fillStyle = b.hp > 1 ? '#95a5a6' : b.color;
+      ctx.fillRect(b.x, b.y, BR_W, BR_H);
+      if (b.hp > 1) {
+        ctx.fillStyle = '#222'; ctx.font = 'bold 13px sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText(String(b.hp), b.x + BR_W / 2, b.y + 15);
+      }
+    });
+
+    ctx.fillStyle = '#ecf0f1';
+    ctx.fillRect(pad.x, PAD_Y, PAD_W, PAD_H);
+    ctx.beginPath(); ctx.arc(ball.x, ball.y, BALL_R, 0, Math.PI * 2);
+    ctx.fillStyle = '#f9ca24'; ctx.fill();
+
+    if (state.mode === 'ready' && !state.paused) {
+      ctx.fillStyle = '#aaa'; ctx.font = '16px sans-serif'; ctx.textAlign = 'center';
+      ctx.fillText('Press Space or click to launch', W / 2, H / 2 + 80);
+    }
+    if (state.mode === 'over') overlay('Game over', 'Press Space or click to restart');
+    else if (state.mode === 'win') overlay('You win', 'Press Space or click to play again');
+    else if (state.paused) overlay('Paused', 'Press P to resume');
+  }
+
+  var last = performance.now();
+  function frame(now) {
+    var dt = Math.min(0.033, (now - last) / 1000);
+    last = now;
+    update(dt);
+    draw();
+    requestAnimationFrame(frame);
+  }
+
+  document.addEventListener('keydown', function (e) {
+    var k = e.key;
+    if (k === 'ArrowLeft') { keys.left = true; e.preventDefault(); }
+    else if (k === 'ArrowRight') { keys.right = true; e.preventDefault(); }
+    else if (k === ' ' || k === 'Spacebar') { e.preventDefault(); launch(); }
+    else if (k === 'p' || k === 'P') {
+      if (state.mode !== 'over' && state.mode !== 'win') state.paused = !state.paused;
+    }
+    else if (k === 'n' || k === 'N') {
+      if (state.mode !== 'over' && state.mode !== 'win' && !state.paused) nextLevel();
+    }
+  });
+  document.addEventListener('keyup', function (e) {
+    if (e.key === 'ArrowLeft') keys.left = false;
+    else if (e.key === 'ArrowRight') keys.right = false;
+  });
+  canvas.addEventListener('mousemove', function (e) {
+    if (state.paused) return;
+    var r = canvas.getBoundingClientRect();
+    var x = (e.clientX - r.left) * (W / r.width);
+    pad.x = x - PAD_W / 2;
+    clampPad();
+  });
+  canvas.addEventListener('mousedown', function () { launch(); });
+  window.addEventListener('blur', function () { keys.left = keys.right = false; });
+
+  load();
+  startLevel();
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
