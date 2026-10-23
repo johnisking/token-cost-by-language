@@ -1,0 +1,440 @@
+{
+ "codex_t6t3_r3": {
+  "build": true,
+  "solved": false,
+  "regressions": [
+   "escape_tick",
+   "escape_tick should pass"
+  ],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 8,
+   "removed": 6
+  },
+  "cases": "4/7 YYYnYnn"
+ },
+ "codex_t6t3_r4": {
+  "build": true,
+  "solved": false,
+  "regressions": [
+   "escape_tick",
+   "escape_tick should pass"
+  ],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 8,
+   "removed": 6
+  },
+  "cases": "4/7 YYYnYnn"
+ },
+ "codex_t6t3_r5": {
+  "build": true,
+  "solved": false,
+  "regressions": [
+   "escape_tick",
+   "escape_tick should pass"
+  ],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 7,
+   "removed": 6
+  },
+  "cases": "4/7 YYYnYnn"
+ },
+ "codexdev_t6t3_r1": {
+  "build": true,
+  "solved": false,
+  "regressions": [
+   "escape_tick",
+   "escape_tick should pass"
+  ],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 8,
+   "removed": 6
+  },
+  "cases": "4/7 YYYnYnn",
+  "excluded": true,
+  "note": "Tests were allowed, but the Codex Windows sandbox (workspace-write) blocked esbuild (\"Cannot read directory ...: Access is denied\"), so the run could not build or run any test; excluded."
+ },
+ "codexdev_t6t3_r2": {
+  "build": true,
+  "solved": false,
+  "regressions": [
+   "backtick_precedence",
+   "backtick_precedence should pass",
+   "escape_tick",
+   "escape_tick should pass"
+  ],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 6,
+   "removed": 0
+  },
+  "cases": "6/7 YYYnYYY",
+  "excluded": true,
+  "note": "Tests were allowed, but the Codex Windows sandbox (workspace-write) blocked esbuild (\"Cannot read directory ...: Access is denied\"), so the run could not build or run any test; excluded."
+ },
+ "codexdev_t6t3_r3": {
+  "build": true,
+  "solved": false,
+  "regressions": [
+   "quadratic_em_mask[0]",
+   "quadratic_em_mask[0] should pass",
+   "quadratic_em_mask[1]",
+   "quadratic_em_mask[1] should pass",
+   "quadratic_em_mask[2]",
+   "quadratic_em_mask[2] should pass",
+   "quadratic_em_mask[3]",
+   "quadratic_em_mask[3] should pass",
+   "quadratic_footnote_defs[0]",
+   "quadratic_footnote_defs[0] should pass",
+   "quadratic_html_prefix_interrupt[0]",
+   "quadratic_html_prefix_interrupt[0] should pass",
+   "quadratic_inline_masking[1]",
+   "quadratic_inline_masking[1] should pass",
+   "quadratic_inline_masking[2]",
+   "quadratic_inline_masking[2] should pass",
+   "quadratic_nested_reflink_defs[0]",
+   "quadratic_nested_reflink_defs[0] should pass",
+   "quadratic_unterminated_links[0]",
+   "quadratic_unterminated_links[0] should pass"
+  ],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 25,
+   "removed": 2
+  },
+  "cases": "5/7 YYYYYnn",
+  "excluded": true,
+  "note": "Tests were allowed, but the Codex Windows sandbox (workspace-write) blocked esbuild (\"Cannot read directory ...: Access is denied\"), so the run could not build or run any test; excluded."
+ },
+ "codexdev_t6t3_r4": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 21,
+   "removed": 2
+  },
+  "cases": "3/7 nnnYYYn",
+  "excluded": true,
+  "note": "Tests were allowed, but the Codex Windows sandbox (workspace-write) blocked esbuild (\"Cannot read directory ...: Access is denied\"), so the run could not build or run any test; excluded."
+ },
+ "codexdev_t6t3_r5": {
+  "build": true,
+  "solved": false,
+  "regressions": [
+   "escape_tick",
+   "escape_tick should pass"
+  ],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 7,
+   "removed": 6
+  },
+  "cases": "4/7 YYYnYnn",
+  "excluded": true,
+  "note": "Tests were allowed, but the Codex Windows sandbox (workspace-write) blocked esbuild (\"Cannot read directory ...: Access is denied\"), so the run could not build or run any test; excluded."
+ },
+ "haiku_t6t3_r3": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 8,
+   "removed": 3
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "haiku_t6t3_r4": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 8,
+   "removed": 1
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "haiku_t6t3_r5": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 11,
+   "removed": 3
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "haikudev_t6t3_r1": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 13,
+   "removed": 4
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "haikudev_t6t3_r2": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 16,
+   "removed": 3
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "haikudev_t6t3_r3": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 12,
+   "removed": 5
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "haikudev_t6t3_r4": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 11,
+   "removed": 2
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "haikudev_t6t3_r5": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 11,
+   "removed": 2
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "opus_t6t3_r3": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 15,
+   "removed": 3
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "opus_t6t3_r4": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 9,
+   "removed": 1
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "opus_t6t3_r5": {
+  "build": true,
+  "solved": false,
+  "regressions": [
+   "test/run-spec-tests.js"
+  ],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 15,
+   "removed": 1
+  },
+  "cases": "",
+  "note": "The change put an invalid regular expression (bad capture-group name) into src/rules.ts, so marked throws on load and every spec test fails; counted as one failing test file."
+ },
+ "opusdev_t6t3_r1": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 10,
+   "removed": 1
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "opusdev_t6t3_r2": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 11,
+   "removed": 1
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "opusdev_t6t3_r3": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 9,
+   "removed": 1
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "opusdev_t6t3_r4": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 62,
+   "removed": 1
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "opusdev_t6t3_r5": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 2,
+   "added": 13,
+   "removed": 1
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "sonnet_t6t3_r3": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 7,
+   "removed": 1
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "sonnet_t6t3_r4": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 5,
+   "removed": 1
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "sonnet_t6t3_r5": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 5,
+   "removed": 1
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "sonnetdev_t6t3_r1": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 3,
+   "removed": 1
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "sonnetdev_t6t3_r2": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 5,
+   "removed": 1
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "sonnetdev_t6t3_r3": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 3,
+   "removed": 1
+  },
+  "cases": "6/7 YYYYYYn"
+ },
+ "sonnetdev_t6t3_r4": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 7,
+   "removed": 1
+  },
+  "cases": "5/7 YYYYYnn"
+ },
+ "sonnetdev_t6t3_r5": {
+  "build": true,
+  "solved": false,
+  "regressions": [],
+  "points": 0,
+  "diff": {
+   "files": 1,
+   "added": 4,
+   "removed": 1
+  },
+  "cases": "6/7 YYYYYYn"
+ }
+}

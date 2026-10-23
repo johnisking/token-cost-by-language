@@ -1,0 +1,6 @@
+The current folder is a checkout of marked, the Markdown parser (TypeScript sources in src/, tests in test/). A user reported the bug below. Find the cause in the source code and fix it in src/, without breaking any other behaviour. Dependencies are already installed in node_modules, and you may run commands in this folder to check your work, for example node scripts, npm run build:esbuild and npm run test:specs (the spec tests in test/specs). You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"A code span that ends with a backslash stops emphasis later in the line from working. For example
+Use `C:\Users\` for **home** and `D:\` for data.
+renders **home** literally: <p>Use <code>C:\Users\</code> for **home** and <code>D:\</code> for data.</p>. Expected: <p>Use <code>C:\Users\</code> for <strong>home</strong> and <code>D:\</code> for data.</p>. Likewise `a\` *b* `c` should give <code>a\</code> <em>b</em> <code>c</code>. A backslash inside a code span is literal text and must not escape anything outside it."

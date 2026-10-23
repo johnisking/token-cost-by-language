@@ -135,7 +135,26 @@ for k, v in sorted(t6.items()):
         date='2026-10-24' if k in DATE_24 else '2026-10-23',
         extra={'solved': v.get('solved'), 'new_test_failures': len(v.get('regressions', [])),
                'hidden_cases_passed': int(m.group(1)) if m else None, 'hidden_cases': int(m.group(2)) if m else None,
-               'lines_added': v.get('diff', {}).get('added'), 'lines_removed': v.get('diff', {}).get('removed')})
+               'lines_added': v.get('diff', {}).get('added'), 'lines_removed': v.get('diff', {}).get('removed'),
+               'tests_allowed': False})
+
+# tier 6b (2026-10-24): the hard bug (t3) again. Runs r3-r5 without tests (same setup as tier 6), and r1-r5 with
+# dependencies preinstalled and the prompt allowing test runs ("dev"; Claude Code: node, npm test/run, read-only git).
+t6b = j(os.path.join(RES, 'tier6b.json'))
+T6B = os.path.join(S, 't6b')
+for k, v in sorted(t6b.items()):
+    name = k.replace('dev_', '_')
+    tool = name.split('_')[0]
+    hc = v.get('cases', '')
+    m = re.match(r'(\d+)/(\d+)', hc or '')
+    add('6', '6t3', name, os.path.join(T6B, k), v['points'], 1, excluded=bool(v.get('excluded')), note=v.get('note', ''),
+        date='2026-10-24', tool=tool,
+        extra={'solved': v.get('solved'), 'new_test_failures': len(v.get('regressions', [])),
+               'hidden_cases_passed': int(m.group(1)) if m else (0 if k == 'opus_t6t3_r5' else None), 'hidden_cases': 7,
+               'lines_added': v.get('diff', {}).get('added'), 'lines_removed': v.get('diff', {}).get('removed'),
+               'tests_allowed': 'dev_' in k})
+    if tool == 'codex': rows[-1]['harness'] = 'Codex CLI 0.163'
+    if 'dev_' in k and tool != 'codex': rows[-1]['permissions'] = 'acceptEdits + allowed: node, npm test/run, read-only git'
 
 os.makedirs(OUT, exist_ok=True)
 cols = []
@@ -145,12 +164,14 @@ for r in rows:
 with open(os.path.join(OUT, 'ai-coding-limit-line.csv'), 'w', newline='', encoding='utf-8') as f:
     w = csv.DictWriter(f, fieldnames=cols); w.writeheader()
     for r in rows: w.writerow({c: ('' if r.get(c) is None else r.get(c)) for c in cols})
-meta = {'title': 'Where AI coding agents first fail: six levels of tasks, five tools',
+meta = {'title': 'Where Claude Haiku falls behind Opus: coding runs with hidden tests, six levels, five tools',
         'measured': '2026-10-23 to 2026-10-24', 'license': 'CC BY 4.0', 'tasks': TASK,
         'scoring': {'2': '9 black-box checks', '3': '12 checks', '4': '23 checks (10 module, 13 UI)',
                     '5a': '38 = 6 bug checks + 9 feature checks + 23 tier-4 regression checks',
                     '5b': '38 = 32 engine module tests + 6 page tests',
-                    '6': '1 point if the upstream fix\'s hidden spec passes and no other marked spec test newly fails'},
+                    '6': '1 point if the upstream fix\'s hidden spec passes and no other marked spec test newly fails; '
+                         'hidden_cases_passed counts the 7 cases of that spec one by one. tests_allowed: dependencies '
+                         'preinstalled and the prompt allowed running node and the spec tests'},
         'runs': rows}
 json.dump(meta, open(os.path.join(OUT, 'ai-coding-limit-line.json'), 'w', encoding='utf-8'), indent=1, ensure_ascii=False)
 print(len(rows), 'rows;', sum(not r['excluded'] for r in rows), 'counted')
