@@ -1,5 +1,7 @@
 # Same code, about 60% more output tokens: Claude vs GPT vs Gemini in four coding tools and five languages
 
+DOI: https://doi.org/10.5281/zenodo.23585139
+
 Measured 2026-10-18 to 2026-10-23 on Windows 11. The same brick-breaker task, prompted in English, Korean, Japanese, Spanish and Ukrainian, in Claude Code 2.1.295 (Opus 5.5), Codex CLI 0.162 (gpt-6-luna) and Antigravity CLI 1.4.5 (Gemini 4 Argon and Claude Opus 5.5). 80 runs. License: CC BY 4.0.
 
 Page with tables, chart and method: https://tokensave.app/data/output-tokens-per-character-by-model
@@ -24,3 +26,5 @@ Opus needed about 60% more output tokens per character than Gemini and about 57%
 - Claude Code and Codex runs: `../coding-prompt-language/`. Antigravity English runs: `../antigravity-cli/`.
 
 Output tokens include the short final reply and the tool-call wrapping around the file, not only the code.
+
+Cite: TokenSave (2026). Same code, about 60% more output tokens: Claude vs GPT vs Gemini in four coding tools and five languages [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23585139
