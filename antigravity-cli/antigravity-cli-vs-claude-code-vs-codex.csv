@@ -43,3 +43,11 @@ codex,startup,1,1,14618,0,5,8,,,,,,,,Codex + gpt-6-luna
 codex,startup,1,2,14618,7680,5,7,,,,,,,,Codex + gpt-6-luna
 codex,startup,30,1,14618,7680,5,8,,,,,,,,Codex + gpt-6-luna
 codex,startup,30,2,14618,0,5,10,,,,,,,,Codex + gpt-6-luna
+claude,game,,4,123666,95504,8537,73,0.42,487,True,True,True,True,"run from 2026-10-18 (dataset claude-code-vs-codex-tokens, same versions); checked there for score, 2 levels and 3 lives",Claude Code + Opus 5.5
+claude,game,,5,79213,51762,7870,63,0.39,527,True,True,True,True,"run from 2026-10-18 (dataset claude-code-vs-codex-tokens, same versions); checked there for score, 2 levels and 3 lives",Claude Code + Opus 5.5
+codex,game,,4,47954,29824,2872,33,,49,True,True,True,True,"run from 2026-10-18 (dataset claude-code-vs-codex-tokens, same versions); checked there for score, 2 levels and 3 lives",Codex + gpt-6-luna
+codex,game,,5,48815,37504,3803,41,,117,True,True,True,True,"run from 2026-10-18 (dataset claude-code-vs-codex-tokens, same versions); checked there for score, 2 levels and 3 lives",Codex + gpt-6-luna
+agyg,game,,4,12143,6795,5454,66,,520,True,True,True,True,,Antigravity + Gemini 4 Argon
+agyg,game,,5,13229,6799,6537,76,,656,True,True,True,True,,Antigravity + Gemini 4 Argon
+agyo,game,,4,10121,15390,4729,47,,261,True,True,True,True,,Antigravity + Opus 5.5
+agyo,game,,5,10087,15530,4452,43,,254,True,True,True,True,,Antigravity + Opus 5.5

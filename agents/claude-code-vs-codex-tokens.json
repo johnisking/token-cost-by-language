@@ -2,8 +2,8 @@
  "title": "Claude Code vs Codex: startup tokens, MCP tools and the same coding task",
  "url": "https://tokensave.app/data/claude-code-vs-codex-tokens",
  "license": "CC BY 4.0",
- "measured": "2026-10-18",
- "citation": "TokenSave (2026). Claude Code vs Codex: startup tokens, MCP tools and the same coding task [Data set]. https://tokensave.app/data/claude-code-vs-codex-tokens",
+ "measured": "2026-10-18 and 2026-10-22",
+ "citation": "TokenSave (2026). Claude Code vs Codex: startup tokens, MCP tools and the same coding task [Data set]. Zenodo. https://doi.org/10.5281/zenodo.23448342",
  "startup": {
   "prompt": "Reply with the single word OK.",
   "mcp_server": "Self-written stdio MCP server (mcp_dummy.js) exposing N tracker tools, each with a one-sentence description and a 5-property input schema. Full definitions: 151 o200k tokens per tool, 4,541 for 30 tools.",
@@ -23,8 +23,20 @@
     "mcp_tools": 0,
     "run1": 35765,
     "run2": 35777,
-    "avg": 35771,
-    "added_vs_no_mcp": 0
+    "avg": 35776,
+    "added_vs_no_mcp": 0,
+    "runs": [
+     35765,
+     35777,
+     35781,
+     35781
+    ],
+    "run_dates": [
+     "2026-10-18",
+     "2026-10-18",
+     "2026-10-22",
+     "2026-10-22"
+    ]
    },
    {
     "tool": "claude_code",
@@ -33,8 +45,20 @@
     "mcp_tools": 1,
     "run1": 35790,
     "run2": 35790,
-    "avg": 35790,
-    "added_vs_no_mcp": 19
+    "avg": 35792,
+    "added_vs_no_mcp": 16,
+    "runs": [
+     35790,
+     35790,
+     35794,
+     35794
+    ],
+    "run_dates": [
+     "2026-10-18",
+     "2026-10-18",
+     "2026-10-22",
+     "2026-10-22"
+    ]
    },
    {
     "tool": "claude_code",
@@ -43,8 +67,20 @@
     "mcp_tools": 10,
     "run1": 35913,
     "run2": 35913,
-    "avg": 35913,
-    "added_vs_no_mcp": 142
+    "avg": 35915,
+    "added_vs_no_mcp": 139,
+    "runs": [
+     35913,
+     35913,
+     35917,
+     35917
+    ],
+    "run_dates": [
+     "2026-10-18",
+     "2026-10-18",
+     "2026-10-22",
+     "2026-10-22"
+    ]
    },
    {
     "tool": "claude_code",
@@ -53,8 +89,20 @@
     "mcp_tools": 30,
     "run1": 36165,
     "run2": 36165,
-    "avg": 36165,
-    "added_vs_no_mcp": 394
+    "avg": 36167,
+    "added_vs_no_mcp": 391,
+    "runs": [
+     36165,
+     36165,
+     36169,
+     36169
+    ],
+    "run_dates": [
+     "2026-10-18",
+     "2026-10-18",
+     "2026-10-22",
+     "2026-10-22"
+    ]
    },
    {
     "tool": "codex",
@@ -63,8 +111,20 @@
     "mcp_tools": 0,
     "run1": 14678,
     "run2": 14678,
-    "avg": 14678,
-    "added_vs_no_mcp": 0
+    "avg": 14748,
+    "added_vs_no_mcp": 0,
+    "runs": [
+     14678,
+     14678,
+     15018,
+     14618
+    ],
+    "run_dates": [
+     "2026-10-18",
+     "2026-10-18",
+     "2026-10-22",
+     "2026-10-22"
+    ]
    },
    {
     "tool": "codex",
@@ -73,8 +133,20 @@
     "mcp_tools": 1,
     "run1": 14678,
     "run2": 14678,
-    "avg": 14678,
-    "added_vs_no_mcp": 0
+    "avg": 14648,
+    "added_vs_no_mcp": -100,
+    "runs": [
+     14678,
+     14678,
+     14618,
+     14618
+    ],
+    "run_dates": [
+     "2026-10-18",
+     "2026-10-18",
+     "2026-10-22",
+     "2026-10-22"
+    ]
    },
    {
     "tool": "codex",
@@ -83,8 +155,20 @@
     "mcp_tools": 10,
     "run1": 14678,
     "run2": 14678,
-    "avg": 14678,
-    "added_vs_no_mcp": 0
+    "avg": 14648,
+    "added_vs_no_mcp": -100,
+    "runs": [
+     14678,
+     14678,
+     14618,
+     14618
+    ],
+    "run_dates": [
+     "2026-10-18",
+     "2026-10-18",
+     "2026-10-22",
+     "2026-10-22"
+    ]
    },
    {
     "tool": "codex",
@@ -93,13 +177,25 @@
     "mcp_tools": 30,
     "run1": 14678,
     "run2": 14678,
-    "avg": 14678,
-    "added_vs_no_mcp": 0
+    "avg": 14648,
+    "added_vs_no_mcp": -100,
+    "runs": [
+     14678,
+     14678,
+     14618,
+     14618
+    ],
+    "run_dates": [
+     "2026-10-18",
+     "2026-10-18",
+     "2026-10-22",
+     "2026-10-22"
+    ]
    }
   ]
  },
  "same_task": {
-  "measured": "2026-10-18",
+  "measured": "2026-10-18 (runs 1-2) and 2026-10-22 (runs 3-5)",
   "prompt": "Make a brick-breaker game that runs in the browser as a single file named index.html in the current folder. It needs 2 levels, a score display and 3 lives, and it must be playable with the keyboard and the mouse. Write the file and finish.",
   "setup": "Each run in its own empty folder, no MCP servers. Claude Code: claude -p --effort medium --permission-mode acceptEdits --output-format json; tokens from modelUsage, cost is Claude Code list API cost. Codex: codex exec --json -s workspace-write -c model_reasoning_effort=\"medium\"; tokens from turn.completed. Time is wall-clock. Every game loaded without errors and showed 2 levels, score and 3 lives in a headless browser check.",
   "rows": [
@@ -115,7 +211,8 @@
     "api_cost_usd": 0.42,
     "file_lines": 487,
     "file_chars": 14992,
-    "works": true
+    "works": true,
+    "measured": "2026-10-18"
    },
    {
     "tool": "claude_code",
@@ -129,7 +226,8 @@
     "api_cost_usd": 0.39,
     "file_lines": 527,
     "file_chars": 15088,
-    "works": true
+    "works": true,
+    "measured": "2026-10-18"
    },
    {
     "tool": "codex",
@@ -143,7 +241,8 @@
     "api_cost_usd": null,
     "file_lines": 49,
     "file_chars": 7566,
-    "works": true
+    "works": true,
+    "measured": "2026-10-18"
    },
    {
     "tool": "codex",
@@ -157,7 +256,98 @@
     "api_cost_usd": null,
     "file_lines": 117,
     "file_chars": 10045,
-    "works": true
+    "works": true,
+    "measured": "2026-10-18"
+   },
+   {
+    "tool": "claude_code",
+    "tool_name": "Claude Code 2.1.295",
+    "model": "claude-opus-5-5, effort medium",
+    "run": 3,
+    "input_tokens": 79316,
+    "cached_input_tokens": 51766,
+    "output_tokens": 7897,
+    "seconds": 62,
+    "api_cost_usd": 0.3887,
+    "file_lines": 513,
+    "file_chars": 14756,
+    "works": true,
+    "measured": "2026-10-22"
+   },
+   {
+    "tool": "claude_code",
+    "tool_name": "Claude Code 2.1.295",
+    "model": "claude-opus-5-5, effort medium",
+    "run": 4,
+    "input_tokens": 77868,
+    "cached_input_tokens": 51766,
+    "output_tokens": 6595,
+    "seconds": 52,
+    "api_cost_usd": 0.3511,
+    "file_lines": 421,
+    "file_chars": 12034,
+    "works": true,
+    "measured": "2026-10-22"
+   },
+   {
+    "tool": "claude_code",
+    "tool_name": "Claude Code 2.1.295",
+    "model": "claude-opus-5-5, effort medium",
+    "run": 5,
+    "input_tokens": 78830,
+    "cached_input_tokens": 51766,
+    "output_tokens": 7447,
+    "seconds": 60,
+    "api_cost_usd": 0.3758,
+    "file_lines": 420,
+    "file_chars": 13618,
+    "works": true,
+    "measured": "2026-10-22"
+   },
+   {
+    "tool": "codex",
+    "tool_name": "Codex CLI 0.162",
+    "model": "gpt-6-luna, reasoning effort medium",
+    "run": 3,
+    "input_tokens": 70704,
+    "cached_input_tokens": 60032,
+    "output_tokens": 7118,
+    "seconds": 75,
+    "api_cost_usd": null,
+    "file_lines": 29,
+    "file_chars": 9756,
+    "works": true,
+    "measured": "2026-10-22"
+   },
+   {
+    "tool": "codex",
+    "tool_name": "Codex CLI 0.162",
+    "model": "gpt-6-luna, reasoning effort medium",
+    "run": 4,
+    "input_tokens": 48362,
+    "cached_input_tokens": 37248,
+    "output_tokens": 3468,
+    "seconds": 72,
+    "api_cost_usd": null,
+    "file_lines": 46,
+    "file_chars": 9368,
+    "works": true,
+    "measured": "2026-10-22"
+   },
+   {
+    "tool": "codex",
+    "tool_name": "Codex CLI 0.162",
+    "model": "gpt-6-luna, reasoning effort medium",
+    "run": 5,
+    "input_tokens": 47975,
+    "cached_input_tokens": 37248,
+    "output_tokens": 3103,
+    "seconds": 57,
+    "api_cost_usd": null,
+    "file_lines": 51,
+    "file_chars": 8660,
+    "works": true,
+    "measured": "2026-10-22"
    }
   ]
  }

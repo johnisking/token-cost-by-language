@@ -2,17 +2,17 @@
 
 DOI: https://doi.org/10.5281/zenodo.23569397
 
-Measured 2026-10-22 on Windows 11 with Claude Code 2.1.295 (Opus 5.5), Codex CLI 0.162.0-alpha.17.2 (gpt-6-luna) and Google's Antigravity CLI 1.4.5 (`agy`) with Gemini 4 Argon and with Claude Opus 5.5. 44 runs. License: CC BY 4.0.
+Measured 2026-10-18 to 2026-10-23 on Windows 11 with Claude Code 2.1.295 (Opus 5.5), Codex CLI 0.162.0-alpha.17.2 (gpt-6-luna) and Google's Antigravity CLI 1.4.5 (`agy`) with Gemini 4 Argon and with Claude Opus 5.5. 52 runs (v2: five game runs per tool). License: CC BY 4.0.
 
 Page with tables, chart and method: https://tokensave.app/data/antigravity-cli-vs-claude-code-vs-codex
 
 ## Key numbers
 
 - Startup ("Reply with the single word OK.", no MCP): Claude Code 35,781 input tokens, Codex 14,818, Antigravity + Gemini 4 Argon 6,745, Antigravity + Opus 5.5 5,326 (+5,167 cache reads reported separately).
-- Same brick-breaker game task, average of 3 runs: Claude Code + Opus 5.5 78,671 input / 7,313 output / 58 s; Codex 55,680 / 4,563 / 68 s; Antigravity + Gemini 13,041 (+6,796 cache) / 6,373 / 81 s; Antigravity + Opus 5.5 9,822 (+15,381 cache) / 4,378 / 42 s.
-- Same model, Opus 5.5: 68% to 88% fewer input tokens in Antigravity than in Claude Code (high end counts only reported input, low end adds the separately reported cache reads).
+- Same brick-breaker game task, average of 5 runs: Claude Code + Opus 5.5 87,779 input / 7,669 output / 62 s; Codex 52,762 / 4,073 / 56 s; Antigravity + Gemini 12,899 (+6,797 cache) / 6,222 / 77 s; Antigravity + Opus 5.5 9,935 (+15,412 cache) / 4,463 / 43 s. Claude Code and Codex runs 4-5 are the 2026-10-18 runs of the Claude Code vs Codex dataset (same versions); one Claude Code run took an extra step (123,666 input).
+- Same model, Opus 5.5: 71% to 89% fewer input tokens in Antigravity than in Claude Code (high end counts only reported input, low end adds the separately reported cache reads).
 - 30 dummy MCP tools added +388 tokens (Claude Code), +0 (Codex), +582 (Antigravity + Gemini), +417 (Antigravity + Opus).
-- All 12 games worked in a headless-browser check (score, level 2, lives 3-2-1-0). The automatic check could not read the score in two Codex games; manual checks confirmed scoring (see `check_note`).
+- All 20 games worked in a headless-browser check (score, level 2, lives 3-2-1-0). The automatic check could not read the score in two Codex games; manual checks confirmed scoring (see `check_note`).
 
 ## How to read Antigravity's numbers
 

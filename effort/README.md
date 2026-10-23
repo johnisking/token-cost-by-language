@@ -1,31 +1,34 @@
 # Claude effort levels: tokens, time and cost for the same coding task
 
-The same coding prompt run at each effort level in Claude Code: Claude Opus 5.5 at low, medium, high, xhigh and max (once each), Claude Sonnet 5.5 at medium and high (once each), and Claude Haiku 5.5 at all five levels (three runs each, added 2026-10-21).
+The same coding prompt run at each effort level in Claude Code 2.1.295: Claude Opus 5.5 at low, medium, high, xhigh and max, Claude Sonnet 5.5 at medium and high (three runs each, 2026-10-23) and Claude Haiku 5.5 at all five levels (three runs each, 2026-10-21). The first single runs of Opus and Sonnet (2026-10-09, earlier Claude Code version, ccusage) are kept for comparison.
 
-**Headline:** the task used 6,299 output tokens and $0.56 at medium on Opus 5.5, and 160,033 tokens and $5.25 at max. High cost only 34% more than medium; the jump starts at xhigh.
+**Headline (v3, 2026-10-23, average of 3 runs):** Opus 5.5 cost $0.17 at low, $0.26 at medium, $0.35 at high, $0.82 at xhigh and $5.33 at max; Sonnet 5.5 $0.10 at medium and $0.12 at high. Low to xhigh cost 40% to 64% less than the first single runs on an earlier Claude Code version. All 21 new games passed a scripted play test.
 
 - Source page, chart and method: https://tokensave.app/data/claude-effort-cost
 - DOI (Zenodo): [10.5281/zenodo.23446567](https://doi.org/10.5281/zenodo.23446567)
 - Also on: [Hugging Face](https://huggingface.co/datasets/JOHNISKING/claude-effort-cost) · [Kaggle](https://www.kaggle.com/datasets/johnisking/claude-effort-levels-tokens-time-and-cost)
-- Measured: 2026-10-09 (Opus, Sonnet), 2026-10-21 (Haiku 5.5)
+- Measured: 2026-10-23 (Opus, Sonnet, 3 runs per level), 2026-10-21 (Haiku 5.5); first Opus/Sonnet runs 2026-10-09
 - License: CC BY 4.0
 
 ## Key findings
 
-- Low and medium are close: low cost 14% less ($0.48 vs $0.56) and took 32 s instead of 52 s.
-- High is the best value step: output tokens rose 96% but cost only 34% more, because most of each request is unchanged input.
-- Costs jump from xhigh: xhigh cost 143% more than medium and max 837% more. Max took 22 min 22 s.
-- Sonnet 5.5 used 35% fewer output tokens than Opus 5.5 at the same effort and cost 55% less at medium and 60% less at high.
-- Haiku 5.5 (average of 3 runs): $0.0095 at low, $0.0142 medium, $0.0205 high, $0.0388 xhigh, $0.38 max. Max cost 869% more than xhigh because Haiku wrote and ran its own test script (15 turns instead of 4); it was still 22% cheaper than Opus 5.5 at low.
+- Low and medium are close: low cost 33% less ($0.17 vs $0.26) and took 29 s instead of 51 s.
+- High is the best value step: output tokens rose 57% but cost only 37% more, because most of each request is unchanged input.
+- Costs jump from xhigh: xhigh cost 221% more than medium and max 1,991% more. Max took 24 min 43 s on average.
+- Sonnet 5.5 used 36% fewer output tokens than Opus 5.5 at the same effort and cost 62% less at medium and 67% less at high.
+- First measurement (2026-10-09, one run per level): Opus $0.48 / $0.56 / $0.75 / $1.36 / $5.25, Sonnet $0.25 / $0.30. See the comparison table on the source page.
+- Haiku 5.5 (average of 3 runs): $0.0095 at low, $0.0142 medium, $0.0205 high, $0.0388 xhigh, $0.38 max. Max cost 869% more than xhigh because Haiku wrote and ran its own test script (15 turns instead of 4); at max it cost 120% more than Opus 5.5 at low in the new runs.
 - All 15 Haiku games passed a scripted play test (score, level 2, three lives) at every level. Higher effort wrote longer code (334 lines at low, 661 at max), not more working games.
 
 ## Files
 
 - `claude-effort-cost.csv`: one row per run with `model, effort, run, seconds, output_tokens, total_tokens, cost_usd, code_lines`
 - `claude-effort-cost.json`: the same data plus the exact prompt
+- `opus-sonnet-2026-10-23/`: the 21 new Opus and Sonnet runs (`index.html`, raw `run.jsonl` with the Windows user name masked as USER, `seconds.txt`).
+- `scripts/`: game checker (`check_brick_deep_i18n_state.py`) and the score probe used for one game whose score label the checker could not read.
 - `haiku-5-5-games/`: the 15 games Haiku 5.5 wrote (`<effort>_<run>.html`), and `run_effort.py`, the script that ran them
 
-## Data
+## Data (first single runs and Haiku; all runs are in the CSV)
 
 | Model | Effort | Time | Output tokens | Total tokens | Cost (USD) | Lines of code |
 |---|---|---:|---:|---:|---:|---:|

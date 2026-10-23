@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Арканоїд</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      user-select: none;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #38bdf8;
+      text-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+    .hud {
+      display: flex;
+      justify-content: space-between;
+      width: 640px;
+      max-width: 95vw;
+      background: #1e293b;
+      padding: 12px 20px;
+      border-radius: 10px 10px 0 0;
+      border: 2px solid #334155;
+      border-bottom: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    .hud span {
+      color: #facc15;
+    }
+    .canvas-wrapper {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+    canvas {
+      background: #020617;
+      border: 2px solid #334155;
+      border-radius: 0 0 10px 10px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      cursor: pointer;
+      max-width: 95vw;
+    }
+    .controls-hint {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Арканоїд</h1>
+
+  <div class="hud">
+    <div>Рахунок: <span id="scoreEl">0</span></div>
+    <div>Рівень: <span id="levelEl">1</span> / 2</div>
+    <div>Життя: <span id="livesEl">❤❤❤</span></div>
+  </div>
+
+  <div class="canvas-wrapper">
+    <canvas id="gameCanvas" width="640" height="480"></canvas>
+  </div>
+
+  <div class="controls-hint">
+    Керування: миша або клавіші ⬅️ ➡️ (A / D). Пробіл або клік — запуск м'яча / рестарт.
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('scoreEl');
+    const levelEl = document.getElementById('levelEl');
+    const livesEl = document.getElementById('livesEl');
+
+    // Стан гри
+    let score = 0;
+    let lives = 3;
+    let level = 1;
+    const maxLevels = 2;
+    let gameState = 'READY'; // READY, PLAYING, LEVEL_TRANSITION, WON, GAMEOVER
+
+    // Платформа
+    const paddle = {
+      width: 104,
+      height: 14,
+      x: canvas.width / 2 - 52,
+      y: canvas.height - 32,
+      speed: 7,
+      dx: 0
+    };
+
+    // М'яч
+    const ball = {
+      radius: 8,
+      x: canvas.width / 2,
+      y: paddle.y - 8,
+      baseSpeed: 5,
+      dx: 4,
+      dy: -4
+    };
+
+    // Керування клавіатурою
+    let rightPressed = false;
+    let leftPressed = false;
+
+    // Цеглинки
+    let bricks = [];
+    const brickConfig = {
+      cols: 8,
+      width: 66,
+      height: 22,
+      padding: 10,
+      offsetTop: 45,
+      offsetLeft: 21
+    };
+
+    const rowColors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#38bdf8', '#a855f7'];
+
+    function createBricksForLevel(lvl) {
+      bricks = [];
+      if (lvl === 1) {
+        // Рівень 1: 4 класичні ряди по 1 удару
+        const rows = 4;
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < brickConfig.cols; c++) {
+            bricks.push({
+              x: brickConfig.offsetLeft + c * (brickConfig.width + brickConfig.padding),
+              y: brickConfig.offsetTop + r * (brickConfig.height + brickConfig.padding),
+              width: brickConfig.width,
+              height: brickConfig.height,
+              hp: 1,
+              maxHp: 1,
+              color: rowColors[r % rowColors.length],
+              points: 10
+            });
+          }
+        }
+      } else if (lvl === 2) {
+        // Рівень 2: 6 рядів із міцними цеглинками (2 удари) та фігурним розташуванням
+        const layout = [
+          [2, 2, 2, 2, 2, 2, 2, 2],
+          [1, 2, 1, 2, 2, 1, 2, 1],
+          [1, 1, 1, 1, 1, 1, 1, 1],
+          [0, 1, 2, 1, 1, 2, 1, 0],
+          [1, 1, 1, 1, 1, 1, 1, 1]
+        ];
+        for (let r = 0; r < layout.length; r++) {
+          for (let c = 0; c < brickConfig.cols; c++) {
+            const hp = layout[r][c];
+            if (hp > 0) {
+              bricks.push({
+                x: brickConfig.offsetLeft + c * (brickConfig.width + brickConfig.padding),
+                y: brickConfig.offsetTop + r * (brickConfig.height + brickConfig.padding),
+                width: brickConfig.width,
+                height: brickConfig.height,
+                hp: hp,
+                maxHp: hp,
+                color: rowColors[(r + 1) % rowColors.length],
+                points: hp * 15
+              });
+            }
+          }
+        }
+      }
+    }
+
+    function updateHUD() {
+      scoreEl.textContent = score;
+      levelEl.textContent = level;
+      livesEl.textContent = '❤'.repeat(Math.max(0, lives)) || '0';
+    }
+
+    function resetBallAndPaddle() {
+      paddle.width = level === 1 ? 104 : 90;
+      paddle.x = canvas.width / 2 - paddle.width / 2;
+      ball.x = paddle.x + paddle.width / 2;
+      ball.y = paddle.y - ball.radius;
+      const speed = level === 1 ? 5 : 6;
+      ball.baseSpeed = speed;
+      const angle = (Math.random() * 0.6 - 0.3); // Невеликий випадковий кут
+      ball.dx = speed * Math.sin(angle);
+      ball.dy = -speed * Math.cos(angle);
+    }
+
+    function launchAction() {
+      if (gameState === 'READY' || gameState === 'LEVEL_TRANSITION') {
+        gameState = 'PLAYING';
+      } else if (gameState === 'GAMEOVER' || gameState === 'WON') {
+        score = 0;
+        lives = 3;
+        level = 1;
+        createBricksForLevel(level);
+        resetBallAndPaddle();
+        updateHUD();
+        gameState = 'READY';
+      }
+    }
+
+    // Події клавіатури
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D' || e.key === 'в' || e.key === 'В') {
+        rightPressed = true;
+      } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A' || e.key === 'ф' || e.key === 'Ф') {
+        leftPressed = true;
+      } else if (e.code === 'Space' || e.key === 'Enter') {
+        e.preventDefault();
+        launchAction();
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D' || e.key === 'в' || e.key === 'В') {
+        rightPressed = false;
+      } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A' || e.key === 'ф' || e.key === 'Ф') {
+        leftPressed = false;
+      }
+    });
+
+    // Події миші
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const mouseX = (e.clientX - rect.left) * scaleX;
+      paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, mouseX - paddle.width / 2));
+      if (gameState === 'READY' || gameState === 'LEVEL_TRANSITION') {
+        ball.x = paddle.x + paddle.width / 2;
+      }
+    });
+
+    canvas.addEventListener('click', () => {
+      launchAction();
+    });
+
+    function update() {
+      // Рух платформи клавіатурою
+      if (rightPressed) {
+        paddle.x = Math.min(canvas.width - paddle.width, paddle.x + paddle.speed);
+      } else if (leftPressed) {
+        paddle.x = Math.max(0, paddle.x - paddle.speed);
+      }
+
+      if (gameState === 'READY' || gameState === 'LEVEL_TRANSITION') {
+        ball.x = paddle.x + paddle.width / 2;
+        ball.y = paddle.y - ball.radius;
+        return;
+      }
+
+      if (gameState !== 'PLAYING') return;
+
+      ball.x += ball.dx;
+      ball.y += ball.dy;
+
+      // Відбивання від бічних стін
+      if (ball.x - ball.radius < 0) {
+        ball.x = ball.radius;
+        ball.dx = Math.abs(ball.dx);
+      } else if (ball.x + ball.radius > canvas.width) {
+        ball.x = canvas.width - ball.radius;
+        ball.dx = -Math.abs(ball.dx);
+      }
+
+      // Відбивання від верхньої стіни
+      if (ball.y - ball.radius < 0) {
+        ball.y = ball.radius;
+        ball.dy = Math.abs(ball.dy);
+      }
+
+      // Відбивання від платформи
+      if (
+        ball.dy > 0 &&
+        ball.y + ball.radius >= paddle.y &&
+        ball.y - ball.radius <= paddle.y + paddle.height &&
+        ball.x >= paddle.x &&
+        ball.x <= paddle.x + paddle.width
+      ) {
+        const hitOffset = (ball.x - (paddle.x + paddle.width / 2)) / (paddle.width / 2);
+        const maxBounceAngle = Math.PI / 3; // 60 градусів
+        const bounceAngle = hitOffset * maxBounceAngle;
+        const speed = ball.baseSpeed;
+        ball.dx = speed * Math.sin(bounceAngle);
+        ball.dy = -speed * Math.cos(bounceAngle);
+        ball.y = paddle.y - ball.radius;
+      }
+
+      // Зіткнення з цеглинками
+      for (let i = 0; i < bricks.length; i++) {
+        const b = bricks[i];
+        if (b.hp > 0) {
+          if (
+            ball.x + ball.radius > b.x &&
+            ball.x - ball.radius < b.x + b.width &&
+            ball.y + ball.radius > b.y &&
+            ball.y - ball.radius < b.y + b.height
+          ) {
+            // Визначаємо сторону зіткнення
+            const overlapLeft = (ball.x + ball.radius) - b.x;
+            const overlapRight = (b.x + b.width) - (ball.x - ball.radius);
+            const overlapTop = (ball.y + ball.radius) - b.y;
+            const overlapBottom = (b.y + b.height) - (ball.y - ball.radius);
+            const minOverlap = Math.min(overlapLeft, overlapRight, overlapTop, overlapBottom);
+
+            if (minOverlap === overlapLeft || minOverlap === overlapRight) {
+              ball.dx = -ball.dx;
+            } else {
+              ball.dy = -ball.dy;
+            }
+
+            b.hp--;
+            if (b.hp === 0) {
+              score += b.points;
+            } else {
+              score += 5;
+            }
+            updateHUD();
+            break;
+          }
+        }
+      }
+
+      // Перевірка завершення рівня
+      const remainingBricks = bricks.some(b => b.hp > 0);
+      if (!remainingBricks) {
+        if (level < maxLevels) {
+          level++;
+          createBricksForLevel(level);
+          resetBallAndPaddle();
+          updateHUD();
+          gameState = 'LEVEL_TRANSITION';
+        } else {
+          gameState = 'WON';
+        }
+        return;
+      }
+
+      // Втрата м'яча
+      if (ball.y - ball.radius > canvas.height) {
+        lives--;
+        updateHUD();
+        if (lives <= 0) {
+          gameState = 'GAMEOVER';
+        } else {
+          resetBallAndPaddle();
+          gameState = 'READY';
+        }
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Малюємо цеглинки
+      bricks.forEach(b => {
+        if (b.hp > 0) {
+          ctx.fillStyle = b.color;
+          ctx.beginPath();
+          ctx.roundRect(b.x, b.y, b.width, b.height, 4);
+          ctx.fill();
+
+          // Якщо цеглинка має 2 життя, додаємо металеву рамку
+          if (b.hp > 1) {
+            ctx.lineWidth = 2.5;
+            ctx.strokeStyle = '#f8fafc';
+            ctx.stroke();
+          }
+        }
+      });
+
+      // Малюємо платформу
+      ctx.fillStyle = '#38bdf8';
+      ctx.beginPath();
+      ctx.roundRect(paddle.x, paddle.y, paddle.width, paddle.height, 7);
+      ctx.fill();
+
+      // Малюємо м'яч
+      ctx.fillStyle = '#facc15';
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Повідомлення на екрані
+      if (gameState !== 'PLAYING') {
+        ctx.fillStyle = 'rgba(2, 6, 23, 0.72)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#f8fafc';
+        ctx.font = 'bold 28px "Segoe UI", sans-serif';
+
+        if (gameState === 'READY') {
+          ctx.fillText(`Рівень ${level}`, canvas.width / 2, canvas.height / 2 - 15);
+          ctx.font = '18px "Segoe UI", sans-serif';
+          ctx.fillStyle = '#94a3b8';
+          ctx.fillText('Клікніть або натисніть Пробіл, щоб запустити м\'яч', canvas.width / 2, canvas.height / 2 + 22);
+        } else if (gameState === 'LEVEL_TRANSITION') {
+          ctx.fillStyle = '#38bdf8';
+          ctx.fillText('Рівень 1 пройдено!', canvas.width / 2, canvas.height / 2 - 20);
+          ctx.font = '18px "Segoe UI", sans-serif';
+          ctx.fillStyle = '#f8fafc';
+          ctx.fillText('Натисніть Пробіл або клікніть для старту Рівня 2', canvas.width / 2, canvas.height / 2 + 20);
+        } else if (gameState === 'WON') {
+          ctx.fillStyle = '#22c55e';
+          ctx.fillText('Перемога! Всі 2 рівні пройдено!', canvas.width / 2, canvas.height / 2 - 20);
+          ctx.font = '18px "Segoe UI", sans-serif';
+          ctx.fillStyle = '#f8fafc';
+          ctx.fillText(`Ваш підсумковий рахунок: ${score}. Клікніть для нової гри`, canvas.width / 2, canvas.height / 2 + 20);
+        } else if (gameState === 'GAMEOVER') {
+          ctx.fillStyle = '#ef4444';
+          ctx.fillText('Гру закінчено!', canvas.width / 2, canvas.height / 2 - 20);
+          ctx.font = '18px "Segoe UI", sans-serif';
+          ctx.fillStyle = '#f8fafc';
+          ctx.fillText(`Ваш рахунок: ${score}. Клікніть або натисніть Пробіл для рестарту`, canvas.width / 2, canvas.height / 2 + 20);
+        }
+      }
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    // Ініціалізація
+    createBricksForLevel(level);
+    resetBallAndPaddle();
+    updateHUD();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>

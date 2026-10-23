@@ -1,21 +1,43 @@
 test,tool,model,mcp_tools,run,input_tokens,cached_input_tokens,output_tokens,seconds,api_cost_usd,file_lines
 startup,claude_code,"claude-opus-5-5 (default, Max plan)",0,1,35765,,,,,
 startup,claude_code,"claude-opus-5-5 (default, Max plan)",0,2,35777,,,,,
+startup,claude_code,"claude-opus-5-5 (default, Max plan)",0,3,35781,,,,,
+startup,claude_code,"claude-opus-5-5 (default, Max plan)",0,4,35781,,,,,
 startup,claude_code,"claude-opus-5-5 (default, Max plan)",1,1,35790,,,,,
 startup,claude_code,"claude-opus-5-5 (default, Max plan)",1,2,35790,,,,,
+startup,claude_code,"claude-opus-5-5 (default, Max plan)",1,3,35794,,,,,
+startup,claude_code,"claude-opus-5-5 (default, Max plan)",1,4,35794,,,,,
 startup,claude_code,"claude-opus-5-5 (default, Max plan)",10,1,35913,,,,,
 startup,claude_code,"claude-opus-5-5 (default, Max plan)",10,2,35913,,,,,
+startup,claude_code,"claude-opus-5-5 (default, Max plan)",10,3,35917,,,,,
+startup,claude_code,"claude-opus-5-5 (default, Max plan)",10,4,35917,,,,,
 startup,claude_code,"claude-opus-5-5 (default, Max plan)",30,1,36165,,,,,
 startup,claude_code,"claude-opus-5-5 (default, Max plan)",30,2,36165,,,,,
+startup,claude_code,"claude-opus-5-5 (default, Max plan)",30,3,36169,,,,,
+startup,claude_code,"claude-opus-5-5 (default, Max plan)",30,4,36169,,,,,
 startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",0,1,14678,,,,,
 startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",0,2,14678,,,,,
+startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",0,3,15018,,,,,
+startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",0,4,14618,,,,,
 startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",1,1,14678,,,,,
 startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",1,2,14678,,,,,
+startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",1,3,14618,,,,,
+startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",1,4,14618,,,,,
 startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",10,1,14678,,,,,
 startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",10,2,14678,,,,,
+startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",10,3,14618,,,,,
+startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",10,4,14618,,,,,
 startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",30,1,14678,,,,,
 startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",30,2,14678,,,,,
+startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",30,3,14618,,,,,
+startup,codex,"gpt-6-luna, reasoning effort low (ChatGPT plan)",30,4,14618,,,,,
 same_task,claude_code,"claude-opus-5-5, effort medium",0,1,123666,95504,8537,73,0.42,487
 same_task,claude_code,"claude-opus-5-5, effort medium",0,2,79213,51762,7870,63,0.39,527
 same_task,codex,"gpt-6-luna, reasoning effort medium",0,1,47954,29824,2872,33,,49
 same_task,codex,"gpt-6-luna, reasoning effort medium",0,2,48815,37504,3803,41,,117
+same_task,claude_code,"claude-opus-5-5, effort medium",0,3,79316,51766,7897,62,0.39,513
+same_task,claude_code,"claude-opus-5-5, effort medium",0,4,77868,51766,6595,52,0.35,421
+same_task,claude_code,"claude-opus-5-5, effort medium",0,5,78830,51766,7447,60,0.38,420
+same_task,codex,"gpt-6-luna, reasoning effort medium",0,3,70704,60032,7118,75,,29
+same_task,codex,"gpt-6-luna, reasoning effort medium",0,4,48362,37248,3468,72,,46
+same_task,codex,"gpt-6-luna, reasoning effort medium",0,5,47975,37248,3103,57,,51

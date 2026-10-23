@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neon Brick Breaker</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #1e293b;
+      --accent: #38bdf8;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1e293b, #090d16);
+      color: var(--text);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .game-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hud {
+      width: 800px;
+      max-width: 100%;
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .hud-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .hud-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .hud-value {
+      color: var(--accent);
+      font-variant-numeric: tabular-nums;
+      font-size: 1.25rem;
+    }
+
+    .hearts {
+      color: #f43f5e;
+      letter-spacing: 3px;
+      font-size: 1.25rem;
+    }
+
+    .canvas-container {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.12);
+      background: #090d16;
+    }
+
+    canvas {
+      display: block;
+      cursor: none;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(9, 13, 22, 0.82);
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      text-align: center;
+      padding: 24px;
+      transition: opacity 0.2s ease;
+    }
+
+    .overlay.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .overlay h1 {
+      font-size: 2.5rem;
+      letter-spacing: 0.04em;
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #f472b6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .overlay p {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 440px;
+      line-height: 1.5;
+    }
+
+    .btn {
+      margin-top: 8px;
+      padding: 12px 28px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #090d16;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      box-shadow: 0 6px 20px rgba(56, 189, 248, 0.35);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(56, 189, 248, 0.5);
+    }
+
+    .controls-hint {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-wrapper">
+    <div class="hud">
+      <div class="hud-item">
+        <span class="hud-label">Score</span>
+        <span class="hud-value" id="scoreEl">0</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">Level</span>
+        <span class="hud-value" id="levelEl">1 / 2</span>
+      </div>
+      <div class="hud-item">
+        <span class="hud-label">Lives</span>
+        <span class="hearts" id="livesEl">&#10084;&#10084;&#10084;</span>
+      </div>
+    </div>
+
+    <div class="canvas-container">
+      <canvas id="gameCanvas" width="800" height="540"></canvas>
+      <div class="overlay" id="overlay">
+        <h1 id="overlayTitle">NEON BRICK BREAKER</h1>
+        <p id="overlayMessage">Clear all bricks across 2 levels! Move with your Mouse or Left/Right Arrow / A &amp; D keys. Press Space or Click to launch the ball.</p>
+        <button class="btn" id="actionBtn">Start Game</button>
+      </div>
+    </div>
+
+    <div class="controls-hint">
+      Controls: <strong>Mouse</strong> or <strong>&larr; / &rarr; / A / D</strong> to steer paddle &bull; <strong>Click</strong> or <strong>Space</strong> to launch ball
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('scoreEl');
+    const levelEl = document.getElementById('levelEl');
+    const livesEl = document.getElementById('livesEl');
+    const overlay = document.getElementById('overlay');
+    const overlayTitle = document.getElementById('overlayTitle');
+    const overlayMessage = document.getElementById('overlayMessage');
+    const actionBtn = document.getElementById('actionBtn');
+
+    const MAX_LEVEL = 2;
+    const INITIAL_LIVES = 3;
+
+    let score = 0;
+    let lives = INITIAL_LIVES;
+    let level = 1;
+    let gameState = 'MENU'; // MENU, PLAYING, LEVEL_TRANSITION, GAMEOVER, VICTORY
+    let ballAttached = true;
+
+    const paddle = {
+      width: 116,
+      height: 14,
+      x: (canvas.width - 116) / 2,
+      y: canvas.height - 34,
+      speed: 8,
+      dx: 0
+    };
+
+    const ball = {
+      x: canvas.width / 2,
+      y: paddle.y - 9,
+      radius: 8,
+      baseSpeed: 5.5,
+      dx: 0,
+      dy: 0
+    };
+
+    const keys = {
+      left: false,
+      right: false
+    };
+
+    let bricks = [];
+    let particles = [];
+
+    const PALETTE = [
+      '#f43f5e', // Rose
+      '#fb923c', // Orange
+      '#facc15', // Yellow
+      '#4ade80', // Green
+      '#38bdf8', // Sky
+      '#a855f7'  // Purple
+    ];
+
+    function buildLevel(lvl) {
+      bricks = [];
+      const padding = 8;
+      const offsetTop = 58;
+      const offsetLeft = 42;
+      const cols = 10;
+      const brickWidth = (canvas.width - offsetLeft * 2 - padding * (cols - 1)) / cols;
+      const brickHeight = 24;
+
+      if (lvl === 1) {
+        // Level 1: Classic 4-row colorful wall
+        const rows = 4;
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            bricks.push({
+              x: offsetLeft + c * (brickWidth + padding),
+              y: offsetTop + r * (brickHeight + padding),
+              width: brickWidth,
+              height: brickHeight,
+              hp: 1,
+              maxHp: 1,
+              points: (rows - r) * 10,
+              color: PALETTE[r % PALETTE.length]
+            });
+          }
+        }
+      } else if (lvl === 2) {
+        // Level 2: Fortress pattern with multi-hit armored bricks
+        const rows = 6;
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            // Leave diamond gaps for strategic angles
+            if ((r === 2 || r === 3) && (c === 4 || c === 5)) continue;
+            const isArmored = r < 2 || (r === 5 && c % 2 === 0);
+            const hp = isArmored ? 2 : 1;
+            bricks.push({
+              x: offsetLeft + c * (brickWidth + padding),
+              y: offsetTop + r * (brickHeight + padding),
+              width: brickWidth,
+              height: brickHeight,
+              hp,
+              maxHp: hp,
+              points: hp * 15,
+              color: PALETTE[(r + 1) % PALETTE.length]
+            });
+          }
+        }
+      }
+    }
+
+    function updateHUD() {
+      scoreEl.textContent = score;
+      levelEl.textContent = `${level} / ${MAX_LEVEL}`;
+      livesEl.innerHTML = '&#10084;'.repeat(Math.max(0, lives)) +
+        '<span style="opacity:0.2">' + '&#10084;'.repeat(Math.max(0, INITIAL_LIVES - lives)) + '</span>';
+    }
+
+    function resetBallAndPaddle() {
+      paddle.width = level === 1 ? 116 : 102;
+      paddle.x = (canvas.width - paddle.width) / 2;
+      ballAttached = true;
+      ball.baseSpeed = level === 1 ? 5.6 : 6.4;
+      ball.x = paddle.x + paddle.width / 2;
+      ball.y = paddle.y - ball.radius - 1;
+      ball.dx = 0;
+      ball.dy = 0;
+    }
+
+    function launchBall() {
+      if (!ballAttached || gameState !== 'PLAYING') return;
+      ballAttached = false;
+      const spread = (Math.random() * 0.5 - 0.25);
+      ball.dx = ball.baseSpeed * Math.sin(spread);
+      ball.dy = -ball.baseSpeed * Math.cos(spread);
+    }
+
+    function spawnParticles(x, y, color) {
+      for (let i = 0; i < 10; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = 1 + Math.random() * 3.5;
+        particles.push({
+          x,
+          y,
+          dx: Math.cos(angle) * speed,
+          dy: Math.sin(angle) * speed,
+          radius: 2 + Math.random() * 2.5,
+          alpha: 1,
+          color
+        });
+      }
+    }
+
+    function startGame() {
+      score = 0;
+      lives = INITIAL_LIVES;
+      level = 1;
+      buildLevel(level);
+      resetBallAndPaddle();
+      updateHUD();
+      gameState = 'PLAYING';
+      overlay.classList.add('hidden');
+    }
+
+    function startNextLevel() {
+      level = 2;
+      buildLevel(level);
+      resetBallAndPaddle();
+      updateHUD();
+      gameState = 'PLAYING';
+      overlay.classList.add('hidden');
+    }
+
+    function showOverlay(title, message, btnText) {
+      overlayTitle.textContent = title;
+      overlayMessage.textContent = message;
+      actionBtn.textContent = btnText;
+      overlay.classList.remove('hidden');
+    }
+
+    // Input handlers
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        keys.left = true;
+      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        keys.right = true;
+      } else if (e.code === 'Space') {
+        e.preventDefault();
+        if (gameState === 'PLAYING' && ballAttached) {
+          launchBall();
+        } else if (!overlay.classList.contains('hidden')) {
+          actionBtn.click();
+        }
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        keys.left = false;
+      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        keys.right = false;
+      }
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const mouseX = (e.clientX - rect.left) * scaleX;
+      paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, mouseX - paddle.width / 2));
+      if (ballAttached) {
+        ball.x = paddle.x + paddle.width / 2;
+      }
+    });
+
+    canvas.addEventListener('click', () => {
+      if (gameState === 'PLAYING' && ballAttached) {
+        launchBall();
+      }
+    });
+
+    actionBtn.addEventListener('click', () => {
+      if (gameState === 'LEVEL_TRANSITION') {
+        startNextLevel();
+      } else {
+        startGame();
+      }
+    });
+
+    function update() {
+      if (gameState !== 'PLAYING') return;
+
+      // Keyboard paddle movement
+      if (keys.left) {
+        paddle.x = Math.max(0, paddle.x - paddle.speed);
+      }
+      if (keys.right) {
+        paddle.x = Math.min(canvas.width - paddle.width, paddle.x + paddle.speed);
+      }
+
+      if (ballAttached) {
+        ball.x = paddle.x + paddle.width / 2;
+        ball.y = paddle.y - ball.radius - 1;
+        return;
+      }
+
+      ball.x += ball.dx;
+      ball.y += ball.dy;
+
+      // Wall collisions
+      if (ball.x - ball.radius <= 0) {
+        ball.x = ball.radius;
+        ball.dx = Math.abs(ball.dx);
+      } else if (ball.x + ball.radius >= canvas.width) {
+        ball.x = canvas.width - ball.radius;
+        ball.dx = -Math.abs(ball.dx);
+      }
+
+      if (ball.y - ball.radius <= 0) {
+        ball.y = ball.radius;
+        ball.dy = Math.abs(ball.dy);
+      }
+
+      // Paddle collision
+      if (
+        ball.dy > 0 &&
+        ball.y + ball.radius >= paddle.y &&
+        ball.y - ball.radius <= paddle.y + paddle.height &&
+        ball.x + ball.radius >= paddle.x &&
+        ball.x - ball.radius <= paddle.x + paddle.width
+      ) {
+        const hitOffset = (ball.x - (paddle.x + paddle.width / 2)) / (paddle.width / 2);
+        const clampedOffset = Math.max(-0.9, Math.min(0.9, hitOffset));
+        const maxBounceAngle = Math.PI / 3; // 60 degrees
+        const bounceAngle = clampedOffset * maxBounceAngle;
+
+        const currentSpeed = Math.min(9.5, Math.hypot(ball.dx, ball.dy) * 1.015);
+        ball.dx = currentSpeed * Math.sin(bounceAngle);
+        ball.dy = -currentSpeed * Math.cos(bounceAngle);
+        ball.y = paddle.y - ball.radius - 1;
+      }
+
+      // Brick collisions
+      for (let i = bricks.length - 1; i >= 0; i--) {
+        const b = bricks[i];
+        if (
+          ball.x + ball.radius > b.x &&
+          ball.x - ball.radius < b.x + b.width &&
+          ball.y + ball.radius > b.y &&
+          ball.y - ball.radius < b.y + b.height
+        ) {
+          const overlapLeft = (ball.x + ball.radius) - b.x;
+          const overlapRight = (b.x + b.width) - (ball.x - ball.radius);
+          const overlapTop = (ball.y + ball.radius) - b.y;
+          const overlapBottom = (b.y + b.height) - (ball.y - ball.radius);
+
+          const minOverlapX = Math.min(overlapLeft, overlapRight);
+          const minOverlapY = Math.min(overlapTop, overlapBottom);
+
+          if (minOverlapX < minOverlapY) {
+            ball.dx = -ball.dx;
+          } else {
+            ball.dy = -ball.dy;
+          }
+
+          b.hp--;
+          spawnParticles(ball.x, ball.y, b.color);
+
+          if (b.hp <= 0) {
+            score += b.points;
+            bricks.splice(i, 1);
+          } else {
+            score += 5;
+          }
+          updateHUD();
+          break;
+        }
+      }
+
+      // Check level completion
+      if (bricks.length === 0) {
+        if (level < MAX_LEVEL) {
+          gameState = 'LEVEL_TRANSITION';
+          showOverlay(
+            'LEVEL 1 COMPLETE!',
+            `Great job! Current Score: ${score}. Get ready for Level 2 with armored bricks and faster ball speed.`,
+            'Start Level 2'
+          );
+        } else {
+          gameState = 'VICTORY';
+          showOverlay(
+            'YOU WIN!',
+            `Congratulations! You cleared both levels with a final score of ${score}!`,
+            'Play Again'
+          );
+        }
+        return;
+      }
+
+      // Bottom out (lose a life)
+      if (ball.y - ball.radius > canvas.height) {
+        lives--;
+        updateHUD();
+        if (lives <= 0) {
+          gameState = 'GAMEOVER';
+          showOverlay(
+            'GAME OVER',
+            `You ran out of lives on Level ${level}. Final Score: ${score}.`,
+            'Try Again'
+          );
+        } else {
+          resetBallAndPaddle();
+        }
+      }
+    }
+
+    function updateParticles() {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.dx;
+        p.y += p.dy;
+        p.alpha -= 0.03;
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+    }
+
+    function drawRoundedRect(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.lineTo(x + w - r, y);
+      ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+      ctx.lineTo(x + w, y + h - r);
+      ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      ctx.lineTo(x + r, y + h);
+      ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+      ctx.lineTo(x, y + r);
+      ctx.quadraticCurveTo(x, y, x + r, y);
+      ctx.closePath();
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Subtle background grid
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.025)';
+      ctx.lineWidth = 1;
+      for (let x = 40; x < canvas.width; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 40; y < canvas.height; y += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(canvas.width, y);
+        ctx.stroke();
+      }
+
+      // Draw bricks
+      for (const b of bricks) {
+        ctx.save();
+        ctx.fillStyle = b.color;
+        ctx.shadowColor = b.color;
+        ctx.shadowBlur = 8;
+        drawRoundedRect(b.x, b.y, b.width, b.height, 5);
+        ctx.fill();
+
+        // Armored brick border indicator
+        if (b.hp > 1) {
+          ctx.lineWidth = 2.5;
+          ctx.strokeStyle = '#ffffff';
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      // Draw paddle
+      ctx.save();
+      const grad = ctx.createLinearGradient(paddle.x, paddle.y, paddle.x + paddle.width, paddle.y);
+      grad.addColorStop(0, '#38bdf8');
+      grad.addColorStop(1, '#818cf8');
+      ctx.fillStyle = grad;
+      ctx.shadowColor = '#38bdf8';
+      ctx.shadowBlur = 12;
+      drawRoundedRect(paddle.x, paddle.y, paddle.width, paddle.height, 7);
+      ctx.fill();
+      ctx.restore();
+
+      // Draw ball
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#f8fafc';
+      ctx.shadowColor = '#38bdf8';
+      ctx.shadowBlur = 14;
+      ctx.fill();
+      ctx.restore();
+
+      // Draw launch prompt when ball is on paddle
+      if (gameState === 'PLAYING' && ballAttached) {
+        ctx.save();
+        ctx.fillStyle = 'rgba(248, 250, 252, 0.75)';
+        ctx.font = '600 15px "Segoe UI", system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Click or press SPACE to launch', canvas.width / 2, canvas.height - 75);
+        ctx.restore();
+      }
+
+      // Draw particles
+      for (const p of particles) {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function loop() {
+      update();
+      updateParticles();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    buildLevel(1);
+    resetBallAndPaddle();
+    updateHUD();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
