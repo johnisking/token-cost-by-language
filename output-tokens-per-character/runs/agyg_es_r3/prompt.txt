@@ -1,0 +1,1 @@
+Crea un juego de romper ladrillos que funcione en el navegador como un único archivo llamado index.html en la carpeta actual. Necesita 2 niveles, un marcador de puntos y 3 vidas, y debe poder jugarse con el teclado y el ratón. Escribe el archivo y termina.

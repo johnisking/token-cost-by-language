@@ -1,0 +1,410 @@
+{
+ "brick_agyg_es_r1": {
+  "score_max": 900,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyg_es_r2": {
+  "score_max": 1500,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyg_es_r3": {
+  "score_max": 900,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyg_ja_r1": {
+  "score_max": 900,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyg_ja_r2": {
+  "score_max": 320,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyg_ja_r3": {
+  "score_max": 800,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyg_ko_r1": {
+  "score_max": 800,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyg_ko_r2": {
+  "score_max": 1750,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyg_ko_r3": {
+  "score_max": 900,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyg_uk_r1": {
+  "score_max": 1350,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyg_uk_r2": {
+  "score_max": 700,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyg_uk_r3": {
+  "score_max": 810,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyo_es_r1": {
+  "score_max": 2100,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyo_es_r2": {
+  "score_max": 1300,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyo_es_r3": {
+  "score_max": 1250,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyo_ja_r1": {
+  "score_max": 400,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyo_ja_r2": {
+  "score_max": 4500,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyo_ja_r3": {
+  "score_max": 1000,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyo_ko_r1": {
+  "score_max": 650,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyo_ko_r2": {
+  "score_max": 800,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyo_ko_r3": {
+  "score_max": 650,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyo_uk_r1": {
+  "score_max": 500,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyo_uk_r2": {
+  "score_max": 1500,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ },
+ "brick_agyo_uk_r3": {
+  "score_max": 500,
+  "score_ok": true,
+  "levels_seen": [
+   1,
+   2
+  ],
+  "level2": true,
+  "lives_sequence": [
+   3,
+   2,
+   1,
+   0
+  ],
+  "lives_ok": true,
+  "script_errors": []
+ }
+}

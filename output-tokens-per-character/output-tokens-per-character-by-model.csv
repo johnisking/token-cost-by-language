@@ -1,0 +1,81 @@
+tool,lang,run,measured,input_tokens,cache_read_reported_separately,output_tokens,seconds,file_chars,file_lines,output_tokens_per_1000_chars,game_ok,source
+claude_code,en,1,2026-10-18,123666,,8537,73,14992,487,569,True,dataset 12 (ai-coding-prompt-language)
+claude_code,en,2,2026-10-18,79213,,7870,63,15088,527,522,True,dataset 12 (ai-coding-prompt-language)
+claude_code,en,3,2026-10-19,122899,,8120,71,14371,496,565,True,dataset 12 (ai-coding-prompt-language)
+claude_code,en,4,2026-10-19,78058,,6668,58,11989,409,556,True,dataset 12 (ai-coding-prompt-language)
+claude_code,en,5,2026-10-19,78474,,7290,64,13059,448,558,True,dataset 12 (ai-coding-prompt-language)
+codex,en,1,2026-10-18,47954,,2872,33,7566,49,380,True,dataset 12 (ai-coding-prompt-language)
+codex,en,2,2026-10-18,48815,,3803,41,10045,117,379,True,dataset 12 (ai-coding-prompt-language)
+codex,en,3,2026-10-19,48422,,3321,36,9216,132,360,True,dataset 12 (ai-coding-prompt-language)
+codex,en,4,2026-10-19,48600,,3476,39,9761,118,356,True,dataset 12 (ai-coding-prompt-language)
+codex,en,5,2026-10-19,64581,,3788,47,10509,64,360,True,dataset 12 (ai-coding-prompt-language)
+claude_code,ko,1,2026-10-18,78282,,6976,59,11789,425,592,True,dataset 12 (ai-coding-prompt-language)
+claude_code,ko,2,2026-10-18,78381,,7116,59,11922,419,597,True,dataset 12 (ai-coding-prompt-language)
+claude_code,ko,3,2026-10-19,80452,,9140,78,12278,478,744,True,dataset 12 (ai-coding-prompt-language)
+claude_code,ko,4,2026-10-19,78678,,7369,63,12367,439,596,True,dataset 12 (ai-coding-prompt-language)
+claude_code,ko,5,2026-10-19,77399,,6013,49,10159,356,592,True,dataset 12 (ai-coding-prompt-language)
+codex,ko,1,2026-10-18,47677,,2536,38,6452,45,393,True,dataset 12 (ai-coding-prompt-language)
+codex,ko,2,2026-10-18,48793,,3649,36,9266,118,394,True,dataset 12 (ai-coding-prompt-language)
+codex,ko,3,2026-10-19,48868,,3694,38,9482,121,390,True,dataset 12 (ai-coding-prompt-language)
+codex,ko,4,2026-10-19,48806,,3632,37,9792,59,371,True,dataset 12 (ai-coding-prompt-language)
+codex,ko,5,2026-10-19,48545,,3410,35,8984,46,380,True,dataset 12 (ai-coding-prompt-language)
+claude_code,ja,1,2026-10-18,80471,,9045,73,14114,536,641,True,dataset 12 (ai-coding-prompt-language)
+claude_code,ja,2,2026-10-18,78974,,7501,62,13306,516,564,True,dataset 12 (ai-coding-prompt-language)
+claude_code,ja,3,2026-10-19,78263,,6827,75,12150,446,562,True,dataset 12 (ai-coding-prompt-language)
+claude_code,ja,4,2026-10-19,79568,,8226,70,14331,544,574,True,dataset 12 (ai-coding-prompt-language)
+claude_code,ja,5,2026-10-19,79053,,7583,59,13427,541,565,True,dataset 12 (ai-coding-prompt-language)
+codex,ja,1,2026-10-18,49078,,3858,39,10033,116,385,True,dataset 12 (ai-coding-prompt-language)
+codex,ja,2,2026-10-18,48063,,2837,36,7282,48,390,True,dataset 12 (ai-coding-prompt-language)
+codex,ja,3,2026-10-19,48218,,3015,34,7563,47,399,True,dataset 12 (ai-coding-prompt-language)
+codex,ja,4,2026-10-19,48756,,3544,41,9307,48,381,True,dataset 12 (ai-coding-prompt-language)
+codex,ja,5,2026-10-19,49184,,3966,47,10704,35,371,True,dataset 12 (ai-coding-prompt-language)
+claude_code,es,1,2026-10-18,80598,,9212,82,13484,448,683,True,dataset 12 (ai-coding-prompt-language)
+claude_code,es,2,2026-10-18,77083,,5797,52,10331,354,561,True,dataset 12 (ai-coding-prompt-language)
+claude_code,es,3,2026-10-19,76570,,5008,49,9215,293,543,True,dataset 12 (ai-coding-prompt-language)
+claude_code,es,4,2026-10-19,80764,,9391,82,14794,488,635,True,dataset 12 (ai-coding-prompt-language)
+claude_code,es,5,2026-10-19,80134,,8841,82,13672,492,647,True,dataset 12 (ai-coding-prompt-language)
+codex,es,1,2026-10-18,48163,,3038,39,8595,53,353,True,dataset 12 (ai-coding-prompt-language)
+codex,es,2,2026-10-18,48192,,3058,38,8545,52,358,True,dataset 12 (ai-coding-prompt-language)
+codex,es,3,2026-10-19,49107,,3966,43,10912,49,363,True,dataset 12 (ai-coding-prompt-language)
+codex,es,4,2026-10-19,47805,,2666,34,7125,51,374,True,dataset 12 (ai-coding-prompt-language)
+codex,es,5,2026-10-19,47740,,2616,33,6865,21,381,True,dataset 12 (ai-coding-prompt-language)
+claude_code,uk,1,2026-10-18,79506,,8137,68,12084,436,673,True,dataset 12 (ai-coding-prompt-language)
+claude_code,uk,2,2026-10-18,79926,,8648,71,15006,477,576,True,dataset 12 (ai-coding-prompt-language)
+claude_code,uk,3,2026-10-19,78718,,7403,63,13443,442,551,True,dataset 12 (ai-coding-prompt-language)
+claude_code,uk,4,2026-10-19,80777,,9363,77,16875,529,555,True,dataset 12 (ai-coding-prompt-language)
+claude_code,uk,5,2026-10-19,80006,,8628,73,15262,486,565,True,dataset 12 (ai-coding-prompt-language)
+codex,uk,1,2026-10-18,49257,,3986,37,10547,101,378,True,dataset 12 (ai-coding-prompt-language)
+codex,uk,2,2026-10-18,47898,,2651,35,6967,54,381,True,dataset 12 (ai-coding-prompt-language)
+codex,uk,3,2026-10-19,48240,,3006,34,7843,50,383,True,dataset 12 (ai-coding-prompt-language)
+codex,uk,4,2026-10-19,48950,,3739,35,10025,50,373,True,dataset 12 (ai-coding-prompt-language)
+codex,uk,5,2026-10-19,49736,,4524,46,12388,38,365,False,dataset 12 (ai-coding-prompt-language)
+antigravity_gemini,es,1,2026-10-23,11631,6793,4995,66,13812,454,362,True,new runs
+antigravity_gemini,es,2,2026-10-23,13589,6801,6910,76,18648,632,371,True,new runs
+antigravity_gemini,es,3,2026-10-23,12667,6799,5979,79,16682,597,358,True,new runs
+antigravity_gemini,ja,1,2026-10-23,13348,6786,6699,85,17715,631,378,True,new runs
+antigravity_gemini,ja,2,2026-10-23,12284,6794,5622,62,15393,558,365,True,new runs
+antigravity_gemini,ja,3,2026-10-23,11592,6788,4939,69,13432,488,368,True,new runs
+antigravity_gemini,ko,1,2026-10-23,12859,6798,6220,85,16338,598,381,True,new runs
+antigravity_gemini,ko,2,2026-10-23,14012,6796,7373,80,19368,684,381,True,new runs
+antigravity_gemini,ko,3,2026-10-23,12995,6799,6415,79,16916,623,379,True,new runs
+antigravity_gemini,uk,1,2026-10-23,13515,6822,6895,85,17477,626,395,True,new runs
+antigravity_gemini,uk,2,2026-10-23,13702,6824,7067,81,18794,648,376,True,new runs
+antigravity_gemini,uk,3,2026-10-23,13125,6823,6454,71,17726,628,364,True,new runs
+antigravity_opus,es,1,2026-10-23,9243,15388,3860,40,5764,136,670,True,new runs
+antigravity_opus,es,2,2026-10-23,10500,15381,4987,47,8409,270,593,True,new runs
+antigravity_opus,es,3,2026-10-23,10092,15395,4521,42,7908,252,572,True,new runs
+antigravity_opus,ja,1,2026-10-23,9776,15387,4355,43,7027,215,620,True,new runs
+antigravity_opus,ja,2,2026-10-23,10133,15390,4619,41,7752,241,596,True,new runs
+antigravity_opus,ja,3,2026-10-23,10040,15386,4564,42,7584,239,602,True,new runs
+antigravity_opus,ko,1,2026-10-23,10304,15394,4917,46,8239,269,597,True,new runs
+antigravity_opus,ko,2,2026-10-23,11564,15392,6164,55,10420,367,592,True,new runs
+antigravity_opus,ko,3,2026-10-23,12081,15397,6612,57,11354,369,582,True,new runs
+antigravity_opus,uk,1,2026-10-23,13433,33134,7872,71,13334,409,590,True,new runs
+antigravity_opus,uk,2,2026-10-23,9599,15389,4094,40,6826,224,600,True,new runs
+antigravity_opus,uk,3,2026-10-23,9841,15386,4422,42,7360,242,601,True,new runs
+antigravity_gemini,en,1,2026-10-22,13672,6797,7012,90,19479,687,360,True,dataset 22 (antigravity-cli-vs-claude-code-vs-codex)
+antigravity_gemini,en,2,2026-10-22,12148,6796,5467,70,14838,523,368,True,dataset 22 (antigravity-cli-vs-claude-code-vs-codex)
+antigravity_gemini,en,3,2026-10-22,13302,6796,6641,82,17800,617,373,True,dataset 22 (antigravity-cli-vs-claude-code-vs-codex)
+antigravity_opus,en,1,2026-10-22,9770,15385,4310,41,7367,226,585,True,dataset 22 (antigravity-cli-vs-claude-code-vs-codex)
+antigravity_opus,en,2,2026-10-22,9800,15380,4390,44,7894,233,556,True,dataset 22 (antigravity-cli-vs-claude-code-vs-codex)
+antigravity_opus,en,3,2026-10-22,9896,15377,4434,42,7620,252,582,True,dataset 22 (antigravity-cli-vs-claude-code-vs-codex)

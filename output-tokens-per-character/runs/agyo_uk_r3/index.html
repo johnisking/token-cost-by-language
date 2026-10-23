@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Арканоїд</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #111; color: #eee; font-family: Arial, sans-serif; }
+  body { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  canvas { background: #000; border: 2px solid #444; cursor: none; max-width: 100%; }
+  p { margin: 8px; font-size: 14px; color: #aaa; }
+</style>
+</head>
+<body>
+<canvas id="game" width="640" height="480"></canvas>
+<p>Керування: ← → або A/D, або мишею. Пробіл / клік — запустити м'яч. P — пауза.</p>
+<script>
+const canvas = document.getElementById('game');
+const ctx = canvas.getContext('2d');
+const W = canvas.width, H = canvas.height;
+
+const LEVELS = [
+  [
+    "1111111111",
+    "2222222222",
+    "3333333333",
+    "4444444444",
+    "5555555555"
+  ],
+  [
+    "6600000066",
+    "6611111166",
+    "0222002220",
+    "0033333300",
+    "4404444044",
+    "5555555555",
+    "0606060606"
+  ]
+];
+const COLORS = { '1':'#e74c3c','2':'#e67e22','3':'#f1c40f','4':'#2ecc71','5':'#3498db','6':'#9b59b6' };
+
+const COLS = 10, BRICK_W = 58, BRICK_H = 20, GAP = 4, OFFSET_X = (W - (COLS * (BRICK_W + GAP) - GAP)) / 2, OFFSET_Y = 60;
+
+const paddle = { w: 90, h: 12, x: W / 2 - 45, y: H - 30, speed: 7 };
+const ball = { r: 7, x: 0, y: 0, dx: 0, dy: 0, stuck: true };
+
+let bricks = [], level = 0, score = 0, lives = 3, state = 'play', paused = false;
+const keys = {};
+
+function loadLevel(n) {
+  bricks = [];
+  LEVELS[n].forEach((row, r) => {
+    [...row].forEach((c, col) => {
+      if (c !== '0') {
+        const hits = c === '6' ? 2 : 1;
+        bricks.push({ x: OFFSET_X + col * (BRICK_W + GAP), y: OFFSET_Y + r * (BRICK_H + GAP), color: COLORS[c], hits, alive: true });
+      }
+    });
+  });
+  resetBall();
+}
+
+function resetBall() {
+  ball.stuck = true;
+  ball.dx = 0; ball.dy = 0;
+  paddle.w = 90;
+}
+
+function launch() {
+  if (state !== 'play') { restart(); return; }
+  if (ball.stuck) {
+    const speed = 5 + level;
+    const angle = (Math.random() * 0.6 - 0.3) - Math.PI / 2;
+    ball.dx = speed * Math.cos(angle);
+    ball.dy = speed * Math.sin(angle);
+    ball.stuck = false;
+  }
+}
+
+function restart() {
+  level = 0; score = 0; lives = 3; state = 'play';
+  loadLevel(0);
+}
+
+document.addEventListener('keydown', e => {
+  keys[e.key] = true;
+  if (e.code === 'Space') { e.preventDefault(); launch(); }
+  if (e.key === 'p' || e.key === 'P' || e.key === 'з' || e.key === 'З') paused = !paused;
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') e.preventDefault();
+});
+document.addEventListener('keyup', e => { keys[e.key] = false; });
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = (e.clientX - rect.left) * (W / rect.width);
+  paddle.x = Math.max(0, Math.min(W - paddle.w, mx - paddle.w / 2));
+});
+canvas.addEventListener('click', launch);
+
+function update() {
+  if (state !== 'play' || paused) return;
+
+  if (keys['ArrowLeft'] || keys['a'] || keys['A'] || keys['ф'] || keys['Ф']) paddle.x -= paddle.speed;
+  if (keys['ArrowRight'] || keys['d'] || keys['D'] || keys['в'] || keys['В']) paddle.x += paddle.speed;
+  paddle.x = Math.max(0, Math.min(W - paddle.w, paddle.x));
+
+  if (ball.stuck) {
+    ball.x = paddle.x + paddle.w / 2;
+    ball.y = paddle.y - ball.r - 1;
+    return;
+  }
+
+  // Substeps to avoid tunneling
+  const steps = 4;
+  for (let s = 0; s < steps; s++) {
+    ball.x += ball.dx / steps;
+    ball.y += ball.dy / steps;
+
+    // Walls
+    if (ball.x - ball.r < 0) { ball.x = ball.r; ball.dx = Math.abs(ball.dx); }
+    if (ball.x + ball.r > W) { ball.x = W - ball.r; ball.dx = -Math.abs(ball.dx); }
+    if (ball.y - ball.r < 0) { ball.y = ball.r; ball.dy = Math.abs(ball.dy); }
+
+    // Paddle
+    if (ball.dy > 0 && ball.y + ball.r >= paddle.y && ball.y + ball.r <= paddle.y + paddle.h + 6 &&
+        ball.x >= paddle.x - ball.r && ball.x <= paddle.x + paddle.w + ball.r) {
+      const hit = (ball.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2);
+      const angle = Math.max(-1, Math.min(1, hit)) * (Math.PI / 3);
+      const speed = Math.hypot(ball.dx, ball.dy);
+      ball.dx = speed * Math.sin(angle);
+      ball.dy = -speed * Math.cos(angle);
+      ball.y = paddle.y - ball.r;
+    }
+
+    // Bricks
+    for (const b of bricks) {
+      if (!b.alive) continue;
+      const cx = Math.max(b.x, Math.min(ball.x, b.x + BRICK_W));
+      const cy = Math.max(b.y, Math.min(ball.y, b.y + BRICK_H));
+      const ddx = ball.x - cx, ddy = ball.y - cy;
+      if (ddx * ddx + ddy * ddy <= ball.r * ball.r) {
+        const overlapX = Math.min(ball.x + ball.r - b.x, b.x + BRICK_W - (ball.x - ball.r));
+        const overlapY = Math.min(ball.y + ball.r - b.y, b.y + BRICK_H - (ball.y - ball.r));
+        if (overlapX < overlapY) ball.dx = -ball.dx; else ball.dy = -ball.dy;
+        b.hits--;
+        if (b.hits <= 0) { b.alive = false; score += 10 * (level + 1); }
+        else { score += 5; b.color = '#c39bd3'; }
+        // speed up slightly
+        ball.dx *= 1.005; ball.dy *= 1.005;
+        break;
+      }
+    }
+
+    // Bottom
+    if (ball.y - ball.r > H) {
+      lives--;
+      if (lives <= 0) { state = 'over'; }
+      else resetBall();
+      return;
+    }
+  }
+
+  if (bricks.every(b => !b.alive)) {
+    level++;
+    if (level >= LEVELS.length) { state = 'win'; level = LEVELS.length - 1; }
+    else loadLevel(level);
+  }
+}
+
+function roundRect(x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  // HUD
+  ctx.fillStyle = '#fff';
+  ctx.font = '18px Arial';
+  ctx.textAlign = 'left';
+  ctx.fillText('Рахунок: ' + score, 12, 28);
+  ctx.textAlign = 'center';
+  ctx.fillText('Рівень: ' + (level + 1) + ' / ' + LEVELS.length, W / 2, 28);
+  ctx.textAlign = 'right';
+  ctx.fillText('Життя: ' + '❤'.repeat(Math.max(0, lives)), W - 12, 28);
+
+  // Bricks
+  for (const b of bricks) {
+    if (!b.alive) continue;
+    ctx.fillStyle = b.color;
+    roundRect(b.x, b.y, BRICK_W, BRICK_H, 4);
+  }
+
+  // Paddle
+  ctx.fillStyle = '#ecf0f1';
+  roundRect(paddle.x, paddle.y, paddle.w, paddle.h, 6);
+
+  // Ball
+  ctx.fillStyle = '#fff';
+  ctx.beginPath();
+  ctx.arc(ball.x, ball.y, ball.r, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.textAlign = 'center';
+  if (state === 'play' && ball.stuck) {
+    ctx.font = '16px Arial';
+    ctx.fillStyle = '#bbb';
+    ctx.fillText('Натисніть пробіл або клацніть, щоб запустити м\'яч', W / 2, H / 2 + 60);
+  }
+  if (paused && state === 'play') overlay('ПАУЗА', 'Натисніть P, щоб продовжити');
+  if (state === 'over') overlay('ГРУ ЗАКІНЧЕНО', 'Рахунок: ' + score + ' — клік або пробіл для нової гри');
+  if (state === 'win') overlay('ПЕРЕМОГА!', 'Рахунок: ' + score + ' — клік або пробіл для нової гри');
+}
+
+function overlay(title, sub) {
+  ctx.fillStyle = 'rgba(0,0,0,0.7)';
+  ctx.fillRect(0, 0, W, H);
+  ctx.fillStyle = '#fff';
+  ctx.font = 'bold 40px Arial';
+  ctx.fillText(title, W / 2, H / 2 - 10);
+  ctx.font = '18px Arial';
+  ctx.fillText(sub, W / 2, H / 2 + 30);
+}
+
+function loop() {
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+loadLevel(0);
+loop();
+</script>
+</body>
+</html>

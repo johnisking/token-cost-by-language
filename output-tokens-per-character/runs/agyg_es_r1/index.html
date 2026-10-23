@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rompe Ladrillos</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #1e293b, #0f172a);
+      color: #f8fafc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      user-select: none;
+    }
+
+    .hud {
+      width: 720px;
+      max-width: 95vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(30, 41, 59, 0.85);
+      border: 1px solid #334155;
+      border-radius: 12px;
+      padding: 12px 24px;
+      margin-bottom: 14px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .hud span {
+      color: #38bdf8;
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      border: 2px solid #475569;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6);
+      background: #090d16;
+    }
+
+    canvas {
+      display: block;
+      cursor: none;
+    }
+
+    .controls-hint {
+      margin-top: 12px;
+      color: #94a3b8;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hud">
+    <div>Puntos: <span id="scoreEl">0</span></div>
+    <div>Nivel: <span id="levelEl">1 / 2</span></div>
+    <div>Vidas: <span id="livesEl">3</span></div>
+  </div>
+
+  <div class="canvas-wrapper">
+    <canvas id="gameCanvas" width="720" height="500"></canvas>
+  </div>
+
+  <div class="controls-hint">
+    Controles: Ratón o Flechas Izquierda/Derecha (A/D) · Espacio o Clic para lanzar / reiniciar
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('scoreEl');
+    const levelEl = document.getElementById('levelEl');
+    const livesEl = document.getElementById('livesEl');
+
+    let score = 0;
+    let lives = 3;
+    let currentLevel = 1;
+    const maxLevels = 2;
+
+    // Estados: 'WAITING' (bola en paleta), 'PLAYING', 'LEVEL_CLEAR', 'GAME_OVER', 'VICTORY'
+    let gameState = 'WAITING';
+
+    const paddle = {
+      width: 110,
+      height: 14,
+      x: (canvas.width - 110) / 2,
+      y: canvas.height - 32,
+      speed: 8,
+      dx: 0
+    };
+
+    const ball = {
+      radius: 8,
+      x: canvas.width / 2,
+      y: paddle.y - 8,
+      baseSpeed: 5.5,
+      dx: 4,
+      dy: -4
+    };
+
+    let rightPressed = false;
+    let leftPressed = false;
+    let bricks = [];
+
+    const rowColors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#a855f7'];
+
+    function createBricks(level) {
+      bricks = [];
+      const cols = 9;
+      const padding = 8;
+      const offsetTop = 55;
+      const offsetLeft = 30;
+      const brickWidth = (canvas.width - offsetLeft * 2 - padding * (cols - 1)) / cols;
+      const brickHeight = 24;
+
+      if (level === 1) {
+        // Nivel 1: 4 filas clásicas de 1 golpe
+        const rows = 4;
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            bricks.push({
+              x: offsetLeft + c * (brickWidth + padding),
+              y: offsetTop + r * (brickHeight + padding),
+              width: brickWidth,
+              height: brickHeight,
+              hp: 1,
+              maxHp: 1,
+              color: rowColors[r % rowColors.length],
+              points: (rows - r) * 10
+            });
+          }
+        }
+      } else if (level === 2) {
+        // Nivel 2: Patrón más denso con ladrillos de 2 golpes en las filas superiores
+        const rows = 6;
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            // Huecos decorativos en diagonal para variar el nivel 2
+            if ((r === 2 || r === 3) && (c === 2 || c === 6)) continue;
+            const hp = r < 2 ? 2 : 1;
+            bricks.push({
+              x: offsetLeft + c * (brickWidth + padding),
+              y: offsetTop + r * (brickHeight + padding),
+              width: brickWidth,
+              height: brickHeight,
+              hp: hp,
+              maxHp: hp,
+              color: rowColors[r % rowColors.length],
+              points: hp * 15
+            });
+          }
+        }
+      }
+    }
+
+    function resetBallAndPaddle() {
+      paddle.width = currentLevel === 1 ? 110 : 95;
+      paddle.x = (canvas.width - paddle.width) / 2;
+      ball.baseSpeed = currentLevel === 1 ? 5.5 : 6.5;
+      ball.x = paddle.x + paddle.width / 2;
+      ball.y = paddle.y - ball.radius;
+      const angle = (Math.random() * 0.6 - 0.3); // ángulo inicial ligero
+      ball.dx = ball.baseSpeed * Math.sin(angle);
+      ball.dy = -ball.baseSpeed * Math.cos(angle);
+    }
+
+    function updateHUD() {
+      scoreEl.textContent = score;
+      levelEl.textContent = `${currentLevel} / ${maxLevels}`;
+      livesEl.textContent = lives;
+    }
+
+    function initGame() {
+      score = 0;
+      lives = 3;
+      currentLevel = 1;
+      gameState = 'WAITING';
+      createBricks(currentLevel);
+      resetBallAndPaddle();
+      updateHUD();
+    }
+
+    function nextLevel() {
+      currentLevel++;
+      gameState = 'WAITING';
+      createBricks(currentLevel);
+      resetBallAndPaddle();
+      updateHUD();
+    }
+
+    // Eventos de teclado
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        rightPressed = true;
+      } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        leftPressed = true;
+      } else if (e.code === 'Space') {
+        e.preventDefault();
+        handleAction();
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        rightPressed = false;
+      } else if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        leftPressed = false;
+      }
+    });
+
+    // Eventos de ratón
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const mouseX = (e.clientX - rect.left) * scaleX;
+      paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, mouseX - paddle.width / 2));
+      if (gameState === 'WAITING') {
+        ball.x = paddle.x + paddle.width / 2;
+      }
+    });
+
+    canvas.addEventListener('click', () => {
+      handleAction();
+    });
+
+    function handleAction() {
+      if (gameState === 'WAITING') {
+        gameState = 'PLAYING';
+      } else if (gameState === 'LEVEL_CLEAR') {
+        nextLevel();
+      } else if (gameState === 'GAME_OVER' || gameState === 'VICTORY') {
+        initGame();
+      }
+    }
+
+    function update() {
+      // Movimiento de la paleta por teclado
+      if (rightPressed) {
+        paddle.x = Math.min(canvas.width - paddle.width, paddle.x + paddle.speed);
+      } else if (leftPressed) {
+        paddle.x = Math.max(0, paddle.x - paddle.speed);
+      }
+
+      if (gameState === 'WAITING') {
+        ball.x = paddle.x + paddle.width / 2;
+        ball.y = paddle.y - ball.radius;
+        return;
+      }
+
+      if (gameState !== 'PLAYING') return;
+
+      ball.x += ball.dx;
+      ball.y += ball.dy;
+
+      // Rebote en paredes laterales
+      if (ball.x - ball.radius < 0) {
+        ball.x = ball.radius;
+        ball.dx = -ball.dx;
+      } else if (ball.x + ball.radius > canvas.width) {
+        ball.x = canvas.width - ball.radius;
+        ball.dx = -ball.dx;
+      }
+
+      // Rebote en el techo
+      if (ball.y - ball.radius < 0) {
+        ball.y = ball.radius;
+        ball.dy = -ball.dy;
+      }
+
+      // Colisión con la paleta
+      if (
+        ball.dy > 0 &&
+        ball.y + ball.radius >= paddle.y &&
+        ball.y - ball.radius <= paddle.y + paddle.height &&
+        ball.x >= paddle.x &&
+        ball.x <= paddle.x + paddle.width
+      ) {
+        const hitPos = (ball.x - (paddle.x + paddle.width / 2)) / (paddle.width / 2);
+        const maxBounceAngle = Math.PI / 3; // 60 grados máx
+        const bounceAngle = hitPos * maxBounceAngle;
+        ball.dx = ball.baseSpeed * Math.sin(bounceAngle);
+        ball.dy = -ball.baseSpeed * Math.cos(bounceAngle);
+        ball.y = paddle.y - ball.radius;
+      }
+
+      // Colisión con ladrillos
+      for (let i = 0; i < bricks.length; i++) {
+        const b = bricks[i];
+        if (b.hp > 0) {
+          if (
+            ball.x + ball.radius > b.x &&
+            ball.x - ball.radius < b.x + b.width &&
+            ball.y + ball.radius > b.y &&
+            ball.y - ball.radius < b.y + b.height
+          ) {
+            // Determinar eje de rebote
+            const overlapLeft = (ball.x + ball.radius) - b.x;
+            const overlapRight = (b.x + b.width) - (ball.x - ball.radius);
+            const overlapTop = (ball.y + ball.radius) - b.y;
+            const overlapBottom = (b.y + b.height) - (ball.y - ball.radius);
+            const minOverlap = Math.min(overlapLeft, overlapRight, overlapTop, overlapBottom);
+
+            if (minOverlap === overlapLeft || minOverlap === overlapRight) {
+              ball.dx = -ball.dx;
+            } else {
+              ball.dy = -ball.dy;
+            }
+
+            b.hp--;
+            if (b.hp === 0) {
+              score += b.points;
+            } else {
+              score += 5;
+            }
+            updateHUD();
+
+            // Comprobar si quedan ladrillos
+            const remaining = bricks.some(brick => brick.hp > 0);
+            if (!remaining) {
+              if (currentLevel < maxLevels) {
+                gameState = 'LEVEL_CLEAR';
+              } else {
+                gameState = 'VICTORY';
+              }
+            }
+            break;
+          }
+        }
+      }
+
+      // Caída al fondo (perder vida)
+      if (ball.y - ball.radius > canvas.height) {
+        lives--;
+        updateHUD();
+        if (lives <= 0) {
+          gameState = 'GAME_OVER';
+        } else {
+          gameState = 'WAITING';
+          resetBallAndPaddle();
+        }
+      }
+    }
+
+    function drawRoundedRect(x, y, w, h, r, fillStyle, strokeStyle) {
+      ctx.beginPath();
+      ctx.roundRect(x, y, w, h, r);
+      if (fillStyle) {
+        ctx.fillStyle = fillStyle;
+        ctx.fill();
+      }
+      if (strokeStyle) {
+        ctx.strokeStyle = strokeStyle;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Dibujar paleta
+      drawRoundedRect(paddle.x, paddle.y, paddle.width, paddle.height, 7, '#38bdf8', '#bae6fd');
+
+      // Dibujar bola
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#f8fafc';
+      ctx.fill();
+      ctx.closePath();
+
+      // Dibujar ladrillos
+      for (const b of bricks) {
+        if (b.hp > 0) {
+          const border = b.hp > 1 ? '#ffffff' : null;
+          drawRoundedRect(b.x, b.y, b.width, b.height, 4, b.color, border);
+          if (b.maxHp > 1 && b.hp === 2) {
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.25)';
+            ctx.fillRect(b.x + 4, b.y + 4, b.width - 8, 4);
+          }
+        }
+      }
+
+      // Mensajes de estado superpuestos
+      if (gameState !== 'PLAYING') {
+        ctx.fillStyle = 'rgba(9, 13, 22, 0.65)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#f8fafc';
+
+        if (gameState === 'WAITING') {
+          ctx.font = 'bold 26px Segoe UI, sans-serif';
+          ctx.fillText(`NIVEL ${currentLevel}`, canvas.width / 2, canvas.height / 2 - 15);
+          ctx.font = '18px Segoe UI, sans-serif';
+          ctx.fillStyle = '#38bdf8';
+          ctx.fillText('Haz clic o pulsa ESPACIO para lanzar la bola', canvas.width / 2, canvas.height / 2 + 22);
+        } else if (gameState === 'LEVEL_CLEAR') {
+          ctx.font = 'bold 30px Segoe UI, sans-serif';
+          ctx.fillStyle = '#22c55e';
+          ctx.fillText('¡NIVEL 1 COMPLETADO!', canvas.width / 2, canvas.height / 2 - 15);
+          ctx.font = '18px Segoe UI, sans-serif';
+          ctx.fillStyle = '#f8fafc';
+          ctx.fillText('Haz clic o pulsa ESPACIO para ir al Nivel 2', canvas.width / 2, canvas.height / 2 + 25);
+        } else if (gameState === 'GAME_OVER') {
+          ctx.font = 'bold 34px Segoe UI, sans-serif';
+          ctx.fillStyle = '#ef4444';
+          ctx.fillText('FIN DEL JUEGO', canvas.width / 2, canvas.height / 2 - 20);
+          ctx.font = '20px Segoe UI, sans-serif';
+          ctx.fillStyle = '#f8fafc';
+          ctx.fillText(`Puntuación final: ${score}`, canvas.width / 2, canvas.height / 2 + 15);
+          ctx.font = '16px Segoe UI, sans-serif';
+          ctx.fillStyle = '#94a3b8';
+          ctx.fillText('Haz clic o pulsa ESPACIO para volver a jugar', canvas.width / 2, canvas.height / 2 + 50);
+        } else if (gameState === 'VICTORY') {
+          ctx.font = 'bold 34px Segoe UI, sans-serif';
+          ctx.fillStyle = '#eab308';
+          ctx.fillText('¡HAS GANADO EL JUEGO!', canvas.width / 2, canvas.height / 2 - 20);
+          ctx.font = '20px Segoe UI, sans-serif';
+          ctx.fillStyle = '#f8fafc';
+          ctx.fillText(`Puntuación final: ${score}`, canvas.width / 2, canvas.height / 2 + 15);
+          ctx.font = '16px Segoe UI, sans-serif';
+          ctx.fillStyle = '#94a3b8';
+          ctx.fillText('Haz clic o pulsa ESPACIO para reiniciar', canvas.width / 2, canvas.height / 2 + 50);
+        }
+      }
+    }
+
+    function loop() {
+      update();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    initGame();
+    loop();
+  </script>
+</body>
+</html>

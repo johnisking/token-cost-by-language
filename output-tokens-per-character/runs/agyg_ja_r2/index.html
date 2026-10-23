@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ブロック崩し (Breakout)</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background: #0f172a;
+      color: #f8fafc;
+      font-family: 'Segoe UI', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      user-select: none;
+    }
+    .game-container {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      border: 1px solid #334155;
+    }
+    .hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding: 10px 16px;
+      background: #0f172a;
+      border-radius: 10px;
+      border: 1px solid #334155;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .hud-item span {
+      color: #38bdf8;
+      margin-left: 6px;
+    }
+    .lives span {
+      color: #f43f5e;
+      letter-spacing: 2px;
+    }
+    .canvas-wrapper {
+      position: relative;
+      width: 640px;
+      height: 480px;
+    }
+    canvas {
+      background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
+      border-radius: 10px;
+      border: 2px solid #475569;
+      display: block;
+      cursor: none;
+    }
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.82);
+      backdrop-filter: blur(4px);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+    .overlay.hidden {
+      display: none;
+    }
+    .overlay h1 {
+      font-size: 36px;
+      margin-bottom: 12px;
+      color: #38bdf8;
+      text-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+    }
+    .overlay p {
+      font-size: 16px;
+      color: #cbd5e1;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    button {
+      background: linear-gradient(135deg, #38bdf8, #2563eb);
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      font-size: 18px;
+      font-weight: 700;
+      border-radius: 9999px;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.6);
+    }
+    .controls-hint {
+      margin-top: 12px;
+      text-align: center;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="game-container">
+    <div class="hud">
+      <div class="hud-item">SCORE: <span id="scoreDisplay">0</span></div>
+      <div class="hud-item">LEVEL: <span id="levelDisplay">1 / 2</span></div>
+      <div class="hud-item lives">LIVES: <span id="livesDisplay">♥♥♥</span></div>
+    </div>
+
+    <div class="canvas-wrapper">
+      <canvas id="gameCanvas" width="640" height="480"></canvas>
+      <div id="overlay" class="overlay">
+        <h1 id="overlayTitle">ブロック崩し</h1>
+        <p id="overlayMessage">
+          全2ステージのブロックをすべて破壊しよう！<br>
+          マウス移動 または 左右キー（← → / A D）でパドルを操作できます。
+        </p>
+        <button id="actionBtn">ゲーム開始 (Space / Click)</button>
+      </div>
+    </div>
+
+    <div class="controls-hint">
+      操作方法: マウス移動 / キーボード [←][→] または [A][D] ｜ 発射・開始: [Space] または クリック
+    </div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const levelDisplay = document.getElementById('levelDisplay');
+    const livesDisplay = document.getElementById('livesDisplay');
+    const overlay = document.getElementById('overlay');
+    const overlayTitle = document.getElementById('overlayTitle');
+    const overlayMessage = document.getElementById('overlayMessage');
+    const actionBtn = document.getElementById('actionBtn');
+
+    const MAX_LEVEL = 2;
+    const INITIAL_LIVES = 3;
+
+    let score = 0;
+    let lives = INITIAL_LIVES;
+    let currentLevel = 1;
+    let gameState = 'START'; // START, PLAYING, LEVEL_CLEAR, GAME_OVER, VICTORY
+    let ballAttached = true;
+
+    const paddle = {
+      width: 104,
+      height: 14,
+      x: (canvas.width - 104) / 2,
+      y: canvas.height - 32,
+      speed: 8
+    };
+
+    const ball = {
+      x: canvas.width / 2,
+      y: paddle.y - 8,
+      radius: 8,
+      dx: 4,
+      dy: -4,
+      baseSpeed: 5
+    };
+
+    const keys = {
+      left: false,
+      right: false
+    };
+
+    let bricks = [];
+    let particles = [];
+
+    const BRICK_COLORS = [
+      '#f43f5e', // Red-Pink
+      '#fb923c', // Orange
+      '#facc15', // Yellow
+      '#4ade80', // Green
+      '#38bdf8', // Sky Blue
+      '#a855f7'  // Purple
+    ];
+
+    function createBricksForLevel(level) {
+      bricks = [];
+      const rows = level === 1 ? 4 : 6;
+      const cols = 8;
+      const padding = 8;
+      const offsetTop = 50;
+      const offsetLeft = 32;
+      const brickWidth = (canvas.width - offsetLeft * 2 - padding * (cols - 1)) / cols;
+      const brickHeight = 22;
+
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          let hp = 1;
+          if (level === 2) {
+            // Level 2 has a patterned layout with durable silver bricks (2 hits)
+            if (r === 0 || (r % 2 === 1 && (c === 1 || c === 6))) {
+              hp = 2;
+            }
+          }
+          bricks.push({
+            x: offsetLeft + c * (brickWidth + padding),
+            y: offsetTop + r * (brickHeight + padding),
+            width: brickWidth,
+            height: brickHeight,
+            hp: hp,
+            maxHp: hp,
+            color: BRICK_COLORS[r % BRICK_COLORS.length],
+            points: hp * 10
+          });
+        }
+      }
+    }
+
+    function updateHUD() {
+      scoreDisplay.textContent = score;
+      levelDisplay.textContent = `${currentLevel} / ${MAX_LEVEL}`;
+      livesDisplay.textContent = '♥'.repeat(Math.max(0, lives)) + '♡'.repeat(Math.max(0, INITIAL_LIVES - lives));
+    }
+
+    function resetBallAndPaddle() {
+      paddle.width = currentLevel === 1 ? 104 : 90;
+      paddle.x = (canvas.width - paddle.width) / 2;
+      ballAttached = true;
+      ball.baseSpeed = currentLevel === 1 ? 5.2 : 6.2;
+      ball.x = paddle.x + paddle.width / 2;
+      ball.y = paddle.y - ball.radius;
+      const angle = (Math.random() * 0.6 - 0.3); // Slight random angle
+      ball.dx = ball.baseSpeed * Math.sin(angle);
+      ball.dy = -ball.baseSpeed * Math.cos(angle);
+    }
+
+    function launchBall() {
+      if (ballAttached && gameState === 'PLAYING') {
+        ballAttached = false;
+        const angle = (Math.random() * 0.5 - 0.25);
+        ball.dx = ball.baseSpeed * Math.sin(angle);
+        ball.dy = -ball.baseSpeed * Math.cos(angle);
+      }
+    }
+
+    function spawnParticles(x, y, color) {
+      for (let i = 0; i < 10; i++) {
+        particles.push({
+          x,
+          y,
+          dx: (Math.random() - 0.5) * 5,
+          dy: (Math.random() - 0.5) * 5,
+          radius: Math.random() * 3 + 1.5,
+          alpha: 1,
+          color
+        });
+      }
+    }
+
+    function startNewGame() {
+      score = 0;
+      lives = INITIAL_LIVES;
+      currentLevel = 1;
+      createBricksForLevel(currentLevel);
+      resetBallAndPaddle();
+      updateHUD();
+      gameState = 'PLAYING';
+      overlay.classList.add('hidden');
+    }
+
+    function startNextLevel() {
+      currentLevel = 2;
+      createBricksForLevel(currentLevel);
+      resetBallAndPaddle();
+      updateHUD();
+      gameState = 'PLAYING';
+      overlay.classList.add('hidden');
+    }
+
+    function showOverlay(title, message, buttonText) {
+      overlayTitle.textContent = title;
+      overlayMessage.innerHTML = message;
+      actionBtn.textContent = buttonText;
+      overlay.classList.remove('hidden');
+    }
+
+    function handleAction() {
+      if (gameState === 'START' || gameState === 'GAME_OVER' || gameState === 'VICTORY') {
+        startNewGame();
+      } else if (gameState === 'LEVEL_CLEAR') {
+        startNextLevel();
+      } else if (gameState === 'PLAYING' && ballAttached) {
+        launchBall();
+      }
+    }
+
+    // Event Listeners
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        keys.left = true;
+      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        keys.right = true;
+      } else if (e.code === 'Space') {
+        e.preventDefault();
+        handleAction();
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        keys.left = false;
+      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        keys.right = false;
+      }
+    });
+
+    canvas.addEventListener('mousemove', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = e.clientX - rect.left;
+      paddle.x = Math.max(0, Math.min(canvas.width - paddle.width, mouseX - paddle.width / 2));
+      if (ballAttached) {
+        ball.x = paddle.x + paddle.width / 2;
+      }
+    });
+
+    canvas.addEventListener('click', () => {
+      if (gameState === 'PLAYING' && ballAttached) {
+        launchBall();
+      }
+    });
+
+    actionBtn.addEventListener('click', () => {
+      handleAction();
+    });
+
+    function update() {
+      if (gameState !== 'PLAYING') return;
+
+      // Keyboard movement
+      if (keys.left) {
+        paddle.x = Math.max(0, paddle.x - paddle.speed);
+      }
+      if (keys.right) {
+        paddle.x = Math.min(canvas.width - paddle.width, paddle.x + paddle.speed);
+      }
+
+      if (ballAttached) {
+        ball.x = paddle.x + paddle.width / 2;
+        ball.y = paddle.y - ball.radius;
+        return;
+      }
+
+      ball.x += ball.dx;
+      ball.y += ball.dy;
+
+      // Wall collisions (Left / Right)
+      if (ball.x - ball.radius < 0) {
+        ball.x = ball.radius;
+        ball.dx = -ball.dx;
+      } else if (ball.x + ball.radius > canvas.width) {
+        ball.x = canvas.width - ball.radius;
+        ball.dx = -ball.dx;
+      }
+
+      // Top wall collision
+      if (ball.y - ball.radius < 0) {
+        ball.y = ball.radius;
+        ball.dy = -ball.dy;
+      }
+
+      // Paddle collision
+      if (
+        ball.dy > 0 &&
+        ball.y + ball.radius >= paddle.y &&
+        ball.y - ball.radius <= paddle.y + paddle.height &&
+        ball.x >= paddle.x &&
+        ball.x <= paddle.x + paddle.width
+      ) {
+        const hitPos = (ball.x - (paddle.x + paddle.width / 2)) / (paddle.width / 2);
+        const maxBounceAngle = Math.PI / 3; // 60 degrees
+        const bounceAngle = hitPos * maxBounceAngle;
+
+        ball.dx = ball.baseSpeed * Math.sin(bounceAngle);
+        ball.dy = -ball.baseSpeed * Math.cos(bounceAngle);
+        ball.y = paddle.y - ball.radius;
+      }
+
+      // Brick collisions
+      for (let i = bricks.length - 1; i >= 0; i--) {
+        const b = bricks[i];
+        if (
+          ball.x + ball.radius > b.x &&
+          ball.x - ball.radius < b.x + b.width &&
+          ball.y + ball.radius > b.y &&
+          ball.y - ball.radius < b.y + b.height
+        ) {
+          const overlapLeft = (ball.x + ball.radius) - b.x;
+          const overlapRight = (b.x + b.width) - (ball.x - ball.radius);
+          const overlapTop = (ball.y + ball.radius) - b.y;
+          const overlapBottom = (b.y + b.height) - (ball.y - ball.radius);
+
+          const minOverlap = Math.min(overlapLeft, overlapRight, overlapTop, overlapBottom);
+          if (minOverlap === overlapLeft || minOverlap === overlapRight) {
+            ball.dx = -ball.dx;
+          } else {
+            ball.dy = -ball.dy;
+          }
+
+          b.hp--;
+          spawnParticles(ball.x, ball.y, b.color);
+
+          if (b.hp <= 0) {
+            score += b.points;
+            bricks.splice(i, 1);
+          } else {
+            score += 5;
+          }
+          updateHUD();
+          break;
+        }
+      }
+
+      // Check Level Clear
+      if (bricks.length === 0) {
+        if (currentLevel < MAX_LEVEL) {
+          gameState = 'LEVEL_CLEAR';
+          showOverlay(
+            'LEVEL 1 クリア！',
+            `現在のスコア: <strong>${score}</strong><br>次は耐久ブロックが登場する LEVEL 2 です！`,
+            'LEVEL 2 へ進む (Space / Click)'
+          );
+        } else {
+          gameState = 'VICTORY';
+          showOverlay(
+            '🎉 ゲームクリア！ 🎉',
+            `全2レベル制覇おめでとうございます！<br>最終スコア: <strong>${score}</strong>`,
+            'もう一度遊ぶ (Space / Click)'
+          );
+        }
+        return;
+      }
+
+      // Bottom out (Lose a life)
+      if (ball.y - ball.radius > canvas.height) {
+        lives--;
+        updateHUD();
+        if (lives <= 0) {
+          gameState = 'GAME_OVER';
+          showOverlay(
+            'GAME OVER',
+            `ライフがなくなりました。<br>最終スコア: <strong>${score}</strong>`,
+            'リトライ (Space / Click)'
+          );
+        } else {
+          resetBallAndPaddle();
+        }
+      }
+    }
+
+    function updateParticles() {
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.dx;
+        p.y += p.dy;
+        p.alpha -= 0.03;
+        if (p.alpha <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw Bricks
+      for (const b of bricks) {
+        ctx.save();
+        ctx.fillStyle = b.hp === 2 ? '#e2e8f0' : b.color;
+        ctx.beginPath();
+        ctx.roundRect(b.x, b.y, b.width, b.height, 5);
+        ctx.fill();
+
+        if (b.hp === 2) {
+          ctx.strokeStyle = b.color;
+          ctx.lineWidth = 2;
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      // Draw Paddle
+      ctx.save();
+      const grad = ctx.createLinearGradient(paddle.x, paddle.y, paddle.x, paddle.y + paddle.height);
+      grad.addColorStop(0, '#38bdf8');
+      grad.addColorStop(1, '#0284c7');
+      ctx.fillStyle = grad;
+      ctx.beginPath();
+      ctx.roundRect(paddle.x, paddle.y, paddle.width, paddle.height, 7);
+      ctx.fill();
+      ctx.restore();
+
+      // Draw Ball
+      ctx.save();
+      ctx.fillStyle = '#ffffff';
+      ctx.shadowColor = '#38bdf8';
+      ctx.shadowBlur = 10;
+      ctx.beginPath();
+      ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+
+      // Launch Prompt
+      if (gameState === 'PLAYING' && ballAttached) {
+        ctx.save();
+        ctx.fillStyle = '#94a3b8';
+        ctx.font = '14px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('クリック または [Space] でボールを発射', canvas.width / 2, canvas.height - 65);
+        ctx.restore();
+      }
+
+      // Draw Particles
+      for (const p of particles) {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    function loop() {
+      update();
+      updateParticles();
+      draw();
+      requestAnimationFrame(loop);
+    }
+
+    createBricksForLevel(1);
+    resetBallAndPaddle();
+    updateHUD();
+    loop();
+  </script>
+</body>
+</html>

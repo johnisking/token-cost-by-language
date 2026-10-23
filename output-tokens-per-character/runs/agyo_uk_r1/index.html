@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Арканоїд</title>
+<style>
+  html, body {
+    margin: 0; height: 100%;
+    background: #0b0f1e;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-family: "Segoe UI", Arial, sans-serif; color: #e6e9f5;
+  }
+  canvas {
+    background: linear-gradient(#141a33, #0d1126);
+    border: 2px solid #3a4580; border-radius: 8px;
+    box-shadow: 0 0 30px rgba(80, 110, 255, 0.25);
+    max-width: 96vw; max-height: 86vh; cursor: none;
+  }
+  .help { margin-top: 10px; font-size: 14px; opacity: 0.75; text-align: center; }
+</style>
+</head>
+<body>
+<canvas id="game" width="800" height="600"></canvas>
+<div class="help">
+  Керування: ← → або A / D, або миша &nbsp;|&nbsp; Пробіл / клік — запуск м'яча &nbsp;|&nbsp; P — пауза
+</div>
+
+<script>
+(() => {
+  const canvas = document.getElementById("game");
+  const ctx = canvas.getContext("2d");
+  const W = canvas.width, H = canvas.height;
+
+  // ---------- Налаштування ----------
+  const PADDLE_W = 110, PADDLE_H = 14, PADDLE_Y = H - 40, PADDLE_SPEED = 520;
+  const BALL_R = 8;
+  const BRICK_COLS = 10, BRICK_W = 68, BRICK_H = 24, BRICK_GAP = 8;
+  const BRICK_TOP = 70;
+  const BRICK_LEFT = (W - (BRICK_COLS * BRICK_W + (BRICK_COLS - 1) * BRICK_GAP)) / 2;
+
+  // Рівні: '.' — порожньо, 1 — звичайна, 2 — міцна (2 удари), 3 — дуже міцна (3 удари)
+  const LEVELS = [
+    {
+      speed: 340,
+      map: [
+        "1111111111",
+        "1111111111",
+        "1111111111",
+        "1111111111",
+        "1111111111",
+      ],
+    },
+    {
+      speed: 400,
+      map: [
+        "3.3.33.3.3",
+        "2222222222",
+        "1.111111.1",
+        "12.2112.21",
+        "2222222222",
+        ".11111111.",
+        "..111111..",
+      ],
+    },
+  ];
+
+  const COLORS = {
+    1: ["#4fd1ff", "#ff6b9d", "#ffd166", "#06d6a0", "#a78bfa", "#ff9f43", "#5eead4"],
+    2: "#c0c6e0",
+    3: "#ffcc33",
+  };
+
+  // ---------- Стан гри ----------
+  let state = "menu"; // menu | ready | playing | paused | levelComplete | gameOver | win
+  let levelIndex = 0, score = 0, lives = 3;
+  let bricks = [];
+  const paddle = { x: W / 2 - PADDLE_W / 2, w: PADDLE_W };
+  const ball = { x: 0, y: 0, vx: 0, vy: 0, speed: 0 };
+  const keys = { left: false, right: false };
+  let mouseX = null;
+  let particles = [];
+
+  function buildLevel(i) {
+    bricks = [];
+    LEVELS[i].map.forEach((row, r) => {
+      [...row].forEach((ch, c) => {
+        if (ch === ".") return;
+        const hp = parseInt(ch, 10);
+        bricks.push({
+          x: BRICK_LEFT + c * (BRICK_W + BRICK_GAP),
+          y: BRICK_TOP + r * (BRICK_H + BRICK_GAP),
+          w: BRICK_W, h: BRICK_H,
+          hp, maxHp: hp,
+          color: hp === 1 ? COLORS[1][r % COLORS[1].length] : COLORS[hp],
+          alive: true,
+        });
+      });
+    });
+  }
+
+  function resetBall() {
+    ball.speed = LEVELS[levelIndex].speed;
+    ball.vx = 0; ball.vy = 0;
+    stickBall();
+    state = "ready";
+  }
+
+  function stickBall() {
+    ball.x = paddle.x + paddle.w / 2;
+    ball.y = PADDLE_Y - BALL_R - 1;
+  }
+
+  function launch() {
+    const angle = (-Math.PI / 2) + (Math.random() * 0.6 - 0.3);
+    ball.vx = Math.cos(angle) * ball.speed;
+    ball.vy = Math.sin(angle) * ball.speed;
+    state = "playing";
+  }
+
+  function newGame() {
+    levelIndex = 0; score = 0; lives = 3;
+    buildLevel(levelIndex);
+    paddle.x = W / 2 - PADDLE_W / 2;
+    resetBall();
+  }
+
+  function nextLevel() {
+    levelIndex++;
+    buildLevel(levelIndex);
+    paddle.x = W / 2 - PADDLE_W / 2;
+    resetBall();
+  }
+
+  // Головна дія (пробіл / клік)
+  function action() {
+    switch (state) {
+      case "menu":
+      case "gameOver":
+      case "win": newGame(); break;
+      case "ready": launch(); break;
+      case "levelComplete": nextLevel(); break;
+      case "paused": state = "playing"; break;
+    }
+  }
+
+  // ---------- Введення ----------
+  document.addEventListener("keydown", (e) => {
+    if (e.code === "ArrowLeft" || e.code === "KeyA") { keys.left = true; mouseX = null; }
+    if (e.code === "ArrowRight" || e.code === "KeyD") { keys.right = true; mouseX = null; }
+    if (e.code === "Space" || e.code === "Enter") { e.preventDefault(); action(); }
+    if (e.code === "KeyP" || e.code === "Escape") {
+      if (state === "playing") state = "paused";
+      else if (state === "paused") state = "playing";
+    }
+    if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.code)) e.preventDefault();
+  });
+  document.addEventListener("keyup", (e) => {
+    if (e.code === "ArrowLeft" || e.code === "KeyA") keys.left = false;
+    if (e.code === "ArrowRight" || e.code === "KeyD") keys.right = false;
+  });
+
+  function canvasX(clientX) {
+    const rect = canvas.getBoundingClientRect();
+    return (clientX - rect.left) * (W / rect.width);
+  }
+  canvas.addEventListener("mousemove", (e) => { mouseX = canvasX(e.clientX); });
+  canvas.addEventListener("mousedown", (e) => { mouseX = canvasX(e.clientX); action(); });
+  canvas.addEventListener("touchmove", (e) => {
+    e.preventDefault(); mouseX = canvasX(e.touches[0].clientX);
+  }, { passive: false });
+  canvas.addEventListener("touchstart", (e) => {
+    e.preventDefault(); mouseX = canvasX(e.touches[0].clientX); action();
+  }, { passive: false });
+
+  // ---------- Логіка ----------
+  function update(dt) {
+    if (state !== "ready" && state !== "playing") { updateParticles(dt); return; }
+
+    // Рух ракетки
+    if (keys.left) paddle.x -= PADDLE_SPEED * dt;
+    if (keys.right) paddle.x += PADDLE_SPEED * dt;
+    if (mouseX !== null && !keys.left && !keys.right) paddle.x = mouseX - paddle.w / 2;
+    paddle.x = Math.max(0, Math.min(W - paddle.w, paddle.x));
+
+    if (state === "ready") { stickBall(); updateParticles(dt); return; }
+
+    // Рух м'яча кроками, щоб не проскакувати крізь цеглинки
+    const steps = Math.ceil((ball.speed * dt) / (BALL_R / 2));
+    const sdt = dt / steps;
+    for (let s = 0; s < steps && state === "playing"; s++) stepBall(sdt);
+
+    updateParticles(dt);
+  }
+
+  function stepBall(dt) {
+    ball.x += ball.vx * dt;
+    ball.y += ball.vy * dt;
+
+    // Стіни
+    if (ball.x - BALL_R < 0) { ball.x = BALL_R; ball.vx = Math.abs(ball.vx); }
+    if (ball.x + BALL_R > W) { ball.x = W - BALL_R; ball.vx = -Math.abs(ball.vx); }
+    if (ball.y - BALL_R < 0) { ball.y = BALL_R; ball.vy = Math.abs(ball.vy); }
+
+    // Ракетка
+    if (ball.vy > 0 &&
+        ball.y + BALL_R >= PADDLE_Y && ball.y + BALL_R <= PADDLE_Y + PADDLE_H + 6 &&
+        ball.x >= paddle.x - BALL_R && ball.x <= paddle.x + paddle.w + BALL_R) {
+      const hit = (ball.x - (paddle.x + paddle.w / 2)) / (paddle.w / 2); // -1..1
+      const angle = Math.max(-1, Math.min(1, hit)) * (Math.PI / 3);     // до 60°
+      ball.vx = Math.sin(angle) * ball.speed;
+      ball.vy = -Math.cos(angle) * ball.speed;
+      ball.y = PADDLE_Y - BALL_R - 0.5;
+    }
+
+    // Падіння
+    if (ball.y - BALL_R > H) {
+      lives--;
+      if (lives <= 0) { state = "gameOver"; }
+      else resetBall();
+      return;
+    }
+
+    // Цеглинки
+    for (const b of bricks) {
+      if (!b.alive) continue;
+      const cx = Math.max(b.x, Math.min(ball.x, b.x + b.w));
+      const cy = Math.max(b.y, Math.min(ball.y, b.y + b.h));
+      const dx = ball.x - cx, dy = ball.y - cy;
+      if (dx * dx + dy * dy > BALL_R * BALL_R) continue;
+
+      // Визначаємо сторону удару
+      const overlapX = Math.min(ball.x + BALL_R - b.x, b.x + b.w - (ball.x - BALL_R));
+      const overlapY = Math.min(ball.y + BALL_R - b.y, b.y + b.h - (ball.y - BALL_R));
+      if (overlapX < overlapY) {
+        ball.vx = ball.x < b.x + b.w / 2 ? -Math.abs(ball.vx) : Math.abs(ball.vx);
+      } else {
+        ball.vy = ball.y < b.y + b.h / 2 ? -Math.abs(ball.vy) : Math.abs(ball.vy);
+      }
+
+      b.hp--;
+      if (b.hp <= 0) {
+        b.alive = false;
+        score += 10 * b.maxHp;
+        spawnParticles(b.x + b.w / 2, b.y + b.h / 2, b.color);
+      } else {
+        score += 5;
+      }
+
+      // Невелике прискорення
+      ball.speed = Math.min(ball.speed * 1.01, LEVELS[levelIndex].speed * 1.6);
+      const v = Math.hypot(ball.vx, ball.vy);
+      ball.vx = (ball.vx / v) * ball.speed;
+      ball.vy = (ball.vy / v) * ball.speed;
+
+      if (bricks.every((br) => !br.alive)) {
+        state = levelIndex + 1 < LEVELS.length ? "levelComplete" : "win";
+      }
+      break; // одна цеглинка за крок
+    }
+  }
+
+  function spawnParticles(x, y, color) {
+    for (let i = 0; i < 14; i++) {
+      const a = Math.random() * Math.PI * 2, sp = 60 + Math.random() * 180;
+      particles.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0.6, color });
+    }
+  }
+  function updateParticles(dt) {
+    for (const p of particles) {
+      p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 400 * dt; p.life -= dt;
+    }
+    particles = particles.filter((p) => p.life > 0);
+  }
+
+  // ---------- Малювання ----------
+  function roundRect(x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  }
+
+  function drawHUD() {
+    ctx.fillStyle = "rgba(255,255,255,0.05)";
+    ctx.fillRect(0, 0, W, 44);
+    ctx.font = "bold 20px Segoe UI, Arial";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "#e6e9f5";
+    ctx.textAlign = "left";
+    ctx.fillText("Рахунок: " + score, 16, 22);
+    ctx.textAlign = "center";
+    ctx.fillText("Рівень " + (levelIndex + 1) + " / " + LEVELS.length, W / 2, 22);
+    ctx.textAlign = "right";
+    ctx.fillText("Життя:", W - 16 - 3 * 24, 22);
+    for (let i = 0; i < 3; i++) {
+      ctx.fillStyle = i < lives ? "#ff4d6d" : "rgba(255,255,255,0.15)";
+      drawHeart(W - 16 - (2 - i) * 24 - 10, 22, 9);
+    }
+  }
+
+  function drawHeart(x, y, s) {
+    ctx.beginPath();
+    ctx.moveTo(x, y + s * 0.8);
+    ctx.bezierCurveTo(x - s * 1.4, y - s * 0.2, x - s * 0.6, y - s * 1.2, x, y - s * 0.4);
+    ctx.bezierCurveTo(x + s * 0.6, y - s * 1.2, x + s * 1.4, y - s * 0.2, x, y + s * 0.8);
+    ctx.fill();
+  }
+
+  function drawBricks() {
+    for (const b of bricks) {
+      if (!b.alive) continue;
+      ctx.globalAlpha = b.maxHp > 1 ? 0.45 + 0.55 * (b.hp / b.maxHp) : 1;
+      ctx.fillStyle = b.color;
+      roundRect(b.x, b.y, b.w, b.h, 5);
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = "rgba(255,255,255,0.25)";
+      ctx.fillRect(b.x + 4, b.y + 3, b.w - 8, 4);
+      if (b.maxHp > 1) {
+        ctx.fillStyle = "rgba(0,0,0,0.55)";
+        ctx.font = "bold 13px Segoe UI, Arial";
+        ctx.textAlign = "center"; ctx.textBaseline = "middle";
+        ctx.fillText(b.hp, b.x + b.w / 2, b.y + b.h / 2 + 1);
+      }
+    }
+  }
+
+  function drawPaddle() {
+    const g = ctx.createLinearGradient(0, PADDLE_Y, 0, PADDLE_Y + PADDLE_H);
+    g.addColorStop(0, "#9bb4ff"); g.addColorStop(1, "#4a63d9");
+    ctx.fillStyle = g;
+    roundRect(paddle.x, PADDLE_Y, paddle.w, PADDLE_H, 7);
+    ctx.fill();
+  }
+
+  function drawBall() {
+    ctx.shadowColor = "#fff"; ctx.shadowBlur = 12;
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath(); ctx.arc(ball.x, ball.y, BALL_R, 0, Math.PI * 2); ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+
+  function drawParticles() {
+    for (const p of particles) {
+      ctx.globalAlpha = Math.max(0, p.life / 0.6);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(p.x - 2, p.y - 2, 4, 4);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function overlay(title, subtitle, color) {
+    ctx.fillStyle = "rgba(5,8,20,0.7)";
+    ctx.fillRect(0, 0, W, H);
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillStyle = color || "#ffffff";
+    ctx.font = "bold 52px Segoe UI, Arial";
+    ctx.fillText(title, W / 2, H / 2 - 40);
+    ctx.fillStyle = "#c9d0ee";
+    ctx.font = "20px Segoe UI, Arial";
+    subtitle.split("\n").forEach((line, i) => ctx.fillText(line, W / 2, H / 2 + 20 + i * 30));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    drawBricks();
+    drawParticles();
+    drawPaddle();
+    if (state !== "menu") drawBall();
+    drawHUD();
+
+    if (state === "menu")
+      overlay("АРКАНОЇД", "Розбий усі цеглинки на 2 рівнях!\nНатисни Пробіл або клацни мишею, щоб почати", "#7fa2ff");
+    else if (state === "ready")
+      { ctx.fillStyle = "#c9d0ee"; ctx.font = "18px Segoe UI, Arial"; ctx.textAlign = "center";
+        ctx.fillText("Пробіл або клік — запустити м'яч", W / 2, H / 2 + 80); }
+    else if (state === "paused")
+      overlay("ПАУЗА", "Натисни P, Пробіл або клацни, щоб продовжити");
+    else if (state === "levelComplete")
+      overlay("РІВЕНЬ ПРОЙДЕНО!", "Рахунок: " + score + "\nПробіл або клік — наступний рівень", "#06d6a0");
+    else if (state === "gameOver")
+      overlay("ГРУ ЗАКІНЧЕНО", "Твій рахунок: " + score + "\nПробіл або клік — грати знову", "#ff4d6d");
+    else if (state === "win")
+      overlay("ПЕРЕМОГА!", "Усі рівні пройдено! Рахунок: " + score + "\nПробіл або клік — грати знову", "#ffd166");
+  }
+
+  // ---------- Головний цикл ----------
+  let last = performance.now();
+  function loop(now) {
+    const dt = Math.min(0.033, (now - last) / 1000);
+    last = now;
+    update(dt);
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  buildLevel(0);
+  stickBall();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
