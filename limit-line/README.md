@@ -2,7 +2,7 @@
 
 136 headless runs (plus 6 excluded) of Claude Code (Haiku 5.5, Sonnet 5.5, Opus 5.5), Codex (gpt-6-luna) and Antigravity CLI (Gemini 4 Argon) on six levels of coding tasks, measured 2026-10-23 to 24 on one Windows 11 laptop.
 
-Page, tables and method: https://tokensave.app/data/ai-coding-limit-line · License: CC BY 4.0
+Page, tables and method: https://tokensave.app/data/ai-coding-limit-line · DOI [10.5281/zenodo.23600477](https://doi.org/10.5281/zenodo.23600477) · License: CC BY 4.0
 
 ![Runs with full marks by tool and level](ai-coding-limit-line-chart.png)
 
