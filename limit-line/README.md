@@ -10,7 +10,7 @@ Page, tables and method: https://tokensave.app/data/ai-coding-limit-line · DOI 
 
 - Levels 2 to 5 (apps from a spec, and an existing 1,032-line app with six symptom-only bugs plus three features): Haiku, Sonnet and Opus got full marks on all 21 runs each, Gemini 18/18, Codex 17/20.
 - Level 6, three real bugs fixed in the [marked](https://github.com/markedjs/marked) Markdown parser in Sep to Oct 2026: the easy and medium bugs were solved by almost every run. No run fully fixed the hard one (7-case upstream test), but the models split: Sonnet passed 6 of 7 in 8 of 10 runs, Opus in 6 of 10, Haiku in 1 of 10. The missed cases are code spans containing a backtick, which the bug report did not mention.
-- Letting the agents run the tests (dependencies preinstalled, `node`, `npm test`/`npm run`, read-only git allowed; 5 runs per Claude model) did not change the cases passed. It removed damage: without tests 2 of 15 Claude runs broke other spec tests (one Opus run left marked unable to load), with tests 0 of 15. Codex was also run with tests allowed, but its Windows sandbox blocked esbuild in all 5 runs (excluded).
+- Letting the agents run the tests (dependencies preinstalled, `node`, `npm test`/`npm run`, read-only git allowed; 5 runs per Claude model) did not change the cases passed. Fewer runs broke other code with tests (2 of 15 without, one Opus run left marked unable to load; 0 of 15 with), but with so few runs that gap could be chance. Codex was also run with tests allowed, but its Windows sandbox blocked esbuild in all 5 runs (excluded).
 - Average API cost per run (Claude Code's own figure): Haiku $0.026, Sonnet $0.19, Opus $0.45.
 
 ## Files

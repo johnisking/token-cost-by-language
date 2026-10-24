@@ -58,9 +58,9 @@ Every run fixed the examples in the bug report. What was left were code spans th
 
 In the first round no agent could run marked's tests: no packages were installed, and Claude Code ran without shell access. A real developer would run the suite while fixing the bug, so I ran each Claude model 5 more times with the dependencies preinstalled and the prompt allowing `node`, `npm test` / `npm run` and read-only git (installs and the network stayed off).
 
-Every one of those 15 runs ran the spec suite, and most wrote their own reproduction scripts. **The number of cases they got right did not change.** What changed was damage: without tests, 2 of 15 Claude runs broke something else (the Haiku run that broke 15 spec tests and the Opus run that stopped marked from loading). With tests, 0 of 15 did.
+Every one of those 15 runs ran the spec suite, and most wrote their own reproduction scripts. **The number of cases they got right did not change.** The one thing that looked different was damage: without tests, 2 of 15 Claude runs broke something else (the Haiku run that broke 15 spec tests and the Opus run that stopped marked from loading); with tests, 0 of 15 did. With so few runs that gap could easily be chance, so I would not claim tests prevent it.
 
-So in this bug, running tests protected the rest of the code, but it did not make any model think of the case the report left out.
+So on this bug, running tests did not make any model think of the case the report left out. It may help avoid breaking other code, but these runs are too few to show that.
 
 I also tried Codex with tests allowed, but its Windows sandbox blocked esbuild from building marked in all 5 runs, so those runs are excluded. Gemini had used up its quota.
 
@@ -80,7 +80,7 @@ Haiku cost about 94% less per run than Opus over all levels.
 
 - **Clear spec, Haiku is enough.** For building something from a clear spec, or fixing bugs whose symptoms are described, Haiku got the same full marks as Opus at about 94% less cost per run.
 - **A real bug with an incomplete report, use Sonnet or Opus.** They caught the extra edge case far more often than Haiku (8 and 6 of 10 runs vs 1 of 10). On this bug Sonnet did best and was also cheaper than Opus ($0.12 to $0.22 vs $0.39 to $0.48 per run), but with 10 runs each the Sonnet vs Opus gap could be chance.
-- **Whatever the model, let it run the tests.** It did not find the missing case, but no run broke other code once tests were allowed.
+- **Whatever the model, let it run the tests.** It did not find the missing case here, and no run with tests broke other code (2 of 15 without tests did, too few runs to be sure it is the tests).
 - **Still review edge cases yourself.** No model fixed the bug completely, and the cases they all missed were the ones only the maintainers thought of.
 
 ## A note on Antigravity
