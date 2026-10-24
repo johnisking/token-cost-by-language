@@ -1,8 +1,8 @@
 # Claude Code baseline tokens by version
 
-Measured 2026-10-21 by TokenSave. Page, method, findings and limitations: https://tokensave.app/data/claude-code-baseline-tokens-by-version
+Measured 2026-10-21 and 2026-10-24 by TokenSave. Page, method, findings and limitations: https://tokensave.app/data/claude-code-baseline-tokens-by-version
 
-46 Claude Code versions (1.0.60, July 2025, to 2.1.306, October 2026) installed from npm on one Windows laptop and sent the prompt "a" with `claude -p` (Claude Haiku 5.5), 3 runs each with MCP off and 1 run with the account's claude.ai connectors on. The metric is the input tokens (uncached + cache read + cache write) of the first model request.
+58 Claude Code versions (1.0.60, July 2025, to 2.1.310, October 23, 2026; versions 2.1.296 to 2.1.310 added on 2026-10-24) installed from npm on one Windows laptop and sent the prompt "a" with `claude -p` (Claude Haiku 5.5), 3 runs each with MCP off and 1 run with the account's claude.ai connectors on. The metric is the input tokens (uncached + cache read + cache write) of the first model request.
 
 Files:
 - `claude-code-baseline-tokens-by-version.csv` / `.json`: one row per version and setting (same as the site download)
