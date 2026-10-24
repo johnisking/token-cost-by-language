@@ -76,6 +76,13 @@ Claude Code reports an API-price cost for every run. Average per run:
 
 Haiku cost about 94% less per run than Opus over all levels.
 
+## What this means in practice
+
+- **Clear spec, Haiku is enough.** For building something from a clear spec, or fixing bugs whose symptoms are described, Haiku got the same full marks as Opus at about 94% less cost per run.
+- **A real bug with an incomplete report, use Sonnet or Opus.** They caught the extra edge case far more often than Haiku (8 and 6 of 10 runs vs 1 of 10). On this bug Sonnet did best and was also cheaper than Opus ($0.12 to $0.22 vs $0.39 to $0.48 per run), but with 10 runs each the Sonnet vs Opus gap could be chance.
+- **Whatever the model, let it run the tests.** It did not find the missing case, but no run broke other code once tests were allowed.
+- **Still review edge cases yourself.** No model fixed the bug completely, and the cases they all missed were the ones only the maintainers thought of.
+
 ## A note on Antigravity
 
 Antigravity's headless mode ends the whole turn the first time a command is denied. With read-only allow-rules, several Gemini runs read the code for minutes and then stopped on a `node -e` check before editing (on Windows a quoted command needs an exact rule). With full permissions, Gemini solved the easy and medium bugs too, in 2 to 11 minutes; one hard run hit its 30-minute limit without an edit.
