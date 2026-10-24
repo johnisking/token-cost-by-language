@@ -1,0 +1,43 @@
+diff --git a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+index ece615e..b41a7d2 100644
+--- a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
++++ b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+@@ -1149,6 +1149,17 @@ describe("toJSONSchema", () => {
+     ]);
+   });
+ 
++  test("record with numeric keys emits string propertyNames", () => {
++    expect(z.toJSONSchema(z.record(z.number(), z.number())).propertyNames).toEqual({
++      type: "string",
++      pattern: "^-?\\d+(\\.\\d+)?(e[+-]?\\d+)?$",
++    });
++    expect(z.toJSONSchema(z.record(z.number().int(), z.string())).propertyNames).toEqual({
++      type: "string",
++      pattern: "^-?\\d+$",
++    });
++  });
++
+   test("record filters enum values to strings and numbers for required", () => {
+     enum NumberEnum {
+       Zero = 0,
+diff --git a/packages/zod/src/v4/core/json-schema-processors.ts b/packages/zod/src/v4/core/json-schema-processors.ts
+index 8258fca..612a449 100644
+--- a/packages/zod/src/v4/core/json-schema-processors.ts
++++ b/packages/zod/src/v4/core/json-schema-processors.ts
+@@ -498,10 +498,15 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+   } else {
+     // Default behavior: use propertyNames + additionalProperties
+     if (ctx.target === "draft-07" || ctx.target === "draft-2020-12") {
+-      json.propertyNames = process(def.keyType, ctx as any, {
++      const keyJson = process(def.keyType, ctx as any, {
+         ...params,
+         path: [...params.path, "propertyNames"],
+       });
++      // object keys are always strings, so numeric keys match their string form
++      const numericKey = (keyJson.type === "number" || keyJson.type === "integer") && !("enum" in keyJson);
++      json.propertyNames = numericKey
++        ? { type: "string", pattern: keyJson.type === "integer" ? "^-?\\d+$" : "^-?\\d+(\\.\\d+)?(e[+-]?\\d+)?$" }
++        : keyJson;
+     }
+     json.additionalProperties = process(def.valueType, ctx as any, {
+       ...params,

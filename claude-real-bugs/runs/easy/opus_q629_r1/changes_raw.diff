@@ -1,0 +1,41 @@
+diff --git a/lib/parse.js b/lib/parse.js
+index 2345b75..5361ab4 100644
+--- a/lib/parse.js
++++ b/lib/parse.js
+@@ -192,7 +192,9 @@ var parseValues = function parseQueryStringValues(str, options) {
+         }
+ 
+         if (val && options.interpretNumericEntities && charset === 'iso-8859-1') {
+-            val = interpretNumericEntities(String(val));
++            val = utils.maybeMap(val, function (v) {
++                return interpretNumericEntities(String(v));
++            });
+         }
+ 
+         if (isEmptyBracketKey) {
+diff --git a/test/parse.js b/test/parse.js
+index 204b8df..2f1beb4 100644
+--- a/test/parse.js
++++ b/test/parse.js
+@@ -1309,12 +1309,20 @@ test('parse()', function (t) {
+     t.test('interpretNumericEntities with comma:true and iso charset does not crash', function (st) {
+         st.deepEqual(
+             qs.parse('b&a[]=1,' + urlEncodedNumSmiley, { comma: true, charset: 'iso-8859-1', interpretNumericEntities: true }),
+-            { b: '', a: ['1,☺'] }
++            { b: '', a: [['1', '☺']] }
+         );
+ 
+         st.end();
+     });
+ 
++    t.test('interpretNumericEntities does not undo comma splitting in iso charset', function (st) {
++        var options = { comma: true, charset: 'iso-8859-1', interpretNumericEntities: true };
++        st.deepEqual(qs.parse('a=b,c', options), { a: ['b', 'c'] });
++        st.deepEqual(qs.parse('a=' + urlEncodedNumSmiley + ',x', options), { a: ['☺', 'x'] });
++        st.deepEqual(qs.parse('a=b', options), { a: 'b' });
++        st.end();
++    });
++
+     t.test('does not interpret %uXXXX syntax in iso-8859-1 mode', function (st) {
+         st.deepEqual(qs.parse('%u263A=%u263A', { charset: 'iso-8859-1' }), { '%u263A': '%u263A' });
+         st.end();

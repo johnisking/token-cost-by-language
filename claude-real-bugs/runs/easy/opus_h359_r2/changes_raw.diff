@@ -1,0 +1,31 @@
+diff --git a/src/humanize/number.py b/src/humanize/number.py
+index 2dfeffe..a4d109b 100644
+--- a/src/humanize/number.py
++++ b/src/humanize/number.py
+@@ -555,6 +555,10 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
+         new_bucket = exponent // 3 * 3
+         value /= 10 ** (new_bucket - old_bucket)
+         digits = int(max(0, precision - exponent % 3 - 1))
++    elif exponent % 3 < 2 and round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
++        # Rounding carried into the next power of ten within the same prefix.
++        exponent += 1
++        digits = int(max(0, precision - exponent % 3 - 1))
+ 
+     if exponent >= 3:
+         ordinal_ = "kMGTPEZYRQ"[exponent // 3 - 1]
+diff --git a/tests/test_number.py b/tests/test_number.py
+index 6f0a664..fa240b9 100644
+--- a/tests/test_number.py
++++ b/tests/test_number.py
+@@ -318,6 +318,11 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
+         ([10, "", 3], "10.0"),
+         ([100, "", 3], "100"),
+         ([1000, "", 3], "1.00 k"),
++        ([9999], "10.0 k"),
++        ([99999], "100 k"),
++        ([-9999], "-10.0 k"),
++        ([9.99999], "10.0"),
++        ([0.0999999], "100 m"),
+         ([math.nan], "NaN"),
+         ([math.nan, "m"], "NaN"),
+         ([math.inf], "+Inf"),

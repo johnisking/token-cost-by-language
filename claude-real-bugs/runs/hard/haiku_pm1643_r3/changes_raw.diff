@@ -1,0 +1,47 @@
+diff --git a/markdown/htmlparser.py b/markdown/htmlparser.py
+index d92dc0d..fa0a488 100644
+--- a/markdown/htmlparser.py
++++ b/markdown/htmlparser.py
+@@ -298,7 +298,18 @@ class HTMLExtractor(htmlparser.HTMLParser):
+ 
+     def handle_comment(self, data: str):
+         # Check if the comment is unclosed, if so, we need to override position
+-        self.handle_empty_tag('<!--{}-->'.format(data), is_block=True)
++        # A comment within a paragraph (e.g., inside an open inline tag) is inline content.
++        self.handle_empty_tag('<!--{}-->'.format(data), is_block=self.at_block_start())
++
++    def at_block_start(self) -> bool:
++        """
++        Returns True if the current line does not directly follow paragraph text.
++
++        The current line starts a new block if it is the first line or the previous line is blank.
++        """
++        # `line_offset` is the start of the current line, so the last item of `split` is always empty.
++        lines = self.rawdata[:self.line_offset].split('\n')
++        return len(lines) == 1 or lines[-2].strip() == ''
+ 
+     def handle_decl(self, data: str):
+         self.handle_empty_tag('<!{}>'.format(data), is_block=True)
+diff --git a/tests/test_syntax/blocks/test_html_blocks.py b/tests/test_syntax/blocks/test_html_blocks.py
+index 1f2f877..772af22 100644
+--- a/tests/test_syntax/blocks/test_html_blocks.py
++++ b/tests/test_syntax/blocks/test_html_blocks.py
+@@ -774,6 +774,18 @@ class TestHTMLBlocks(TestCase):
+             )
+         )
+ 
++    def test_raw_comment_in_inline_tag(self):
++        self.assertMarkdownRenders(
++            '<span>\n  <!-- *foo* -->\n  <img src="bar">\n</span>',
++            '<p><span>\n  <!-- *foo* -->\n  <img src="bar">\n</span></p>'
++        )
++
++    def test_raw_comment_in_paragraph(self):
++        self.assertMarkdownRenders(
++            'text\n<!-- *foo* -->\nmore',
++            '<p>text\n<!-- *foo* -->\nmore</p>'
++        )
++
+     # Note: Trailing (insignificant) whitespace is not preserved, which does not match the
+     # reference implementation. However, it is not a change in behavior for Python-Markdown.
+     def test_raw_comment_trailing_whitespace(self):

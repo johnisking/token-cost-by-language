@@ -1,0 +1,150 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 64cbe81..911325b 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -378,7 +378,13 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+       // link
+       if (token = this.tokenizer.link(src)) {
+         src = src.substring(token.raw.length);
+-        tokens.push(token);
++        const lastToken = tokens.at(-1);
++        if (token.type === 'text' && lastToken?.type === 'text') {
++          lastToken.raw += token.raw;
++          lastToken.text += token.text;
++        } else {
++          tokens.push(token);
++        }
+         continue;
+       }
+ 
+diff --git a/src/Tokenizer.ts b/src/Tokenizer.ts
+index b651849..8384e69 100644
+--- a/src/Tokenizer.ts
++++ b/src/Tokenizer.ts
+@@ -11,22 +11,43 @@ import type { _Lexer } from './Lexer.ts';
+ import type { Links, Tokens, Token } from './Tokens.ts';
+ import type { MarkedOptions } from './MarkedOptions.ts';
+ 
+-function outputLink(cap: string[], link: Pick<Tokens.Link, 'href' | 'title'>, raw: string, lexer: _Lexer, rules: Rules): Tokens.Link | Tokens.Image {
++// Incremented every time a bracketed link (not an image or autolink) is
++// produced, so outputLink can tell whether its text contained a link.
++let bracketLinkCount = 0;
++
++function outputLink(cap: string[], link: Pick<Tokens.Link, 'href' | 'title'>, raw: string, lexer: _Lexer, rules: Rules): Tokens.Link | Tokens.Image | Tokens.Text {
+   const href = link.href;
+   const title = link.title || null;
+   const text = cap[1].replace(rules.other.outputLinkReplace, '$1');
++  const type = cap[0].charAt(0) === '!' ? 'image' : 'link';
+ 
++  const linkCountBefore = bracketLinkCount;
++  const inLink = lexer.state.inLink;
+   lexer.state.inLink = true;
+-  const token: Tokens.Link | Tokens.Image = {
+-    type: cap[0].charAt(0) === '!' ? 'image' : 'link',
++  const tokens = lexer.inlineTokens(text);
++  lexer.state.inLink = inLink;
++
++  if (type === 'link') {
++    if (bracketLinkCount !== linkCountBefore) {
++      // Links may not contain other links, at any level of nesting.
++      // The opening bracket is literal text and the inner link wins.
++      return {
++        type: 'text',
++        raw: '[',
++        text: '[',
++      };
++    }
++    bracketLinkCount++;
++  }
++
++  return {
++    type,
+     raw,
+     href,
+     title,
+     text,
+-    tokens: lexer.inlineTokens(text),
++    tokens,
+   };
+-  lexer.state.inLink = false;
+-  return token;
+ }
+ 
+ function indentCodeCompensation(raw: string, text: string, rules: Rules) {
+@@ -662,7 +683,7 @@ export class _Tokenizer<ParserOutput = string, RendererOutput = string> {
+     }
+   }
+ 
+-  link(src: string): Tokens.Link | Tokens.Image | undefined {
++  link(src: string): Tokens.Link | Tokens.Image | Tokens.Text | undefined {
+     const cap = this.rules.inline.link.exec(src);
+     if (cap) {
+       const trimmedUrl = cap[2].trim();
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 6e14498..4e348a4 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4145,8 +4145,7 @@
+     "example": 518,
+     "start_line": 7886,
+     "end_line": 7890,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *[bar [baz](/uri)](/uri)*](/uri)\n",
+@@ -4154,8 +4153,7 @@
+     "example": 519,
+     "start_line": 7893,
+     "end_line": 7897,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "![[[foo](uri1)](uri2)](uri3)\n",
+@@ -4263,8 +4261,7 @@
+     "example": 532,
+     "start_line": 8044,
+     "end_line": 8050,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *bar [baz][ref]*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index c8ffbc1..47d0a22 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4145,8 +4145,7 @@
+     "example": 518,
+     "start_line": 7886,
+     "end_line": 7890,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *[bar [baz](/uri)](/uri)*](/uri)\n",
+@@ -4154,8 +4153,7 @@
+     "example": 519,
+     "start_line": 7893,
+     "end_line": 7897,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "![[[foo](uri1)](uri2)](uri3)\n",
+@@ -4263,8 +4261,7 @@
+     "example": 532,
+     "start_line": 8044,
+     "end_line": 8050,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *bar [baz][ref]*][ref]\n\n[ref]: /uri\n",

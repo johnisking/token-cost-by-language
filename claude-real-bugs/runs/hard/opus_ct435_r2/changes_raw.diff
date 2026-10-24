@@ -1,0 +1,84 @@
+diff --git a/src/cachetools/_cachedmethod.py b/src/cachetools/_cachedmethod.py
+index 2a626ab..e702d1c 100644
+--- a/src/cachetools/_cachedmethod.py
++++ b/src/cachetools/_cachedmethod.py
+@@ -71,6 +71,7 @@ class _DescriptorBase:
+     def __init__(self, deprecated=False):
+         self.__attrname = None
+         self.__deprecated = deprecated
++        self.__unbound = None
+ 
+     def __set_name__(self, owner, name):
+         if self.__attrname is None:
+@@ -81,14 +82,31 @@ class _DescriptorBase:
+                 f"({self.__attrname!r} and {name!r})."
+             )
+ 
++    def __unbound_wrapper(self):
++        unbound = self.__unbound
++        if unbound is None:
++            descriptor = self
++
++            class Unbound(self.Wrapper):  # type: ignore
++                # Support calling through the class with an explicit
++                # instance, e.g. ``Class.method(obj, *args)``.
++                def __call__(self, obj, /, *args, **kwargs):
++                    return descriptor.__get__(obj, type(obj))(*args, **kwargs)
++
++            Unbound.__name__ = self.Wrapper.__name__  # type: ignore
++            Unbound.__qualname__ = self.Wrapper.__qualname__  # type: ignore
++            unbound = self.__unbound = Unbound
++        return unbound(None)
++
+     def __get__(self, obj, objtype=None):
+-        wrapper = self.Wrapper(obj)  # type: ignore
+         if obj is None:
+-            # Return the wrapper itself without modification when accessed
+-            # through the class to support class-level introspection, such
+-            # as for mocking with autospec=True in unittest.mock.
+-            pass
+-        elif self.__attrname is not None:
++            # Return a wrapper without binding it when accessed through
++            # the class to support class-level introspection, such as for
++            # mocking with autospec=True in unittest.mock.  Calling it
++            # requires passing the instance explicitly.
++            return self.__unbound_wrapper()
++        wrapper = self.Wrapper(obj)  # type: ignore
++        if self.__attrname is not None:
+             # replace descriptor instance with wrapper in instance dict
+             try:
+                 # In case of a race condition where another thread already replaced
+diff --git a/tests/test_cachedmethod.py b/tests/test_cachedmethod.py
+index 8d519f6..1fcddcb 100644
+--- a/tests/test_cachedmethod.py
++++ b/tests/test_cachedmethod.py
+@@ -683,6 +683,29 @@ class NoneMethodTest(unittest.TestCase):
+             wrapper.cache_info()
+ 
+ 
++class ClassAccessTest(unittest.TestCase):
++    def test_class_access_with_instance(self):
++        for name in (
++            "get",
++            "get_info",
++            "get_lock",
++            "get_lock_info",
++            "get_cond",
++            "get_cond_info",
++            "get_lock_cond",
++            "get_lock_cond_info",
++        ):
++            with self.subTest(name=name):
++                cached = Cached(Cache(10))
++                method = getattr(Cached, name)
++                self.assertEqual(getattr(cached, name)(1), 0)
++                self.assertEqual(method(cached, 1), 0)
++                self.assertEqual(method(cached, value=2), 1)
++                self.assertEqual(getattr(cached, name)(value=2), 1)
++                self.assertEqual(len(cached.cache), 2)
++                self.assertEqual(method.__name__, name)
++
++
+ class AutospecTest(unittest.TestCase):
+     def test_autospec_no_warnings(self):
+ 

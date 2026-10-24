@@ -1,0 +1,128 @@
+diff --git a/CHANGES b/CHANGES
+index e1c88ae..3d22163 100644
+--- a/CHANGES
++++ b/CHANGES
+@@ -94,6 +94,12 @@ Version 3.3.3 - in development
+   `leave_whitespace(recursive=True)`. Issue #633, reported by Ahmed Mohamed Abdelaal,
+   PR submitted by fcardosojr18 et AI.
+ 
++- Fixed `match_previous_expr()` failing on nested repeats (such as `{a}{b}xx{/b}{/a}`),
++  on sequential repeats (such as `OneOrMore` of `a:a b:b`), and on any parse after
++  the expression had matched once. Each match added another checking parse action
++  to the repeat expression, so later matches had to equal all earlier ones. Matches
++  are now tracked on a stack.
++
+ - Fixed `Located` reporting a `locn_start` that included leading whitespace when the
+   wrapped expression delegates whitespace skipping to sub-expressions (such as
+   `MatchFirst` or `And`). The leading whitespace is now skipped before the start
+diff --git a/pyparsing/helpers.py b/pyparsing/helpers.py
+index c88e543..6eb243e 100644
+--- a/pyparsing/helpers.py
++++ b/pyparsing/helpers.py
+@@ -156,18 +156,42 @@ def match_previous_expr(expr: ParserElement) -> ParserElement:
+     e2 = expr.copy()
+     rep <<= e2
+ 
+-    def copy_token_to_repeater(s, l, t):
+-        match_tokens = _flatten(t.as_list())
+-
+-        def must_match_these_tokens(s, l, t):
+-            these_tokens = _flatten(t.as_list())
+-            if these_tokens != match_tokens:
+-                raise ParseException(
+-                    s, l, f"Expected {match_tokens}, found{these_tokens}"
+-                )
++    # Stack of matches of expr, as [start_loc, tokens, repeat_loc] entries;
++    # repeat_loc is None while the match has not yet been repeated. Keeping a
++    # stack (instead of only the last match) supports nested and sequential
++    # repeats; entries at or beyond the current location are left over from
++    # backtracked parse attempts, and are discarded or reopened.
++    matches: list = []
++    current_string: list = [None]
++
++    def discard_stale_matches(s, l):
++        if s is not current_string[0]:
++            current_string[0] = s
++            matches.clear()
++        while matches and matches[-1][0] >= l:
++            matches.pop()
++        for entry in matches:
++            if entry[2] is not None and entry[2] >= l:
++                entry[2] = None
+ 
+-        e2.add_parse_action(must_match_these_tokens, call_during_try=True)
++    def copy_token_to_repeater(s, l, t):
++        discard_stale_matches(s, l)
++        matches.append([l, _flatten(t.as_list()), None])
++
++    def must_match_these_tokens(s, l, t):
++        discard_stale_matches(s, l)
++        these_tokens = _flatten(t.as_list())
++        for entry in reversed(matches):
++            if entry[2] is None:
++                match_tokens = entry[1]
++                if these_tokens != match_tokens:
++                    raise ParseException(
++                        s, l, f"Expected {match_tokens}, found{these_tokens}"
++                    )
++                entry[2] = l
++                return
+ 
++    e2.add_parse_action(must_match_these_tokens, call_during_try=True)
+     expr.add_parse_action(copy_token_to_repeater, call_during_try=True)
+     rep.set_name(f"(prev) {expr}")
+     return rep
+diff --git a/tests/test_unit.py b/tests/test_unit.py
+index a96efd9..ea57fde 100644
+--- a/tests/test_unit.py
++++ b/tests/test_unit.py
+@@ -2559,6 +2559,49 @@ class Test02_WithoutPackrat(ppt.TestParseResultsAsserts, TestCase):
+                 ):
+                     expr.parse_string(tst)
+ 
++    def testRepeaterNestedAndRepeated(self):
++        """test match_previous_expr with nested, sequential, and repeated parses"""
++
++        if ParserElement._packratEnabled or ParserElement._left_recursion_enabled:
++            print("skipping this test, not compatible with memoization")
++            return
++
++        name = pp.Word(pp.alphas)
++        open_tag = "{" + name + "}"
++        close_tag = "{/" + pp.match_previous_expr(name) + "}"
++        tag = pp.Forward()
++        tag <<= open_tag + (tag | "xx") + close_tag
++
++        tests = [
++            ("{a}xx{/a}", True),
++            ("{a}{b}xx{/b}{/a}", True),
++            ("{a}{b}xx{/a}{/b}", False),
++            ("{a}xx{/b}", False),
++            ("{a}xx{/a}", True),
++            ("{a}{b}{c}xx{/c}{/b}{/a}", True),
++        ]
++        for tst, expected in tests:
++            if expected:
++                tag.parse_string(tst, parse_all=True)
++            else:
++                with self.assertRaisesParseException(msg=tst):
++                    tag.parse_string(tst, parse_all=True)
++
++        self.assertParseAndCheckList(
++            pp.OneOrMore(tag),
++            "{a}xx{/a}{b}xx{/b}",
++            ["{", "a", "}", "xx", "{/", "a", "}", "{", "b", "}", "xx", "{/", "b", "}"],
++        )
++
++        word = pp.Word(pp.alphas)
++        pair = word + ":" + pp.match_previous_expr(word)
++        self.assertParseAndCheckList(
++            pp.OneOrMore(pair), "a:a b:b", ["a", ":", "a", "b", ":", "b"]
++        )
++        with self.assertRaisesParseException():
++            pair.parse_string("a:b", parse_all=True)
++        self.assertParseAndCheckList(pair, "c:c", ["c", ":", "c"])
++
+     def testSetNameToStrAndNone(self):
+         wd = pp.Word(pp.alphas)
+         with self.subTest():

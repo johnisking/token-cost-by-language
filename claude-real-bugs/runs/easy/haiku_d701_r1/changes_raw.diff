@@ -1,0 +1,65 @@
+diff --git a/src/patch/line-endings.ts b/src/patch/line-endings.ts
+index d36c7a5..85aed4e 100644
+--- a/src/patch/line-endings.ts
++++ b/src/patch/line-endings.ts
+@@ -41,11 +41,22 @@ export function winToUnix(patch: StructuredPatch | StructuredPatch[]): Structure
+     ...patch,
+     hunks: patch.hunks.map(hunk => ({
+       ...hunk,
+-      lines: hunk.lines.map(line => line.endsWith('\r') ? line.substring(0, line.length - 1) : line)
++      lines: hunk.lines.map(
++        (line, i) => hasCRLineEnding(line, hunk.lines[i + 1]) ? line.substring(0, line.length - 1) : line
++      )
+     }))
+   };
+ }
+ 
++/**
++ * Returns true if the line ends with a CR which is a line-ending CR (rather than literal content).
++ * A line followed by a "\ No newline at end of file" marker has no line ending at all, so any
++ * trailing CR in such a line is part of its content.
++ */
++function hasCRLineEnding(line: string, nextLine: string | undefined): boolean {
++  return line.endsWith('\r') && !line.startsWith('\\') && !nextLine?.startsWith('\\');
++}
++
+ /**
+  * Returns true if the patch consistently uses Unix line endings (or only involves one line and has
+  * no line endings).
+@@ -55,7 +66,7 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+   return !patch.some(
+     index => index.hunks.some(
+       hunk => hunk.lines.some(
+-        line => !line.startsWith('\\') && line.endsWith('\r')
++        (line, i) => hasCRLineEnding(line, hunk.lines[i + 1])
+       )
+     )
+   );
+@@ -66,7 +77,7 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+  */
+ export function isWin(patch: StructuredPatch | StructuredPatch[]): boolean {
+   if (!Array.isArray(patch)) { patch = [patch]; }
+-  return patch.some(index => index.hunks.some(hunk => hunk.lines.some(line => line.endsWith('\r'))))
++  return patch.some(index => index.hunks.some(hunk => hunk.lines.some((line, i) => hasCRLineEnding(line, hunk.lines[i + 1]))))
+     && patch.every(
+       index => index.hunks.every(
+         hunk => hunk.lines.every(
+diff --git a/test/patch/apply.js b/test/patch/apply.js
+index c789488..8f2a8ba 100644
+--- a/test/patch/apply.js
++++ b/test/patch/apply.js
+@@ -1456,6 +1456,14 @@ describe('patch/apply', function() {
+       expect(applyPatch(oldFile, diffFile)).to.equal('foo\nnew\ntwo\nthree\nqux\n');
+     });
+ 
++    it('should not treat a trailing CR on a final line with no trailing newline as a line ending', () => {
++      const oldFile = 'line1\nline2\n';
++      const newFile = 'line1\nline2\nline3\r';
++      const patch = structuredPatch('f', 'f', oldFile, newFile, undefined, undefined, {context: 0});
++
++      expect(applyPatch(oldFile, patch)).to.equal(newFile);
++    });
++
+     it('should leave line endings in the patch alone if the target file has mixed file endings, even if this means the patch does not apply', () => {
+       const oldFile1 = 'foo\r\nbar\nbaz\nqux\n';
+       const oldFile2 = 'foo\nbar\r\nbaz\r\nqux\n';

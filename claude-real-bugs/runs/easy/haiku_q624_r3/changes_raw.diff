@@ -1,0 +1,66 @@
+diff --git a/lib/utils.js b/lib/utils.js
+index b86b94f..01d3514 100644
+--- a/lib/utils.js
++++ b/lib/utils.js
+@@ -404,8 +404,16 @@ var encode = function encode(str, defaultEncoder, charset, kind, format) {
+                 continue;
+             }
+ 
++            // a lone surrogate (a low one, or a high one not followed by a low one) is encoded as U+FFFD,
++            // without consuming the next character, as URLSearchParams and TextEncoder do
++            var next = i + 1 < segment.length ? segment.charCodeAt(i + 1) : 0;
++            if (c >= 0xDC00 || next < 0xDC00 || next > 0xDFFF) {
++                arr[arr.length] = '%EF%BF%BD';
++                continue;
++            }
++
+             i += 1;
+-            c = 0x10000 + (((c & 0x3FF) << 10) | (segment.charCodeAt(i) & 0x3FF));
++            c = 0x10000 + (((c & 0x3FF) << 10) | (next & 0x3FF));
+ 
+             arr[arr.length] = hexTable[0xF0 | (c >> 18)]
+                 + hexTable[0x80 | ((c >> 12) & 0x3F)]
+diff --git a/test/utils.js b/test/utils.js
+index 0a215a3..3d2af36 100644
+--- a/test/utils.js
++++ b/test/utils.js
+@@ -742,7 +742,7 @@ test('encode', function (t) {
+         loneExpected += 'a';
+     }
+     loneBoundary += '\uD83DX';
+-    loneExpected += '%F0%9F%91%98';
++    loneExpected += '%EF%BF%BDX';
+ 
+     t.equal(
+         utils.encode(loneBoundary),
+@@ -771,8 +771,28 @@ test('encode', function (t) {
+ 
+     t.equal(
+         utils.encode('\uD83D \uDCA9'),
+-        '%F0%9F%90%A0%F0%BA%90%80',
+-        'encodes lone surrogates'
++        '%EF%BF%BD%20%EF%BF%BD',
++        'encodes lone surrogates as U+FFFD without swallowing the following character'
++    );
++    t.equal(
++        utils.encode('\uD800x'),
++        '%EF%BF%BDx',
++        'a lone high surrogate keeps the following character'
++    );
++    t.equal(
++        utils.encode('x\uDBFF'),
++        'x%EF%BF%BD',
++        'a trailing lone high surrogate encodes as U+FFFD'
++    );
++    t.equal(
++        utils.encode('\uDC00 '),
++        '%EF%BF%BD%20',
++        'a lone low surrogate keeps the following space'
++    );
++    t.equal(
++        utils.encode('\uD800𐀀'),
++        '%EF%BF%BD%F0%90%80%80',
++        'a lone high surrogate before a valid pair encodes as U+FFFD and the pair still encodes'
+     );
+ 
+     t.end();

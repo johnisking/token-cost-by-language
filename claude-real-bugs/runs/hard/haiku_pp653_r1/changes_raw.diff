@@ -1,0 +1,97 @@
+diff --git a/pyparsing/helpers.py b/pyparsing/helpers.py
+index c88e543..426853d 100644
+--- a/pyparsing/helpers.py
++++ b/pyparsing/helpers.py
+@@ -156,18 +156,29 @@ def match_previous_expr(expr: ParserElement) -> ParserElement:
+     e2 = expr.copy()
+     rep <<= e2
+ 
+-    def copy_token_to_repeater(s, l, t):
+-        match_tokens = _flatten(t.as_list())
+-
+-        def must_match_these_tokens(s, l, t):
+-            these_tokens = _flatten(t.as_list())
+-            if these_tokens != match_tokens:
+-                raise ParseException(
+-                    s, l, f"Expected {match_tokens}, found{these_tokens}"
+-                )
+-
+-        e2.add_parse_action(must_match_these_tokens, call_during_try=True)
++    # stack of (location, tokens) for each match of expr that has not yet
++    # been matched by a repeat; nested matches push onto the stack, and each
++    # successful repeat pops the innermost one
++    open_matches = []
+ 
++    def copy_token_to_repeater(s, l, t):
++        # discard entries left behind by an earlier failed parse, which start
++        # at or after this match's location
++        while open_matches and open_matches[-1][0] >= l:
++            open_matches.pop()
++        open_matches.append((l, _flatten(t.as_list())))
++
++    def must_match_these_tokens(s, l, t):
++        these_tokens = _flatten(t.as_list())
++        if not open_matches or these_tokens != open_matches[-1][1]:
++            expected = open_matches[-1][1] if open_matches else []
++            raise ParseException(s, l, f"Expected {expected}, found {these_tokens}")
++
++    def pop_matched_token(s, l, t):
++        open_matches.pop()
++
++    e2.add_parse_action(must_match_these_tokens, call_during_try=True)
++    rep.add_parse_action(pop_matched_token)
+     expr.add_parse_action(copy_token_to_repeater, call_during_try=True)
+     rep.set_name(f"(prev) {expr}")
+     return rep
+diff --git a/tests/test_unit.py b/tests/test_unit.py
+index a96efd9..d85e74a 100644
+--- a/tests/test_unit.py
++++ b/tests/test_unit.py
+@@ -2559,6 +2559,47 @@ class Test02_WithoutPackrat(ppt.TestParseResultsAsserts, TestCase):
+                 ):
+                     expr.parse_string(tst)
+ 
++    def testRepeaterMatchesRepeatedAndNested(self):
++        """test match_previous_expr with repeated, nested, and retried matches"""
++
++        if ParserElement._packratEnabled or ParserElement._left_recursion_enabled:
++            print("skipping this test, not compatible with memoization")
++            return
++
++        name = pp.Word(pp.alphas)
++        close = pp.Suppress("{/") + pp.match_previous_expr(name) + pp.Suppress("}")
++        block = pp.Forward()
++        block <<= pp.Suppress("{") + name + pp.Suppress("}") + pp.ZeroOrMore(pp.Word("x") | block) + close
++        parser = block + pp.StringEnd()
++
++        tests = [
++            ("{a}xx{/a}", True),
++            ("{a}{b}xx{/b}{/a}", True),
++            ("{a}xx{/b}", False),
++            ("{a}{b}xx{/a}", False),
++        ]
++        for tst, expected in tests:
++            with self.subTest(tst=tst):
++                if expected:
++                    parser.parse_string(tst)
++                else:
++                    with self.assertRaises(pp.ParseException):
++                        parser.parse_string(tst)
++
++        # sequential matches under OneOrMore, each closed by its own word
++        word = pp.Word(pp.alphas)
++        seq = pp.OneOrMore(pp.Group(word + pp.Suppress(":") + pp.match_previous_expr(word)))
++        result = seq.parse_string("a:a b:b", parse_all=True)
++        self.assertEqual([["a", "a"], ["b", "b"]], [r.as_list() for r in result])
++
++        # a failed parse must not affect later parses of valid input
++        with self.assertRaises(pp.ParseException):
++            parser.parse_string("{a}xx{/b}")
++        self.assertEqual(
++            ["a", "xx", "a"],
++            parser.parse_string("{a}xx{/a}").as_list(),
++        )
++
+     def testSetNameToStrAndNone(self):
+         wd = pp.Word(pp.alphas)
+         with self.subTest():

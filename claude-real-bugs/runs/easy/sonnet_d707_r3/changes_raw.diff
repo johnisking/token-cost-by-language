@@ -1,0 +1,26 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index f020777..690524a 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -85,6 +85,10 @@ export function canonicalize(
+ 
+   let canonicalizedObj: any;
+ 
++  if (obj && typeof obj.toJSON === 'function') {
++    obj = obj.toJSON();
++  }
++
+   if ('[object Array]' === Object.prototype.toString.call(obj)) {
+     stack.push(obj);
+     canonicalizedObj = new Array(obj.length);
+@@ -97,10 +101,6 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && typeof obj.toJSON === 'function') {
+-    obj = obj.toJSON();
+-  }
+-
+   if (typeof obj === 'object' && obj !== null) {
+     stack.push(obj);
+     // Use a null-prototype object so that an own "__proto__" key is stored as

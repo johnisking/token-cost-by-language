@@ -1,0 +1,48 @@
+diff --git a/src/markdownit.ts b/src/markdownit.ts
+index 4dc2ce9..0265b6f 100644
+--- a/src/markdownit.ts
++++ b/src/markdownit.ts
+@@ -160,6 +160,15 @@ class MarkdownIt {
+           parsed.hostname = punycode.toASCII(parsed.hostname)
+         } catch (er) { /**/ }
+       }
++
++      if (parsed.hostname && parsed.hostname.indexOf(':') !== -1) {
++        // IPv6 address literal: the brackets are part of the host syntax
++        // (`[2001:db8::1]`), so they must stay unencoded. Encode the parts
++        // around the host separately and wrap the host in brackets.
++        const head = mdurl.format({ ...parsed, hostname: null, port: null, pathname: null, search: null, hash: null })
++        const tail = mdurl.format({ ...parsed, hostname: null, auth: null, protocol: null, slashes: null })
++        return mdurl.encode(head) + '[' + parsed.hostname + ']' + mdurl.encode(tail)
++      }
+     }
+ 
+     return mdurl.encode(mdurl.format(parsed))
+diff --git a/test/markdown-it/misc.test.mjs b/test/markdown-it/misc.test.mjs
+index 5b2ca86..0011849 100644
+--- a/test/markdown-it/misc.test.mjs
++++ b/test/markdown-it/misc.test.mjs
+@@ -406,6 +406,23 @@ describe('Url normalization', function () {
+     assert.strictEqual(md.render('[test](http://example.com)'), '<p><a href="LINK">test</a></p>\n')
+     assert.strictEqual(md.render('![test](http://example.com)'), '<p><img src="LINK" alt="test"></p>\n')
+   })
++
++  it('Should not percent-encode IPv6 address literal brackets', function () {
++    const md = markdownit()
++
++    assert.strictEqual(
++      md.render('[visit](http://[2001:db8::1]/)'),
++      '<p><a href="http://[2001:db8::1]/">visit</a></p>\n'
++    )
++    assert.strictEqual(
++      md.render('[visit](http://user@[2001:db8::1]:8080/a[b]?c[d]#e[f])'),
++      '<p><a href="http://user@[2001:db8::1]:8080/a%5Bb%5D?c%5Bd%5D#e%5Bf%5D">visit</a></p>\n'
++    )
++    assert.strictEqual(
++      md.render('[visit](http://[::1]/)'),
++      '<p><a href="http://[::1]/">visit</a></p>\n'
++    )
++  })
+ })
+ 
+ describe('Links validation', function () {

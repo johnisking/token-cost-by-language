@@ -1,0 +1,91 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..1c6aef6 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -18,7 +18,10 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+   const marker = state.src.slice(start, pos)
+   const openerLength = marker.length
+ 
+-  if (state.backticksScanned && (state.backticks[openerLength] || 0) <= start) {
++  // The cache is only valid for openers at or after the point where the
++  // full scan started. Earlier openers (e.g. re-parsed after a failed link
++  // label) may have closers that the cache never saw.
++  if (state.backticksScanned && start >= state.backticksScanFrom && (state.backticks[openerLength] || 0) <= start) {
+     if (!silent) state.pending += marker
+     state.pos += openerLength
+     return true
+@@ -26,6 +29,7 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+ 
+   let matchEnd = pos
+   let matchStart
++  const lastSeen: Record<number, number> = {}
+ 
+   // Nothing found in the cache, scan until the end of the line (or until marker is found)
+   while ((matchStart = state.src.indexOf('`', matchEnd)) !== -1) {
+@@ -49,12 +53,15 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+       return true
+     }
+ 
+-    // Some different length found, put it in cache as upper limit of where closer can be found
+-    state.backticks[closerLength] = matchStart
++    // Some different length found, remember its last position
++    lastSeen[closerLength] = matchStart
+   }
+ 
+-  // Scanned through the end, didn't find anything
++  // Scanned through the end, didn't find anything. Only a full scan is
++  // recorded: its last positions are exact for every position from `pos` on.
+   state.backticksScanned = true
++  state.backticksScanFrom = pos
++  Object.assign(state.backticks, lastSeen)
+ 
+   if (!silent) state.pending += marker
+   state.pos += openerLength
+diff --git a/src/rules_inline/state_inline.ts b/src/rules_inline/state_inline.ts
+index fbba926..fc9765d 100644
+--- a/src/rules_inline/state_inline.ts
++++ b/src/rules_inline/state_inline.ts
+@@ -36,6 +36,7 @@ class StateInline {
+   // backtick length => last seen position
+   backticks: Record<number, number> = {}
+   backticksScanned = false
++  backticksScanFrom = 0
+ 
+   // Counter used to disable inline linkify-it execution
+   // inside <a> and markdown links
+diff --git a/test/markdown-it/misc.test.mjs b/test/markdown-it/misc.test.mjs
+index 5b2ca86..1c3f8b5 100644
+--- a/test/markdown-it/misc.test.mjs
++++ b/test/markdown-it/misc.test.mjs
+@@ -563,4 +563,31 @@ describe('Token attributes', function () {
+ 
+     assert.strictEqual(t.attrGet('myattr'), 'myvalue')
+   })
++
++  it('code span after unclosed link label', function () {
++    const md = markdownit('commonmark')
++    const def = markdownit()
++
++    // failed link/image label scan must not hide a later valid code span
++    assert.strictEqual(
++      md.render('[foo `bar` baz`'),
++      '<p>[foo <code>bar</code> baz`</p>\n'
++    )
++    assert.strictEqual(
++      md.render('![alt `code` x`'),
++      '<p>![alt <code>code</code> x`</p>\n'
++    )
++    assert.strictEqual(
++      md.render('[`a`b`'),
++      '<p>[<code>a</code>b`</p>\n'
++    )
++    assert.strictEqual(
++      def.render('[foo `bar` baz`'),
++      '<p>[foo <code>bar</code> baz`</p>\n'
++    )
++    assert.strictEqual(
++      def.render('![alt `code` x`'),
++      '<p>![alt <code>code</code> x`</p>\n'
++    )
++  })
+ })

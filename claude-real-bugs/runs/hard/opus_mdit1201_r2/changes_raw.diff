@@ -1,0 +1,64 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..356a8f8 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -36,6 +36,13 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+ 
+     const closerLength = matchEnd - matchStart
+ 
++    // Remember the furthest known position of a backtick run of this length
++    // (scans may start from different positions, e.g. in link label lookahead,
++    // so matched closers must be cached too and never moved backwards)
++    if ((state.backticks[closerLength] || 0) < matchStart) {
++      state.backticks[closerLength] = matchStart
++    }
++
+     if (closerLength === openerLength) {
+       // Found matching closer length.
+       if (!silent) {
+@@ -48,9 +55,6 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+       state.pos = matchEnd
+       return true
+     }
+-
+-    // Some different length found, put it in cache as upper limit of where closer can be found
+-    state.backticks[closerLength] = matchStart
+   }
+ 
+   // Scanned through the end, didn't find anything
+diff --git a/test/fixtures/markdown-it/commonmark_extras.txt b/test/fixtures/markdown-it/commonmark_extras.txt
+index c8bbc7a..36e0d68 100644
+--- a/test/fixtures/markdown-it/commonmark_extras.txt
++++ b/test/fixtures/markdown-it/commonmark_extras.txt
+@@ -876,3 +876,31 @@ foo
+ <p>foo</p>
+ <!bar baz>
+ .
++
++Unclosed link label must not suppress a later code span
++.
++[foo `bar` baz`
++.
++<p>[foo <code>bar</code> baz`</p>
++.
++
++Unclosed image label must not suppress a later code span
++.
++![alt `code` x`
++.
++<p>![alt <code>code</code> x`</p>
++.
++
++Unclosed link label with code span followed by unmatched backtick
++.
++[`a`b`
++.
++<p>[<code>a</code>b`</p>
++.
++
++Unclosed link label with code spans of different lengths
++.
++[x `a` ``b`` ` ``
++.
++<p>[x <code>a</code> <code>b</code> ` ``</p>
++.

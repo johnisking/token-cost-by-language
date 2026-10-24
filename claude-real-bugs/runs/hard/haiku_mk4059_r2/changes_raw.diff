@@ -1,0 +1,122 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 9ba9df6..e2d7d18 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -303,6 +303,15 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+   /**
+    * Lexing/Compiling
+    */
++  hasNestedLink(text: string): boolean {
++    const { rules } = this.tokenizer;
++    if (text.search(rules.inline.linkSearch) !== -1) return true;
++    return [...text.matchAll(rules.inline.reflinkSearch)].some(([match]) => {
++      const cap = rules.inline.reflink.exec(match) || rules.inline.nolink.exec(match);
++      return !!cap && Object.hasOwn(this.tokens.links, (cap[2] || cap[1]).replace(rules.other.multipleSpaceGlobal, ' ').toLowerCase());
++    });
++  }
++
+   inlineTokens(src: string, tokens: Token[] = []): Token[] {
+     this.tokenizer.lexer = this;
+     // String with links masked to avoid interference with em and strong
+@@ -310,10 +319,15 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+ 
+     // Mask out reflinks
+     if (this.tokens.links && src.includes('[')) {
+-      maskedSrc = maskedSrc.replace(this.tokenizer.rules.inline.reflinkSearch, match0 =>
+-        Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))
+-          ? '[' + 'a'.repeat(match0.length - 2) + ']'
+-          : match0);
++      const links = this.tokens.links;
++      maskedSrc = maskedSrc.replace(this.tokenizer.rules.inline.reflinkSearch, match0 => {
++        const lastBracket = match0.lastIndexOf('[');
++        if (!Object.hasOwn(links, match0.slice(lastBracket + 1, -1))) return match0;
++        // A reflink whose text contains a link is rejected (see outputLink), so its text stays
++        // plain text and its emphasis delimiters must remain visible to emStrong
++        if (match0[0] !== '!' && this.hasNestedLink(match0.slice(0, lastBracket))) return match0;
++        return '[' + 'a'.repeat(match0.length - 2) + ']';
++      });
+     }
+ 
+     // Mask out escaped characters.
+diff --git a/src/rules.ts b/src/rules.ts
+index aeb880c..aa8eb11 100644
+--- a/src/rules.ts
++++ b/src/rules.ts
+@@ -463,6 +463,9 @@ const reflinkSearch = edit('reflink|nolink(?!\\()', 'g')
+   .replace('nolink', nolink)
+   .getRegex();
+ 
++// unanchored inline link, used to find links nested inside a reflink's text
++const linkSearch = edit(link.source.replace(/^\^/, ''), 'g').getRegex();
++
+ const _caseInsensitiveProtocol = /[hH][tT][tT][pP][sS]?|[fF][tT][pP]/;
+ 
+ /**
+@@ -484,6 +487,7 @@ const inlineNormal = {
+   emStrongRDelimUnd,
+   escape,
+   link,
++  linkSearch,
+   nolink,
+   punctuation,
+   reflink,
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 4e348a4..92b13ab 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index 47d0a22..a2bf8ca 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/unit/marked.test.js b/test/unit/marked.test.js
+index 5d1449b..06f62b3 100644
+--- a/test/unit/marked.test.js
++++ b/test/unit/marked.test.js
+@@ -69,6 +69,27 @@ describe('marked unit', () => {
+         '<p>[a &amp; b <pre> <a href="/uri">x</a>](/uri)</p>',
+       );
+     });
++
++    // a reference link whose text holds a link is rejected, so its emphasis must survive
++    it('should keep emphasis around a link inside a rejected reflink', () => {
++      const src = '[ref]: /uri\n\n';
++      assert.strictEqual(
++        marked.parse(src + '[foo *bar [baz](/url) qux*][ref]').trim(),
++        '<p>[foo <em>bar <a href="/url">baz</a> qux</em>]<a href="/uri">ref</a></p>',
++      );
++      assert.strictEqual(
++        marked.parse(src + '[foo _bar [baz](/url) qux_][ref]').trim(),
++        '<p>[foo <em>bar <a href="/url">baz</a> qux</em>]<a href="/uri">ref</a></p>',
++      );
++      assert.strictEqual(
++        marked.parse(src + '[foo **bar [baz](/url) qux**][ref]').trim(),
++        '<p>[foo <strong>bar <a href="/url">baz</a> qux</strong>]<a href="/uri">ref</a></p>',
++      );
++      assert.strictEqual(
++        marked.parse(src + '[foo *bar [baz][ref2] qux*][ref]\n\n[ref2]: /url2').trim(),
++        '<p>[foo <em>bar <a href="/url2">baz</a> qux</em>]<a href="/uri">ref</a></p>',
++      );
++    });
+   });
+ 
+   describe('use extension', () => {

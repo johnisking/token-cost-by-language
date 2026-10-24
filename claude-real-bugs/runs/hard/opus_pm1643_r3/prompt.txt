@@ -1,0 +1,24 @@
+The current folder is a checkout of Python-Markdown (sources in markdown/, tests in tests/). A user reported the bug below. Find the cause in the source code and fix it in markdown/, without breaking any other behaviour. Dependencies are already installed in a virtual environment in .venv, and you may run commands in this folder to check your work, for example .venv/Scripts/python -m pytest -q tests/test_syntax/blocks/test_html_blocks.py. You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+HTML comment inside inline raw HTML creates malformed output
+
+This Markdown:
+
+<picture>
+  <!-- TODO: what the heck? -->
+  <source media="(prefers-color-scheme: dark)" srcset="../images/example.svg">
+  <img alt="Example" src="../images/example.svg">
+</picture>
+
+renders as:
+
+<p><picture>
+  <!-- TODO: what the heck? --></p>
+<p><source media="(prefers-color-scheme: dark)" srcset="../images/example.svg">
+  <img alt="Example" src="../images/example.svg">
+</picture></p>
+
+Note the insertion of </p> ... <p> in the middle of the <picture> ... </picture> block immediately after the comment. Without the comment the block stays in one paragraph.
+"""

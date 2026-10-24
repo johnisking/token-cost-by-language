@@ -1,0 +1,34 @@
+diff --git a/packages/zod/src/v4/classic/tests/default.test.ts b/packages/zod/src/v4/classic/tests/default.test.ts
+index d7ff8b4..73679b3 100644
+--- a/packages/zod/src/v4/classic/tests/default.test.ts
++++ b/packages/zod/src/v4/classic/tests/default.test.ts
+@@ -1,6 +1,16 @@
+ import { expect, expectTypeOf, test } from "vitest";
+ import { z } from "zod/v4";
+ 
++test("default factory runs once per object parse", () => {
++  let n = 0;
++  const schema = z.object({
++    a: z.string().default(() => `${n++}`),
++    b: z.string().prefault(() => `${n++}`),
++  });
++  expect(schema.parse({})).toEqual({ a: "0", b: "1" });
++  expect(n).toBe(2);
++});
++
+ test("basic defaults", () => {
+   expect(z.string().default("default").parse(undefined)).toBe("default");
+ });
+diff --git a/packages/zod/src/v4/core/memoizer.ts b/packages/zod/src/v4/core/memoizer.ts
+index 72a85db..e61183f 100644
+--- a/packages/zod/src/v4/core/memoizer.ts
++++ b/packages/zod/src/v4/core/memoizer.ts
+@@ -56,6 +56,8 @@ function isRecursive(inst: $ZodType, stack: Set<object>): boolean {
+     // `for...in` skips symbols, so a cycle through a declared symbol key would read as non-recursive
+     if (shape) for (const key of Reflect.ownKeys(shape)) check(shape[key]);
+     for (const key in def) {
++      // a getter that invokes the user's default factory
++      if (key === "defaultValue") continue;
+       const value = def[key];
+       if (!value || typeof value !== "object") continue;
+       if (value._zod) check(value);

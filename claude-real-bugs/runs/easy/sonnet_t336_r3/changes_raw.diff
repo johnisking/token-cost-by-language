@@ -1,0 +1,25 @@
+diff --git a/tomlkit/api.py b/tomlkit/api.py
+index b0f8cd6..15f986a 100644
+--- a/tomlkit/api.py
++++ b/tomlkit/api.py
+@@ -2,6 +2,7 @@ from __future__ import annotations
+ 
+ import contextlib
+ import datetime as _datetime
++import re
+ 
+ from collections.abc import Iterable
+ from collections.abc import Mapping
+@@ -116,7 +117,11 @@ def document() -> TOMLDocument:
+ # Items
+ def integer(raw: str | int) -> Integer:
+     """Create an integer item from a number or string."""
+-    return item(int(raw))
++    value = int(raw)
++    if isinstance(raw, str) and re.fullmatch(r"[+-]?\d+(_\d+)*", raw):
++        return Integer(value, Trivia(), raw)
++
++    return item(value)
+ 
+ 
+ def float_(raw: str | float) -> Float:

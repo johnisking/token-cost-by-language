@@ -1,0 +1,60 @@
+diff --git a/tests/test_api.py b/tests/test_api.py
+index b5f31bc..9b55e33 100644
+--- a/tests/test_api.py
++++ b/tests/test_api.py
+@@ -224,6 +224,26 @@ def test_integer() -> None:
+     assert isinstance(i, Integer)
+ 
+ 
++def test_integer_keeps_underscores() -> None:
++    i = tomlkit.integer("1_000")
++
++    assert isinstance(i, Integer)
++    assert i == 1000
++    assert int(i) == 1000
++    assert i.as_string() == "1_000"
++
++    doc = tomlkit.document()
++    doc["n"] = tomlkit.integer("53_49_221")
++    assert tomlkit.dumps(doc) == "n = 53_49_221\n"
++    assert tomlkit.parse(tomlkit.dumps(doc))["n"] == 5349221
++
++
++def test_integer_plain_string_unchanged() -> None:
++    assert tomlkit.integer("34").as_string() == "34"
++    assert tomlkit.integer(" 42 ").as_string() == "42"
++    assert tomlkit.integer(7).as_string() == "7"
++
++
+ def test_float() -> None:
+     i = tomlkit.float_("34.56")
+ 
+diff --git a/tomlkit/api.py b/tomlkit/api.py
+index b0f8cd6..9a08043 100644
+--- a/tomlkit/api.py
++++ b/tomlkit/api.py
+@@ -2,6 +2,7 @@ from __future__ import annotations
+ 
+ import contextlib
+ import datetime as _datetime
++import re
+ 
+ from collections.abc import Iterable
+ from collections.abc import Mapping
+@@ -115,7 +116,15 @@ def document() -> TOMLDocument:
+ 
+ # Items
+ def integer(raw: str | int) -> Integer:
+-    """Create an integer item from a number or string."""
++    """Create an integer item from a number or string.
++
++    A string using TOML's underscore grouping (e.g. ``"1_000"``) is kept
++    as written when rendered, while its value is still the plain integer.
++    """
++    if isinstance(raw, str) and "_" in raw:
++        clean = raw.strip()
++        if re.fullmatch(r"[+-]?\d+(?:_\d+)+", clean):
++            return Integer(int(clean), Trivia(), clean)
+     return item(int(raw))
+ 
+ 

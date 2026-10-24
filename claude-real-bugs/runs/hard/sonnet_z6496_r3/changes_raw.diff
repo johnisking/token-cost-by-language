@@ -1,0 +1,36 @@
+diff --git a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+index ece615e..601aecc 100644
+--- a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
++++ b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+@@ -4403,3 +4403,9 @@ describe("intersection folding declines", () => {
+     expect(allOf(schema)).toHaveLength(3);
+   });
+ });
++
++test("record with numeric keys emits string propertyNames", () => {
++  const names = (s: z.ZodType) => (z.toJSONSchema(s) as any).propertyNames;
++  expect(names(z.record(z.number(), z.number()))).toEqual({ type: "string", pattern: "^-?\\d+(\\.\\d+)?$" });
++  expect(names(z.record(z.int(), z.number()))).toEqual({ type: "string", pattern: "^-?\\d+$" });
++});
+diff --git a/packages/zod/src/v4/core/json-schema-processors.ts b/packages/zod/src/v4/core/json-schema-processors.ts
+index 8258fca..d1628d9 100644
+--- a/packages/zod/src/v4/core/json-schema-processors.ts
++++ b/packages/zod/src/v4/core/json-schema-processors.ts
+@@ -498,10 +498,15 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+   } else {
+     // Default behavior: use propertyNames + additionalProperties
+     if (ctx.target === "draft-07" || ctx.target === "draft-2020-12") {
+-      json.propertyNames = process(def.keyType, ctx as any, {
++      const names = process(def.keyType, ctx as any, {
+         ...params,
+         path: [...params.path, "propertyNames"],
+-      });
++      }) as any;
++      // json keys are always strings
++      json.propertyNames =
++        (names.type === "number" || names.type === "integer") && names.enum === undefined && names.const === undefined
++          ? { type: "string", pattern: names.type === "integer" ? "^-?\\d+$" : "^-?\\d+(\\.\\d+)?$" }
++          : names;
+     }
+     json.additionalProperties = process(def.valueType, ctx as any, {
+       ...params,

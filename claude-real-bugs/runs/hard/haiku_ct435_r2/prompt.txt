@@ -1,0 +1,26 @@
+The current folder is a checkout of cachetools, the Python caching library (sources in src/cachetools/, tests in tests/). A user reported the bug below. Find the cause in the source code and fix it in src/cachetools/, without breaking any other behaviour. Dependencies are already installed in a virtual environment in .venv, and you may run commands in this folder to check your work, for example .venv/Scripts/python -m pytest -q tests/test_cachedmethod.py. You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+cachedmethod class access loses the explicitly supplied instance
+
+Calling an instance method decorated with `cachedmethod` through its class raises AttributeError, even when the instance is explicitly supplied. This worked in cachetools 6.2.0 and fails on 7.2.1.
+
+Expected: Example.value(example, 3) should behave like example.value(3), including using the instance's cache. This is ordinary instance-method access, not @classmethod usage.
+
+Actual: the instance call returns 6. The class call raises AttributeError: 'NoneType' object has no attribute 'cache'.
+
+from cachetools import Cache, cachedmethod
+
+class Example:
+    def __init__(self):
+        self.cache = Cache(2)
+
+    @cachedmethod(lambda self: self.cache)
+    def value(self, number):
+        return number * 2
+
+example = Example()
+print(example.value(3))
+print(Example.value(example, 3))
+"""

@@ -1,0 +1,53 @@
+diff --git a/markdown/htmlparser.py b/markdown/htmlparser.py
+index d92dc0d..2ed6ea3 100644
+--- a/markdown/htmlparser.py
++++ b/markdown/htmlparser.py
+@@ -93,6 +93,11 @@ htmlparser.locatetagend = re.compile(r"""
+ blank_line_re = re.compile(r'^([ ]*\n){2}')
+ 
+ 
++_VOID_TAGS = frozenset([
++    'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'
++])
++
++
+ class _HTMLParser(htmlparser.HTMLParser):
+     """Handle special start and end tags."""
+ 
+@@ -145,6 +150,7 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         """Reset this instance.  Loses all unprocessed data."""
+         self.inraw = False
+         self.intail = False
++        self.inline_stack: list[str] = []  # Open inline (non-block) tags outside raw blocks
+         self.stack: list[str] = []  # When `inraw==True`, stack contains a list of tags
+         self._cache: list[str] = []
+         self.cleandoc: list[str] = []
+@@ -225,6 +231,8 @@ class HTMLExtractor(htmlparser.HTMLParser):
+             self._cache.append(text)
+         else:
+             self.cleandoc.append(text)
++            if not self.md.is_block_level(tag) and tag not in _VOID_TAGS:
++                self.inline_stack.append(tag)
+             if tag in self.CDATA_CONTENT_ELEMENTS:
+                 # This is presumably a standalone tag in a code span (see #1036).
+                 self.clear_cdata_mode()
+@@ -255,6 +263,10 @@ class HTMLExtractor(htmlparser.HTMLParser):
+                 self._cache = []
+         else:
+             self.cleandoc.append(text)
++            if tag in self.inline_stack:
++                while self.inline_stack:
++                    if self.inline_stack.pop() == tag:
++                        break
+ 
+     def handle_data(self, data: str):
+         if self.intail and '\n' in data:
+@@ -269,7 +281,7 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         if self.inraw or self.intail:
+             # Append this to the existing raw block
+             self._cache.append(data)
+-        elif self.at_line_start() and is_block:
++        elif self.at_line_start() and is_block and not self.inline_stack:
+             # Handle this as a standalone raw block
+             if blank_line_re.match(self.rawdata[self.line_offset + self.offset + len(data):]):
+                 # Preserve blank line after tag in raw block.

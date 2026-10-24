@@ -1,0 +1,74 @@
+diff --git a/tests/test_api.py b/tests/test_api.py
+index b5f31bc..ddc6349 100644
+--- a/tests/test_api.py
++++ b/tests/test_api.py
+@@ -224,6 +224,27 @@ def test_integer() -> None:
+     assert isinstance(i, Integer)
+ 
+ 
++@pytest.mark.parametrize("raw", ["1_000", "5_349_221", "53_49_221", "1_2_3_4_5", "-1_000"])
++def test_integer_keeps_underscores(raw: str) -> None:
++    i = tomlkit.integer(raw)
++
++    assert isinstance(i, Integer)
++    assert i.as_string() == raw
++    assert int(i) == int(raw)
++
++    doc = tomlkit.document()
++    doc["n"] = i
++    assert tomlkit.dumps(doc) == f"n = {raw}\n"
++    assert tomlkit.parse(tomlkit.dumps(doc))["n"] == int(raw)
++
++
++def test_integer_with_underscores_keeps_sign_on_arithmetic() -> None:
++    i = tomlkit.integer("+1_000")
++
++    assert i.as_string() == "+1_000"
++    assert (i + 1).as_string() == "+1001"
++
++
+ def test_float() -> None:
+     i = tomlkit.float_("34.56")
+ 
+diff --git a/tomlkit/api.py b/tomlkit/api.py
+index b0f8cd6..ed74cc3 100644
+--- a/tomlkit/api.py
++++ b/tomlkit/api.py
+@@ -2,6 +2,7 @@ from __future__ import annotations
+ 
+ import contextlib
+ import datetime as _datetime
++import re
+ 
+ from collections.abc import Iterable
+ from collections.abc import Mapping
+@@ -115,7 +116,15 @@ def document() -> TOMLDocument:
+ 
+ # Items
+ def integer(raw: str | int) -> Integer:
+-    """Create an integer item from a number or string."""
++    """Create an integer item from a number or string.
++
++    A string using underscores between digits (e.g. ``"1_000"``) keeps its
++    formatting when rendered.
++    """
++    if isinstance(raw, str):
++        stripped = raw.strip()
++        if "_" in stripped and re.fullmatch(r"[+\-]?(0|[1-9](_?\d)*)", stripped):
++            return Integer(int(stripped), Trivia(), stripped)
+     return item(int(raw))
+ 
+ 
+diff --git a/tomlkit/items.py b/tomlkit/items.py
+index 8589df9..3461ca3 100644
+--- a/tomlkit/items.py
++++ b/tomlkit/items.py
+@@ -627,7 +627,7 @@ class Integer(Item, _CustomInt):
+         self._raw = raw
+         self._sign = False
+ 
+-        if re.match(r"^[+\-]\d+$", raw):
++        if re.match(r"^[+\-]\d+(_\d+)*$", raw):
+             self._sign = True
+ 
+     def unwrap(self) -> int:

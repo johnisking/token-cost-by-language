@@ -1,0 +1,17 @@
+diff --git a/tomlkit/api.py b/tomlkit/api.py
+index b0f8cd6..f9925fd 100644
+--- a/tomlkit/api.py
++++ b/tomlkit/api.py
+@@ -116,7 +116,11 @@ def document() -> TOMLDocument:
+ # Items
+ def integer(raw: str | int) -> Integer:
+     """Create an integer item from a number or string."""
+-    return item(int(raw))
++    result = item(int(raw))
++    if isinstance(raw, str) and "_" in raw:
++        # Keep the underscore grouping; int() already validated its placement
++        return Integer(int(result), result.trivia, raw.strip())
++    return result
+ 
+ 
+ def float_(raw: str | float) -> Float:

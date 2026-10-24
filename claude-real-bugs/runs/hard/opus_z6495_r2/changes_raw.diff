@@ -1,0 +1,40 @@
+diff --git a/packages/zod/src/v4/classic/tests/default.test.ts b/packages/zod/src/v4/classic/tests/default.test.ts
+index d7ff8b4..17d08d8 100644
+--- a/packages/zod/src/v4/classic/tests/default.test.ts
++++ b/packages/zod/src/v4/classic/tests/default.test.ts
+@@ -1,6 +1,19 @@
+ import { expect, expectTypeOf, test } from "vitest";
+ import { z } from "zod/v4";
+ 
++test("default function runs once per parse inside an object", () => {
++  let calls = 0;
++  const fn = () => {
++    calls++;
++    return "d";
++  };
++  const schema = z.object({ a: z.string().default(fn), b: z.string().prefault(fn) });
++  expect(schema.parse({})).toEqual({ a: "d", b: "d" });
++  expect(calls).toBe(2);
++  expect(schema.parse({})).toEqual({ a: "d", b: "d" });
++  expect(calls).toBe(4);
++});
++
+ test("basic defaults", () => {
+   expect(z.string().default("default").parse(undefined)).toBe("default");
+ });
+diff --git a/packages/zod/src/v4/core/memoizer.ts b/packages/zod/src/v4/core/memoizer.ts
+index 72a85db..60cbf87 100644
+--- a/packages/zod/src/v4/core/memoizer.ts
++++ b/packages/zod/src/v4/core/memoizer.ts
+@@ -55,7 +55,11 @@ function isRecursive(inst: $ZodType, stack: Set<object>): boolean {
+     const shape = def.shape;
+     // `for...in` skips symbols, so a cycle through a declared symbol key would read as non-recursive
+     if (shape) for (const key of Reflect.ownKeys(shape)) check(shape[key]);
++    // `.merge()` defines it as an accessor, which the loop below skips
++    check(def.catchall);
+     for (const key in def) {
++      // an accessor can run user code, e.g. a `.default()` getter
++      if (Object.getOwnPropertyDescriptor(def, key)?.get) continue;
+       const value = def[key];
+       if (!value || typeof value !== "object") continue;
+       if (value._zod) check(value);

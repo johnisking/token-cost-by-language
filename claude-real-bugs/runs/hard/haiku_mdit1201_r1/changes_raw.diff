@@ -1,0 +1,38 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..c01f4f3 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -18,7 +18,9 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+   const marker = state.src.slice(start, pos)
+   const openerLength = marker.length
+ 
+-  if (state.backticksScanned && (state.backticks[openerLength] || 0) <= start) {
++  // A failed scan that started at `backticksScannedFrom` found no closer of this
++  // length after it, so openers at or after that position can't be closed either
++  if (start >= state.backticksScannedFrom && (state.backticks[openerLength] || 0) <= start) {
+     if (!silent) state.pending += marker
+     state.pos += openerLength
+     return true
+@@ -54,7 +56,7 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+   }
+ 
+   // Scanned through the end, didn't find anything
+-  state.backticksScanned = true
++  state.backticksScannedFrom = pos
+ 
+   if (!silent) state.pending += marker
+   state.pos += openerLength
+diff --git a/src/rules_inline/state_inline.ts b/src/rules_inline/state_inline.ts
+index fbba926..4e5dedd 100644
+--- a/src/rules_inline/state_inline.ts
++++ b/src/rules_inline/state_inline.ts
+@@ -35,7 +35,8 @@ class StateInline {
+ 
+   // backtick length => last seen position
+   backticks: Record<number, number> = {}
+-  backticksScanned = false
++  // position after which a failed closer scan covered the rest of the line
++  backticksScannedFrom = Infinity
+ 
+   // Counter used to disable inline linkify-it execution
+   // inside <a> and markdown links

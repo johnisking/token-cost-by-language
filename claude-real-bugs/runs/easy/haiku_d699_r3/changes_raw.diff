@@ -1,0 +1,38 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index 20fe8c8..f020777 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -97,7 +97,7 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && obj.toJSON) {
++  if (obj && typeof obj.toJSON === 'function') {
+     obj = obj.toJSON();
+   }
+ 
+diff --git a/test/diff/json.js b/test/diff/json.js
+index 7c744cb..db93b12 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -281,5 +281,20 @@ describe('diff/json', function() {
+         { count: 1, value: '}', removed: false, added: false }
+       ]);
+     });
++
++    it("doesn't throw on a truthy, non-callable toJSON property", function() {
++      const oldObject = JSON.parse('{"toJSON":"old"}');
++      const newObject = JSON.parse('{"toJSON":"new"}');
++      let diff;
++      expect(function() {
++        diff = diffJson(oldObject, newObject);
++      }).not.to['throw']();
++      expect(diff).to.eql([
++        { count: 1, value: '{\n', removed: false, added: false },
++        { count: 1, value: '  "toJSON": "old"\n', removed: true, added: false },
++        { count: 1, value: '  "toJSON": "new"\n', removed: false, added: true },
++        { count: 1, value: '}', removed: false, added: false }
++      ]);
++    });
+   });
+ });

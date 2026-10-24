@@ -1,0 +1,53 @@
+diff --git a/src/cachetools/_cachedmethod.py b/src/cachetools/_cachedmethod.py
+index 2a626ab..3aa5293 100644
+--- a/src/cachetools/_cachedmethod.py
++++ b/src/cachetools/_cachedmethod.py
+@@ -84,10 +84,15 @@ class _DescriptorBase:
+     def __get__(self, obj, objtype=None):
+         wrapper = self.Wrapper(obj)  # type: ignore
+         if obj is None:
+-            # Return the wrapper itself without modification when accessed
+-            # through the class to support class-level introspection, such
+-            # as for mocking with autospec=True in unittest.mock.
+-            pass
++            # Accessed through the class, e.g. Class.method(instance, ...).
++            # Dispatch the explicitly supplied instance to its own wrapper,
++            # so that its cache is used. The wrapper's metadata is kept to
++            # support class-level introspection, such as for mocking with
++            # autospec=True in unittest.mock.
++            def method(instance, *args, **kwargs):
++                return self.__get__(instance, objtype)(*args, **kwargs)
++
++            return functools.update_wrapper(method, wrapper)
+         elif self.__attrname is not None:
+             # replace descriptor instance with wrapper in instance dict
+             try:
+diff --git a/tests/test_cachedmethod.py b/tests/test_cachedmethod.py
+index 8d519f6..d361318 100644
+--- a/tests/test_cachedmethod.py
++++ b/tests/test_cachedmethod.py
+@@ -690,3 +690,24 @@ class AutospecTest(unittest.TestCase):
+             warnings.simplefilter("always")
+             unittest.mock.create_autospec(Cached, instance=True)
+         self.assertEqual(len(w), 0)
++
++
++class ClassAccessTest(unittest.TestCase):
++    def test_explicit_instance(self):
++        class Example:
++            def __init__(self):
++                self.cache = Cache(2)
++                self.count = 0
++
++            @cachedmethod(lambda self: self.cache)
++            def value(self, number):
++                self.count += 1
++                return number * 2
++
++        example = Example()
++        self.assertEqual(example.value(3), 6)
++        self.assertEqual(Example.value(example, 3), 6)
++        self.assertEqual(example.count, 1)
++        self.assertEqual(Example.value(example, 4), 8)
++        self.assertEqual(example.value(4), 8)
++        self.assertEqual(example.count, 2)

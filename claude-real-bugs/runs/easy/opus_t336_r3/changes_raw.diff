@@ -1,0 +1,67 @@
+diff --git a/tests/test_api.py b/tests/test_api.py
+index b5f31bc..cdf17d5 100644
+--- a/tests/test_api.py
++++ b/tests/test_api.py
+@@ -224,6 +224,22 @@ def test_integer() -> None:
+     assert isinstance(i, Integer)
+ 
+ 
++@pytest.mark.parametrize(
++    "raw, value",
++    [("1_000", 1000), ("5_349_221", 5349221), ("1_2_3_4_5", 12345), ("+1_000", 1000), ("-1_0", -10)],
++)
++def test_integer_preserves_underscores(raw: str, value: int) -> None:
++    i = tomlkit.integer(raw)
++
++    assert i.as_string() == raw
++    assert int(i) == value
++
++    doc = tomlkit.document()
++    doc["n"] = i
++    assert tomlkit.dumps(doc) == f"n = {raw}\n"
++    assert tomlkit.parse(tomlkit.dumps(doc))["n"] == value
++
++
+ def test_float() -> None:
+     i = tomlkit.float_("34.56")
+ 
+diff --git a/tomlkit/api.py b/tomlkit/api.py
+index b0f8cd6..4522512 100644
+--- a/tomlkit/api.py
++++ b/tomlkit/api.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import contextlib
++import re as _re
+ import datetime as _datetime
+ 
+ from collections.abc import Iterable
+@@ -115,7 +116,13 @@ def document() -> TOMLDocument:
+ 
+ # Items
+ def integer(raw: str | int) -> Integer:
+-    """Create an integer item from a number or string."""
++    """Create an integer item from a number or string.
++
++    A string in TOML decimal integer syntax (e.g. ``"1_000"``) keeps its
++    original formatting, including underscores, when rendered.
++    """
++    if isinstance(raw, str) and _re.fullmatch(r"[+-]?(?:0|[1-9](?:_?\d)*)", raw):
++        return Integer(int(raw), Trivia(), raw)
+     return item(int(raw))
+ 
+ 
+diff --git a/tomlkit/items.py b/tomlkit/items.py
+index 8589df9..965162b 100644
+--- a/tomlkit/items.py
++++ b/tomlkit/items.py
+@@ -627,7 +627,7 @@ class Integer(Item, _CustomInt):
+         self._raw = raw
+         self._sign = False
+ 
+-        if re.match(r"^[+\-]\d+$", raw):
++        if re.match(r"^[+\-]\d[\d_]*$", raw):
+             self._sign = True
+ 
+     def unwrap(self) -> int:

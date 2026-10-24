@@ -1,0 +1,79 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index f020777..b2b41ef 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -85,6 +85,12 @@ export function canonicalize(
+ 
+   let canonicalizedObj: any;
+ 
++  // Apply toJSON() before checking for arrays, so that arrays with their own toJSON() are
++  // handled the way JSON.stringify handles them, and so that toJSON() may return an array.
++  if (obj && typeof obj.toJSON === 'function') {
++    obj = obj.toJSON();
++  }
++
+   if ('[object Array]' === Object.prototype.toString.call(obj)) {
+     stack.push(obj);
+     canonicalizedObj = new Array(obj.length);
+@@ -97,10 +103,6 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && typeof obj.toJSON === 'function') {
+-    obj = obj.toJSON();
+-  }
+-
+   if (typeof obj === 'object' && obj !== null) {
+     stack.push(obj);
+     // Use a null-prototype object so that an own "__proto__" key is stored as
+diff --git a/test/diff/json.js b/test/diff/json.js
+index d7f2de7..f3e6aea 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -159,6 +159,46 @@ describe('diff/json', function() {
+         { count: 1, value: '}', removed: false, added: false }
+       ]);
+     });
++
++    it('serializes an array returned by toJSON as an array, like JSON.stringify does', function() {
++      const x = {
++        toJSON: () => [1]
++      };
++      const y = {
++        toJSON: () => [2]
++      };
++
++      expect(diffJson(x, y)).to.eql([
++        { count: 1, value: '[\n', removed: false, added: false },
++        { count: 1, value: '  1\n', added: false, removed: true },
++        { count: 1, value: '  2\n', added: true, removed: false },
++        { count: 1, value: ']', removed: false, added: false }
++      ]);
++    });
++
++    it('does not report differences between arrays with equal JSON from toJSON, like JSON.stringify does', function() {
++      const x = {
++        toJSON: () => [1, 2]
++      };
++      const y = {
++        toJSON: () => [1, 2]
++      };
++
++      expect(diffJson({ foo: x }, { foo: y })).to.eql([
++        { count: 6, value: '{\n  "foo": [\n    1,\n    2\n  ]\n}', removed: false, added: false }
++      ]);
++    });
++
++    it('uses toJSON on arrays, like JSON.stringify does', function() {
++      const x = [1, 2];
++      x.toJSON = () => 'aaa';
++      const y = [3];
++      y.toJSON = () => 'aaa';
++
++      expect(diffJson(x, y)).to.eql([
++        { count: 1, value: '"aaa"', removed: false, added: false }
++      ]);
++    });
+   });
+ 
+   describe('#canonicalize', function() {

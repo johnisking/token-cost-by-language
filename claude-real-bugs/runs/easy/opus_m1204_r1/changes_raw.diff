@@ -1,0 +1,49 @@
+diff --git a/src/markdownit.ts b/src/markdownit.ts
+index 4dc2ce9..5940c88 100644
+--- a/src/markdownit.ts
++++ b/src/markdownit.ts
+@@ -162,6 +162,15 @@ class MarkdownIt {
+       }
+     }
+ 
++    if (parsed.hostname && parsed.hostname.indexOf(':') !== -1) {
++      // IPv6 host literal: brackets must stay unencoded (WHATWG URL requires
++      // `[` and `]` around IPv6 hosts), so encode parts around them separately.
++      const before = mdurl.format({ ...parsed, hostname: '', port: null, pathname: null, search: null, hash: null })
++      const after = mdurl.format({ ...parsed, protocol: null, slashes: false, auth: null, hostname: '' })
++
++      return mdurl.encode(before) + '[' + mdurl.encode(parsed.hostname) + ']' + mdurl.encode(after)
++    }
++
+     return mdurl.encode(mdurl.format(parsed))
+   }
+ 
+diff --git a/test/fixtures/markdown-it/normalize.txt b/test/fixtures/markdown-it/normalize.txt
+index 3b0c39a..bc2e322 100644
+--- a/test/fixtures/markdown-it/normalize.txt
++++ b/test/fixtures/markdown-it/normalize.txt
+@@ -93,3 +93,24 @@ test xn--n3h@xn--n3h.net foo
+ .
+ <p>test <a href="mailto:xn--n3h@xn--n3h.net">xn--n3h@☃.net</a> foo</p>
+ .
++
++
++Should keep IPv6 host brackets unencoded:
++
++.
++[visit](http://[2001:db8::1]/)
++.
++<p><a href="http://[2001:db8::1]/">visit</a></p>
++.
++
++.
++[visit](<http://u ser@[::1]:8080/a[b]?q=[c]#[d]>)
++.
++<p><a href="http://u%20ser@[::1]:8080/a%5Bb%5D?q=%5Bc%5D#%5Bd%5D">visit</a></p>
++.
++
++.
++<http://[::1]/foo>
++.
++<p><a href="http://[::1]/foo">http://[::1]/foo</a></p>
++.

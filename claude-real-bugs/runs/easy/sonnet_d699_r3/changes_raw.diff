@@ -1,0 +1,13 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index 20fe8c8..f020777 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -97,7 +97,7 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && obj.toJSON) {
++  if (obj && typeof obj.toJSON === 'function') {
+     obj = obj.toJSON();
+   }
+ 

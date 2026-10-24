@@ -1,0 +1,15 @@
+diff --git a/src/ast/styler_defaults.ts b/src/ast/styler_defaults.ts
+index d61ce64..7d80308 100644
+--- a/src/ast/styler_defaults.ts
++++ b/src/ast/styler_defaults.ts
+@@ -64,6 +64,10 @@ function applyForceQuotesOption (layout: ScalarLayout): void {
+   // forceQuotes applies only to plain values, not to mapping keys.
+   if (layout.isKey || layout.style !== SCALAR_STYLE.PLAIN) return
+ 
++  // Non-string scalars (bool, int, float, null...) must stay plain, otherwise
++  // they would need explicit tags to keep their types.
++  if (layout.node.tag !== layout.presenterOptions.schema.defaultScalarTag.tagName) return
++
+   layout.style = layout.node.value.includes('\n')
+     ? SCALAR_STYLE.DOUBLE_QUOTED
+     : _preferredQuotedStyle(layout)

@@ -1,0 +1,99 @@
+diff --git a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+index ece615e..01b174b 100644
+--- a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
++++ b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+@@ -1164,20 +1164,36 @@ describe("toJSONSchema", () => {
+         },
+         "propertyNames": {
+           "enum": [
+-            0,
+-            1,
++            "0",
++            "1",
+           ],
+-          "type": "number",
++          "type": "string",
+         },
+         "required": [
+-          0,
+-          1,
++          "0",
++          "1",
+         ],
+         "type": "object",
+       }
+     `);
+   });
+ 
++  test("record with number keys uses numeric-string propertyNames", () => {
++    expect(z.toJSONSchema(z.record(z.number(), z.number())).propertyNames).toEqual({
++      type: "string",
++      pattern: "^-?\\d+(?:\\.\\d+)?$",
++    });
++    expect(z.toJSONSchema(z.record(z.int(), z.number())).propertyNames).toEqual({
++      type: "string",
++      pattern: "^-?\\d+$",
++    });
++    expect(z.toJSONSchema(z.record(z.literal(1), z.string())).propertyNames).toEqual({ type: "string", const: "1" });
++    expect(z.toJSONSchema(z.record(z.literal([1, 2]), z.string()))).toMatchObject({
++      propertyNames: { type: "string", enum: ["1", "2"] },
++      required: ["1", "2"],
++    });
++  });
++
+   test("strict record with regex key uses propertyNames", () => {
+     const schema = z.record(z.string().regex(/^label:[a-z]{2}$/), z.string());
+ 
+diff --git a/packages/zod/src/v4/core/json-schema-processors.ts b/packages/zod/src/v4/core/json-schema-processors.ts
+index 8258fca..d10d480 100644
+--- a/packages/zod/src/v4/core/json-schema-processors.ts
++++ b/packages/zod/src/v4/core/json-schema-processors.ts
+@@ -475,6 +475,22 @@ export const tupleProcessor: Processor<schemas.$ZodTuple> = (schema, ctx, _json,
+   if (typeof maximum === "number") json.maxItems = maximum;
+ };
+ 
++// json keys are strings, so numeric key schemas match their numeric-string form
++const toStringKeySchema = (key: JSONSchema.BaseSchema): JSONSchema.BaseSchema => {
++  const numeric = key.type === "number" || key.type === "integer";
++  if (key.enum) {
++    return {
++      ...key,
++      ...(numeric && { type: "string" }),
++      enum: key.enum.map((v) => (typeof v === "number" ? String(v) : v)),
++    } as JSONSchema.BaseSchema;
++  }
++  if (typeof key.const === "number") return { type: "string", const: String(key.const) };
++  if (key.type === "integer") return { type: "string", pattern: "^-?\\d+$" };
++  if (key.type === "number") return { type: "string", pattern: "^-?\\d+(?:\\.\\d+)?$" };
++  return key;
++};
++
+ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _json, params) => {
+   const json = _json as JSONSchema.ObjectSchema;
+   const def = schema._zod.def as schemas.$ZodRecordDef;
+@@ -498,10 +514,12 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+   } else {
+     // Default behavior: use propertyNames + additionalProperties
+     if (ctx.target === "draft-07" || ctx.target === "draft-2020-12") {
+-      json.propertyNames = process(def.keyType, ctx as any, {
+-        ...params,
+-        path: [...params.path, "propertyNames"],
+-      });
++      json.propertyNames = toStringKeySchema(
++        process(def.keyType, ctx as any, {
++          ...params,
++          path: [...params.path, "propertyNames"],
++        })
++      );
+     }
+     json.additionalProperties = process(def.valueType, ctx as any, {
+       ...params,
+@@ -519,7 +537,7 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+     );
+ 
+     if (validKeyValues.length > 0) {
+-      json.required = validKeyValues as string[];
++      json.required = validKeyValues.map(String);
+     }
+   }
+ };

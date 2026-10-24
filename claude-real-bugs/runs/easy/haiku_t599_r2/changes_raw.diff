@@ -1,0 +1,49 @@
+diff --git a/tests/test_items.py b/tests/test_items.py
+index 8284029..f86d43c 100644
+--- a/tests/test_items.py
++++ b/tests/test_items.py
+@@ -328,6 +328,29 @@ def test_key_automatically_sets_proper_string_type_if_not_bare() -> None:
+     assert key.t == KeyType.Basic
+ 
+ 
++@pytest.mark.parametrize(
++    ("index", "expected"),
++    [
++        (slice(None, 0), [1, 2, 3]),
++        (slice(-1, None), [1, 2]),
++        (slice(None, -1), [3]),
++        (slice(0, 2), [3]),
++        (slice(None, None, 2), [2]),
++        (slice(None, None, -1), []),
++        (slice(5, 10), [1, 2, 3]),
++    ],
++)
++def test_array_del_slice_keeps_string_in_sync(
++    index: slice, expected: list[int]
++) -> None:
++    doc = parse("a = [1, 2, 3]\n")
++    del doc["a"][index]
++
++    assert doc["a"] == expected
++    assert parse(doc.as_string())["a"] == expected
++    assert doc.as_string() == f"a = [{', '.join(map(str, expected))}]\n"
++
++
+ @pytest.mark.parametrize(
+     "index, replacement",
+     [
+diff --git a/tomlkit/items.py b/tomlkit/items.py
+index aaf8db7..12b6dce 100644
+--- a/tomlkit/items.py
++++ b/tomlkit/items.py
+@@ -1687,9 +1687,7 @@ class Array(Item, _CustomList):  # type: ignore[type-arg]
+         list.__delitem__(self, key)
+ 
+         if isinstance(key, slice):
+-            indices_to_remove = list(
+-                range(key.start or 0, key.stop or length, key.step or 1)
+-            )
++            indices_to_remove = list(range(length)[key])
+         else:
+             indices_to_remove = [length + key if key < 0 else key]
+         for i in sorted(indices_to_remove, reverse=True):

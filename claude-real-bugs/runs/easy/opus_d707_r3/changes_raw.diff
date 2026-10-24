@@ -1,0 +1,62 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index f020777..3d68144 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -85,6 +85,12 @@ export function canonicalize(
+ 
+   let canonicalizedObj: any;
+ 
++  // Like JSON.stringify, apply toJSON (including on arrays) before deciding
++  // whether the value is serialized as an array or as an object.
++  if (obj && typeof obj.toJSON === 'function') {
++    obj = obj.toJSON(key === undefined ? '' : key);
++  }
++
+   if ('[object Array]' === Object.prototype.toString.call(obj)) {
+     stack.push(obj);
+     canonicalizedObj = new Array(obj.length);
+@@ -97,10 +103,6 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && typeof obj.toJSON === 'function') {
+-    obj = obj.toJSON();
+-  }
+-
+   if (typeof obj === 'object' && obj !== null) {
+     stack.push(obj);
+     // Use a null-prototype object so that an own "__proto__" key is stored as
+diff --git a/test/diff/json.js b/test/diff/json.js
+index d7f2de7..712034e 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -1,4 +1,4 @@
+-import {diffJson, canonicalize} from '../../libesm/diff/json.js';
++import {diffJson, jsonDiff, canonicalize} from '../../libesm/diff/json.js';
+ import {convertChangesToXML} from '../../libesm/convert/xml.js';
+ 
+ import {expect} from 'chai';
+@@ -159,6 +159,23 @@ describe('diff/json', function() {
+         { count: 1, value: '}', removed: false, added: false }
+       ]);
+     });
++
++    it('serializes an array returned by toJSON as an array', function() {
++      const x = { toJSON: () => [1, 2] };
++      expect(jsonDiff.castInput({foo: x}, {})).to.equal(JSON.stringify({foo: [1, 2]}, null, '  '));
++      expect(diffJson({foo: x}, {foo: [1, 2]})).to.eql([
++        { count: 6, value: '{\n  "foo": [\n    1,\n    2\n  ]\n}', removed: false, added: false }
++      ]);
++    });
++
++    it('calls toJSON methods on arrays', function() {
++      const arr = [1, 2, 3];
++      arr.toJSON = () => 'abc';
++      expect(jsonDiff.castInput({foo: arr}, {})).to.equal(JSON.stringify({foo: 'abc'}, null, '  '));
++      expect(diffJson({foo: arr}, {foo: 'abc'})).to.eql([
++        { count: 3, value: '{\n  "foo": "abc"\n}', removed: false, added: false }
++      ]);
++    });
+   });
+ 
+   describe('#canonicalize', function() {

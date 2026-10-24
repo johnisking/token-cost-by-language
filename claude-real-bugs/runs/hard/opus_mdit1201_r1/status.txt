@@ -1,0 +1,2 @@
+ M src/rules_inline/backticks.ts
+ M test/fixtures/markdown-it/commonmark_extras.txt

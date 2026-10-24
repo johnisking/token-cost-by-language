@@ -1,0 +1,64 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 861ee60..73447a5 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -709,10 +709,6 @@ function readBlockScalar (state: ParserState, parentIndent: number, props: NodeP
+         state.position = linePosition + column
+         throwError(state, 'tab characters must not be used in indentation')
+       }
+-      if (column < maxLeadingIndent) {
+-        state.position = linePosition + column
+-        throwError(state, 'bad indentation of a mapping entry')
+-      }
+     }
+ 
+     if (contentIndent === -1 && first !== 0 && !isEol(first) && column < parentIndent) {
+@@ -721,6 +717,13 @@ function readBlockScalar (state: ParserState, parentIndent: number, props: NodeP
+       break
+     }
+ 
++    // Checked only after the block-end test above: a less indented line ends the
++    // scalar, and any whitespace-only lines before it are not leading content.
++    if (!detectedIndent && contentIndent === -1 && !isEol(first) && column < maxLeadingIndent) {
++      state.position = linePosition + column
++      throwError(state, 'bad indentation of a mapping entry')
++    }
++
+     if (!detectedIndent && first !== 0 && !isEol(first) && contentIndent === -1) {
+       contentIndent = column
+     }
+diff --git a/test/core/parser/parser.test.mjs b/test/core/parser/parser.test.mjs
+index f75c419..5623346 100644
+--- a/test/core/parser/parser.test.mjs
++++ b/test/core/parser/parser.test.mjs
+@@ -1,8 +1,29 @@
+ import { describe, it } from 'node:test'
+ import assert from 'node:assert/strict'
+-import { EVENT_ID, getScalarValue, loadAll, parseEvents } from 'js-yaml'
++import { EVENT_ID, getScalarValue, load, loadAll, parseEvents } from 'js-yaml'
+ 
+ describe('parser', () => {
++  it('ends a block scalar at a less indented line after a whitespace-only line', () => {
++    const blankWithSpaces = ' '.repeat(8)
++    const samples = [
++      ['a:\n  oneOf:\n    - type: string\n      example: |+\n' + blankWithSpaces + '\n    - type: array\n', { a: { oneOf: [{ type: 'string', example: '\n' }, { type: 'array' }] } }],
++      ['a:\n  x: |+\n      \n  y: 1\n', { a: { x: '\n', y: 1 } }],
++      ['a:\n  x: |\n      \n  y: 1\n', { a: { x: '', y: 1 } }],
++      ['a:\n  x: >+\n      \n  y: 1\n', { a: { x: '\n', y: 1 } }]
++    ]
++
++    for (const [source, expected] of samples) {
++      assert.deepEqual(load(source), expected)
++    }
++  })
++
++  it('still rejects a leading blank line more indented than the block content', () => {
++    assert.throws(
++      () => load('x: |\n      \n  content\n'),
++      /bad indentation of a mapping entry/
++    )
++  })
++
+   it('keeps an implicit null mapping value before a document marker', () => {
+     const samples = [
+       ['a:\n---\nx: 1\n', ['a', '', 'x', '1']],

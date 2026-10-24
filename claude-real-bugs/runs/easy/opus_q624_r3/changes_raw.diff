@@ -1,0 +1,53 @@
+diff --git a/lib/utils.js b/lib/utils.js
+index b86b94f..40acdb4 100644
+--- a/lib/utils.js
++++ b/lib/utils.js
+@@ -404,8 +404,15 @@ var encode = function encode(str, defaultEncoder, charset, kind, format) {
+                 continue;
+             }
+ 
++            var next = i + 1 < segment.length ? segment.charCodeAt(i + 1) : NaN;
++            if (c >= 0xDC00 || !(next >= 0xDC00 && next <= 0xDFFF)) {
++                // lone surrogate: encode as U+FFFD, like TextEncoder / URLSearchParams
++                arr[arr.length] = '%EF%BF%BD';
++                continue;
++            }
++
+             i += 1;
+-            c = 0x10000 + (((c & 0x3FF) << 10) | (segment.charCodeAt(i) & 0x3FF));
++            c = 0x10000 + (((c & 0x3FF) << 10) | (next & 0x3FF));
+ 
+             arr[arr.length] = hexTable[0xF0 | (c >> 18)]
+                 + hexTable[0x80 | ((c >> 12) & 0x3F)]
+diff --git a/test/utils.js b/test/utils.js
+index 0a215a3..64eedaa 100644
+--- a/test/utils.js
++++ b/test/utils.js
+@@ -742,7 +742,7 @@ test('encode', function (t) {
+         loneExpected += 'a';
+     }
+     loneBoundary += '\uD83DX';
+-    loneExpected += '%F0%9F%91%98';
++    loneExpected += '%EF%BF%BDX';
+ 
+     t.equal(
+         utils.encode(loneBoundary),
+@@ -771,10 +771,16 @@ test('encode', function (t) {
+ 
+     t.equal(
+         utils.encode('\uD83D \uDCA9'),
+-        '%F0%9F%90%A0%F0%BA%90%80',
+-        'encodes lone surrogates'
++        '%EF%BF%BD%20%EF%BF%BD',
++        'encodes lone surrogates as U+FFFD'
+     );
+ 
++    t.equal(utils.encode('\uD800x'), '%EF%BF%BDx', 'lone high surrogate does not swallow the next char');
++    t.equal(utils.encode('x\uDBFF'), 'x%EF%BF%BD', 'trailing lone high surrogate');
++    t.equal(utils.encode('\uDC00 '), '%EF%BF%BD%20', 'lone low surrogate does not swallow the next char');
++    t.equal(utils.encode('\uDC00\uD800'), '%EF%BF%BD%EF%BF%BD', 'reversed surrogates are both lone');
++    t.equal(utils.encode('💩'), '%F0%9F%92%A9', 'valid surrogate pair still encodes');
++
+     t.end();
+ });
+ 

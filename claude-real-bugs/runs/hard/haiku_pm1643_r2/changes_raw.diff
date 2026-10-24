@@ -1,0 +1,90 @@
+diff --git a/markdown/htmlparser.py b/markdown/htmlparser.py
+index d92dc0d..d2158c4 100644
+--- a/markdown/htmlparser.py
++++ b/markdown/htmlparser.py
+@@ -147,6 +147,7 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         self.intail = False
+         self.stack: list[str] = []  # When `inraw==True`, stack contains a list of tags
+         self._cache: list[str] = []
++        self._inline_tags: list[str] = []
+         self.cleandoc: list[str] = []
+         self.lineno_start_cache = [0]
+ 
+@@ -225,6 +226,9 @@ class HTMLExtractor(htmlparser.HTMLParser):
+             self._cache.append(text)
+         else:
+             self.cleandoc.append(text)
++            if not self.md.is_block_level(tag):
++                # Track open inline tags so that comments within them stay inline.
++                self._inline_tags.append(tag)
+             if tag in self.CDATA_CONTENT_ELEMENTS:
+                 # This is presumably a standalone tag in a code span (see #1036).
+                 self.clear_cdata_mode()
+@@ -255,6 +259,11 @@ class HTMLExtractor(htmlparser.HTMLParser):
+                 self._cache = []
+         else:
+             self.cleandoc.append(text)
++            if tag in self._inline_tags:
++                # Remove the inline tag from the stack.
++                while self._inline_tags:
++                    if self._inline_tags.pop() == tag:
++                        break
+ 
+     def handle_data(self, data: str):
+         if self.intail and '\n' in data:
+@@ -262,6 +271,9 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         if self.inraw:
+             self._cache.append(data)
+         else:
++            if re.search(r'\n[ ]*\n', data):
++                # A blank line ends the paragraph, so any open inline tags end with it.
++                self._inline_tags.clear()
+             self.cleandoc.append(data)
+ 
+     def handle_empty_tag(self, data: str, is_block: bool):
+@@ -297,8 +309,8 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         self.handle_empty_tag('&{};'.format(name), is_block=False)
+ 
+     def handle_comment(self, data: str):
+-        # Check if the comment is unclosed, if so, we need to override position
+-        self.handle_empty_tag('<!--{}-->'.format(data), is_block=True)
++        # A comment inside an open inline tag is part of that paragraph, not a standalone block.
++        self.handle_empty_tag('<!--{}-->'.format(data), is_block=not self._inline_tags)
+ 
+     def handle_decl(self, data: str):
+         self.handle_empty_tag('<!{}>'.format(data), is_block=True)
+diff --git a/tests/test_syntax/blocks/test_html_blocks.py b/tests/test_syntax/blocks/test_html_blocks.py
+index 1f2f877..4c4c703 100644
+--- a/tests/test_syntax/blocks/test_html_blocks.py
++++ b/tests/test_syntax/blocks/test_html_blocks.py
+@@ -1788,6 +1788,30 @@ class TestHTMLBlocks(TestCase):
+             )
+         )
+ 
++    def test_comment_in_open_inline_tag(self):
++        """Ensure a comment inside an open inline tag does not break the paragraph."""
++
++        self.assertMarkdownRenders(
++            self.dedent(
++                '''
++                <picture>
++                  <!-- TODO: what the heck? -->
++                  <source media="(prefers-color-scheme: dark)" srcset="../images/example.svg">
++                  <img alt="Example" src="../images/example.svg">
++                </picture>
++                '''
++            ),
++            self.dedent(
++                '''
++                <p><picture>
++                  <!-- TODO: what the heck? -->
++                  <source media="(prefers-color-scheme: dark)" srcset="../images/example.svg">
++                  <img alt="Example" src="../images/example.svg">
++                </picture></p>
++                '''
++            )
++        )
++
+     def test_unterminated_endtag_in_code_span(self):
+         """Ensure an unterminated end tag does not swallow the remaining content."""
+ 

@@ -1,0 +1,106 @@
+diff --git a/pyparsing/helpers.py b/pyparsing/helpers.py
+index c88e543..7e8971e 100644
+--- a/pyparsing/helpers.py
++++ b/pyparsing/helpers.py
+@@ -156,18 +156,44 @@ def match_previous_expr(expr: ParserElement) -> ParserElement:
+     e2 = expr.copy()
+     rep <<= e2
+ 
+-    def copy_token_to_repeater(s, l, t):
+-        match_tokens = _flatten(t.as_list())
++    # history of (loc, is_open, tokens) events for the string currently being
++    # parsed; events at or beyond a newly matched location are discarded, since
++    # they belong to parse paths that were backtracked over
++    events: list = []
++    current: list = [None]
++
++    def _record(s, l, is_open, tokens):
++        if current[0] is not s:
++            current[0] = s
++            events.clear()
++        while events and events[-1][0] >= l:
++            events.pop()
++        events.append((l, is_open, tokens))
++
++    def _expected_tokens(s, l):
++        if current[0] is not s:
++            return None
++        stack = []
++        for loc, is_open, tokens in events:
++            if loc >= l:
++                break
++            if is_open:
++                stack.append(tokens)
++            elif stack:
++                stack.pop()
++        return stack[-1] if stack else None
+ 
+-        def must_match_these_tokens(s, l, t):
+-            these_tokens = _flatten(t.as_list())
+-            if these_tokens != match_tokens:
+-                raise ParseException(
+-                    s, l, f"Expected {match_tokens}, found{these_tokens}"
+-                )
++    def copy_token_to_repeater(s, l, t):
++        _record(s, l, True, _flatten(t.as_list()))
+ 
+-        e2.add_parse_action(must_match_these_tokens, call_during_try=True)
++    def must_match_these_tokens(s, l, t):
++        these_tokens = _flatten(t.as_list())
++        match_tokens = _expected_tokens(s, l)
++        if these_tokens != match_tokens:
++            raise ParseException(s, l, f"Expected {match_tokens}, found{these_tokens}")
++        _record(s, l, False, these_tokens)
+ 
++    e2.add_parse_action(must_match_these_tokens, call_during_try=True)
+     expr.add_parse_action(copy_token_to_repeater, call_during_try=True)
+     rep.set_name(f"(prev) {expr}")
+     return rep
+diff --git a/tests/test_unit.py b/tests/test_unit.py
+index a96efd9..df82c4d 100644
+--- a/tests/test_unit.py
++++ b/tests/test_unit.py
+@@ -2494,6 +2494,43 @@ class Test02_WithoutPackrat(ppt.TestParseResultsAsserts, TestCase):
+                 ):
+                     expr.parse_string(tst)
+ 
++    def testRepeaterNestedAndRepeated(self):
++        """test match_previous_expr with nested, repeated, and re-parsed matches"""
++
++        if ParserElement._packratEnabled or ParserElement._left_recursion_enabled:
++            print("skipping this test, not compatible with memoization")
++            return
++
++        name = pp.Word(pp.alphas)
++        open_tag = pp.Suppress("{") + name + pp.Suppress("}")
++        close_tag = pp.Suppress("{/") + pp.match_previous_expr(name) + pp.Suppress("}")
++        elem = pp.Forward()
++        elem <<= open_tag + pp.ZeroOrMore(elem | pp.Word("x")) + close_tag
++
++        for tst, expected in [
++            ("{a}xx{/a}", True),
++            ("{a}{b}xx{/b}{/a}", True),
++            ("{a}{b}xx{/a}{/b}", False),
++            ("{a}xx{/b}", False),
++            ("{a}xx{/a}", True),
++            ("{a}{b}x{/b}{c}x{/c}{/a}", True),
++        ]:
++            if expected:
++                elem.parse_string(tst, parse_all=True)
++            else:
++                with self.assertRaisesParseException(msg=f"expected fail: {tst!r}"):
++                    elem.parse_string(tst, parse_all=True)
++
++        word = pp.Word(pp.alphas)
++        pairs = pp.OneOrMore(pp.Group(word + ":" + pp.match_previous_expr(word)))
++        result = pairs.parse_string("a:a b:b", parse_all=True)
++        self.assertParseResultsEquals(
++            result, expected_list=[["a", ":", "a"], ["b", ":", "b"]]
++        )
++        with self.assertRaisesParseException():
++            pairs.parse_string("a:b", parse_all=True)
++        result = pairs.parse_string("c:c", parse_all=True)
++        self.assertParseResultsEquals(result, expected_list=[["c", ":", "c"]])
+ 
+     def testRepeaterRecursiveFalse(self):
+         """test match_previous_expr with recursive=False"""

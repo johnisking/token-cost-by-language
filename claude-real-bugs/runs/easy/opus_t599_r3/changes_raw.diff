@@ -1,0 +1,49 @@
+diff --git a/tests/test_items.py b/tests/test_items.py
+index 8284029..59d5bd6 100644
+--- a/tests/test_items.py
++++ b/tests/test_items.py
+@@ -1637,3 +1637,29 @@ def test_out_of_order_table_proxy_membership() -> None:
+         _ = 123 in table
+     # membership must not resolve values or mutate the document
+     assert doc.as_string() == content
++
++
++@pytest.mark.parametrize(
++    "key",
++    [
++        slice(None, 0),
++        slice(-1, None),
++        slice(None, -1),
++        slice(1, None),
++        slice(0, 2),
++        slice(None, None, 2),
++        slice(None, None, -1),
++        slice(-2, -1),
++        slice(5, 10),
++        slice(None, None),
++    ],
++)
++def test_array_delete_slice_matches_list(key: slice) -> None:
++    doc = parse("a = [1, 2, 3]\n")
++    expected = [1, 2, 3]
++    del expected[key]
++    del doc["a"][key]
++
++    assert doc["a"] == expected
++    rendered = doc.as_string()
++    assert parse(rendered)["a"] == expected
+diff --git a/tomlkit/items.py b/tomlkit/items.py
+index aaf8db7..a9b4d54 100644
+--- a/tomlkit/items.py
++++ b/tomlkit/items.py
+@@ -1687,9 +1687,7 @@ class Array(Item, _CustomList):  # type: ignore[type-arg]
+         list.__delitem__(self, key)
+ 
+         if isinstance(key, slice):
+-            indices_to_remove = list(
+-                range(key.start or 0, key.stop or length, key.step or 1)
+-            )
++            indices_to_remove = list(range(*key.indices(length)))
+         else:
+             indices_to_remove = [length + key if key < 0 else key]
+         for i in sorted(indices_to_remove, reverse=True):

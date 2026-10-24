@@ -1,0 +1,22 @@
+The current folder is a checkout of Papa Parse, the CSV parser (source in papaparse.js, tests in tests/). A user reported the bug below. Find the cause in the source code and fix it in papaparse.js, without breaking any other behaviour. Dependencies are already installed in node_modules, and you may run commands in this folder to check your work, for example node node_modules/mocha/bin/mocha tests/node-tests.js tests/test-cases.js. You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+unparse crashes on a null cell when skipEmptyLines is true
+
+Papa.unparse() throws an error when a row contains a single null value and skipEmptyLines is set to true. The same data exports successfully when this option is false or 'greedy'.
+
+import Papa from 'papaparse';
+const data = [
+  [null],
+  ['hello'],
+];
+console.log(Papa.unparse(data, { skipEmptyLines: true }));
+
+Actual result:
+TypeError: Cannot read properties of null (reading 'length')
+
+A single-cell row containing undefined also throws.
+
+Expected result: the export should handle null and undefined cells without crashing. Since these values are normally exported as empty cells, an empty single-cell row should be skipped.
+"""

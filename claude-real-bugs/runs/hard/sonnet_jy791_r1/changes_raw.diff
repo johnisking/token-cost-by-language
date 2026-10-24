@@ -1,0 +1,16 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 35bf033..375d70f 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -1449,7 +1449,10 @@ function parseEvents (input: string, options: ParserOptions): Event[] {
+   const nullpos = input.indexOf('\0')
+   if (nullpos !== -1) YAMLException.throwAt(input, nullpos, 'null byte is not allowed in input', state.filename)
+ 
+-  if (state.input.charCodeAt(state.position) === 0xFEFF) state.position++
++  if (state.input.charCodeAt(state.position) === 0xFEFF) {
++    state.position++
++    state.lineStart = state.position
++  }
+ 
+   while (state.position < state.length) {
+     skipSeparationSpace(state, true)

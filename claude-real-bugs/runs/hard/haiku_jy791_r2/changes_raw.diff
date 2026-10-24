@@ -1,0 +1,45 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 35bf033..0c03618 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -1449,7 +1449,12 @@ function parseEvents (input: string, options: ParserOptions): Event[] {
+   const nullpos = input.indexOf('\0')
+   if (nullpos !== -1) YAMLException.throwAt(input, nullpos, 'null byte is not allowed in input', state.filename)
+ 
+-  if (state.input.charCodeAt(state.position) === 0xFEFF) state.position++
++  // Skip a leading byte order mark. The BOM is not part of the first line's
++  // indentation, so the line start moves past it as well.
++  if (state.input.charCodeAt(state.position) === 0xFEFF) {
++    state.position++
++    state.lineStart = state.position
++  }
+ 
+   while (state.position < state.length) {
+     skipSeparationSpace(state, true)
+diff --git a/test/core/parser/parser.test.mjs b/test/core/parser/parser.test.mjs
+index f75c419..ed99676 100644
+--- a/test/core/parser/parser.test.mjs
++++ b/test/core/parser/parser.test.mjs
+@@ -22,4 +22,22 @@ describe('parser', () => {
+       [{ a: null }, { x: 1 }]
+     )
+   })
++
++  it('ignores a leading byte order mark when computing indentation', () => {
++    const bom = '﻿'
++    const source = 'abc: 5\ncba:\n  - Xyz\n  - Zyx\n'
++
++    assert.deepEqual(
++      loadAll(bom + source)[0],
++      loadAll(source)[0]
++    )
++    assert.deepEqual(
++      loadAll(bom + source)[0],
++      { abc: 5, cba: ['Xyz', 'Zyx'] }
++    )
++    assert.deepEqual(
++      loadAll(bom + '- a\n- b\n')[0],
++      ['a', 'b']
++    )
++  })
+ })

@@ -1,0 +1,31 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index c128bc9..a04597d 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -3718,12 +3718,20 @@ def ichunked(iterable, n):
+     [8, 9, 10, 11]
+ 
+     """
+-    iterator = iter(iterable)
+-    for first in iterator:
+-        rest = islice(iterator, n - 1)
+-        cache, cacher = tee(rest)
+-        yield chain([first], rest, cache)
+-        consume(cacher)
++    if n < 0:
++        raise ValueError('n must be at least 0')
++    if n == 0:
++        return iter(())
++
++    def gen():
++        iterator = iter(iterable)
++        for first in iterator:
++            rest = islice(iterator, n - 1)
++            cache, cacher = tee(rest)
++            yield chain([first], rest, cache)
++            consume(cacher)
++
++    return gen()
+ 
+ 
+ def iequals(*iterables):

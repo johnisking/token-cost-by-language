@@ -1,0 +1,17 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 35bf033..182e628 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -1449,7 +1449,11 @@ function parseEvents (input: string, options: ParserOptions): Event[] {
+   const nullpos = input.indexOf('\0')
+   if (nullpos !== -1) YAMLException.throwAt(input, nullpos, 'null byte is not allowed in input', state.filename)
+ 
+-  if (state.input.charCodeAt(state.position) === 0xFEFF) state.position++
++  // Skip a leading BOM; it is not part of the first line's indentation.
++  if (state.input.charCodeAt(state.position) === 0xFEFF) {
++    state.position++
++    state.lineStart = state.position
++  }
+ 
+   while (state.position < state.length) {
+     skipSeparationSpace(state, true)

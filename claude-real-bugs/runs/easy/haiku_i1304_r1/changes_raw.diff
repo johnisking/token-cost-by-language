@@ -1,0 +1,58 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index c128bc9..df5d3b2 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -3718,12 +3718,21 @@ def ichunked(iterable, n):
+     [8, 9, 10, 11]
+ 
+     """
+-    iterator = iter(iterable)
+-    for first in iterator:
+-        rest = islice(iterator, n - 1)
+-        cache, cacher = tee(rest)
+-        yield chain([first], rest, cache)
+-        consume(cacher)
++    if n < 0:
++        raise ValueError('n must be at least 0')
++
++    def ret():
++        iterator = iter(iterable)
++        for first in iterator:
++            rest = islice(iterator, n - 1)
++            cache, cacher = tee(rest)
++            yield chain([first], rest, cache)
++            consume(cacher)
++
++    if n == 0:
++        return iter(())
++
++    return ret()
+ 
+ 
+ def iequals(*iterables):
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 50fab9c..a7d5f75 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -4543,10 +4543,20 @@ class IchunkedTests(TestCase):
+         expected = []
+         self.assertEqual(actual, expected)
+ 
++    def test_zero_nonempty(self):
++        iterable = iter('abc')
++        actual = [list(c) for c in mi.ichunked(iterable, 0)]
++        self.assertEqual(actual, [])
++        self.assertEqual(list(iterable), ['a', 'b', 'c'])
++
+     def test_negative(self):
+         iterable = count()
+         with self.assertRaises(ValueError):
+-            [list(c) for c in mi.ichunked(iterable, -1)]
++            mi.ichunked(iterable, -1)
++
++    def test_negative_message(self):
++        with self.assertRaisesRegex(ValueError, 'n must be at least 0'):
++            mi.ichunked('abc', -1)
+ 
+     def test_out_of_order(self):
+         iterable = map(str, count())

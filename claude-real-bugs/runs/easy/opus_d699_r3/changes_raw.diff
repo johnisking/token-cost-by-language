@@ -1,0 +1,38 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index 20fe8c8..9231a2b 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -97,7 +97,9 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && obj.toJSON) {
++  // Like JSON.stringify, only call toJSON if it is actually callable; a
++  // non-function toJSON (e.g. from JSON.parse('{"toJSON":"x"}')) is just data.
++  if (obj && typeof obj.toJSON === 'function') {
+     obj = obj.toJSON();
+   }
+ 
+diff --git a/test/diff/json.js b/test/diff/json.js
+index 7c744cb..cee2330 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -16,6 +16,18 @@ describe('diff/json', function() {
+       ]);
+     });
+ 
++    it('should treat a non-callable toJSON property as ordinary data', function() {
++      expect(diffJson(
++        JSON.parse('{"toJSON":"old"}'),
++        JSON.parse('{"toJSON":"new"}')
++      )).to.eql([
++        { count: 1, value: '{\n', removed: false, added: false },
++        { count: 1, value: '  "toJSON": "old"\n', added: false, removed: true },
++        { count: 1, value: '  "toJSON": "new"\n', added: true, removed: false },
++        { count: 1, value: '}', removed: false, added: false }
++      ]);
++    });
++
+     it('should accept objects with different order', function() {
+       expect(diffJson(
+         {a: 123, b: 456, c: 789},

@@ -1,0 +1,43 @@
+diff --git a/packages/zod/src/v4/classic/tests/default.test.ts b/packages/zod/src/v4/classic/tests/default.test.ts
+index d7ff8b4..7a6c44c 100644
+--- a/packages/zod/src/v4/classic/tests/default.test.ts
++++ b/packages/zod/src/v4/classic/tests/default.test.ts
+@@ -324,6 +324,18 @@ test("defaulted object schema returns shallow clone", () => {
+   expect(result1).toEqual(result2);
+ });
+ 
++test("function default runs once inside an object", () => {
++  let calls = 0;
++  const schema = z.object({
++    a: z.string().default(() => {
++      calls++;
++      return "x";
++    }),
++  });
++  expect(schema.parse({})).toEqual({ a: "x" });
++  expect(calls).toBe(1);
++});
++
+ test("defaulted array schema returns shallow clone", () => {
+   const schema = z.array(z.string()).default(["x"]);
+   const result1 = schema.parse(undefined);
+diff --git a/packages/zod/src/v4/core/memoizer.ts b/packages/zod/src/v4/core/memoizer.ts
+index 72a85db..fb3c5df 100644
+--- a/packages/zod/src/v4/core/memoizer.ts
++++ b/packages/zod/src/v4/core/memoizer.ts
+@@ -51,11 +51,14 @@ function isRecursive(inst: $ZodType, stack: Set<object>): boolean {
+   if (def.type === "lazy") {
+     check((inst as any)._zod.innerType);
+   } else {
+-    // $ZodObject redefines `shape` as a non-enumerable accessor, so `for...in` misses it.
++    // $ZodObject redefines `shape` and `catchall` as accessors, so they are read by name
+     const shape = def.shape;
+     // `for...in` skips symbols, so a cycle through a declared symbol key would read as non-recursive
+     if (shape) for (const key of Reflect.ownKeys(shape)) check(shape[key]);
++    check(def.catchall);
+     for (const key in def) {
++      // skip getters: `defaultValue` runs user code on read
++      if (Object.getOwnPropertyDescriptor(def, key)?.get) continue;
+       const value = def[key];
+       if (!value || typeof value !== "object") continue;
+       if (value._zod) check(value);

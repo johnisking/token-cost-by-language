@@ -1,0 +1,146 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 9ba9df6..1c16a66 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -15,6 +15,8 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+     inRawBlock: boolean;
+     /** a link was produced in the inline run currently being scanned */
+     linkEmitted: boolean;
++    /** the last link or reflink was discarded because its text contains a link */
++    linkRejected: boolean;
+     top: boolean;
+   };
+ 
+@@ -36,6 +38,7 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+       inLink: false,
+       inRawBlock: false,
+       linkEmitted: false,
++      linkRejected: false,
+       top: true,
+     };
+ 
+@@ -301,10 +304,10 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+   }
+ 
+   /**
+-   * Lexing/Compiling
++   * Mask out the parts of src that em, strong and del must not match into.
++   * The result has the same length as src so it can be sliced alongside it.
+    */
+-  inlineTokens(src: string, tokens: Token[] = []): Token[] {
+-    this.tokenizer.lexer = this;
++  private maskInline(src: string): string {
+     // String with links masked to avoid interference with em and strong
+     let maskedSrc = src;
+ 
+@@ -329,7 +332,15 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+     });
+ 
+     // Mask out blocks from extensions
+-    maskedSrc = this.options.hooks?.emStrongMask?.call({ lexer: this }, maskedSrc) ?? maskedSrc;
++    return this.options.hooks?.emStrongMask?.call({ lexer: this }, maskedSrc) ?? maskedSrc;
++  }
++
++  /**
++   * Lexing/Compiling
++   */
++  inlineTokens(src: string, tokens: Token[] = []): Token[] {
++    this.tokenizer.lexer = this;
++    let maskedSrc = this.maskInline(src);
+ 
+     let keepPrevChar = false;
+     let prevChar = '';
+@@ -383,6 +394,7 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+       }
+ 
+       // reflink, nolink
++      this.state.linkRejected = false;
+       if (token = this.tokenizer.reflink(src, this.tokens.links)) {
+         src = src.substring(token.raw.length);
+         const lastToken = tokens.at(-1);
+@@ -394,6 +406,12 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+         }
+         continue;
+       }
++      if (this.state.linkRejected) {
++        // The rejected reflink is re-scanned as plain text, so its contents were
++        // masked for nothing: unmask them so em and strong can match inside it.
++        // Keep the leading '[' masked-free and mask the rest from scratch.
++        maskedSrc = maskedSrc.slice(0, maskedSrc.length - src.length) + '[' + this.maskInline(src.slice(1));
++      }
+ 
+       // em & strong
+       if (token = this.tokenizer.emStrong(src, maskedSrc, prevChar)) {
+diff --git a/src/Tokenizer.ts b/src/Tokenizer.ts
+index 5f7d878..cab5255 100644
+--- a/src/Tokenizer.ts
++++ b/src/Tokenizer.ts
+@@ -25,6 +25,7 @@ function outputLink(cap: string[], link: Pick<Tokens.Link, 'href' | 'title'>, ra
+   const textHasLink = lexer.state.linkEmitted;
+   lexer.state.linkEmitted = outerLinkEmitted;
+   lexer.state.inLink = false;
++  lexer.state.linkRejected = textHasLink && !isImage;
+ 
+   if (!isImage) {
+     // CommonMark: "Links may not contain other links, at any level of nesting."
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 4e348a4..92b13ab 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index 47d0a22..a2bf8ca 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/unit/marked.test.js b/test/unit/marked.test.js
+index 5d1449b..60ff236 100644
+--- a/test/unit/marked.test.js
++++ b/test/unit/marked.test.js
+@@ -69,6 +69,28 @@ describe('marked unit', () => {
+         '<p>[a &amp; b <pre> <a href="/uri">x</a>](/uri)</p>',
+       );
+     });
++
++    it('should keep emphasis in a rejected reflink', () => {
++      // the reflink's text was masked for em/strong before it was rejected, so the
++      // re-scan as text must see the delimiters again
++      const ref = '\n\n[ref]: /uri';
++      assert.strictEqual(
++        marked.parse(`[foo *bar [baz](/url) qux*][ref]${ref}`).trim(),
++        '<p>[foo <em>bar <a href="/url">baz</a> qux</em>]<a href="/uri">ref</a></p>',
++      );
++      assert.strictEqual(
++        marked.parse(`[foo _bar [baz](/url) qux_][ref]${ref}`).trim(),
++        '<p>[foo <em>bar <a href="/url">baz</a> qux</em>]<a href="/uri">ref</a></p>',
++      );
++      assert.strictEqual(
++        marked.parse(`[foo **bar [baz](/url) qux**][ref]${ref}`).trim(),
++        '<p>[foo <strong>bar <a href="/url">baz</a> qux</strong>]<a href="/uri">ref</a></p>',
++      );
++      assert.strictEqual(
++        marked.parse(`[foo *bar [baz][ref] qux*][ref]${ref}`).trim(),
++        '<p>[foo <em>bar <a href="/uri">baz</a> qux</em>]<a href="/uri">ref</a></p>',
++      );
++    });
+   });
+ 
+   describe('use extension', () => {

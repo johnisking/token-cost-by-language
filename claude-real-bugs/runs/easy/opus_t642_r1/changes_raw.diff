@@ -1,0 +1,52 @@
+diff --git a/tests/test_parser.py b/tests/test_parser.py
+index 44d5cd6..8575f34 100644
+--- a/tests/test_parser.py
++++ b/tests/test_parser.py
+@@ -41,6 +41,22 @@ def test_parser_should_raise_an_error_for_empty_tables() -> None:
+     assert e.value.col == 1
+ 
+ 
++@pytest.mark.parametrize(
++    "content",
++    [
++        "a = 1\nb = 2\nc = @\nd = 4\n",
++        "a = 1\r\nb = 2\r\nc = @\r\nd = 4\r\n",
++        "a = 1\r\nb = 2\nc = @\r\nd = 4\n",
++    ],
++)
++def test_parser_error_position_does_not_depend_on_line_endings(content) -> None:
++    with pytest.raises(UnexpectedCharError) as e:
++        Parser(content).parse()
++
++    assert e.value.line == 3
++    assert e.value.col == 4
++
++
+ def test_parser_should_raise_an_error_if_equal_not_found() -> None:
+     content = """[foo]
+ a {c = 1, d = 2}
+diff --git a/tomlkit/source.py b/tomlkit/source.py
+index b2e9caa..73f50e8 100644
+--- a/tomlkit/source.py
++++ b/tomlkit/source.py
+@@ -230,11 +230,14 @@ class Source(str):
+         return exception(line, col, *args, **kwargs)
+ 
+     def _to_linecol(self) -> tuple[int, int]:
+-        cur = 0
+-        for i, line in enumerate(self.splitlines()):
+-            if cur + len(line) + 1 > self.idx:
+-                return (i + 1, self.idx - cur)
++        # TOML lines end with "\n" or "\r\n"; both end in "\n", so counting
++        # "\n" gives the same position whatever the line endings are.
++        if self.idx < len(self):
++            line_start = self.rfind("\n", 0, self.idx) + 1
++            return self.count("\n", 0, self.idx) + 1, self.idx - line_start
+ 
+-            cur += len(line) + 1
++        lines = self.count("\n")
++        if self and not self.endswith("\n"):
++            lines += 1
+ 
+-        return len(self.splitlines()), 0
++        return lines, 0

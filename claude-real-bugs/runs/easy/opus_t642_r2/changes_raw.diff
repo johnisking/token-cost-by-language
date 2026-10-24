@@ -1,0 +1,54 @@
+diff --git a/tests/test_parser.py b/tests/test_parser.py
+index 44d5cd6..3ac512f 100644
+--- a/tests/test_parser.py
++++ b/tests/test_parser.py
+@@ -41,6 +41,23 @@ def test_parser_should_raise_an_error_for_empty_tables() -> None:
+     assert e.value.col == 1
+ 
+ 
++@pytest.mark.parametrize(
++    "content",
++    [
++        "a = 1\nb = 2\nc = @\nd = 4\n",
++        "a = 1\r\nb = 2\r\nc = @\r\nd = 4\r\n",
++        "a = 1\r\nb = 2\nc = @\r\nd = 4\n",
++        "a = 1\r\nb = 2\r\nc = @",
++    ],
++)
++def test_parse_error_position_is_independent_of_line_endings(content: str) -> None:
++    with pytest.raises(UnexpectedCharError) as e:
++        Parser(content).parse()
++
++    assert e.value.line == 3
++    assert e.value.col == 4
++
++
+ def test_parser_should_raise_an_error_if_equal_not_found() -> None:
+     content = """[foo]
+ a {c = 1, d = 2}
+diff --git a/tomlkit/source.py b/tomlkit/source.py
+index b2e9caa..088c40f 100644
+--- a/tomlkit/source.py
++++ b/tomlkit/source.py
+@@ -231,10 +231,17 @@ class Source(str):
+ 
+     def _to_linecol(self) -> tuple[int, int]:
+         cur = 0
+-        for i, line in enumerate(self.splitlines()):
+-            if cur + len(line) + 1 > self.idx:
++        lines = self.splitlines(keepends=True)
++        for i, line in enumerate(lines):
++            # Use the real length of the line ending (e.g. "\r\n" is two
++            # characters); a final line without one counts as if it had one.
++            width = len(line)
++            if len(line.splitlines()[0]) == width:
++                width += 1
++
++            if cur + width > self.idx:
+                 return (i + 1, self.idx - cur)
+ 
+-            cur += len(line) + 1
++            cur += width
+ 
+-        return len(self.splitlines()), 0
++        return len(lines), 0

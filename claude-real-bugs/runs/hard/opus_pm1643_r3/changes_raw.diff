@@ -1,0 +1,212 @@
+diff --git a/markdown/extensions/md_in_html.py b/markdown/extensions/md_in_html.py
+index d02d7a4..44a3150 100644
+--- a/markdown/extensions/md_in_html.py
++++ b/markdown/extensions/md_in_html.py
+@@ -139,6 +139,7 @@ class HTMLExtractorExtra(HTMLExtractor):
+                 self.mdstate.append(state)
+                 self.mdstack.append(tag)
+                 self.mdstarted.append(True)
++                self.inline_stack = []
+                 attrs['markdown'] = state
+                 self.treebuilder.start(tag, attrs)
+ 
+@@ -147,6 +148,7 @@ class HTMLExtractorExtra(HTMLExtractor):
+             if self.inraw:
+                 super().handle_starttag(tag, attrs)
+             else:
++                self.open_inline_tag(tag)
+                 text = self.get_starttag_text()
+                 if self.mdstate and self.mdstate[-1] == "off":
+                     self.handle_data(self.md.htmlStash.store(text))
+@@ -161,6 +163,7 @@ class HTMLExtractorExtra(HTMLExtractor):
+             if self.inraw:
+                 super().handle_endtag(tag)
+             elif tag in self.mdstack:
++                self.inline_stack = []
+                 # Close element and any unclosed children
+                 while self.mdstack:
+                     item = self.mdstack.pop()
+@@ -237,6 +240,7 @@ class HTMLExtractorExtra(HTMLExtractor):
+             if self.inraw:
+                 super().handle_endtag(tag)
+             else:
++                self.close_inline_tag(tag)
+                 text = self.get_endtag_text(tag)
+                 if self.mdstate and self.mdstate[-1] == "off":
+                     self.handle_data(self.md.htmlStash.store(text))
+@@ -269,7 +273,7 @@ class HTMLExtractorExtra(HTMLExtractor):
+         if self.inraw or not self.mdstack:
+             super().handle_empty_tag(data, is_block)
+         else:
+-            if self.at_line_start() and is_block:
++            if self.at_line_start() and is_block and not self.in_inline_html():
+                 self.handle_data('\n' + self.md.htmlStash.store(data) + '\n\n')
+             elif self.mdstate and self.mdstate[-1] == "off":
+                 self.handle_data(self.md.htmlStash.store(data))
+diff --git a/markdown/htmlparser.py b/markdown/htmlparser.py
+index d92dc0d..4d00e9f 100644
+--- a/markdown/htmlparser.py
++++ b/markdown/htmlparser.py
+@@ -91,6 +91,8 @@ htmlparser.locatetagend = re.compile(r"""
+ # Match a blank line at the start of a block of text (two newlines).
+ # The newlines may be preceded by additional whitespace.
+ blank_line_re = re.compile(r'^([ ]*\n){2}')
++# Match a blank line anywhere in a string
++blank_line_split_re = re.compile(r'\n[ \t]*\n')
+ 
+ 
+ class _HTMLParser(htmlparser.HTMLParser):
+@@ -146,6 +148,8 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         self.inraw = False
+         self.intail = False
+         self.stack: list[str] = []  # When `inraw==True`, stack contains a list of tags
++        # Contains `(tag, position in rawdata)` of unclosed inline (span level) raw HTML tags
++        self.inline_stack: list[tuple[str, int]] = []
+         self._cache: list[str] = []
+         self.cleandoc: list[str] = []
+         self.lineno_start_cache = [0]
+@@ -217,6 +221,7 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         if self.md.is_block_level(tag) and (self.intail or (self.at_line_start() and not self.inraw)):
+             # Started a new raw block. Prepare stack.
+             self.inraw = True
++            self.inline_stack = []
+             self.cleandoc.append('\n')
+ 
+         text = self.get_starttag_text()
+@@ -224,6 +229,7 @@ class HTMLExtractor(htmlparser.HTMLParser):
+             self.stack.append(tag)
+             self._cache.append(text)
+         else:
++            self.open_inline_tag(tag)
+             self.cleandoc.append(text)
+             if tag in self.CDATA_CONTENT_ELEMENTS:
+                 # This is presumably a standalone tag in a code span (see #1036).
+@@ -254,6 +260,7 @@ class HTMLExtractor(htmlparser.HTMLParser):
+                 self.cleandoc.append('\n\n')
+                 self._cache = []
+         else:
++            self.close_inline_tag(tag)
+             self.cleandoc.append(text)
+ 
+     def handle_data(self, data: str):
+@@ -264,12 +271,34 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         else:
+             self.cleandoc.append(data)
+ 
++    def open_inline_tag(self, tag: str) -> None:
++        """ Record the start of an inline (span level) raw HTML tag. """
++        self.inline_stack.append((tag, self.line_offset + self.offset))
++
++    def close_inline_tag(self, tag: str) -> None:
++        """ Record the end of an inline (span level) raw HTML tag and any unclosed tags nested within it. """
++        for i in range(len(self.inline_stack) - 1, -1, -1):
++            if self.inline_stack[i][0] == tag:
++                del self.inline_stack[i:]
++                break
++
++    def in_inline_html(self) -> bool:
++        """
++        Returns True if an inline raw HTML tag opened in the current paragraph is still unclosed.
++        """
++        if self.inline_stack:
++            start = self.inline_stack[-1][1]
++            if blank_line_split_re.search(self.rawdata, start, self.line_offset + self.offset):
++                # A blank line has ended the paragraph, so any unclosed inline tags no longer apply.
++                self.inline_stack = []
++        return bool(self.inline_stack)
++
+     def handle_empty_tag(self, data: str, is_block: bool):
+         """ Handle empty tags (`<data>`). """
+         if self.inraw or self.intail:
+             # Append this to the existing raw block
+             self._cache.append(data)
+-        elif self.at_line_start() and is_block:
++        elif self.at_line_start() and is_block and not self.in_inline_html():
+             # Handle this as a standalone raw block
+             if blank_line_re.match(self.rawdata[self.line_offset + self.offset + len(data):]):
+                 # Preserve blank line after tag in raw block.
+diff --git a/tests/test_syntax/blocks/test_html_blocks.py b/tests/test_syntax/blocks/test_html_blocks.py
+index 1f2f877..f1eaff3 100644
+--- a/tests/test_syntax/blocks/test_html_blocks.py
++++ b/tests/test_syntax/blocks/test_html_blocks.py
+@@ -1015,6 +1015,45 @@ class TestHTMLBlocks(TestCase):
+             )
+         )
+ 
++    def test_comment_in_inline_html(self):
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                <picture>
++                  <!-- TODO: what the heck? -->
++                  <source media="(prefers-color-scheme: dark)" srcset="../images/example.svg">
++                  <img alt="Example" src="../images/example.svg">
++                </picture>
++                """
++            ),
++            self.dedent(
++                """
++                <p><picture>
++                  <!-- TODO: what the heck? -->
++                  <source media="(prefers-color-scheme: dark)" srcset="../images/example.svg">
++                  <img alt="Example" src="../images/example.svg">
++                </picture></p>
++                """
++            )
++        )
++
++    def test_comment_after_unclosed_inline_html_in_previous_paragraph(self):
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                <span>foo
++
++                <!-- comment -->
++                """
++            ),
++            self.dedent(
++                """
++                <p><span>foo</p>
++                <!-- comment -->
++                """
++            )
++        )
++
+     # Note: This is a change in behavior. Previously, Python-Markdown interpreted this in the same manner
+     # as browsers and all text after the opening comment tag was considered to be in a comment. However,
+     # that did not match the reference implementation. The new behavior does.
+diff --git a/tests/test_syntax/extensions/test_md_in_html.py b/tests/test_syntax/extensions/test_md_in_html.py
+index c89ae6f..3277d0e 100644
+--- a/tests/test_syntax/extensions/test_md_in_html.py
++++ b/tests/test_syntax/extensions/test_md_in_html.py
+@@ -126,6 +126,30 @@ class TestMdInHTML(TestCase):
+             )
+         )
+ 
++    def test_md1_comment_in_inline_html(self):
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                <div markdown="1">
++                <picture>
++                  <!-- comment -->
++                  <img alt="Example" src="example.svg">
++                </picture>
++                </div>
++                """
++            ),
++            self.dedent(
++                """
++                <div>
++                <p><picture>
++                  <!-- comment -->
++                  <img alt="Example" src="example.svg">
++                </picture></p>
++                </div>
++                """
++            )
++        )
++
+     def test_md1_code_span(self):
+         self.assertMarkdownRenders(
+             self.dedent(

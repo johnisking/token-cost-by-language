@@ -1,0 +1,76 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 9ba9df6..d23961d 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -303,6 +303,31 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+   /**
+    * Lexing/Compiling
+    */
++  /**
++   * Mask defined reference links. A reference link whose text contains
++   * another link is rejected, so only the inner links (and the trailing
++   * label) are masked and the text keeps its emphasis delimiters.
++   */
++  private maskReflinks(str: string): string {
++    const rules = this.tokenizer.rules.inline;
++    return str.replace(rules.reflinkSearch, match0 => {
++      if (!Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))) {
++        return match0;
++      }
++      const label = rules.reflink.exec(match0)?.[1];
++      if (label && label.includes('[')) {
++        const start = match0.indexOf('[') + 1;
++        const innerMasked = this.maskReflinks(label);
++        rules.blockSkip.lastIndex = 0;
++        if (innerMasked !== label || rules.blockSkip.test(label)) {
++          const tail = match0.length - start - label.length - 1;
++          return match0.slice(0, start) + innerMasked + ']' + '[' + 'a'.repeat(tail - 2) + ']';
++        }
++      }
++      return '[' + 'a'.repeat(match0.length - 2) + ']';
++    });
++  }
++
+   inlineTokens(src: string, tokens: Token[] = []): Token[] {
+     this.tokenizer.lexer = this;
+     // String with links masked to avoid interference with em and strong
+@@ -310,10 +335,7 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+ 
+     // Mask out reflinks
+     if (this.tokens.links && src.includes('[')) {
+-      maskedSrc = maskedSrc.replace(this.tokenizer.rules.inline.reflinkSearch, match0 =>
+-        Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))
+-          ? '[' + 'a'.repeat(match0.length - 2) + ']'
+-          : match0);
++      maskedSrc = this.maskReflinks(maskedSrc);
+     }
+ 
+     // Mask out escaped characters.
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 4e348a4..92b13ab 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index 47d0a22..a2bf8ca 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",

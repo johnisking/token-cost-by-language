@@ -1,0 +1,33 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 35bf033..375d70f 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -1449,7 +1449,10 @@ function parseEvents (input: string, options: ParserOptions): Event[] {
+   const nullpos = input.indexOf('\0')
+   if (nullpos !== -1) YAMLException.throwAt(input, nullpos, 'null byte is not allowed in input', state.filename)
+ 
+-  if (state.input.charCodeAt(state.position) === 0xFEFF) state.position++
++  if (state.input.charCodeAt(state.position) === 0xFEFF) {
++    state.position++
++    state.lineStart = state.position
++  }
+ 
+   while (state.position < state.length) {
+     skipSeparationSpace(state, true)
+diff --git a/test/core/units/load-other.test.mjs b/test/core/units/load-other.test.mjs
+index dd33711..a4d79c3 100644
+--- a/test/core/units/load-other.test.mjs
++++ b/test/core/units/load-other.test.mjs
+@@ -8,6 +8,12 @@ describe('core/units/load-other', () => {
+     assert.deepStrictEqual(load('foo: bar\n'), { foo: 'bar' })
+   })
+ 
++  it('BOM strip with block sequence on following lines', () => {
++    const src = 'abc: 5\ncba:\n  - Xyz\n  - Zyx\n'
++    assert.deepStrictEqual(load('﻿' + src),{ abc: 5, cba: ['Xyz', 'Zyx'] })
++    assert.deepStrictEqual(load(src), { abc: 5, cba: ['Xyz', 'Zyx'] })
++  })
++
+   it('Loading multidocument source using `load` should cause an error', () => {
+     assert.throws(() => {
+       load('--- # first document\n--- # second document\n')

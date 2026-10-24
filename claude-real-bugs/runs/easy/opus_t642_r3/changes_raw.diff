@@ -1,0 +1,49 @@
+diff --git a/tests/test_parser.py b/tests/test_parser.py
+index 44d5cd6..f44f13a 100644
+--- a/tests/test_parser.py
++++ b/tests/test_parser.py
+@@ -41,6 +41,22 @@ def test_parser_should_raise_an_error_for_empty_tables() -> None:
+     assert e.value.col == 1
+ 
+ 
++@pytest.mark.parametrize(
++    "content",
++    [
++        "a = 1\nb = 2\nc = @\nd = 4\n",
++        "a = 1\r\nb = 2\r\nc = @\r\nd = 4\r\n",
++        "a = 1\r\nb = 2\nc = @\r\nd = 4\n",
++    ],
++)
++def test_parser_error_position_ignores_line_endings(content: str) -> None:
++    with pytest.raises(UnexpectedCharError) as e:
++        Parser(content).parse()
++
++    assert e.value.line == 3
++    assert e.value.col == 4
++
++
+ def test_parser_should_raise_an_error_if_equal_not_found() -> None:
+     content = """[foo]
+ a {c = 1, d = 2}
+diff --git a/tomlkit/source.py b/tomlkit/source.py
+index b2e9caa..2700bef 100644
+--- a/tomlkit/source.py
++++ b/tomlkit/source.py
+@@ -231,10 +231,14 @@ class Source(str):
+ 
+     def _to_linecol(self) -> tuple[int, int]:
+         cur = 0
+-        for i, line in enumerate(self.splitlines()):
+-            if cur + len(line) + 1 > self.idx:
++        for i, line in enumerate(self.splitlines(keepends=True)):
++            # Line endings may be more than one character long (e.g. "\r\n"),
++            # so measure the actual terminator instead of assuming one char.
++            content_len = len(line.splitlines()[0])
++            eol_len = max(len(line) - content_len, 1)
++            if cur + content_len + eol_len > self.idx:
+                 return (i + 1, self.idx - cur)
+ 
+-            cur += len(line) + 1
++            cur += len(line)
+ 
+         return len(self.splitlines()), 0

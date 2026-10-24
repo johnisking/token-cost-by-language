@@ -1,0 +1,18 @@
+diff --git a/src/markdownit.ts b/src/markdownit.ts
+index 4dc2ce9..ad1825b 100644
+--- a/src/markdownit.ts
++++ b/src/markdownit.ts
+@@ -162,6 +162,13 @@ class MarkdownIt {
+       }
+     }
+ 
++    // IPv6 literal brackets must stay as-is in the host part
++    if (parsed.hostname && parsed.hostname.indexOf(':') >= 0) {
++      const ipv6 = parsed.hostname
++      parsed.hostname = 'ipv6-host-placeholder'
++      return mdurl.encode(mdurl.format(parsed)).replace('ipv6-host-placeholder', () => '[' + ipv6 + ']')
++    }
++
+     return mdurl.encode(mdurl.format(parsed))
+   }
+ 

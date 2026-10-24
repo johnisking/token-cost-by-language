@@ -1,0 +1,48 @@
+diff --git a/tests/test_items.py b/tests/test_items.py
+index 8284029..e766bb8 100644
+--- a/tests/test_items.py
++++ b/tests/test_items.py
+@@ -358,6 +358,28 @@ def test_array_slice_assignment_does_not_mutate(
+     assert parse(doc.as_string())["a"] == a
+ 
+ 
++@pytest.mark.parametrize(
++    "index",
++    [
++        slice(None, 0),
++        slice(-1, None),
++        slice(None, -1),
++        slice(1, None),
++        slice(None, None, 2),
++    ],
++)
++def test_array_slice_delete_matches_list(index: slice) -> None:
++    doc = parse("a = [1, 2, 3]\n")
++    expected = [1, 2, 3]
++    del expected[index]
++
++    del doc["a"][index]
++
++    assert doc["a"] == expected
++    assert doc["a"].as_string() == "[" + ", ".join(str(x) for x in expected) + "]"
++    assert parse(doc.as_string())["a"] == expected
++
++
+ def test_array_behaves_like_a_list() -> None:
+     a = item([1, 2])
+ 
+diff --git a/tomlkit/items.py b/tomlkit/items.py
+index aaf8db7..a9b4d54 100644
+--- a/tomlkit/items.py
++++ b/tomlkit/items.py
+@@ -1687,9 +1687,7 @@ class Array(Item, _CustomList):  # type: ignore[type-arg]
+         list.__delitem__(self, key)
+ 
+         if isinstance(key, slice):
+-            indices_to_remove = list(
+-                range(key.start or 0, key.stop or length, key.step or 1)
+-            )
++            indices_to_remove = list(range(*key.indices(length)))
+         else:
+             indices_to_remove = [length + key if key < 0 else key]
+         for i in sorted(indices_to_remove, reverse=True):

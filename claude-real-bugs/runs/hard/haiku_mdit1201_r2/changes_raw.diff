@@ -1,0 +1,65 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..29d771a 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -18,7 +18,9 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+   const marker = state.src.slice(start, pos)
+   const openerLength = marker.length
+ 
+-  if (state.backticksScanned && (state.backticks[openerLength] || 0) <= start) {
++  // Cache only knows about backticks after the position its scan started from,
++  // so it can't be used for openers before that (e.g. after a failed link label parse)
++  if (state.backticksScanned && start >= state.backticksScanStart && (state.backticks[openerLength] || 0) <= start) {
+     if (!silent) state.pending += marker
+     state.pos += openerLength
+     return true
+@@ -55,6 +57,7 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+ 
+   // Scanned through the end, didn't find anything
+   state.backticksScanned = true
++  state.backticksScanStart = Math.min(state.backticksScanStart, start)
+ 
+   if (!silent) state.pending += marker
+   state.pos += openerLength
+diff --git a/src/rules_inline/state_inline.ts b/src/rules_inline/state_inline.ts
+index fbba926..6687b36 100644
+--- a/src/rules_inline/state_inline.ts
++++ b/src/rules_inline/state_inline.ts
+@@ -36,6 +36,8 @@ class StateInline {
+   // backtick length => last seen position
+   backticks: Record<number, number> = {}
+   backticksScanned = false
++  // Earliest opener position whose scan reached the end of the source; cache is valid only from here on
++  backticksScanStart = Infinity
+ 
+   // Counter used to disable inline linkify-it execution
+   // inside <a> and markdown links
+diff --git a/test/fixtures/markdown-it/commonmark_extras.txt b/test/fixtures/markdown-it/commonmark_extras.txt
+index c8bbc7a..de2f8f4 100644
+--- a/test/fixtures/markdown-it/commonmark_extras.txt
++++ b/test/fixtures/markdown-it/commonmark_extras.txt
+@@ -876,3 +876,24 @@ foo
+ <p>foo</p>
+ <!bar baz>
+ .
++
++Code span after an unclosed link label (code spans bind tighter than links)
++.
++[foo `bar` baz`
++.
++<p>[foo <code>bar</code> baz`</p>
++.
++
++Code span after an unclosed image label
++.
++![alt `code` x`
++.
++<p>![alt <code>code</code> x`</p>
++.
++
++Code span right after an unclosed link label, closer after a failed label scan
++.
++[`a`b`
++.
++<p>[<code>a</code>b`</p>
++.

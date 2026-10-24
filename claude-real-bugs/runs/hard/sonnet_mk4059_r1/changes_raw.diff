@@ -1,0 +1,68 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 9ba9df6..0587807 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -310,10 +310,31 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+ 
+     // Mask out reflinks
+     if (this.tokens.links && src.includes('[')) {
+-      maskedSrc = maskedSrc.replace(this.tokenizer.rules.inline.reflinkSearch, match0 =>
+-        Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))
+-          ? '[' + 'a'.repeat(match0.length - 2) + ']'
+-          : match0);
++      const inline = this.tokenizer.rules.inline;
++      const maskReflinks = (str: string): string => str.replace(inline.reflinkSearch, match0 => {
++        if (!Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))) {
++          return match0;
++        }
++        if (match0[0] !== '!') {
++          // A link cannot contain another link, so the outer one is rejected and
++          // its brackets are plain text: mask only the links inside it.
++          // only the link text is searched, not the trailing [label]
++          const labelStart = match0.lastIndexOf('[');
++          const inner = match0.slice(1, labelStart > 0 ? labelStart - 1 : -1);
++          const tail = match0.slice(1 + inner.length);
++          let hasLink = false;
++          inner.replace(inline.blockSkip, m => {
++            hasLink ||= m[0] === '[';
++            return m;
++          });
++          const maskedInner = maskReflinks(inner);
++          if (hasLink || maskedInner !== inner) {
++            return '[' + maskedInner + tail;
++          }
++        }
++        return '[' + 'a'.repeat(match0.length - 2) + ']';
++      });
++      maskedSrc = maskReflinks(maskedSrc);
+     }
+ 
+     // Mask out escaped characters.
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 4e348a4..92b13ab 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index 47d0a22..a2bf8ca 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",

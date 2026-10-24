@@ -1,0 +1,52 @@
+diff --git a/src/cachetools/_cachedmethod.py b/src/cachetools/_cachedmethod.py
+index 2a626ab..f8454b6 100644
+--- a/src/cachetools/_cachedmethod.py
++++ b/src/cachetools/_cachedmethod.py
+@@ -84,10 +84,15 @@ class _DescriptorBase:
+     def __get__(self, obj, objtype=None):
+         wrapper = self.Wrapper(obj)  # type: ignore
+         if obj is None:
+-            # Return the wrapper itself without modification when accessed
+-            # through the class to support class-level introspection, such
+-            # as for mocking with autospec=True in unittest.mock.
+-            pass
++            # Accessed through the class, e.g. Cls.method(instance, ...):
++            # forward to the instance's own wrapper so that the instance's
++            # cache is used, as for instance.method(...). The method's
++            # metadata is kept for introspection, such as for mocking with
++            # autospec=True in unittest.mock.
++            def unbound(instance, *args, **kwargs):
++                return self.__get__(instance, objtype)(*args, **kwargs)
++
++            return functools.update_wrapper(unbound, wrapper.__wrapped__)
+         elif self.__attrname is not None:
+             # replace descriptor instance with wrapper in instance dict
+             try:
+diff --git a/tests/test_cachedmethod.py b/tests/test_cachedmethod.py
+index 8d519f6..c23303a 100644
+--- a/tests/test_cachedmethod.py
++++ b/tests/test_cachedmethod.py
+@@ -683,6 +683,23 @@ class NoneMethodTest(unittest.TestCase):
+             wrapper.cache_info()
+ 
+ 
++class UnboundCallTest(unittest.TestCase):
++    def test_class_access_with_instance(self):
++        class Example:
++            def __init__(self):
++                self.cache = Cache(2)
++
++            @cachedmethod(lambda self: self.cache)
++            def value(self, number):
++                return number * 2
++
++        example = Example()
++        self.assertEqual(example.value(3), 6)
++        self.assertEqual(Example.value(example, 3), 6)
++        # the instance's cache is used
++        self.assertEqual(len(example.cache), 1)
++
++
+ class AutospecTest(unittest.TestCase):
+     def test_autospec_no_warnings(self):
+ 

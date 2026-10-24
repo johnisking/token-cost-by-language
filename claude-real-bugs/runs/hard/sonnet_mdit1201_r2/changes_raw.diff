@@ -1,0 +1,58 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..623b49f 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -18,7 +18,7 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+   const marker = state.src.slice(start, pos)
+   const openerLength = marker.length
+ 
+-  if (state.backticksScanned && (state.backticks[openerLength] || 0) <= start) {
++  if (state.backticksScanned && start >= state.backticksScanStart && (state.backticks[openerLength] || 0) <= start) {
+     if (!silent) state.pending += marker
+     state.pos += openerLength
+     return true
+@@ -54,6 +54,8 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+   }
+ 
+   // Scanned through the end, didn't find anything
++  // The cache only covers closers located after this opener
++  if (!state.backticksScanned || pos < state.backticksScanStart) state.backticksScanStart = pos
+   state.backticksScanned = true
+ 
+   if (!silent) state.pending += marker
+diff --git a/src/rules_inline/state_inline.ts b/src/rules_inline/state_inline.ts
+index fbba926..bf03eae 100644
+--- a/src/rules_inline/state_inline.ts
++++ b/src/rules_inline/state_inline.ts
+@@ -36,6 +36,7 @@ class StateInline {
+   // backtick length => last seen position
+   backticks: Record<number, number> = {}
+   backticksScanned = false
++  backticksScanStart = 0
+ 
+   // Counter used to disable inline linkify-it execution
+   // inside <a> and markdown links
+diff --git a/test/fixtures/markdown-it/commonmark_extras.txt b/test/fixtures/markdown-it/commonmark_extras.txt
+index c8bbc7a..91e4a0b 100644
+--- a/test/fixtures/markdown-it/commonmark_extras.txt
++++ b/test/fixtures/markdown-it/commonmark_extras.txt
+@@ -876,3 +876,19 @@ foo
+ <p>foo</p>
+ <!bar baz>
+ .
++
++
++Unclosed link label does not suppress later code span
++.
++[foo `bar` baz`
++.
++<p>[foo <code>bar</code> baz`</p>
++.
++
++
++Unclosed image label does not suppress later code span
++.
++![alt `code` x`
++.
++<p>![alt <code>code</code> x`</p>
++.

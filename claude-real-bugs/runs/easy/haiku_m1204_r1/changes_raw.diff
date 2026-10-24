@@ -1,0 +1,49 @@
+diff --git a/src/markdownit.ts b/src/markdownit.ts
+index 4dc2ce9..64130df 100644
+--- a/src/markdownit.ts
++++ b/src/markdownit.ts
+@@ -162,6 +162,14 @@ class MarkdownIt {
+       }
+     }
+ 
++    if (parsed.hostname && parsed.hostname.indexOf(':') !== -1) {
++      // IPv6 literal hosts must keep their brackets (`[...]`), otherwise
++      // the URL is invalid. Encode the parts around the host separately.
++      const head = mdurl.format({ ...parsed, hostname: null, port: null, pathname: null, search: null, hash: null })
++      const tail = mdurl.format({ ...parsed, protocol: null, slashes: null, auth: null, hostname: null })
++      return mdurl.encode(head) + `[${parsed.hostname}]` + mdurl.encode(tail)
++    }
++
+     return mdurl.encode(mdurl.format(parsed))
+   }
+ 
+diff --git a/test/markdown-it/misc.test.mjs b/test/markdown-it/misc.test.mjs
+index 5b2ca86..c8b6b6a 100644
+--- a/test/markdown-it/misc.test.mjs
++++ b/test/markdown-it/misc.test.mjs
+@@ -564,3 +564,25 @@ describe('Token attributes', function () {
+     assert.strictEqual(t.attrGet('myattr'), 'myvalue')
+   })
+ })
++
++describe('normalizeLink', function () {
++  const md = markdownit()
++
++  it('keeps brackets around IPv6 literal hosts', function () {
++    assert.strictEqual(
++      md.render('[visit](http://[2001:db8::1]/)'),
++      '<p><a href="http://[2001:db8::1]/">visit</a></p>\n'
++    )
++    assert.strictEqual(
++      md.normalizeLink('http://[2001:db8::1]:8080/a[b]?c[d]#e[f]'),
++      'http://[2001:db8::1]:8080/a%5Bb%5D?c%5Bd%5D#e%5Bf%5D'
++    )
++  })
++
++  it('still encodes brackets outside of IPv6 hosts', function () {
++    assert.strictEqual(
++      md.normalizeLink('http://example.org/[a]'),
++      'http://example.org/%5Ba%5D'
++    )
++  })
++})

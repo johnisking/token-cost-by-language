@@ -1,0 +1,103 @@
+diff --git a/pyparsing/helpers.py b/pyparsing/helpers.py
+index c88e543..4b6ed7b 100644
+--- a/pyparsing/helpers.py
++++ b/pyparsing/helpers.py
+@@ -156,18 +156,21 @@ def match_previous_expr(expr: ParserElement) -> ParserElement:
+     e2 = expr.copy()
+     rep <<= e2
+ 
+-    def copy_token_to_repeater(s, l, t):
+-        match_tokens = _flatten(t.as_list())
++    # tokens from each match of expr that has not yet been repeated, innermost last
++    pending_matches = []
+ 
+-        def must_match_these_tokens(s, l, t):
+-            these_tokens = _flatten(t.as_list())
+-            if these_tokens != match_tokens:
+-                raise ParseException(
+-                    s, l, f"Expected {match_tokens}, found{these_tokens}"
+-                )
++    def copy_token_to_repeater(s, l, t):
++        pending_matches.append(_flatten(t.as_list()))
+ 
+-        e2.add_parse_action(must_match_these_tokens, call_during_try=True)
++    def must_match_these_tokens(s, l, t):
++        these_tokens = _flatten(t.as_list())
++        if not pending_matches or these_tokens != pending_matches[-1]:
++            expected = pending_matches[-1] if pending_matches else []
++            raise ParseException(s, l, f"Expected {expected}, found {these_tokens}")
++        # each repeat consumes the match it repeats, so nested matches pair up
++        pending_matches.pop()
+ 
++    e2.add_parse_action(must_match_these_tokens, call_during_try=True)
+     expr.add_parse_action(copy_token_to_repeater, call_during_try=True)
+     rep.set_name(f"(prev) {expr}")
+     return rep
+diff --git a/tests/test_unit.py b/tests/test_unit.py
+index a96efd9..98de247 100644
+--- a/tests/test_unit.py
++++ b/tests/test_unit.py
+@@ -2559,6 +2559,63 @@ class Test02_WithoutPackrat(ppt.TestParseResultsAsserts, TestCase):
+                 ):
+                     expr.parse_string(tst)
+ 
++    def testRepeaterMatchesRepeatedly(self):
++        """test match_previous_expr matches on every use, not just the first"""
++
++        if ParserElement._packratEnabled or ParserElement._left_recursion_enabled:
++            print("skipping this test, not compatible with memoization")
++            return
++
++        name = pp.Word(pp.alphas)
++        open_tag = pp.Suppress("{") + name + pp.Suppress("}")
++        close_tag = pp.Suppress("{/") + pp.match_previous_expr(name) + pp.Suppress("}")
++        pair = open_tag + pp.Literal("xx") + close_tag
++
++        # the same expression can match and repeat many times
++        for _ in range(3):
++            self.assertParseAndCheckList(pair, "{a}xx{/a}", ["a", "xx", "a"])
++            with self.assertRaisesParseException():
++                pair.parse_string("{a}xx{/b}")
++
++        # sequential pairs under OneOrMore
++        seq = pp.OneOrMore(pair)
++        self.assertParseAndCheckList(
++            seq, "{a}xx{/a}{b}xx{/b}", ["a", "xx", "a", "b", "xx", "b"]
++        )
++
++    def testRepeaterNestedMatches(self):
++        """test match_previous_expr with nested matches of the same expression"""
++
++        if ParserElement._packratEnabled or ParserElement._left_recursion_enabled:
++            print("skipping this test, not compatible with memoization")
++            return
++
++        name = pp.Word(pp.alphas)
++        element = pp.Forward()
++        element <<= (
++            pp.Suppress("{")
++            + name
++            + pp.Suppress("}")
++            + pp.ZeroOrMore(element | pp.Literal("xx"))
++            + pp.Suppress("{/")
++            + pp.match_previous_expr(name)
++            + pp.Suppress("}")
++        )
++
++        self.assertParseAndCheckList(element, "{a}xx{/a}", ["a", "xx", "a"])
++        self.assertParseAndCheckList(
++            element, "{a}{b}xx{/b}{/a}", ["a", "b", "xx", "b", "a"]
++        )
++        with self.assertRaisesParseException():
++            element.parse_string("{a}{b}xx{/a}{/b}")
++
++        # a failed parse must not affect a later valid parse
++        with self.assertRaisesParseException():
++            element.parse_string("{a}xx{/b}")
++        self.assertParseAndCheckList(
++            element, "{c}{d}xx{/d}{/c}", ["c", "d", "xx", "d", "c"]
++        )
++
+     def testSetNameToStrAndNone(self):
+         wd = pp.Word(pp.alphas)
+         with self.subTest():

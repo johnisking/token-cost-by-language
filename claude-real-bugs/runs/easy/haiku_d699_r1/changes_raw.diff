@@ -1,0 +1,41 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index 20fe8c8..f020777 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -97,7 +97,7 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && obj.toJSON) {
++  if (obj && typeof obj.toJSON === 'function') {
+     obj = obj.toJSON();
+   }
+ 
+diff --git a/test/diff/json.js b/test/diff/json.js
+index 7c744cb..8c2f410 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -127,6 +127,23 @@ describe('diff/json', function() {
+         { count: 1, value: '}', removed: false, added: false }
+       ]);
+     });
++
++    it('does not throw on a truthy, non-callable toJSON property', function() {
++      // JSON.stringify only calls toJSON when it is a function, so a plain
++      // "toJSON" data property should be diffed like any other property.
++      const oldObj = JSON.parse('{"toJSON": "old"}');
++      const newObj = JSON.parse('{"toJSON": "new"}');
++      let diff;
++      expect(function() {
++        diff = diffJson(oldObj, newObj);
++      }).not.to['throw']();
++      expect(diff).to.eql([
++        { count: 1, value: '{\n', removed: false, added: false },
++        { count: 1, value: '  "toJSON": "old"\n', added: false, removed: true },
++        { count: 1, value: '  "toJSON": "new"\n', added: true, removed: false },
++        { count: 1, value: '}', removed: false, added: false }
++      ]);
++    });
+   });
+ 
+   describe('#canonicalize', function() {

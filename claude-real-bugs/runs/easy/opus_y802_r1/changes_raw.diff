@@ -1,0 +1,45 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 861ee60..59d2e38 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -709,7 +709,9 @@ function readBlockScalar (state: ParserState, parentIndent: number, props: NodeP
+         state.position = linePosition + column
+         throwError(state, 'tab characters must not be used in indentation')
+       }
+-      if (column < maxLeadingIndent) {
++      // A less indented line that ends the scalar is not content, so leading
++      // blank lines cannot be over-indented relative to it.
++      if (column < maxLeadingIndent && column >= parentIndent) {
+         state.position = linePosition + column
+         throwError(state, 'bad indentation of a mapping entry')
+       }
+diff --git a/test/core/units/load-other.test.mjs b/test/core/units/load-other.test.mjs
+index 735784f..66e4ef6 100644
+--- a/test/core/units/load-other.test.mjs
++++ b/test/core/units/load-other.test.mjs
+@@ -66,4 +66,25 @@ last: document
+ --- !a1!str 123
+ `), '123')
+   })
++
++  it('ends a whitespace-only block scalar at a less indented line', () => {
++    const source = [
++      'a:',
++      '  oneOf:',
++      '    - type: string',
++      '      example: |+',
++      ' '.repeat(8),
++      '    - type: array',
++      ''
++    ].join('\n')
++    assert.deepEqual(load(source), { a: { oneOf: [{ type: 'string', example: '\n' }, { type: 'array' }] } })
++    assert.deepEqual(load(source.replace('|+', '>+')), { a: { oneOf: [{ type: 'string', example: '\n' }, { type: 'array' }] } })
++    assert.deepEqual(load(source.replace('|+', '|')), { a: { oneOf: [{ type: 'string', example: '' }, { type: 'array' }] } })
++    assert.deepEqual(load(source.replace('|+', '>')), { a: { oneOf: [{ type: 'string', example: '' }, { type: 'array' }] } })
++    assert.deepEqual(load('a:\n  x: |+\n      \n  y: 1\n'), { a: { x: '\n', y: 1 } })
++  })
++
++  it('rejects leading blank lines more indented than block scalar content', () => {
++    assert.throws(() => load('x: |\n    \n  a\n'), YAMLException)
++  })
+ })

@@ -1,0 +1,19 @@
+The current folder is a checkout of qs, the query string parser and serializer (sources in lib/, tests in test/). A user reported the bug below. Find the cause in the source code and fix it in lib/, without breaking any other behaviour. Dependencies are already installed in node_modules, and you may run commands in this folder to check your work, for example node node_modules/tape/bin/tape "test/**/*.js". You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+stringify: a lone surrogate swallows the next character
+
+When a string contains a lone UTF-16 surrogate, qs.stringify silently eats the character after it:
+
+qs.stringify({ a: '\uD800x' });   // 'a=%F0%90%81%B8'  -> parses back as U+10078; the x is gone
+qs.stringify({ a: 'x\uDBFF' });   // 'a=x%F4%8F%B0%80' -> trailing surrogate combined with garbage
+qs.stringify({ a: '\uDC00 ' });   // the space is swallowed
+
+Expected: like URLSearchParams and TextEncoder, a lone surrogate should be encoded as U+FFFD (%EF%BF%BD) and the following character kept:
+
+qs.stringify({ a: '\uD800x' });   // 'a=%EF%BF%BDx'
+new URLSearchParams({ a: '\uD800x' }).toString(); // 'a=%EF%BF%BDx'
+
+Valid surrogate pairs (emoji etc.) must still encode as before.
+"""

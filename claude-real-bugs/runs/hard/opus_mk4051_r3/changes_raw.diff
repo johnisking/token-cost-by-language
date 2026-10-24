@@ -1,0 +1,127 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 64cbe81..945034c 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -375,15 +375,16 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+         continue;
+       }
+ 
+-      // link
+-      if (token = this.tokenizer.link(src)) {
+-        src = src.substring(token.raw.length);
+-        tokens.push(token);
+-        continue;
+-      }
+-
+-      // reflink, nolink
+-      if (token = this.tokenizer.reflink(src, this.tokens.links)) {
++      // link, reflink, nolink
++      if ((token = this.tokenizer.link(src)) || (token = this.tokenizer.reflink(src, this.tokens.links))) {
++        if (token.type === 'link' && this.containsLink(token.tokens)) {
++          // links may not contain other links, the opening bracket is literal text
++          token = {
++            type: 'text',
++            raw: '[',
++            text: '[',
++          };
++        }
+         src = src.substring(token.raw.length);
+         const lastToken = tokens.at(-1);
+         if (token.type === 'text' && lastToken?.type === 'text') {
+@@ -479,6 +480,11 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+     return tokens;
+   }
+ 
++  private containsLink(tokens: Token[] | undefined): boolean {
++    return !!tokens?.some(t => (t.type === 'link' && t.raw.charAt(0) === '[')
++      || this.containsLink((t as Tokens.Generic).tokens));
++  }
++
+   private infiniteLoopError(byte: number) {
+     const errMsg = 'Infinite loop on byte: ' + byte;
+     if (this.options.silent) {
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 6e14498..4e348a4 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4145,8 +4145,7 @@
+     "example": 518,
+     "start_line": 7886,
+     "end_line": 7890,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *[bar [baz](/uri)](/uri)*](/uri)\n",
+@@ -4154,8 +4153,7 @@
+     "example": 519,
+     "start_line": 7893,
+     "end_line": 7897,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "![[[foo](uri1)](uri2)](uri3)\n",
+@@ -4263,8 +4261,7 @@
+     "example": 532,
+     "start_line": 8044,
+     "end_line": 8050,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *bar [baz][ref]*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index c8ffbc1..47d0a22 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4145,8 +4145,7 @@
+     "example": 518,
+     "start_line": 7886,
+     "end_line": 7890,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *[bar [baz](/uri)](/uri)*](/uri)\n",
+@@ -4154,8 +4153,7 @@
+     "example": 519,
+     "start_line": 7893,
+     "end_line": 7897,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "![[[foo](uri1)](uri2)](uri3)\n",
+@@ -4263,8 +4261,7 @@
+     "example": 532,
+     "start_line": 8044,
+     "end_line": 8050,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *bar [baz][ref]*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/unit/marked.test.js b/test/unit/marked.test.js
+index 07e58f8..54149d9 100644
+--- a/test/unit/marked.test.js
++++ b/test/unit/marked.test.js
+@@ -56,6 +56,12 @@ describe('marked unit', () => {
+ 
+       assert.strictEqual(html, '# header\n\n<em>em</em>');
+     });
++
++    it('should not nest links', () => {
++      assert.strictEqual(parseInline('[foo [bar](/uri)](/uri)'), '[foo <a href="/uri">bar</a>](/uri)');
++      assert.strictEqual(marked.parse('[foo [bar](/uri)][ref]\n\n[ref]: /uri'), '<p>[foo <a href="/uri">bar</a>]<a href="/uri">ref</a></p>\n');
++      assert.strictEqual(parseInline('[![[foo](/a)](/b)](/c)'), '[<img src="/b" alt="foo">](/c)');
++    });
+   });
+ 
+   describe('use extension', () => {

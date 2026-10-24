@@ -1,0 +1,38 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 35bf033..7e34f0c 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -1449,7 +1449,12 @@ function parseEvents (input: string, options: ParserOptions): Event[] {
+   const nullpos = input.indexOf('\0')
+   if (nullpos !== -1) YAMLException.throwAt(input, nullpos, 'null byte is not allowed in input', state.filename)
+ 
+-  if (state.input.charCodeAt(state.position) === 0xFEFF) state.position++
++  // A leading BOM is not content: treat the line as starting after it, so
++  // that indentation (position - lineStart) of the first line is correct.
++  if (state.input.charCodeAt(state.position) === 0xFEFF) {
++    state.position++
++    state.lineStart = state.position
++  }
+ 
+   while (state.position < state.length) {
+     skipSeparationSpace(state, true)
+diff --git a/test/core/units/load-other.test.mjs b/test/core/units/load-other.test.mjs
+index dd33711..c55d386 100644
+--- a/test/core/units/load-other.test.mjs
++++ b/test/core/units/load-other.test.mjs
+@@ -8,6 +8,15 @@ describe('core/units/load-other', () => {
+     assert.deepStrictEqual(load('foo: bar\n'), { foo: 'bar' })
+   })
+ 
++  it('BOM does not shift indentation of the first line', () => {
++    const BOM = String.fromCharCode(0xFEFF)
++    const expected = { abc: 5, cba: ['Xyz', 'Zyx'] }
++    assert.deepStrictEqual(load(BOM + 'abc: 5\ncba:\n  - Xyz\n  - Zyx\n'), expected)
++    assert.deepStrictEqual(load(BOM + 'abc: 5\ncba:\n- Xyz\n- Zyx\n'), expected)
++    assert.deepStrictEqual(load(BOM + '- a\n- b\n'), ['a', 'b'])
++    assert.deepStrictEqual(load(BOM + '--- x\n'), 'x')
++  })
++
+   it('Loading multidocument source using `load` should cause an error', () => {
+     assert.throws(() => {
+       load('--- # first document\n--- # second document\n')

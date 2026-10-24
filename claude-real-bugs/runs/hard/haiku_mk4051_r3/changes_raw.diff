@@ -1,0 +1,108 @@
+diff --git a/src/Tokenizer.ts b/src/Tokenizer.ts
+index b651849..f04b1e6 100644
+--- a/src/Tokenizer.ts
++++ b/src/Tokenizer.ts
+@@ -11,21 +11,31 @@ import type { _Lexer } from './Lexer.ts';
+ import type { Links, Tokens, Token } from './Tokens.ts';
+ import type { MarkedOptions } from './MarkedOptions.ts';
+ 
+-function outputLink(cap: string[], link: Pick<Tokens.Link, 'href' | 'title'>, raw: string, lexer: _Lexer, rules: Rules): Tokens.Link | Tokens.Image {
++function containsLink(tokens: Token[]): boolean {
++  return tokens.some((token) => token.type === 'link' || containsLink((token as Tokens.Generic).tokens || []));
++}
++
++function outputLink(cap: string[], link: Pick<Tokens.Link, 'href' | 'title'>, raw: string, lexer: _Lexer, rules: Rules): Tokens.Link | Tokens.Image | undefined {
+   const href = link.href;
+   const title = link.title || null;
+   const text = cap[1].replace(rules.other.outputLinkReplace, '$1');
+ 
+   lexer.state.inLink = true;
++  const type = cap[0].charAt(0) === '!' ? 'image' : 'link';
++  const tokens = lexer.inlineTokens(text);
++  lexer.state.inLink = false;
++  // links may not contain other links, at any level of nesting; the outer brackets stay literal text
++  if (type === 'link' && containsLink(tokens)) {
++    return;
++  }
+   const token: Tokens.Link | Tokens.Image = {
+-    type: cap[0].charAt(0) === '!' ? 'image' : 'link',
++    type,
+     raw,
+     href,
+     title,
+     text,
+-    tokens: lexer.inlineTokens(text),
++    tokens,
+   };
+-  lexer.state.inLink = false;
+   return token;
+ }
+ 
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 6e14498..4e348a4 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4145,8 +4145,7 @@
+     "example": 518,
+     "start_line": 7886,
+     "end_line": 7890,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *[bar [baz](/uri)](/uri)*](/uri)\n",
+@@ -4154,8 +4153,7 @@
+     "example": 519,
+     "start_line": 7893,
+     "end_line": 7897,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "![[[foo](uri1)](uri2)](uri3)\n",
+@@ -4263,8 +4261,7 @@
+     "example": 532,
+     "start_line": 8044,
+     "end_line": 8050,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *bar [baz][ref]*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index c8ffbc1..47d0a22 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4145,8 +4145,7 @@
+     "example": 518,
+     "start_line": 7886,
+     "end_line": 7890,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *[bar [baz](/uri)](/uri)*](/uri)\n",
+@@ -4154,8 +4153,7 @@
+     "example": 519,
+     "start_line": 7893,
+     "end_line": 7897,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "![[[foo](uri1)](uri2)](uri3)\n",
+@@ -4263,8 +4261,7 @@
+     "example": 532,
+     "start_line": 8044,
+     "end_line": 8050,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *bar [baz][ref]*][ref]\n\n[ref]: /uri\n",

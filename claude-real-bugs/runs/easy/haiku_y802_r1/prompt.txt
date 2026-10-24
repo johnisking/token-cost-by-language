@@ -1,0 +1,28 @@
+The current folder is a checkout of js-yaml, the YAML parser and dumper (TypeScript sources in src/, tests in test/). A user reported the bug below. Find the cause in the source code and fix it in src/, without breaking any other behaviour. Dependencies are already installed in node_modules, and you may run commands in this folder to check your work, for example npm run build (builds dist/, which the tests import) and node --test "test/core/**/*.test.mjs". You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+Block scalar with a whitespace-only body fails
+
+Since 5.0.0, load rejects a block scalar when its body is one whitespace-only line and the next line is less indented than the scalar. 4.3.2 parses the same input.
+
+import { load } from 'js-yaml'
+const source = [
+  'a:',
+  '  oneOf:',
+  '    - type: string',
+  '      example: |+',
+  ' '.repeat(8),          // a line that contains only spaces
+  '    - type: array',
+  ''
+].join('\n')
+load(source)
+
+Current version: YAMLException: bad indentation of a mapping entry
+4.3.2: { a: { oneOf: [ { type: 'string', example: '\n' }, { type: 'array' } ] } }
+The yaml package 2.9.1 gives the same value as 4.3.2.
+
+The same error occurs with |, > and >+, and when the next line is a sibling key at the parent's indent (a:\n  x: |+\n      \n  y: 1\n). An empty line with no spaces parses correctly.
+
+Expected: the scalar ends at the less indented line, and example is "\n".
+"""

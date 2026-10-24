@@ -1,0 +1,36 @@
+diff --git a/src/patch/line-endings.ts b/src/patch/line-endings.ts
+index d36c7a5..d6c5287 100644
+--- a/src/patch/line-endings.ts
++++ b/src/patch/line-endings.ts
+@@ -41,7 +41,12 @@ export function winToUnix(patch: StructuredPatch | StructuredPatch[]): Structure
+     ...patch,
+     hunks: patch.hunks.map(hunk => ({
+       ...hunk,
+-      lines: hunk.lines.map(line => line.endsWith('\r') ? line.substring(0, line.length - 1) : line)
++      lines: hunk.lines.map((line, i) =>
++        // A \r right before a "\ No newline" marker is literal content, not a line ending
++        (line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\'))
++          ? line.substring(0, line.length - 1)
++          : line
++      )
+     }))
+   };
+ }
+@@ -55,7 +60,7 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+   return !patch.some(
+     index => index.hunks.some(
+       hunk => hunk.lines.some(
+-        line => !line.startsWith('\\') && line.endsWith('\r')
++        (line, i) => !line.startsWith('\\') && line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\')
+       )
+     )
+   );
+@@ -66,7 +71,7 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+  */
+ export function isWin(patch: StructuredPatch | StructuredPatch[]): boolean {
+   if (!Array.isArray(patch)) { patch = [patch]; }
+-  return patch.some(index => index.hunks.some(hunk => hunk.lines.some(line => line.endsWith('\r'))))
++  return patch.some(index => index.hunks.some(hunk => hunk.lines.some((line, i) => line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\'))))
+     && patch.every(
+       index => index.hunks.every(
+         hunk => hunk.lines.every(

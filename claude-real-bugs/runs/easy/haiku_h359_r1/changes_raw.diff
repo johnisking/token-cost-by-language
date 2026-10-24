@@ -1,0 +1,30 @@
+diff --git a/src/humanize/number.py b/src/humanize/number.py
+index 2dfeffe..d907bab 100644
+--- a/src/humanize/number.py
++++ b/src/humanize/number.py
+@@ -550,8 +550,8 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
+     old_bucket = exponent // 3 * 3
+     value /= 10**old_bucket
+     digits = int(max(0, precision - exponent % 3 - 1))
+-    if exponent < 30 and round(abs(value), digits) >= 1000:
+-        exponent += 3 - exponent % 3
++    if exponent < 30 and round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
++        exponent += 1
+         new_bucket = exponent // 3 * 3
+         value /= 10 ** (new_bucket - old_bucket)
+         digits = int(max(0, precision - exponent % 3 - 1))
+diff --git a/tests/test_number.py b/tests/test_number.py
+index 6f0a664..65b7d60 100644
+--- a/tests/test_number.py
++++ b/tests/test_number.py
+@@ -318,6 +318,10 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
+         ([10, "", 3], "10.0"),
+         ([100, "", 3], "100"),
+         ([1000, "", 3], "1.00 k"),
++        ([9999], "10.0 k"),
++        ([99999], "100 k"),
++        ([9.99999], "10.0"),
++        ([999999], "1.00 M"),
+         ([math.nan], "NaN"),
+         ([math.nan, "m"], "NaN"),
+         ([math.inf], "+Inf"),

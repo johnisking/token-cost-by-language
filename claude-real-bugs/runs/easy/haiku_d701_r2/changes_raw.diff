@@ -1,0 +1,57 @@
+diff --git a/src/patch/line-endings.ts b/src/patch/line-endings.ts
+index d36c7a5..bbfdf5a 100644
+--- a/src/patch/line-endings.ts
++++ b/src/patch/line-endings.ts
+@@ -41,7 +41,11 @@ export function winToUnix(patch: StructuredPatch | StructuredPatch[]): Structure
+     ...patch,
+     hunks: patch.hunks.map(hunk => ({
+       ...hunk,
+-      lines: hunk.lines.map(line => line.endsWith('\r') ? line.substring(0, line.length - 1) : line)
++      lines: hunk.lines.map(
++        (line, i) => (line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\'))
++          ? line.substring(0, line.length - 1)
++          : line
++      )
+     }))
+   };
+ }
+@@ -55,7 +59,7 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+   return !patch.some(
+     index => index.hunks.some(
+       hunk => hunk.lines.some(
+-        line => !line.startsWith('\\') && line.endsWith('\r')
++        (line, i) => !line.startsWith('\\') && line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\')
+       )
+     )
+   );
+@@ -66,7 +70,11 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+  */
+ export function isWin(patch: StructuredPatch | StructuredPatch[]): boolean {
+   if (!Array.isArray(patch)) { patch = [patch]; }
+-  return patch.some(index => index.hunks.some(hunk => hunk.lines.some(line => line.endsWith('\r'))))
++  return patch.some(
++    index => index.hunks.some(
++      hunk => hunk.lines.some((line, i) => line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\'))
++    )
++  )
+     && patch.every(
+       index => index.hunks.every(
+         hunk => hunk.lines.every(
+diff --git a/test/patch/apply.js b/test/patch/apply.js
+index c789488..7077d84 100644
+--- a/test/patch/apply.js
++++ b/test/patch/apply.js
+@@ -117,6 +117,13 @@ describe('patch/apply', function() {
+         .to.equal('line1\nline2\nline3\nline44\nline5\n');
+     });
+ 
++    it('should not strip a literal carriage return at the end of a final line lacking a newline', function() {
++      const oldFile = 'line1\nline2\n';
++      const newFile = 'line1\nline2\nline3\r';
++      const patch = structuredPatch('f', 'f', oldFile, newFile, undefined, undefined, {context: 0});
++      expect(applyPatch(oldFile, patch)).to.equal(newFile);
++    });
++
+     it('should merge EOFNL', function() {
+       expect(applyPatch(
+           'line1\nline2\nline3\nline4\n',

@@ -1,0 +1,38 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index 20fe8c8..f020777 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -97,7 +97,7 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && obj.toJSON) {
++  if (obj && typeof obj.toJSON === 'function') {
+     obj = obj.toJSON();
+   }
+ 
+diff --git a/test/diff/json.js b/test/diff/json.js
+index 7c744cb..fa58013 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -114,6 +114,20 @@ describe('diff/json', function() {
+       }).to['throw'](/circular|cyclic/i);
+     });
+ 
++    it('should not call a truthy but non-callable toJSON property', function() {
++      // JSON.stringify only calls toJSON when it is a function, so diffing
++      // must not throw when a plain data property happens to be named toJSON.
++      expect(diffJson(
++        JSON.parse('{"toJSON":"old"}'),
++        JSON.parse('{"toJSON":"new"}')
++      )).to.eql([
++        { count: 1, value: '{\n', removed: false, added: false },
++        { count: 1, value: '  "toJSON": "old"\n', added: false, removed: true },
++        { count: 1, value: '  "toJSON": "new"\n', added: true, removed: false },
++        { count: 1, value: '}', removed: false, added: false }
++      ]);
++    });
++
+     it('does not silently drop an own __proto__ property', function() {
+       // Objects parsed from JSON can carry an own enumerable "__proto__"
+       // property. Diffing must reflect a change to it instead of reporting

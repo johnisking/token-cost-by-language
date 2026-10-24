@@ -1,0 +1,55 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 861ee60..995aa2c 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -709,7 +709,9 @@ function readBlockScalar (state: ParserState, parentIndent: number, props: NodeP
+         state.position = linePosition + column
+         throwError(state, 'tab characters must not be used in indentation')
+       }
+-      if (column < maxLeadingIndent) {
++      // A line indented less than the parent ends the block below, so it is not
++      // content and must not be compared against leading blank lines.
++      if (column >= parentIndent && column < maxLeadingIndent) {
+         state.position = linePosition + column
+         throwError(state, 'bad indentation of a mapping entry')
+       }
+diff --git a/test/core/parser/parser.test.mjs b/test/core/parser/parser.test.mjs
+index f75c419..ca637ce 100644
+--- a/test/core/parser/parser.test.mjs
++++ b/test/core/parser/parser.test.mjs
+@@ -1,8 +1,34 @@
+ import { describe, it } from 'node:test'
+ import assert from 'node:assert/strict'
+-import { EVENT_ID, getScalarValue, loadAll, parseEvents } from 'js-yaml'
++import { EVENT_ID, getScalarValue, load, loadAll, parseEvents } from 'js-yaml'
+ 
+ describe('parser', () => {
++  it('ends a block scalar with a whitespace-only body at a less indented line', () => {
++    const blank = ' '.repeat(8)
++    const samples = [
++      ['|+', '\n'],
++      ['>+', '\n'],
++      ['|', ''],
++      ['>', '']
++    ]
++
++    for (const [indicator, expected] of samples) {
++      const source = [
++        'a:',
++        '  oneOf:',
++        '    - type: string',
++        `      example: ${indicator}`,
++        blank,
++        '    - type: array',
++        ''
++      ].join('\n')
++
++      assert.deepEqual(load(source), { a: { oneOf: [{ type: 'string', example: expected }, { type: 'array' }] } })
++    }
++
++    assert.deepEqual(load('a:\n  x: |+\n      \n  y: 1\n'), { a: { x: '\n', y: 1 } })
++  })
++
+   it('keeps an implicit null mapping value before a document marker', () => {
+     const samples = [
+       ['a:\n---\nx: 1\n', ['a', '', 'x', '1']],

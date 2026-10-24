@@ -1,0 +1,43 @@
+diff --git a/src/ast/styler_defaults.ts b/src/ast/styler_defaults.ts
+index d61ce64..446cd58 100644
+--- a/src/ast/styler_defaults.ts
++++ b/src/ast/styler_defaults.ts
+@@ -61,8 +61,11 @@ function doubleQuoteWhitespaceOnly (layout: ScalarLayout): void {
+ function applyForceQuotesOption (layout: ScalarLayout): void {
+   if (!layout.presenterOptions.forceQuotes) return
+ 
+-  // forceQuotes applies only to plain values, not to mapping keys.
++  // forceQuotes applies only to plain string values, not to mapping keys or
++  // to non-string scalars (booleans, numbers, null, ...), which would otherwise
++  // need explicit tags to keep their types.
+   if (layout.isKey || layout.style !== SCALAR_STYLE.PLAIN) return
++  if (layout.node.tag !== layout.presenterOptions.schema.defaultScalarTag.tagName) return
+ 
+   layout.style = layout.node.value.includes('\n')
+     ? SCALAR_STYLE.DOUBLE_QUOTED
+diff --git a/test/core/units/dump-scalar-styles.test.mjs b/test/core/units/dump-scalar-styles.test.mjs
+index 4c622e5..b5e8351 100644
+--- a/test/core/units/dump-scalar-styles.test.mjs
++++ b/test/core/units/dump-scalar-styles.test.mjs
+@@ -109,6 +109,21 @@ describe('Scalar style dump:', () => {
+       )
+     })
+ 
++    it('forceQuotes quotes only string values, leaving other scalars plain and untagged', () => {
++      const out = dump(
++        { bool: true, integer: 42, float: 3.14, nil: null, text: 'true' },
++        { forceQuotes: true, quoteStyle: 'double' }
++      )
++      assert.strictEqual(
++        out,
++        'bool: true\ninteger: 42\nfloat: 3.14\nnil: null\ntext: "true"\n'
++      )
++      assert.deepStrictEqual(
++        load(out),
++        { bool: true, integer: 42, float: 3.14, nil: null, text: 'true' }
++      )
++    })
++
+     it('quotes an empty scalar with double quotes under quoteStyle: double', () => {
+       assert.strictEqual(dump('', { quoteStyle: 'double' }), '""\n')
+     })

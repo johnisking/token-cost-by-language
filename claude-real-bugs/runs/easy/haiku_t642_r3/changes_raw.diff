@@ -1,0 +1,50 @@
+diff --git a/tests/test_parser.py b/tests/test_parser.py
+index 44d5cd6..20e428e 100644
+--- a/tests/test_parser.py
++++ b/tests/test_parser.py
+@@ -41,6 +41,22 @@ def test_parser_should_raise_an_error_for_empty_tables() -> None:
+     assert e.value.col == 1
+ 
+ 
++@pytest.mark.parametrize(
++    "content",
++    [
++        "a = 1\nb = 2\nc = @\nd = 4\n",
++        "a = 1\r\nb = 2\r\nc = @\r\nd = 4\r\n",
++        "a = 1\r\nb = 2\nc = @\r\nd = 4\n",
++    ],
++)
++def test_parse_error_position_is_independent_of_line_endings(content: str) -> None:
++    with pytest.raises(UnexpectedCharError) as e:
++        Parser(content).parse()
++
++    assert e.value.line == 3
++    assert e.value.col == 4
++
++
+ def test_parser_should_raise_an_error_if_equal_not_found() -> None:
+     content = """[foo]
+ a {c = 1, d = 2}
+diff --git a/tomlkit/source.py b/tomlkit/source.py
+index b2e9caa..a0186a9 100644
+--- a/tomlkit/source.py
++++ b/tomlkit/source.py
+@@ -230,11 +230,16 @@ class Source(str):
+         return exception(line, col, *args, **kwargs)
+ 
+     def _to_linecol(self) -> tuple[int, int]:
++        # Only "\n" ends a line in TOML. "\r\n" is split on the "\n", leaving the
++        # "\r" in the line so that every line's length matches its index span.
++        # str.splitlines() is not used: it drops the "\r" and also breaks on
++        # other characters, which skews the reported line and column.
++        lines = self.split("\n")
+         cur = 0
+-        for i, line in enumerate(self.splitlines()):
++        for i, line in enumerate(lines):
+             if cur + len(line) + 1 > self.idx:
+                 return (i + 1, self.idx - cur)
+ 
+             cur += len(line) + 1
+ 
+-        return len(self.splitlines()), 0
++        return len(lines), 0

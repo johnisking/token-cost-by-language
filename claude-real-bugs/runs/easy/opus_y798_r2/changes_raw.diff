@@ -1,0 +1,37 @@
+diff --git a/src/ast/styler_defaults.ts b/src/ast/styler_defaults.ts
+index d61ce64..b049f79 100644
+--- a/src/ast/styler_defaults.ts
++++ b/src/ast/styler_defaults.ts
+@@ -64,6 +64,10 @@ function applyForceQuotesOption (layout: ScalarLayout): void {
+   // forceQuotes applies only to plain values, not to mapping keys.
+   if (layout.isKey || layout.style !== SCALAR_STYLE.PLAIN) return
+ 
++  // forceQuotes applies only to strings; quoting other scalars (bool, int,
++  // float, null, ...) would require an explicit tag to preserve their type.
++  if (layout.node.tag !== layout.presenterOptions.schema.defaultScalarTag.tagName) return
++
+   layout.style = layout.node.value.includes('\n')
+     ? SCALAR_STYLE.DOUBLE_QUOTED
+     : _preferredQuotedStyle(layout)
+diff --git a/test/core/units/dump-options.test.mjs b/test/core/units/dump-options.test.mjs
+index 71aa336..3486da8 100644
+--- a/test/core/units/dump-options.test.mjs
++++ b/test/core/units/dump-options.test.mjs
+@@ -102,6 +102,17 @@ describe('dump options', () => {
+     )
+   })
+ 
++  it('forceQuotes — does not quote non-string scalars', () => {
++    assert.equal(
++      dump(
++        { bool: true, integer: 42, float: 3.14, nil: null, text: 'true' },
++        { forceQuotes: true, quoteStyle: 'double' }
++      ),
++      'bool: true\ninteger: 42\nfloat: 3.14\nnil: null\ntext: "true"\n'
++    )
++    assert.equal(dump([1, false, 'a'], { forceQuotes: true }), "- 1\n- false\n- 'a'\n")
++  })
++
+   it('flowLevel — switches to flow style from the given depth', () => {
+     assert.equal(dump({ a: [1, 2] }), 'a:\n  - 1\n  - 2\n')
+     assert.equal(dump({ a: [1, 2] }, { flowLevel: 0 }), '{a: [1, 2]}\n')

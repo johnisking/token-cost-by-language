@@ -1,0 +1,54 @@
+diff --git a/tests/test_api.py b/tests/test_api.py
+index b5f31bc..cafec4b 100644
+--- a/tests/test_api.py
++++ b/tests/test_api.py
+@@ -224,6 +224,18 @@ def test_integer() -> None:
+     assert isinstance(i, Integer)
+ 
+ 
++def test_integer_preserves_underscores() -> None:
++    i = tomlkit.integer("1_000")
++
++    assert i.as_string() == "1_000"
++    assert int(i) == 1000
++
++    doc = tomlkit.document()
++    doc["n"] = tomlkit.integer("53_49_221")
++
++    assert tomlkit.dumps(doc) == "n = 53_49_221\n"
++
++
+ def test_float() -> None:
+     i = tomlkit.float_("34.56")
+ 
+diff --git a/tomlkit/api.py b/tomlkit/api.py
+index b0f8cd6..f2b4b88 100644
+--- a/tomlkit/api.py
++++ b/tomlkit/api.py
+@@ -115,7 +115,12 @@ def document() -> TOMLDocument:
+ 
+ # Items
+ def integer(raw: str | int) -> Integer:
+-    """Create an integer item from a number or string."""
++    """Create an integer item from a number or string.
++
++    A string keeps its original formatting, so underscores are preserved.
++    """
++    if isinstance(raw, str):
++        return Integer(int(raw), Trivia(), raw)
+     return item(int(raw))
+ 
+ 
+diff --git a/tomlkit/items.py b/tomlkit/items.py
+index 8589df9..e5b4ecc 100644
+--- a/tomlkit/items.py
++++ b/tomlkit/items.py
+@@ -627,7 +627,7 @@ class Integer(Item, _CustomInt):
+         self._raw = raw
+         self._sign = False
+ 
+-        if re.match(r"^[+\-]\d+$", raw):
++        if re.match(r"^[+\-][\d_]+$", raw):
+             self._sign = True
+ 
+     def unwrap(self) -> int:

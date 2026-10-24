@@ -1,0 +1,108 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 9ba9df6..ac0a869 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -301,11 +301,9 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+   }
+ 
+   /**
+-   * Lexing/Compiling
++   * Mask links, escapes and other blocks in src so em and strong ignore them
+    */
+-  inlineTokens(src: string, tokens: Token[] = []): Token[] {
+-    this.tokenizer.lexer = this;
+-    // String with links masked to avoid interference with em and strong
++  private maskInline(src: string): string {
+     let maskedSrc = src;
+ 
+     // Mask out reflinks
+@@ -331,6 +329,17 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+     // Mask out blocks from extensions
+     maskedSrc = this.options.hooks?.emStrongMask?.call({ lexer: this }, maskedSrc) ?? maskedSrc;
+ 
++    return maskedSrc;
++  }
++
++  /**
++   * Lexing/Compiling
++   */
++  inlineTokens(src: string, tokens: Token[] = []): Token[] {
++    this.tokenizer.lexer = this;
++    // String with links masked to avoid interference with em and strong
++    let maskedSrc = this.maskInline(src);
++
+     let keepPrevChar = false;
+     let prevChar = '';
+     let srcLength = Infinity;
+@@ -393,6 +402,18 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+           tokens.push(token);
+         }
+         continue;
++      } else if (src.charAt(0) === '[') {
++        // A reference link rejected because its text holds another link is
++        // only literal text, so its span must not stay masked as a link:
++        // re-mask it from its contents so em and strong inside are found
++        const cap = this.tokenizer.rules.inline.reflink.exec(src)
++          || this.tokenizer.rules.inline.nolink.exec(src);
++        if (cap) {
++          const offset = maskedSrc.length - src.length;
++          maskedSrc = maskedSrc.slice(0, offset)
++            + '[' + this.maskInline(cap[0].slice(1))
++            + maskedSrc.slice(offset + cap[0].length);
++        }
+       }
+ 
+       // em & strong
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 4e348a4..92b13ab 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index 47d0a22..a2bf8ca 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/unit/marked.test.js b/test/unit/marked.test.js
+index 5d1449b..8d0ff4b 100644
+--- a/test/unit/marked.test.js
++++ b/test/unit/marked.test.js
+@@ -22,6 +22,20 @@ describe('marked unit', () => {
+     });
+   });
+ 
++  describe('rejected reference link', () => {
++    it('should keep emphasis in the text of a reference link that holds a link', () => {
++      const cases = [
++        ['[foo *bar [baz](/url) qux*][ref]\n\n[ref]: /uri', '<p>[foo <em>bar <a href="/url">baz</a> qux</em>]<a href="/uri">ref</a></p>\n'],
++        ['[foo _bar [baz](/url) qux_][ref]\n\n[ref]: /uri', '<p>[foo <em>bar <a href="/url">baz</a> qux</em>]<a href="/uri">ref</a></p>\n'],
++        ['[foo **bar [baz](/url) qux**][ref]\n\n[ref]: /uri', '<p>[foo <strong>bar <a href="/url">baz</a> qux</strong>]<a href="/uri">ref</a></p>\n'],
++        ['[foo *bar [baz][ref]*][ref]\n\n[ref]: /uri', '<p>[foo <em>bar <a href="/uri">baz</a></em>]<a href="/uri">ref</a></p>\n'],
++      ];
++      for (const [md, html] of cases) {
++        assert.strictEqual(marked.parse(md), html);
++      }
++    });
++  });
++
+   describe('changeDefaults', () => {
+     it('should change global defaults', async() => {
+       const { defaults, setOptions } = await import('../../lib/marked.esm.js');

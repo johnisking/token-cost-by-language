@@ -1,0 +1,52 @@
+diff --git a/markdown/htmlparser.py b/markdown/htmlparser.py
+index d92dc0d..2d996ba 100644
+--- a/markdown/htmlparser.py
++++ b/markdown/htmlparser.py
+@@ -134,6 +134,10 @@ class HTMLExtractor(htmlparser.HTMLParser):
+ 
+         # Block tags that should contain no content (self closing)
+         self.empty_tags = set(['hr'])
++        self.void_tags = frozenset([
++            'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input',
++            'link', 'meta', 'param', 'source', 'track', 'wbr'
++        ])
+ 
+         self.lineno_start_cache = [0]
+ 
+@@ -145,6 +149,7 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         """Reset this instance.  Loses all unprocessed data."""
+         self.inraw = False
+         self.intail = False
++        self.inline_stack: list[str] = []  # Open non-raw tags
+         self.stack: list[str] = []  # When `inraw==True`, stack contains a list of tags
+         self._cache: list[str] = []
+         self.cleandoc: list[str] = []
+@@ -225,6 +230,8 @@ class HTMLExtractor(htmlparser.HTMLParser):
+             self._cache.append(text)
+         else:
+             self.cleandoc.append(text)
++            if tag not in self.void_tags:
++                self.inline_stack.append(tag)
+             if tag in self.CDATA_CONTENT_ELEMENTS:
+                 # This is presumably a standalone tag in a code span (see #1036).
+                 self.clear_cdata_mode()
+@@ -255,6 +262,10 @@ class HTMLExtractor(htmlparser.HTMLParser):
+                 self._cache = []
+         else:
+             self.cleandoc.append(text)
++            if tag in self.inline_stack:
++                while self.inline_stack:
++                    if self.inline_stack.pop() == tag:
++                        break
+ 
+     def handle_data(self, data: str):
+         if self.intail and '\n' in data:
+@@ -269,7 +280,7 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         if self.inraw or self.intail:
+             # Append this to the existing raw block
+             self._cache.append(data)
+-        elif self.at_line_start() and is_block:
++        elif self.at_line_start() and is_block and not self.inline_stack:
+             # Handle this as a standalone raw block
+             if blank_line_re.match(self.rawdata[self.line_offset + self.offset + len(data):]):
+                 # Preserve blank line after tag in raw block.

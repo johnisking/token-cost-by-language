@@ -1,0 +1,25 @@
+diff --git a/src/markdownit.ts b/src/markdownit.ts
+index 4dc2ce9..9904572 100644
+--- a/src/markdownit.ts
++++ b/src/markdownit.ts
+@@ -162,7 +162,19 @@ class MarkdownIt {
+       }
+     }
+ 
+-    return mdurl.encode(mdurl.format(parsed))
++    const encoded = mdurl.encode(mdurl.format(parsed))
++
++    // IPv6 literals must keep their brackets, e.g. `http://[::1]/`
++    if (parsed.hostname && parsed.hostname.indexOf(':') >= 0) {
++      const literal = '[' + parsed.hostname + ']'
++      const encodedLiteral = mdurl.encode(literal)
++      const pos = encoded.indexOf(encodedLiteral)
++      if (pos >= 0) {
++        return encoded.slice(0, pos) + literal + encoded.slice(pos + encodedLiteral.length)
++      }
++    }
++
++    return encoded
+   }
+ 
+   /**

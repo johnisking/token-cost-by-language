@@ -1,0 +1,90 @@
+diff --git a/src/patch/line-endings.ts b/src/patch/line-endings.ts
+index d36c7a5..b0c16ff 100644
+--- a/src/patch/line-endings.ts
++++ b/src/patch/line-endings.ts
+@@ -41,11 +41,20 @@ export function winToUnix(patch: StructuredPatch | StructuredPatch[]): Structure
+     ...patch,
+     hunks: patch.hunks.map(hunk => ({
+       ...hunk,
+-      lines: hunk.lines.map(line => line.endsWith('\r') ? line.substring(0, line.length - 1) : line)
++      lines: hunk.lines.map((line, i) => hasCRLFEnding(hunk.lines, i) ? line.substring(0, line.length - 1) : line)
+     }))
+   };
+ }
+ 
++/**
++ * Returns true if the line at index `i` of `lines` is terminated by a CR (i.e. ends in `\r` and is
++ * not followed by a "\ No newline at end of file" marker). A `\r` on a line that is followed by such
++ * a marker is literal file content rather than part of a line ending, so it must be left alone.
++ */
++function hasCRLFEnding(lines: string[], i: number): boolean {
++  return lines[i].endsWith('\r') && !lines[i].startsWith('\\') && !lines[i + 1]?.startsWith('\\');
++}
++
+ /**
+  * Returns true if the patch consistently uses Unix line endings (or only involves one line and has
+  * no line endings).
+@@ -54,9 +63,7 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+   if (!Array.isArray(patch)) { patch = [patch]; }
+   return !patch.some(
+     index => index.hunks.some(
+-      hunk => hunk.lines.some(
+-        line => !line.startsWith('\\') && line.endsWith('\r')
+-      )
++      hunk => hunk.lines.some((line, i) => hasCRLFEnding(hunk.lines, i))
+     )
+   );
+ }
+@@ -66,7 +73,7 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+  */
+ export function isWin(patch: StructuredPatch | StructuredPatch[]): boolean {
+   if (!Array.isArray(patch)) { patch = [patch]; }
+-  return patch.some(index => index.hunks.some(hunk => hunk.lines.some(line => line.endsWith('\r'))))
++  return patch.some(index => index.hunks.some(hunk => hunk.lines.some((line, i) => hasCRLFEnding(hunk.lines, i))))
+     && patch.every(
+       index => index.hunks.every(
+         hunk => hunk.lines.every(
+diff --git a/test/patch/apply.js b/test/patch/apply.js
+index c789488..1f0cfbc 100644
+--- a/test/patch/apply.js
++++ b/test/patch/apply.js
+@@ -1628,6 +1628,13 @@ describe('patch/apply', function() {
+         );
+       }).to['throw']('fuzzFactor must be a non-negative integer');
+     });
++
++    it('should preserve a literal carriage return at the end of a file with no trailing newline', () => {
++      const oldFile = 'line1\nline2\n';
++      const newFile = 'line1\nline2\nline3\r';
++      const patch = structuredPatch('f', 'f', oldFile, newFile, undefined, undefined, {context: 0});
++      expect(applyPatch(oldFile, patch)).to.equal(newFile);
++    });
+   });
+ 
+   describe('#applyPatches', function() {
+diff --git a/test/patch/line-endings.js b/test/patch/line-endings.js
+index 19d318b..c3296c2 100644
+--- a/test/patch/line-endings.js
++++ b/test/patch/line-endings.js
+@@ -118,6 +118,21 @@ describe('isWin', () => {
+     );
+     expect(isWin(patch)).to.equal(true);
+   });
++
++  it('should return false if the only CR is literal content on a line followed by a no newline at EOF indicator', () => {
++    const patch = parsePatch(
++      'Index: test\n'
++      + '===================================================================\n'
++      + '--- test\theader1\n'
++      + '+++ test\theader2\n'
++      + '@@ -1,2 +1,3 @@\n'
++      + ' line2\n'
++      + ' line3\n'
++      + '+line4\r\n'
++      + '\\ No newline at end of file\n'
++    );
++    expect(isWin(patch)).to.equal(false);
++  });
+ });
+ 
+ describe('isUnix', () => {

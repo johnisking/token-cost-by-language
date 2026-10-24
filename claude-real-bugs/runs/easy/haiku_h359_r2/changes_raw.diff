@@ -1,0 +1,14 @@
+diff --git a/src/humanize/number.py b/src/humanize/number.py
+index 2dfeffe..2085e81 100644
+--- a/src/humanize/number.py
++++ b/src/humanize/number.py
+@@ -555,6 +555,9 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
+         new_bucket = exponent // 3 * 3
+         value /= 10 ** (new_bucket - old_bucket)
+         digits = int(max(0, precision - exponent % 3 - 1))
++    elif round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
++        # Rounding carried into an extra integer digit, so drop one decimal to keep `precision` significant figures.
++        digits = int(max(0, digits - 1))
+ 
+     if exponent >= 3:
+         ordinal_ = "kMGTPEZYRQ"[exponent // 3 - 1]

@@ -1,0 +1,24 @@
+diff --git a/tomlkit/source.py b/tomlkit/source.py
+index b2e9caa..31304fa 100644
+--- a/tomlkit/source.py
++++ b/tomlkit/source.py
+@@ -230,11 +230,17 @@ class Source(str):
+         return exception(line, col, *args, **kwargs)
+ 
+     def _to_linecol(self) -> tuple[int, int]:
++        # Split on "\n" only so that offsets stay exact for "\r\n" and for
++        # other characters str.splitlines() treats as line boundaries.
++        lines = self.split("\n")
++        if lines and lines[-1] == "":
++            lines.pop()
++
+         cur = 0
+-        for i, line in enumerate(self.splitlines()):
++        for i, line in enumerate(lines):
+             if cur + len(line) + 1 > self.idx:
+                 return (i + 1, self.idx - cur)
+ 
+             cur += len(line) + 1
+ 
+-        return len(self.splitlines()), 0
++        return len(lines), 0

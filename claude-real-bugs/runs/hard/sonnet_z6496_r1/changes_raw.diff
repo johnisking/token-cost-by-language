@@ -1,0 +1,71 @@
+diff --git a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+index ece615e..a48ee75 100644
+--- a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
++++ b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+@@ -1164,14 +1164,14 @@ describe("toJSONSchema", () => {
+         },
+         "propertyNames": {
+           "enum": [
+-            0,
+-            1,
++            "0",
++            "1",
+           ],
+-          "type": "number",
++          "type": "string",
+         },
+         "required": [
+-          0,
+-          1,
++          "0",
++          "1",
+         ],
+         "type": "object",
+       }
+@@ -4403,3 +4403,11 @@ describe("intersection folding declines", () => {
+     expect(allOf(schema)).toHaveLength(3);
+   });
+ });
++
++test("record with numeric keys", () => {
++  expect(z.toJSONSchema(z.record(z.number(), z.number())).propertyNames).toEqual({
++    type: "string",
++    pattern: "^-?(?:\\d+\\.?\\d*|\\.\\d+)(?:[eE][+-]?\\d+)?$",
++  });
++  expect(z.toJSONSchema(z.record(z.int(), z.string())).propertyNames).toEqual({ type: "string", pattern: "^-?\\d+$" });
++});
+diff --git a/packages/zod/src/v4/core/json-schema-processors.ts b/packages/zod/src/v4/core/json-schema-processors.ts
+index 8258fca..46fe3a6 100644
+--- a/packages/zod/src/v4/core/json-schema-processors.ts
++++ b/packages/zod/src/v4/core/json-schema-processors.ts
+@@ -498,10 +498,19 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+   } else {
+     // Default behavior: use propertyNames + additionalProperties
+     if (ctx.target === "draft-07" || ctx.target === "draft-2020-12") {
+-      json.propertyNames = process(def.keyType, ctx as any, {
++      const names = process(def.keyType, ctx as any, {
+         ...params,
+         path: [...params.path, "propertyNames"],
+-      });
++      }) as JSONSchema.BaseSchema;
++      // json keys are always strings
++      if (names.type === "number" || names.type === "integer") {
++        json.propertyNames = { type: "string" };
++        if (names.enum) json.propertyNames.enum = names.enum.map(String);
++        else if (names.const !== undefined) json.propertyNames.const = String(names.const);
++        else
++          json.propertyNames.pattern =
++            names.type === "integer" ? "^-?\\d+$" : "^-?(?:\\d+\\.?\\d*|\\.\\d+)(?:[eE][+-]?\\d+)?$";
++      } else json.propertyNames = names;
+     }
+     json.additionalProperties = process(def.valueType, ctx as any, {
+       ...params,
+@@ -519,7 +528,7 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+     );
+ 
+     if (validKeyValues.length > 0) {
+-      json.required = validKeyValues as string[];
++      json.required = validKeyValues.map(String);
+     }
+   }
+ };

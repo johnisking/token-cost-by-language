@@ -1,0 +1,84 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 9ba9df6..d2c03e4 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -301,11 +301,10 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+   }
+ 
+   /**
+-   * Lexing/Compiling
++   * Mask links, escapes, code and html so em/strong/del skip over them.
++   * The result has the same length as src.
+    */
+-  inlineTokens(src: string, tokens: Token[] = []): Token[] {
+-    this.tokenizer.lexer = this;
+-    // String with links masked to avoid interference with em and strong
++  private maskInline(src: string): string {
+     let maskedSrc = src;
+ 
+     // Mask out reflinks
+@@ -329,7 +328,16 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+     });
+ 
+     // Mask out blocks from extensions
+-    maskedSrc = this.options.hooks?.emStrongMask?.call({ lexer: this }, maskedSrc) ?? maskedSrc;
++    return this.options.hooks?.emStrongMask?.call({ lexer: this }, maskedSrc) ?? maskedSrc;
++  }
++
++  /**
++   * Lexing/Compiling
++   */
++  inlineTokens(src: string, tokens: Token[] = []): Token[] {
++    this.tokenizer.lexer = this;
++    // String with links masked to avoid interference with em and strong
++    let maskedSrc = this.maskInline(src);
+ 
+     let keepPrevChar = false;
+     let prevChar = '';
+@@ -395,6 +403,18 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+         continue;
+       }
+ 
++      // A reference link rejected for holding another link is lexed as text,
++      // so unmask its label and closing bracket to let em/strong pair up inside it.
++      const rejectedRef = src.charAt(0) === '['
++        && (this.tokenizer.rules.inline.reflink.exec(src) || this.tokenizer.rules.inline.nolink.exec(src));
++      if (rejectedRef && rejectedRef[1]) {
++        const label = rejectedRef[1];
++        const rest = rejectedRef[0].slice(label.length + 1);
++        const start = maskedSrc.length - src.length + 1;
++        maskedSrc = maskedSrc.slice(0, start) + this.maskInline(label) + this.maskInline(rest)
++          + maskedSrc.slice(start + label.length + rest.length);
++      }
++
+       // em & strong
+       if (token = this.tokenizer.emStrong(src, maskedSrc, prevChar)) {
+         src = src.substring(token.raw.length);
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 4e348a4..92b13ab 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index 47d0a22..a2bf8ca 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",

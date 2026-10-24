@@ -1,0 +1,81 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index 5dc2b32..c8f085e 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -2326,6 +2326,9 @@ class numeric_range(Sequence):
+         if self._step == self._zero:
+             raise ValueError('numeric_range() arg 3 must not be zero')
+         self._growing = self._step > self._zero
++        self._inexact = any(
++            isinstance(x, float) for x in (self._start, self._stop, self._step)
++        )
+ 
+     def __bool__(self):
+         if self._growing:
+@@ -2334,6 +2337,12 @@ class numeric_range(Sequence):
+             return self._start > self._stop
+ 
+     def __contains__(self, elem):
++        if self._inexact:
++            try:
++                self.index(elem)
++            except ValueError:
++                return False
++            return True
+         if self._growing:
+             if self._start <= elem < self._stop:
+                 return (elem - self._start) % self._step == self._zero
+@@ -2420,7 +2429,19 @@ class numeric_range(Sequence):
+             return 0
+         else:  # distance > 0 and step > 0: regular euclidean division
+             q, r = divmod(distance, step)
+-            return int(q) + int(r != self._zero)
++            n = int(q) + int(r != self._zero)
++            if not self._inexact:
++                return n
++            # Float rounding: match exactly what iteration yields.
++            while self._in_bounds(n):
++                n += 1
++            while n > 0 and not self._in_bounds(n - 1):
++                n -= 1
++            return n
++
++    def _in_bounds(self, n):
++        item = self._start + n * self._step
++        return item < self._stop if self._growing else item > self._stop
+ 
+     def __reduce__(self):
+         return numeric_range, (self._start, self._stop, self._step)
+@@ -2433,20 +2454,23 @@ class numeric_range(Sequence):
+         )
+ 
+     def __reversed__(self):
+-        # Empty iterator
+-        try:
+-            start = self._get_by_index(-1)
+-        except IndexError:
+-            return iter([])
+-
+-        return iter(
+-            numeric_range(start, self._start - self._step, -self._step)
+-        )
++        return (self._get_by_index(i) for i in range(self._len - 1, -1, -1))
+ 
+     def count(self, value):
+         return int(value in self)
+ 
+     def index(self, value):
++        if self._inexact:
++            n = self._len
++            try:
++                est = round((value - self._start) / self._step)
++            except (OverflowError, ValueError):
++                est = None
++            if est is not None:
++                for i in (est, est - 1, est + 1):
++                    if 0 <= i < n and self._start + i * self._step == value:
++                        return i
++            raise ValueError(f"{value} is not in numeric range")
+         if self._growing:
+             if self._start <= value < self._stop:
+                 q, r = divmod(value - self._start, self._step)

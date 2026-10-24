@@ -1,0 +1,80 @@
+diff --git a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+index ece615e..1431c93 100644
+--- a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
++++ b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+@@ -1149,6 +1149,19 @@ describe("toJSONSchema", () => {
+     ]);
+   });
+ 
++  test("record with numeric keys emits string propertyNames", () => {
++    const names = (key: z.core.$ZodRecordKey) => z.toJSONSchema(z.record(key, z.number())).propertyNames;
++    expect(names(z.number())).toEqual({ type: "string", pattern: "^-?\\d+(?:\\.\\d+)?$" });
++    expect(names(z.int())).toEqual({ type: "string", pattern: "^-?\\d+$" });
++    expect(names(z.literal([1, 2]))).toEqual({ type: "string", enum: ["1", "2"] });
++    expect(z.toJSONSchema(z.record(z.literal([1, 2]), z.number())).required).toEqual(["1", "2"]);
++    expect(names(z.string())).toEqual({ type: "string" });
++    expect(z.toJSONSchema(z.record(z.number(), z.number()), { target: "draft-07" }).propertyNames).toEqual({
++      type: "string",
++      pattern: "^-?\\d+(?:\\.\\d+)?$",
++    });
++  });
++
+   test("record filters enum values to strings and numbers for required", () => {
+     enum NumberEnum {
+       Zero = 0,
+@@ -1164,14 +1177,14 @@ describe("toJSONSchema", () => {
+         },
+         "propertyNames": {
+           "enum": [
+-            0,
+-            1,
++            "0",
++            "1",
+           ],
+-          "type": "number",
++          "type": "string",
+         },
+         "required": [
+-          0,
+-          1,
++          "0",
++          "1",
+         ],
+         "type": "object",
+       }
+diff --git a/packages/zod/src/v4/core/json-schema-processors.ts b/packages/zod/src/v4/core/json-schema-processors.ts
+index 8258fca..601dfd5 100644
+--- a/packages/zod/src/v4/core/json-schema-processors.ts
++++ b/packages/zod/src/v4/core/json-schema-processors.ts
+@@ -498,10 +498,21 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+   } else {
+     // Default behavior: use propertyNames + additionalProperties
+     if (ctx.target === "draft-07" || ctx.target === "draft-2020-12") {
+-      json.propertyNames = process(def.keyType, ctx as any, {
++      const keySchema = process(def.keyType, ctx as any, {
+         ...params,
+         path: [...params.path, "propertyNames"],
+       });
++      // JSON property names are always strings, so numeric keys are described by their string form
++      if (keySchema.type === "number" || keySchema.type === "integer") {
++        const { values, pattern } = keyType._zod;
++        json.propertyNames = values
++          ? { type: "string", enum: [...values].map(String) }
++          : pattern
++            ? { type: "string", pattern: pattern.source }
++            : { type: "string" };
++      } else {
++        json.propertyNames = keySchema;
++      }
+     }
+     json.additionalProperties = process(def.valueType, ctx as any, {
+       ...params,
+@@ -519,7 +530,7 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+     );
+ 
+     if (validKeyValues.length > 0) {
+-      json.required = validKeyValues as string[];
++      json.required = validKeyValues.map(String);
+     }
+   }
+ };

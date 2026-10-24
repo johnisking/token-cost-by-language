@@ -1,0 +1,54 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..f21fa29 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -36,6 +36,14 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+ 
+     const closerLength = matchEnd - matchStart
+ 
++    // Remember the furthest closer of each length seen so far. Matched closers
++    // must be recorded too: a scan may run from inside a link label (via
++    // skipToken) and consume a closer that is needed again when the label
++    // turns out to be unclosed and the text is re-tokenized.
++    if ((state.backticks[closerLength] || 0) < matchStart) {
++      state.backticks[closerLength] = matchStart
++    }
++
+     if (closerLength === openerLength) {
+       // Found matching closer length.
+       if (!silent) {
+@@ -48,9 +56,6 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+       state.pos = matchEnd
+       return true
+     }
+-
+-    // Some different length found, put it in cache as upper limit of where closer can be found
+-    state.backticks[closerLength] = matchStart
+   }
+ 
+   // Scanned through the end, didn't find anything
+diff --git a/test/fixtures/markdown-it/commonmark_extras.txt b/test/fixtures/markdown-it/commonmark_extras.txt
+index c8bbc7a..c1eddc8 100644
+--- a/test/fixtures/markdown-it/commonmark_extras.txt
++++ b/test/fixtures/markdown-it/commonmark_extras.txt
+@@ -398,6 +398,20 @@ Coverage. Unpaired nested backtick (silent mode)
+ .
+ 
+ 
++Code span inside an unclosed link label should survive backtick cache
++.
++[foo `bar` baz`
++
++![alt `code` x`
++
++[`a`b`
++.
++<p>[foo <code>bar</code> baz`</p>
++<p>![alt <code>code</code> x`</p>
++<p>[<code>a</code>b`</p>
++.
++
++
+ Coverage. Should continue scanning after closing "```" despite cache
+ .
+ ```aaa``bbb``ccc```ddd``eee``

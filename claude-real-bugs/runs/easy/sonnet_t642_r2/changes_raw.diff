@@ -1,0 +1,20 @@
+diff --git a/tomlkit/source.py b/tomlkit/source.py
+index b2e9caa..6a5ad28 100644
+--- a/tomlkit/source.py
++++ b/tomlkit/source.py
+@@ -231,10 +231,13 @@ class Source(str):
+ 
+     def _to_linecol(self) -> tuple[int, int]:
+         cur = 0
+-        for i, line in enumerate(self.splitlines()):
++        lines = self.split("\n")
++        if lines and lines[-1] == "":
++            lines.pop()
++        for i, line in enumerate(lines):
+             if cur + len(line) + 1 > self.idx:
+                 return (i + 1, self.idx - cur)
+ 
+             cur += len(line) + 1
+ 
+-        return len(self.splitlines()), 0
++        return len(lines), 0

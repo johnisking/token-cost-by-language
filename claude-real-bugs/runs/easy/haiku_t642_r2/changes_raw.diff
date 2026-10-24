@@ -1,0 +1,52 @@
+diff --git a/tests/test_parser.py b/tests/test_parser.py
+index 44d5cd6..1ee85b1 100644
+--- a/tests/test_parser.py
++++ b/tests/test_parser.py
+@@ -246,3 +246,19 @@ def test_parser_accepts_uppercase_exponent_after_leading_zero() -> None:
+         value = Parser(f"a = {raw}").parse()["a"]
+         assert isinstance(value, Float)
+         assert value == float(raw)
++
++
++@pytest.mark.parametrize(
++    "content",
++    [
++        "a = 1\r\nb = 2\r\nc = @\r\nd = 4\r\n",
++        "a = 1\nb = 2\nc = @\nd = 4\n",
++        "a = 1\r\nb = 2\nc = @\r\nd = 4\n",
++    ],
++)
++def test_parser_error_position_is_independent_of_line_endings(content: str) -> None:
++    with pytest.raises(UnexpectedCharError) as e:
++        Parser(content).parse()
++
++    assert e.value.line == 3
++    assert e.value.col == 4
+diff --git a/tomlkit/source.py b/tomlkit/source.py
+index b2e9caa..a8c128f 100644
+--- a/tomlkit/source.py
++++ b/tomlkit/source.py
+@@ -230,11 +230,15 @@ class Source(str):
+         return exception(line, col, *args, **kwargs)
+ 
+     def _to_linecol(self) -> tuple[int, int]:
+-        cur = 0
+-        for i, line in enumerate(self.splitlines()):
+-            if cur + len(line) + 1 > self.idx:
+-                return (i + 1, self.idx - cur)
+-
+-            cur += len(line) + 1
+-
+-        return len(self.splitlines()), 0
++        if self.idx >= len(self):
++            return len(self.splitlines()), 0
++
++        # Count line breaks in the text before the current character. A CRLF
++        # pair is one break (and its CR is not part of the column), so the
++        # result is the same as for LF-only input.
++        prefix = self[: self.idx]
++        if self.current == "\n" and prefix.endswith("\r"):
++            prefix = prefix[:-1]
++        lines = prefix.replace("\r\n", "\n").replace("\r", "\n").split("\n")
++
++        return len(lines), len(lines[-1])

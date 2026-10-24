@@ -1,0 +1,34 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..99f12c6 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -18,7 +18,7 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+   const marker = state.src.slice(start, pos)
+   const openerLength = marker.length
+ 
+-  if (state.backticksScanned && (state.backticks[openerLength] || 0) <= start) {
++  if (state.backticksScanned && start >= state.backticksScanStart && (state.backticks[openerLength] || 0) <= start) {
+     if (!silent) state.pending += marker
+     state.pos += openerLength
+     return true
+@@ -55,6 +55,7 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+ 
+   // Scanned through the end, didn't find anything
+   state.backticksScanned = true
++  state.backticksScanStart = start
+ 
+   if (!silent) state.pending += marker
+   state.pos += openerLength
+diff --git a/src/rules_inline/state_inline.ts b/src/rules_inline/state_inline.ts
+index fbba926..c5700fc 100644
+--- a/src/rules_inline/state_inline.ts
++++ b/src/rules_inline/state_inline.ts
+@@ -36,6 +36,8 @@ class StateInline {
+   // backtick length => last seen position
+   backticks: Record<number, number> = {}
+   backticksScanned = false
++  // position of the opener whose failed scan set backticksScanned
++  backticksScanStart = 0
+ 
+   // Counter used to disable inline linkify-it execution
+   // inside <a> and markdown links

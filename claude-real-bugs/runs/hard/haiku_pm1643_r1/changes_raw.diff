@@ -1,0 +1,146 @@
+diff --git a/markdown/extensions/md_in_html.py b/markdown/extensions/md_in_html.py
+index d02d7a4..9360f08 100644
+--- a/markdown/extensions/md_in_html.py
++++ b/markdown/extensions/md_in_html.py
+@@ -152,6 +152,7 @@ class HTMLExtractorExtra(HTMLExtractor):
+                     self.handle_data(self.md.htmlStash.store(text))
+                 else:
+                     self.handle_data(text)
++                self.open_inline_tag(tag)
+                 if tag in self.CDATA_CONTENT_ELEMENTS:
+                     # This is presumably a standalone tag in a code span (see #1036).
+                     self.clear_cdata_mode()
+@@ -237,6 +238,7 @@ class HTMLExtractorExtra(HTMLExtractor):
+             if self.inraw:
+                 super().handle_endtag(tag)
+             else:
++                self.close_inline_tag(tag)
+                 text = self.get_endtag_text(tag)
+                 if self.mdstate and self.mdstate[-1] == "off":
+                     self.handle_data(self.md.htmlStash.store(text))
+@@ -259,6 +261,7 @@ class HTMLExtractorExtra(HTMLExtractor):
+     def handle_data(self, data):
+         if self.intail and '\n' in data:
+             self.intail = False
++        self.track_blank_line(data)
+         if self.inraw or not self.mdstack:
+             super().handle_data(data)
+         else:
+diff --git a/markdown/htmlparser.py b/markdown/htmlparser.py
+index d92dc0d..4e007b2 100644
+--- a/markdown/htmlparser.py
++++ b/markdown/htmlparser.py
+@@ -146,6 +146,7 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         self.inraw = False
+         self.intail = False
+         self.stack: list[str] = []  # When `inraw==True`, stack contains a list of tags
++        self.inline_stack: list[str] = []  # Open inline (non-block) tags in the current paragraph
+         self._cache: list[str] = []
+         self.cleandoc: list[str] = []
+         self.lineno_start_cache = [0]
+@@ -225,6 +226,8 @@ class HTMLExtractor(htmlparser.HTMLParser):
+             self._cache.append(text)
+         else:
+             self.cleandoc.append(text)
++            if not self.md.is_block_level(tag):
++                self.open_inline_tag(tag)
+             if tag in self.CDATA_CONTENT_ELEMENTS:
+                 # This is presumably a standalone tag in a code span (see #1036).
+                 self.clear_cdata_mode()
+@@ -254,11 +257,29 @@ class HTMLExtractor(htmlparser.HTMLParser):
+                 self.cleandoc.append('\n\n')
+                 self._cache = []
+         else:
++            self.close_inline_tag(tag)
+             self.cleandoc.append(text)
+ 
++    def open_inline_tag(self, tag: str):
++        """ Track an open inline (non-block) tag within the current paragraph. """
++        self.inline_stack.append(tag)
++
++    def close_inline_tag(self, tag: str):
++        """ Stop tracking `tag` and any inline tags opened after it. """
++        if tag in self.inline_stack:
++            while self.inline_stack:
++                if self.inline_stack.pop() == tag:
++                    break
++
++    def track_blank_line(self, data: str):
++        """ A blank line ends the paragraph, so no inline tags remain open. """
++        if re.search(r'\n[ ]*\n', data):
++            self.inline_stack = []
++
+     def handle_data(self, data: str):
+         if self.intail and '\n' in data:
+             self.intail = False
++        self.track_blank_line(data)
+         if self.inraw:
+             self._cache.append(data)
+         else:
+@@ -269,8 +290,8 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         if self.inraw or self.intail:
+             # Append this to the existing raw block
+             self._cache.append(data)
+-        elif self.at_line_start() and is_block:
+-            # Handle this as a standalone raw block
++        elif self.at_line_start() and is_block and not self.inline_stack:
++            # Handle this as a standalone raw block (but not within an open inline tag)
+             if blank_line_re.match(self.rawdata[self.line_offset + self.offset + len(data):]):
+                 # Preserve blank line after tag in raw block.
+                 data += '\n'
+diff --git a/tests/test_syntax/blocks/test_html_blocks.py b/tests/test_syntax/blocks/test_html_blocks.py
+index 1f2f877..f831f19 100644
+--- a/tests/test_syntax/blocks/test_html_blocks.py
++++ b/tests/test_syntax/blocks/test_html_blocks.py
+@@ -1558,6 +1558,51 @@ class TestHTMLBlocks(TestCase):
+             )
+         )
+ 
++    def test_comment_in_inline_tag(self):
++        # A comment within an open inline tag is inline content, not a raw block.
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                <picture>
++                  <!-- TODO: what the heck? -->
++                  <source media="(prefers-color-scheme: dark)" srcset="../images/example.svg">
++                  <img alt="Example" src="../images/example.svg">
++                </picture>
++                """
++            ),
++            self.dedent(
++                """
++                <p><picture>
++                  <!-- TODO: what the heck? -->
++                  <source media="(prefers-color-scheme: dark)" srcset="../images/example.svg">
++                  <img alt="Example" src="../images/example.svg">
++                </picture></p>
++                """
++            )
++        )
++
++    def test_comment_after_inline_tag_blank_line(self):
++        # A blank line ends the paragraph, so a comment after it starts a new raw block.
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                <span>Text
++
++                <!-- comment -->
++
++                Done
++                """
++            ),
++            self.dedent(
++                """
++                <p><span>Text</p>
++                <!-- comment -->
++
++                <p>Done</p>
++                """
++            )
++        )
++
+     def test_hr_only_start(self):
+         self.assertMarkdownRenders(
+             self.dedent(

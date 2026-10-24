@@ -1,0 +1,52 @@
+diff --git a/src/markdownit.ts b/src/markdownit.ts
+index 4dc2ce9..63c2f48 100644
+--- a/src/markdownit.ts
++++ b/src/markdownit.ts
+@@ -162,7 +162,22 @@ class MarkdownIt {
+       }
+     }
+ 
+-    return mdurl.encode(mdurl.format(parsed))
++    const formatted = mdurl.format(parsed)
++
++    // IPv6 hosts must keep their literal brackets (`[...]`), otherwise the
++    // URL is invalid per WHATWG URL Standard. Encode the rest around them.
++    if (parsed.hostname && parsed.hostname.indexOf(':') !== -1) {
++      const host = '[' + parsed.hostname + ']'
++      const start = formatted.indexOf(host)
++
++      if (start !== -1) {
++        return mdurl.encode(formatted.slice(0, start)) +
++          host +
++          mdurl.encode(formatted.slice(start + host.length))
++      }
++    }
++
++    return mdurl.encode(formatted)
+   }
+ 
+   /**
+diff --git a/test/markdown-it/misc.test.mjs b/test/markdown-it/misc.test.mjs
+index 5b2ca86..48b26ca 100644
+--- a/test/markdown-it/misc.test.mjs
++++ b/test/markdown-it/misc.test.mjs
+@@ -202,6 +202,19 @@ describe('Plugins', function () {
+ })
+ 
+ describe('Misc', function () {
++  it('Should keep IPv6 literal brackets in link destinations', function () {
++    const md = markdownit()
++
++    assert.strictEqual(
++      md.render('[visit](http://[2001:db8::1]/)'),
++      '<p><a href="http://[2001:db8::1]/">visit</a></p>\n'
++    )
++    assert.strictEqual(
++      md.normalizeLink('http://[2001:db8::1]:8080/a[b]?c=[d]'),
++      'http://[2001:db8::1]:8080/a%5Bb%5D?c=%5Bd%5D'
++    )
++  })
++
+   it('Should store reference labels in token metadata', function () {
+     const md = markdownit()
+     const tokens = md.parse('[text][foo bar]\n\n![alt][FOO   BAR]\n\n[Foo Bar]: /url', {})

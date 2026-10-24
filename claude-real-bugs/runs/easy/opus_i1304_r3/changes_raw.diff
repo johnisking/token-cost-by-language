@@ -1,0 +1,41 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index c128bc9..8e1c208 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -3718,7 +3718,16 @@ def ichunked(iterable, n):
+     [8, 9, 10, 11]
+ 
+     """
+-    iterator = iter(iterable)
++    if n < 0:
++        raise ValueError('n must be at least 0')
++
++    return _ichunked(iter(iterable), n)
++
++
++def _ichunked(iterator, n):
++    # Like chunked, n=0 yields nothing (and consumes nothing).
++    if n == 0:
++        return
+     for first in iterator:
+         rest = islice(iterator, n - 1)
+         cache, cacher = tee(rest)
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 50fab9c..3aa864c 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -4537,6 +4537,14 @@ class IchunkedTests(TestCase):
+         expected = ['0123', '4567', '89']
+         self.assertEqual(actual, expected)
+ 
++    def test_zero(self):
++        self.assertEqual(list(mi.ichunked(['a', 'b', 'c'], 0)), [])
++        self.assertEqual(list(mi.ichunked([], 0)), [])
++
++    def test_negative(self):
++        with self.assertRaisesRegex(ValueError, 'n must be at least 0'):
++            mi.ichunked(['a', 'b', 'c'], -1)
++
+     def test_zero(self):
+         iterable = []
+         actual = [list(c) for c in mi.ichunked(iterable, 0)]

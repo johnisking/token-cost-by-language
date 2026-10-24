@@ -1,0 +1,55 @@
+diff --git a/lib/parse.js b/lib/parse.js
+index 2345b75..9ad7d05 100644
+--- a/lib/parse.js
++++ b/lib/parse.js
+@@ -185,16 +185,17 @@ var parseValues = function parseQueryStringValues(str, options) {
+                         isArray(obj[key]) && (options.duplicates === 'combine' || isEmptyBracketKey) ? obj[key].length : 0
+                     ),
+                     function (encodedVal) {
+-                        return options.decoder(encodedVal, defaults.decoder, charset, 'value');
++                        // applied per element: `val` may already be an array from `comma`, and stringifying it would undo the split
++                        var decoded = options.decoder(encodedVal, defaults.decoder, charset, 'value');
++                        if (decoded && options.interpretNumericEntities && charset === 'iso-8859-1') {
++                            return interpretNumericEntities(String(decoded));
++                        }
++                        return decoded;
+                     }
+                 );
+             }
+         }
+ 
+-        if (val && options.interpretNumericEntities && charset === 'iso-8859-1') {
+-            val = interpretNumericEntities(String(val));
+-        }
+-
+         if (isEmptyBracketKey) {
+             val = isArray(val) ? [val] : val;
+         }
+diff --git a/test/parse.js b/test/parse.js
+index 204b8df..20912d5 100644
+--- a/test/parse.js
++++ b/test/parse.js
+@@ -63,6 +63,14 @@ test('parse()', function (t) {
+         st.end();
+     });
+ 
++    t.test('comma: true works with iso-8859-1 and interpretNumericEntities', function (st) {
++        var options = { comma: true, charset: 'iso-8859-1', interpretNumericEntities: true };
++        st.deepEqual(qs.parse('a=b,c', options), { a: ['b', 'c'] });
++        st.deepEqual(qs.parse('a=%26%239786%3B,c', options), { a: ['☺', 'c'] });
++        st.deepEqual(qs.parse('a[]=%26%239786%3B,c', options), { a: [['☺', 'c']] });
++        st.end();
++    });
++
+     t.test('comma: `[]=` in a value does not wrap the value in an extra array', function (st) {
+         st.deepEqual(qs.parse('a[b]=1,2,3[]=x', { comma: true }), { a: { b: ['1', '2', '3[]=x'] } });
+         st.deepEqual(qs.parse('a[b]=1,2[]=3', { comma: true }), { a: { b: ['1', '2[]=3'] } });
+@@ -1309,7 +1317,7 @@ test('parse()', function (t) {
+     t.test('interpretNumericEntities with comma:true and iso charset does not crash', function (st) {
+         st.deepEqual(
+             qs.parse('b&a[]=1,' + urlEncodedNumSmiley, { comma: true, charset: 'iso-8859-1', interpretNumericEntities: true }),
+-            { b: '', a: ['1,☺'] }
++            { b: '', a: [['1', '☺']] }
+         );
+ 
+         st.end();

@@ -1,0 +1,30 @@
+diff --git a/papaparse.js b/papaparse.js
+index 5229936..2df56aa 100644
+--- a/papaparse.js
++++ b/papaparse.js
+@@ -333,7 +333,7 @@ License: MIT
+ 				var nullLine = hasHeader ? Object.keys(data[row]).length === 0 : data[row].length === 0;
+ 				if (skipEmptyLines && !hasHeader)
+ 				{
+-					emptyLine = skipEmptyLines === 'greedy' ? data[row].join('').trim() === '' : data[row].length === 1 && data[row][0].length === 0;
++					emptyLine = skipEmptyLines === 'greedy' ? data[row].join('').trim() === '' : data[row].length === 1 && (typeof data[row][0] === 'undefined' || data[row][0] === null || data[row][0].length === 0);
+ 				}
+ 				if (skipEmptyLines === 'greedy' && hasHeader) {
+ 					var line = [];
+diff --git a/tests/test-cases.js b/tests/test-cases.js
+index 72c540a..44e4ae1 100644
+--- a/tests/test-cases.js
++++ b/tests/test-cases.js
+@@ -2044,6 +2044,12 @@ var UNPARSE_TESTS = [
+ 		config: {skipEmptyLines: true},
+ 		expected: '," "\r\n1,2'
+ 	},
++	{
++		description: "Skips single-cell rows containing null or undefined when skipEmptyLines is true",
++		input: [[null], [undefined], ['hello']],
++		config: {skipEmptyLines: true},
++		expected: 'hello'
++	},
+ 	{
+ 		description: "Returns without rows with no content when skipEmptyLines is 'greedy'",
+ 		input: [[null, ' '], [], ['1', '2']].concat(new Array(500000).fill(['', ''])).concat([['3', '4']]),

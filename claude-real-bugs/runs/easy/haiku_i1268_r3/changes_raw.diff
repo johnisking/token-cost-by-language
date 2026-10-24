@@ -1,0 +1,59 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index 6d43f7b..05d6856 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -3098,12 +3098,20 @@ class seekable:
+             self._cache = []
+         else:
+             self._cache = deque([], maxlen)
++        self._maxlen = maxlen
+         self._index = None
++        # With ``maxlen=0`` nothing is cached, so a peeked item is held here
++        self._pending = _marker
+ 
+     def __iter__(self):
+         return self
+ 
+     def __next__(self):
++        if self._pending is not _marker:
++            item = self._pending
++            self._pending = _marker
++            return item
++
+         if self._index is not None:
+             try:
+                 item = self._cache[self._index]
+@@ -3131,6 +3139,9 @@ class seekable:
+             if default is _marker:
+                 raise
+             return default
++        if self._maxlen == 0:
++            self._pending = peeked
++            return peeked
+         if self._index is None:
+             self._index = len(self._cache)
+         self._index -= 1
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 9757022..d1f9247 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -3781,6 +3781,19 @@ class SeekableTest(PeekableMixinTests, TestCase):
+         self.assertEqual(list(s), iterable)
+         self.assertEqual(list(s.elements()), [])
+ 
++    def test_maxlen_zero_peek(self):
++        s = mi.seekable([10, 20, 30], maxlen=0)
++        self.assertEqual(s.peek(), 10)
++        self.assertEqual(s.peek(), 10)
++        self.assertEqual(list(s), [10, 20, 30])
++        self.assertEqual(list(s.elements()), [])
++
++    def test_maxlen_zero_bool(self):
++        s = mi.seekable([10, 20, 30], maxlen=0)
++        self.assertTrue(bool(s))
++        self.assertEqual(list(s), [10, 20, 30])
++        self.assertFalse(bool(s))
++
+     def test_relative_seek(self):
+         iterable = [str(x) for x in range(5)]
+         s = mi.seekable(iterable)

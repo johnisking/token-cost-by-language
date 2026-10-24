@@ -1,0 +1,59 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index 6d43f7b..59960a3 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -3099,6 +3099,7 @@ class seekable:
+         else:
+             self._cache = deque([], maxlen)
+         self._index = None
++        self._pending = deque()
+ 
+     def __iter__(self):
+         return self
+@@ -3113,6 +3114,9 @@ class seekable:
+                 self._index += 1
+                 return item
+ 
++        if self._pending:
++            return self._pending.popleft()
++
+         item = next(self._source)
+         self._cache.append(item)
+         return item
+@@ -3131,6 +3135,11 @@ class seekable:
+             if default is _marker:
+                 raise
+             return default
++        if not self._cache:
++            # Nothing is cached (maxlen=0), so the item can't be rewound to;
++            # hold it back so the next read returns it.
++            self._pending.appendleft(peeked)
++            return peeked
+         if self._index is None:
+             self._index = len(self._cache)
+         self._index -= 1
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 9757022..0c37777 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -3781,6 +3781,20 @@ class SeekableTest(PeekableMixinTests, TestCase):
+         self.assertEqual(list(s), iterable)
+         self.assertEqual(list(s.elements()), [])
+ 
++    def test_maxlen_zero_peek_and_bool(self):
++        s = mi.seekable([10, 20, 30], maxlen=0)
++        self.assertEqual(s.peek(), 10)
++        self.assertEqual(s.peek(), 10)
++        self.assertEqual(list(s), [10, 20, 30])
++
++        s = mi.seekable([10, 20, 30], maxlen=0)
++        self.assertTrue(bool(s))
++        self.assertEqual(list(s), [10, 20, 30])
++
++        s = mi.seekable([], maxlen=0)
++        self.assertFalse(bool(s))
++        self.assertEqual(s.peek('empty'), 'empty')
++
+     def test_relative_seek(self):
+         iterable = [str(x) for x in range(5)]
+         s = mi.seekable(iterable)

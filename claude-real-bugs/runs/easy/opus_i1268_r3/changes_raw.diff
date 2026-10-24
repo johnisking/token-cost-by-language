@@ -1,0 +1,62 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index 6d43f7b..8b2c630 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -3099,6 +3099,8 @@ class seekable:
+         else:
+             self._cache = deque([], maxlen)
+         self._index = None
++        # With maxlen=0 the cache can't hold a peeked item, so keep it here
++        self._peeked = _marker
+ 
+     def __iter__(self):
+         return self
+@@ -3113,6 +3115,10 @@ class seekable:
+                 self._index += 1
+                 return item
+ 
++        if self._peeked is not _marker:
++            item, self._peeked = self._peeked, _marker
++            return item
++
+         item = next(self._source)
+         self._cache.append(item)
+         return item
+@@ -3131,6 +3137,9 @@ class seekable:
+             if default is _marker:
+                 raise
+             return default
++        if getattr(self._cache, 'maxlen', None) == 0:
++            self._peeked = peeked
++            return peeked
+         if self._index is None:
+             self._index = len(self._cache)
+         self._index -= 1
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 9757022..b614932 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -3781,6 +3781,23 @@ class SeekableTest(PeekableMixinTests, TestCase):
+         self.assertEqual(list(s), iterable)
+         self.assertEqual(list(s.elements()), [])
+ 
++    def test_maxlen_zero_peek_and_bool(self):
++        s = mi.seekable([10, 20, 30], maxlen=0)
++        self.assertEqual(s.peek(), 10)
++        self.assertEqual(s.peek(), 10)
++        self.assertTrue(s)
++        self.assertEqual(next(s), 10)
++        self.assertTrue(s)
++        self.assertEqual(list(s), [20, 30])
++        self.assertFalse(s)
++        self.assertEqual(s.peek(default='empty'), 'empty')
++        self.assertEqual(list(s.elements()), [])
++
++        s = mi.seekable([10, 20, 30], maxlen=0)
++        self.assertTrue(s)
++        s.seek(0)
++        self.assertEqual(list(s), [10, 20, 30])
++
+     def test_relative_seek(self):
+         iterable = [str(x) for x in range(5)]
+         s = mi.seekable(iterable)

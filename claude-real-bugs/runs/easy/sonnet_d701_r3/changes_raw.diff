@@ -1,0 +1,32 @@
+diff --git a/src/patch/line-endings.ts b/src/patch/line-endings.ts
+index d36c7a5..f347ec2 100644
+--- a/src/patch/line-endings.ts
++++ b/src/patch/line-endings.ts
+@@ -41,7 +41,11 @@ export function winToUnix(patch: StructuredPatch | StructuredPatch[]): Structure
+     ...patch,
+     hunks: patch.hunks.map(hunk => ({
+       ...hunk,
+-      lines: hunk.lines.map(line => line.endsWith('\r') ? line.substring(0, line.length - 1) : line)
++      lines: hunk.lines.map((line, i) =>
++        // A line followed by a "\ No newline" marker has no line ending, so a trailing \r is
++        // literal content rather than part of a Windows line ending.
++        (line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\')) ? line.substring(0, line.length - 1) : line
++      )
+     }))
+   };
+ }
+@@ -66,7 +70,13 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+  */
+ export function isWin(patch: StructuredPatch | StructuredPatch[]): boolean {
+   if (!Array.isArray(patch)) { patch = [patch]; }
+-  return patch.some(index => index.hunks.some(hunk => hunk.lines.some(line => line.endsWith('\r'))))
++  return patch.some(
++    index => index.hunks.some(
++      hunk => hunk.lines.some(
++        (line, i) => line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\')
++      )
++    )
++  )
+     && patch.every(
+       index => index.hunks.every(
+         hunk => hunk.lines.every(

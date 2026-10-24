@@ -1,0 +1,52 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 861ee60..e184bc7 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -709,7 +709,9 @@ function readBlockScalar (state: ParserState, parentIndent: number, props: NodeP
+         state.position = linePosition + column
+         throwError(state, 'tab characters must not be used in indentation')
+       }
+-      if (column < maxLeadingIndent) {
++      // Only a line that would become content can conflict with the leading
++      // blank lines; a less indented line ends the scalar instead.
++      if (column < maxLeadingIndent && column >= parentIndent + 1) {
+         state.position = linePosition + column
+         throwError(state, 'bad indentation of a mapping entry')
+       }
+diff --git a/test/core/units/load-other.test.mjs b/test/core/units/load-other.test.mjs
+index 735784f..facc8ea 100644
+--- a/test/core/units/load-other.test.mjs
++++ b/test/core/units/load-other.test.mjs
+@@ -3,6 +3,32 @@ import assert from 'node:assert/strict'
+ import { load, loadAll, YAMLException } from 'js-yaml'
+ 
+ describe('core/units/load-other', () => {
++  describe('block scalar with whitespace-only body', () => {
++    it('ends at a less indented line', () => {
++      const source = [
++        'a:',
++        '  oneOf:',
++        '    - type: string',
++        '      example: |+',
++        ' '.repeat(8),
++        '    - type: array',
++        ''
++      ].join('\n')
++
++      for (const [indicator, example] of [['|+', '\n'], ['|', ''], ['>', ''], ['>+', '\n']]) {
++        assert.deepStrictEqual(load(source.replace('|+', indicator)), {
++          a: { oneOf: [{ type: 'string', example }, { type: 'array' }] }
++        })
++      }
++
++      assert.deepStrictEqual(load('a:\n  x: |+\n      \n  y: 1\n'), { a: { x: '\n', y: 1 } })
++    })
++
++    it('still rejects leading blank lines more indented than the content', () => {
++      assert.throws(() => load('a: |\n     \n  x\n'), YAMLException)
++    })
++  })
++
+   describe('BOM', () => {
+     it('accepts BOM at the start of a document', () => {
+       const expected = { abc: 5, cba: ['Xyz', 'Zyx'] }

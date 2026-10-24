@@ -1,0 +1,64 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index 6d43f7b..cdb9712 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -3099,6 +3099,9 @@ class seekable:
+         else:
+             self._cache = deque([], maxlen)
+         self._index = None
++        # Holds a peeked item that could not be stored in the cache
++        # (i.e. when maxlen=0)
++        self._lookahead = _marker
+ 
+     def __iter__(self):
+         return self
+@@ -3113,6 +3116,10 @@ class seekable:
+                 self._index += 1
+                 return item
+ 
++        if self._lookahead is not _marker:
++            item, self._lookahead = self._lookahead, _marker
++            return item
++
+         item = next(self._source)
+         self._cache.append(item)
+         return item
+@@ -3131,6 +3138,10 @@ class seekable:
+             if default is _marker:
+                 raise
+             return default
++        if getattr(self._cache, 'maxlen', None) == 0:
++            # The cache can't hold the item, so keep it aside instead
++            self._lookahead = peeked
++            return peeked
+         if self._index is None:
+             self._index = len(self._cache)
+         self._index -= 1
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 9757022..6a862a7 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -3706,6 +3706,23 @@ class DifferenceTest(TestCase):
+ class SeekableTest(PeekableMixinTests, TestCase):
+     cls = mi.seekable
+ 
++    def test_maxlen_zero_peek_bool(self):
++        s = mi.seekable([10, 20, 30], maxlen=0)
++        self.assertEqual(s.peek(), 10)
++        self.assertEqual(s.peek(), 10)
++        self.assertTrue(s)
++        self.assertEqual(list(s.elements()), [])
++        self.assertEqual(next(s), 10)
++        self.assertTrue(s)
++        self.assertEqual(list(s), [20, 30])
++        self.assertFalse(s)
++        self.assertEqual(s.peek('x'), 'x')
++
++        s = mi.seekable([10, 20, 30], maxlen=0)
++        s.peek()
++        s.seek(1)
++        self.assertEqual(list(s), [20, 30])
++
+     def test_exhaustion_reset(self):
+         iterable = [str(n) for n in range(10)]
+ 

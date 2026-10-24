@@ -1,0 +1,30 @@
+diff --git a/src/humanize/number.py b/src/humanize/number.py
+index 2dfeffe..bccb068 100644
+--- a/src/humanize/number.py
++++ b/src/humanize/number.py
+@@ -555,6 +555,10 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
+         new_bucket = exponent // 3 * 3
+         value /= 10 ** (new_bucket - old_bucket)
+         digits = int(max(0, precision - exponent % 3 - 1))
++    elif digits and abs(value) < 10 ** (exponent % 3 + 1) <= round(abs(value), digits):
++        # Rounding carried the mantissa up a power of ten, e.g. 9.9999 -> 10.00,
++        # so one fewer decimal digit keeps the same number of significant figures.
++        digits -= 1
+ 
+     if exponent >= 3:
+         ordinal_ = "kMGTPEZYRQ"[exponent // 3 - 1]
+diff --git a/tests/test_number.py b/tests/test_number.py
+index 6f0a664..6cdcea7 100644
+--- a/tests/test_number.py
++++ b/tests/test_number.py
+@@ -318,6 +318,10 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
+         ([10, "", 3], "10.0"),
+         ([100, "", 3], "100"),
+         ([1000, "", 3], "1.00 k"),
++        ([9999], "10.0 k"),
++        ([99999], "100 k"),
++        ([9.99999], "10.0"),
++        ([9999, "", 4], "9.999 k"),
+         ([math.nan], "NaN"),
+         ([math.nan, "m"], "NaN"),
+         ([math.inf], "+Inf"),

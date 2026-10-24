@@ -1,0 +1,72 @@
+diff --git a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+index ece615e..cf86643 100644
+--- a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
++++ b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+@@ -1164,14 +1164,14 @@ describe("toJSONSchema", () => {
+         },
+         "propertyNames": {
+           "enum": [
+-            0,
+-            1,
++            "0",
++            "1",
+           ],
+-          "type": "number",
++          "type": "string",
+         },
+         "required": [
+-          0,
+-          1,
++          "0",
++          "1",
+         ],
+         "type": "object",
+       }
+@@ -4403,3 +4403,9 @@ describe("intersection folding declines", () => {
+     expect(allOf(schema)).toHaveLength(3);
+   });
+ });
++
++test("record with numeric keys uses string propertyNames", () => {
++  expect(z.toJSONSchema(z.record(z.int(), z.number())).propertyNames).toEqual({ type: "string", pattern: "^-?\\d+$" });
++  expect(z.toJSONSchema(z.record(z.number(), z.number())).propertyNames).toMatchObject({ type: "string" });
++  expect(z.toJSONSchema(z.record(z.union([z.literal(1), z.literal(2)]), z.string())).required).toEqual(["1", "2"]);
++});
+diff --git a/packages/zod/src/v4/core/json-schema-processors.ts b/packages/zod/src/v4/core/json-schema-processors.ts
+index 8258fca..164179a 100644
+--- a/packages/zod/src/v4/core/json-schema-processors.ts
++++ b/packages/zod/src/v4/core/json-schema-processors.ts
+@@ -498,10 +498,22 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+   } else {
+     // Default behavior: use propertyNames + additionalProperties
+     if (ctx.target === "draft-07" || ctx.target === "draft-2020-12") {
+-      json.propertyNames = process(def.keyType, ctx as any, {
++      const names = process(def.keyType, ctx as any, {
+         ...params,
+         path: [...params.path, "propertyNames"],
+-      });
++      }) as JSONSchema.BaseSchema;
++      // object keys are always strings, so numeric key schemas become numeric-looking string patterns
++      if (names.type === "number" || names.type === "integer") {
++        const integer = names.type === "integer";
++        names.type = "string";
++        if (names.const === undefined && names.enum === undefined)
++          names.pattern = integer ? "^-?\\d+$" : "^-?\\d+(\\.\\d+)?([eE][+-]?\\d+)?$";
++        for (const k of ["minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum", "multipleOf"] as const)
++          delete (names as any)[k];
++      }
++      if (typeof names.const === "number") names.const = String(names.const);
++      if (Array.isArray(names.enum)) names.enum = names.enum.map((v) => (typeof v === "number" ? String(v) : v));
++      json.propertyNames = names;
+     }
+     json.additionalProperties = process(def.valueType, ctx as any, {
+       ...params,
+@@ -519,7 +531,7 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+     );
+ 
+     if (validKeyValues.length > 0) {
+-      json.required = validKeyValues as string[];
++      json.required = validKeyValues.map(String);
+     }
+   }
+ };

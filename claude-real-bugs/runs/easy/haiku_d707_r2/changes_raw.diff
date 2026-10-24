@@ -1,0 +1,69 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index f020777..a74e4c6 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -75,6 +75,12 @@ export function canonicalize(
+     obj = replacer(key === undefined ? '' : key, obj);
+   }
+ 
++  // Apply toJSON before checking the type, as JSON.stringify does, so that arrays
++  // with a toJSON method (or toJSON returning an array) are serialized correctly.
++  if (obj && typeof obj.toJSON === 'function') {
++    obj = obj.toJSON();
++  }
++
+   let i;
+ 
+   for (i = 0; i < stack.length; i += 1) {
+@@ -97,10 +103,6 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && typeof obj.toJSON === 'function') {
+-    obj = obj.toJSON();
+-  }
+-
+   if (typeof obj === 'object' && obj !== null) {
+     stack.push(obj);
+     // Use a null-prototype object so that an own "__proto__" key is stored as
+diff --git a/test/diff/json.js b/test/diff/json.js
+index d7f2de7..014f641 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -159,6 +159,36 @@ describe('diff/json', function() {
+         { count: 1, value: '}', removed: false, added: false }
+       ]);
+     });
++
++    it('serializes an array returned by toJSON as an array', function() {
++      const x = {
++        toJSON: () => ['a', 'b']
++      };
++      const y = {
++        toJSON: () => ['a', 'c']
++      };
++
++      expect(diffJson(x, y)).to.eql([
++        { count: 2, value: '[\n  "a",\n', removed: false, added: false },
++        { count: 1, value: '  "b"\n', added: false, removed: true },
++        { count: 1, value: '  "c"\n', added: true, removed: false },
++        { count: 1, value: ']', removed: false, added: false }
++      ]);
++    });
++
++    it('respects a toJSON method on an array, as JSON.stringify does', function() {
++      const x = ['a', 'b'];
++      x.toJSON = () => 'aaa';
++      const y = ['a', 'c'];
++      y.toJSON = () => 'bbb';
++
++      expect(diffJson({ foo: x }, { foo: y })).to.eql([
++        { count: 1, value: '{\n', removed: false, added: false },
++        { count: 1, value: '  "foo": "aaa"\n', added: false, removed: true },
++        { count: 1, value: '  "foo": "bbb"\n', added: true, removed: false },
++        { count: 1, value: '}', removed: false, added: false }
++      ]);
++    });
+   });
+ 
+   describe('#canonicalize', function() {

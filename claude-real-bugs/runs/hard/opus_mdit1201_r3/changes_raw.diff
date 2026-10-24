@@ -1,0 +1,62 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..a1ee2bb 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -37,7 +37,9 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+     const closerLength = matchEnd - matchStart
+ 
+     if (closerLength === openerLength) {
+-      // Found matching closer length.
++      // Found matching closer length. Remember it, so that a later cache
++      // lookup (e.g. after a lookahead from a link label) doesn't miss it.
++      state.backticks[closerLength] = Math.max(state.backticks[closerLength] || 0, matchStart)
+       if (!silent) {
+         const token = state.push('code_inline', 'code', 0)
+         token.markup = marker
+@@ -50,12 +52,16 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+     }
+ 
+     // Some different length found, put it in cache as upper limit of where closer can be found
+-    state.backticks[closerLength] = matchStart
++    state.backticks[closerLength] = Math.max(state.backticks[closerLength] || 0, matchStart)
+   }
+ 
+   // Scanned through the end, didn't find anything
+   state.backticksScanned = true
+ 
++  // This opener may still serve as a closer for an earlier opener
++  // (visited out of order by lookahead), so record its position too.
++  state.backticks[openerLength] = Math.max(state.backticks[openerLength] || 0, start)
++
+   if (!silent) state.pending += marker
+   state.pos += openerLength
+   return true
+diff --git a/test/fixtures/markdown-it/commonmark_extras.txt b/test/fixtures/markdown-it/commonmark_extras.txt
+index c8bbc7a..d480184 100644
+--- a/test/fixtures/markdown-it/commonmark_extras.txt
++++ b/test/fixtures/markdown-it/commonmark_extras.txt
+@@ -876,3 +876,24 @@ foo
+ <p>foo</p>
+ <!bar baz>
+ .
++
++Unclosed link label must not suppress a later code span
++.
++[foo `bar` baz`
++.
++<p>[foo <code>bar</code> baz`</p>
++.
++
++Unclosed image label must not suppress a later code span
++.
++![alt `code` x`
++.
++<p>![alt <code>code</code> x`</p>
++.
++
++Unclosed link label followed by code span and unmatched backtick
++.
++[`a`b`
++.
++<p>[<code>a</code>b`</p>
++.

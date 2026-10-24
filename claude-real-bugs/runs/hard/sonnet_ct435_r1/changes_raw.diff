@@ -1,0 +1,68 @@
+diff --git a/src/cachetools/_cachedmethod.py b/src/cachetools/_cachedmethod.py
+index 2a626ab..2bb5931 100644
+--- a/src/cachetools/_cachedmethod.py
++++ b/src/cachetools/_cachedmethod.py
+@@ -42,6 +42,28 @@ class _WrapperBase:
+         self.__lock = lock if lock is not None else _none
+         self.__cond = cond if cond is not None else _none
+ 
++    _descriptor = None  # set when accessed through the class
++
++    def __init_subclass__(cls, **kwargs):
++        super().__init_subclass__(**kwargs)
++        call = cls.__dict__.get("__call__")
++        if call is None:
++            return
++
++        @functools.wraps(call)
++        def __call__(self, *args, **kwargs):
++            if self._obj is None and self._descriptor is not None:
++                # accessed through the class: first argument is the instance
++                if not args:
++                    raise TypeError(
++                        "missing instance argument for unbound @cachedmethod"
++                    )
++                obj, *args = args
++                return self._descriptor.__get__(obj, type(obj))(*args, **kwargs)
++            return call(self, *args, **kwargs)
++
++        cls.__call__ = __call__
++
+     def __call__(self, *args, **kwargs):
+         raise NotImplementedError()  # pragma: no cover
+ 
+@@ -87,7 +109,7 @@ class _DescriptorBase:
+             # Return the wrapper itself without modification when accessed
+             # through the class to support class-level introspection, such
+             # as for mocking with autospec=True in unittest.mock.
+-            pass
++            wrapper._descriptor = self
+         elif self.__attrname is not None:
+             # replace descriptor instance with wrapper in instance dict
+             try:
+diff --git a/tests/test_cachedmethod.py b/tests/test_cachedmethod.py
+index 8d519f6..40c9ef4 100644
+--- a/tests/test_cachedmethod.py
++++ b/tests/test_cachedmethod.py
+@@ -690,3 +690,21 @@ class AutospecTest(unittest.TestCase):
+             warnings.simplefilter("always")
+             unittest.mock.create_autospec(Cached, instance=True)
+         self.assertEqual(len(w), 0)
++
++
++class CachedMethodClassAccessTest(unittest.TestCase):
++    def test_class_call_with_instance(self):
++        class Example:
++            def __init__(self):
++                self.cache = Cache(2)
++
++            @cachedmethod(lambda self: self.cache)
++            def value(self, number):
++                return number * 2
++
++        example = Example()
++        self.assertEqual(6, example.value(3))
++        self.assertEqual(6, Example.value(example, 3))
++        example2 = Example()
++        self.assertEqual(6, Example.value(example2, 3))
++        self.assertEqual(1, len(example2.cache))

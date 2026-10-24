@@ -1,0 +1,41 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index 6d43f7b..760f5a7 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -3099,6 +3099,7 @@ class seekable:
+         else:
+             self._cache = deque([], maxlen)
+         self._index = None
++        self._peeked = _marker
+ 
+     def __iter__(self):
+         return self
+@@ -3113,6 +3114,10 @@ class seekable:
+                 self._index += 1
+                 return item
+ 
++        if self._peeked is not _marker:
++            item, self._peeked = self._peeked, _marker
++            return item
++
+         item = next(self._source)
+         self._cache.append(item)
+         return item
+@@ -3125,6 +3130,17 @@ class seekable:
+         return True
+ 
+     def peek(self, default=_marker):
++        if getattr(self._cache, 'maxlen', None) == 0:
++            # The cache can't hold the peeked item, so hold it separately
++            if self._peeked is _marker:
++                try:
++                    self._peeked = next(self._source)
++                except StopIteration:
++                    if default is _marker:
++                        raise
++                    return default
++            return self._peeked
++
+         try:
+             peeked = next(self)
+         except StopIteration:
