@@ -1,0 +1,36 @@
+{
+ "_doc": "Frozen 2026-10-25 before any run. R = the report shows this input or names this variant. U = not shown. Rules are applied in order; the first matching regex wins. Only cases that are targets (fail at parent, pass at fix) or guards (pass at both) after the Windows baseline are scored. U guards count as unreported cases that pass when not broken. X = excluded from scoring and breakage.",
+ "split_files": {"cachetools": "checks/test_ds26_cachetools.py", "zod": "checks/ds26_zod.test.ts", "fastify": "checks/ds26_fastify.test.js"},
+ "new": {
+  "ct443": [["ct443__R_", "R"], ["ct443__U_", "U"]],
+  "ct446": [["ct446__R_", "R"], ["ct446__U_", "U"]],
+  "ct440": [["ct440__R_", "R"], ["ct440__U_", "U"]],
+  "ct437": [["ct437__R_", "R"], ["ct437__U_", "U"]],
+  "z6641": [["z6641__R_", "R"], ["z6641__U_", "U"], ["record key schemas compile", "U"]],
+  "z6659": [["z6659__R_", "R"], ["z6659__U_", "U"]],
+  "pm1668": [["test_bigger_end", "R"], ["test_smaller_end", "U"]],
+  "fy7073": [["fy7073__R_", "R"], ["fy7073__U_", "U"]],
+  "pq256": [["aborts while the task starts.*timeout: undefined", "R"], ["aborts while the task starts.*timeout: 5000", "U"]],
+  "un5981": [["queued during ALPN negotiation", "R"], ["queued in a Pool keep their async context", "U"]],
+  "any1273": [["aclose_in_cancelled_scope|close_during_send|reset_during_send|aclose_during_send|close_during_accept", "X"], ["TestTCPStream.*concurrent_aclose_forcefully.*asyncio", "R"], ["concurrent_aclose_forcefully|test_aclose_forcefully", "U"]],
+  "any1364": [["closes_winner_on_outer_cancellation.*asyncio", "R"], ["closes_winner_on_outer_cancellation", "U"]],
+  "du1369": [["completed_empty|invalidate|unbounded|options_and_timezone|subclass|smoke|property", "U"], ["roundtrip.*(partial|complete|disabled)", "U"], ["roundtrip.*empty", "R"], ["roundtrip", "U"]]
+ },
+ "K": {
+  "ct435": [["test_class_call$", "R"], ["test_base_class_call", "U"]],
+  "jy791": [["BOM at the start of a document", "R"], ["BOM before each document in a stream", "U"]],
+  "pm1643": [["comment_in_inline_html_own_line", "R"], ["comment", "U"]],
+  "z6495": [["runs once per parse inside a container", "R"], ["default factory does not run at compile time|prefault", "U"]],
+  "z6496": [["numeric key emits propertyNames", "R"], ["toJSONSchema record", "U"]],
+  "mk4051": [["example 518|example 519|example 532", "R"], ["link in link text", "U"]],
+  "t336": [["preserve '1_000'$|emit '1_000'$", "R"], [".", "U"]],
+  "q629": [["issue example", "R"], [".", "U"]]
+ },
+ "_notes": {
+  "pm1643": "Guard tests about comments after other inline HTML (which every dataset 25 run broke) are U guards.",
+  "z6495": "'runs once per parse inside a container' covers the reported object default; the prefault and compile-time tests are U.",
+  "un5981": "The report shows https fetch; h1 and h2 ALPN tests are both R. The Pool test is plain http with one connection, which the report says works, so it is U.",
+  "any1273": "The fix commit also fixed anyio#1288 and #1237; their tests are X.",
+  "pq255": "Dropped: the maintainer test only repeats the reported case."
+ }
+}
