@@ -1,0 +1,246 @@
+{
+ "tool": "Codex CLI (@openai/codex)",
+ "model": "gpt-6-luna",
+ "reasoning_effort": "low",
+ "prompt": "a",
+ "login": "ChatGPT plan",
+ "measured": "2026-10-25",
+ "method": "codex exec --json --skip-git-repo-check -s read-only -m gpt-6-luna -c model_reasoning_effort=\"low\" \"a\"; empty folder; fresh CODEX_HOME per run holding only auth.json; input_tokens from turn.completed (includes cached input); value = most common of 3 runs",
+ "not_measurable": "Versions before 0.155.0 (2026-09-17) are refused by the server with a ChatGPT login: their models (gpt-5, gpt-5.2-codex, gpt-5.5) and gpt-6-luna both return 'model is not supported when using Codex with a ChatGPT account'. 0.2.0 does not run on Windows.",
+ "rows": [
+  {
+   "version": "0.155.0",
+   "released": "2026-09-17",
+   "runs": 3,
+   "input_tokens": 13147,
+   "min": 13147,
+   "max": 13559,
+   "cached_runs": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "version": "0.155.1",
+   "released": "2026-09-18",
+   "runs": 3,
+   "input_tokens": 13147,
+   "min": 13147,
+   "max": 13147,
+   "cached_runs": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "version": "0.156.0",
+   "released": "2026-09-22",
+   "runs": 3,
+   "input_tokens": 13123,
+   "min": 13123,
+   "max": 13123,
+   "cached_runs": [
+    0,
+    0,
+    12928
+   ]
+  },
+  {
+   "version": "0.156.1",
+   "released": "2026-09-23",
+   "runs": 3,
+   "input_tokens": 13123,
+   "min": 13123,
+   "max": 13123,
+   "cached_runs": [
+    12928,
+    0,
+    12928
+   ]
+  },
+  {
+   "version": "0.157.0",
+   "released": "2026-09-25",
+   "runs": 3,
+   "input_tokens": 13123,
+   "min": 13123,
+   "max": 13123,
+   "cached_runs": [
+    12928,
+    0,
+    0
+   ]
+  },
+  {
+   "version": "0.157.1",
+   "released": "2026-09-26",
+   "runs": 3,
+   "input_tokens": 13123,
+   "min": 13123,
+   "max": 13123,
+   "cached_runs": [
+    0,
+    0,
+    11136
+   ]
+  },
+  {
+   "version": "0.158.0",
+   "released": "2026-09-28",
+   "runs": 3,
+   "input_tokens": 13123,
+   "min": 13123,
+   "max": 13123,
+   "cached_runs": [
+    12928,
+    0,
+    0
+   ]
+  },
+  {
+   "version": "0.159.0",
+   "released": "2026-09-29",
+   "runs": 3,
+   "input_tokens": 13023,
+   "min": 13023,
+   "max": 13023,
+   "cached_runs": [
+    11136,
+    0,
+    0
+   ]
+  },
+  {
+   "version": "0.159.1",
+   "released": "2026-09-29",
+   "runs": 3,
+   "input_tokens": 13023,
+   "min": 13023,
+   "max": 13023,
+   "cached_runs": [
+    11136,
+    0,
+    11136
+   ]
+  },
+  {
+   "version": "0.159.2",
+   "released": "2026-09-30",
+   "runs": 3,
+   "input_tokens": 13023,
+   "min": 13023,
+   "max": 13023,
+   "cached_runs": [
+    11136,
+    11136,
+    0
+   ]
+  },
+  {
+   "version": "0.159.3",
+   "released": "2026-09-30",
+   "runs": 3,
+   "input_tokens": 13023,
+   "min": 13023,
+   "max": 13023,
+   "cached_runs": [
+    11136,
+    12800,
+    0
+   ]
+  },
+  {
+   "version": "0.160.0",
+   "released": "2026-10-01",
+   "runs": 3,
+   "input_tokens": 13023,
+   "min": 13023,
+   "max": 13023,
+   "cached_runs": [
+    12800,
+    12800,
+    12800
+   ]
+  },
+  {
+   "version": "0.160.1",
+   "released": "2026-10-05",
+   "runs": 3,
+   "input_tokens": 13023,
+   "min": 13023,
+   "max": 13023,
+   "cached_runs": [
+    12800,
+    0,
+    0
+   ]
+  },
+  {
+   "version": "0.161.0",
+   "released": "2026-10-07",
+   "runs": 3,
+   "input_tokens": 13023,
+   "min": 13023,
+   "max": 13023,
+   "cached_runs": [
+    12800,
+    12800,
+    12800
+   ]
+  },
+  {
+   "version": "0.162.0",
+   "released": "2026-10-08",
+   "runs": 3,
+   "input_tokens": 13019,
+   "min": 13019,
+   "max": 13019,
+   "cached_runs": [
+    11136,
+    11136,
+    11136
+   ]
+  },
+  {
+   "version": "0.162.1",
+   "released": "2026-10-09",
+   "runs": 3,
+   "input_tokens": 13019,
+   "min": 13019,
+   "max": 13019,
+   "cached_runs": [
+    11136,
+    11136,
+    12800
+   ]
+  },
+  {
+   "version": "0.163.0",
+   "released": "2026-10-15",
+   "runs": 3,
+   "input_tokens": 13019,
+   "min": 13019,
+   "max": 13019,
+   "cached_runs": [
+    12800,
+    11136,
+    0
+   ]
+  },
+  {
+   "version": "0.164.0",
+   "released": "2026-10-23",
+   "runs": 3,
+   "input_tokens": 13019,
+   "min": 13019,
+   "max": 13019,
+   "cached_runs": [
+    11136,
+    12800,
+    11136
+   ]
+  }
+ ]
+}
