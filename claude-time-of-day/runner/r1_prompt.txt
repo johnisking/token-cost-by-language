@@ -1,0 +1,26 @@
+The current folder is a checkout of qs, the query string parser and serializer (sources in lib/). Answer the questions below by reading the source code only. You cannot run code in this session.
+
+For each expression, give the exact value it returns, where qs = require('./lib'). Options not shown use their defaults.
+
+q1: qs.parse('a[b][c][d][e][f][g][h]=1')
+q2: qs.parse('a[]=b&a[]=c&a[25]=d')
+q3: qs.parse('a[1]=b&a[15]=c')
+q4: qs.parse('a.b.c=1&a[d]=2', { allowDots: true })
+q5: qs.parse('a=1&a=2&b=3&b', { duplicates: 'last', strictNullHandling: true })
+q6: qs.parse('?a=%E4%BD%A0&b=x%20y+z', { ignoreQueryPrefix: true })
+q7: qs.stringify({ a: ['x', 'y'], b: { c: null, d: undefined, e: '' } })
+q8: qs.stringify({ a: ['x', 'y'], b: { c: 'z w' } }, { arrayFormat: 'brackets', encodeValuesOnly: true })
+q9: qs.stringify({ a: [], b: [ { c: 1 } ] }, { allowEmptyArrays: true, allowDots: true })
+q10: qs.parse('a=b,c&d=e', { comma: true, parameterLimit: 1 })
+q11: qs.parse('a[b][c][d]=1', { depth: 1, strictDepth: true })
+q12: qs.parse('a[]=1&a[]=2&a[]=3', { arrayLimit: 1 })
+q13: qs.parse('a[0]=b&a[2]=c', { allowSparse: true })
+q14: qs.parse('a=1&a=2', { duplicates: 'first' })
+q15: qs.parse('a[0]=x&a[b]=y')
+q16: qs.parse('a%5Bb%5D=c&d%2Ee=f', { allowDots: true })
+q17: qs.stringify({ a: ['b', 'c'] }, { arrayFormat: 'comma' })
+q18: qs.stringify({ a: { b: { c: 'd' } } }, { allowDots: true, encode: false })
+q19: qs.stringify({ c: 1, a: 2, b: [3, 4] }, { sort: function (x, y) { return x.localeCompare(y); }, indices: false })
+q20: qs.parse('a=b&c', { parseArrays: false, strictNullHandling: false })
+
+Finish with one JSON object on its own, with keys q1 to q20. For parse, the value is the returned object written as JSON. For stringify, the value is the returned string. If an expression throws, write the string "THROWS".

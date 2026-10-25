@@ -1,0 +1,15 @@
+The current folder is empty. Create a file duration.js in it that implements the specification below as a CommonJS module (module.exports = { parseDuration }). You may run node in this folder to check your work. Do not install packages and do not use the network. Write the file and finish.
+
+Specification: parseDuration(input)
+
+1. If input is not a string, throw a TypeError.
+2. Leading and trailing whitespace is ignored.
+3. After that, the string may start with one sign character, "+" or "-". The rest is the duration.
+4. A duration is one or more components. A component is a number immediately followed by a unit, with no space between them.
+5. A number is one or more digits, optionally followed by "." and one or more digits. Examples: "2", "007", "1.5". Not allowed: ".5", "1.", "1e3", "1_000".
+6. Units are lowercase only: "d" (86400000 ms), "h" (3600000 ms), "m" (60000 ms), "s" (1000 ms), "ms" (1 ms).
+7. Components must appear in this order: d, h, m, s, ms. Each unit may appear at most once. Units may be skipped.
+8. Components may be separated by one or more spaces, or by nothing ("1h30m" and "1h 30m" are both valid). No space is allowed between the sign and the first component.
+9. Special case: if the whole duration (after the optional sign) is a single number with no unit, the unit is seconds. "90" means 90 seconds. A number without a unit is not allowed anywhere else ("1h30" is invalid).
+10. The result is a Number of milliseconds: the sum of all components, rounded to the nearest integer with halves rounded away from zero, and negated if the sign is "-". "-0.0005s" gives -1.
+11. Anything that does not match these rules throws an Error whose message starts with "Invalid duration".
