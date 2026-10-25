@@ -48,3 +48,8 @@ Floor check: if every condition passes under 10% of UNREPORTED cases in a group,
   4c33e700bb4e65ce2d4bdf8a6d687c2f384816f6721af00d08714f10d460b2c0  checks/ds26_fastify.test.js
   3a781ca054476ed3a3a027861fb9fec286c151e1b2b22bf25130bad39c1bd4a5  checks/ds26_zod.test.ts
   5636887f0a6101bad662b94ff6722a7205285e37e59d3fb1799308d8af614c1d  checks/test_ds26_cachetools.py
+
+## Amendment 4 (2026-10-25 19:47 KST, before any run)
+- ct440 prompt: the example test command pointed at tests/test_cachedmethod.py. It now points at tests/test_ttl.py, the file for TTLCache. No other prompt changed.
+- Runs capture new untracked source files too (git add -A before git diff), unlike dataset 25.
+  eb548e5f8c8da0a28637a00f9f5386da2ad5d01682f10dca90f1127e16c53ef3  prompts_ds26.json
