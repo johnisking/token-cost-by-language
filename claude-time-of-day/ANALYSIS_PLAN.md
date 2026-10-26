@@ -1,8 +1,8 @@
-# Time-of-day study: analysis plan (written 2026-10-26 01:20 KST, before the first scheduled slot at 2026-10-27 04:00 KST)
+# Time-of-day study: analysis plan (written 2026-10-26 01:20 KST, before the first scheduled slot; first slot moved on 2026-10-26 from 2026-10-27 to 2026-11-02 04:00 KST, see Changes)
 
 Question: does Claude Haiku 5.5 in Claude Code do worse, run slower or fail more often at busy times of day or week?
 
-Design (already fixed in the runner tod_run.ps1): 7 tasks x 3 runs per slot, order shuffled per slot with a seed from the slot time, 4 slots a day at 04:00, 09:00, 15:00 and 23:30 KST, from 2026-10-27 04:00 to 2026-11-02 23:30 KST (28 slots, 588 runs). Tasks: 5 real bugs (q629, mdit1201, z6495, z6496, ct435; hidden cases or maintainer tests), r1 (20 code-reading questions on qs, no code execution), f1 (write duration.js from a spec, hidden checks). One account (subscription login), one PC, one network. Missing slots are recorded and not re-run.
+Design (already fixed in the runner tod_run.ps1): 7 tasks x 3 runs per slot, order shuffled per slot with a seed from the slot time, 4 slots a day at 04:00, 09:00, 15:00 and 23:30 KST, from 2026-11-02 04:00 to 2026-11-08 23:30 KST (28 slots, 588 runs). Tasks: 5 real bugs (q629, mdit1201, z6495, z6496, ct435; hidden cases or maintainer tests), r1 (20 code-reading questions on qs, no code execution), f1 (write duration.js from a spec, hidden checks). One account (subscription login), one PC, one network. Missing slots are recorded and not re-run.
 
 ## Outcomes
 1. Primary, quality: run score = share of the task's checks passed, using the scorer frozen before the first slot. A run that errors or times out scores 0 and is also counted under failures. Slot score = mean over the 21 runs with every task weighted equally.
@@ -10,7 +10,7 @@ Design (already fixed in the runner tod_run.ps1): 7 tasks x 3 runs per slot, ord
 3. Failures: share of runs with a non-success result, an API error, a rate-limit message, or the 30-minute timeout.
 
 ## Grouping of slots
-Times are converted to UTC and to US Eastern time with the DST change on 2026-11-01 applied.
+Times are converted to UTC and to US Eastern time. The whole week falls after the US DST change on 2026-11-01, so US Eastern is UTC-5 throughout.
 - Peak: slots that fall in US Eastern weekday business hours, 09:00 to 17:00 local (the 23:30 and 04:00 KST slots on US weekdays).
 - Off-peak: all other slots (09:00 and 15:00 KST slots, and every slot on a US Saturday or Sunday).
 
@@ -34,3 +34,6 @@ One model (Haiku), one account, one PC in Korea, one week. Results say nothing a
 
 ## Follow-up
 If the primary test finds a peak/off-peak difference, an Opus 5.5 follow-up with the same tasks and slots will be pre-registered separately. If it does not, no Opus run is planned.
+
+## Changes before the first slot
+- 2026-10-26 15:20 KST: the study week was moved from 2026-10-27..11-02 to 2026-11-02..11-08 so that it does not overlap with another study still running on the same PC. No slot had run. Tasks, slots, outcomes and tests are unchanged. Slot grouping is the same rule applied to the new dates.
