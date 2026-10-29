@@ -1,5 +1,7 @@
 # Does Claude get worse at busy times? (pre-registration)
 
+Cancelled on 2026-10-29 before any slot ran. No data was collected.
+
 Status: pre-registered on 2026-10-26, before the first measurement slot. The study week was moved on 2026-10-26 (before any slot ran) to 2026-11-02 04:00 through 2026-11-08 KST. Results will be added here after 2026-11-08.
 
 Claude Haiku 5.5 in Claude Code, 7 fixed tasks (5 real bugs, a code-reading quiz, a spec-to-code task), 3 runs each, 4 times a day for 7 days (588 runs). Quality, API time and failures are compared between US business hours and other times.
