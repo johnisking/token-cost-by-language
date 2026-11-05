@@ -1,7 +1,8 @@
 """ds27 scoring. recall = matched key items / key items, per run.
 An item matches when (1) the item's file basename appears anywhere in the final answer, and
 (2) one name in its accept list matches on a single line of the answer.
-A name 'A.b' (owner A, member b) matches a line that contains 'A.b', or contains A and b as whole words.
+A name 'A.b' (owner A, member b) matches when a line contains 'A.b', or a line contains A as a whole word
+and b appears as a whole word anywhere in the answer (amendment 1).
 A plain name matches as a whole word. Matching is case-sensitive."""
 import json, re, sys
 def wb(tok, line):
@@ -9,7 +10,7 @@ def wb(tok, line):
 def name_hit(name, lines):
     if '.' in name:
         owner, mem = name.rsplit('.', 1)
-        return any(name in l or (wb(owner, l) and wb(mem, l)) for l in lines)
+        return any(name in l for l in lines) or (any(wb(owner, l) for l in lines) and wb(mem, '\n'.join(lines)))
     return any(wb(name, l) for l in lines)
 def score(answer, key):
     lines = answer.splitlines()

@@ -51,3 +51,10 @@ Also recorded per run: API cost (`total_cost_usd`), wall time, turns, number of 
 
 12 questions, all "find every place" searches with a single right list. One prompt wording. One Claude Code version.
 The key is regex-based; a correct item that the regex misses would count against no one but is not credited either.
+
+## Amendment 1 (2026-11-06, after 2 of 288 runs)
+
+The first scored run (M1, Opus, C2) listed all 8 correct items in a table but named the method `extendMarkdown` once in a sentence
+above the table, not on each row. The line rule gave it 1 of 8. The rule for `Class.method` names is changed to:
+`Class` as a whole word on some line, and `method` as a whole word anywhere in the answer.
+Nothing else changes. No condition comparison had been looked at. New scoring/score.py sha256: `efbd7038c1171c0ce089e2231e64250f750f715aa8e3d7e4fa30376076d87f3b`
