@@ -1,0 +1,1222 @@
+[
+ {
+  "id": "U1",
+  "repo": "undici",
+  "scope": "lib",
+  "ext": ".js",
+  "pat": "new RequestAbortedError\\(",
+  "excl": [],
+  "q": "In this repository's library code (lib/), find every place where a RequestAbortedError is created. For each one, give the file and the enclosing function or method.",
+  "key": [
+   {
+    "file": "lib/api/abort-signal.js",
+    "symbol": "abort",
+    "accept": [
+     "abort"
+    ]
+   },
+   {
+    "file": "lib/api/api-pipeline.js",
+    "symbol": "PipelineHandler.onResponseStart",
+    "accept": [
+     "PipelineHandler.onResponseStart"
+    ]
+   },
+   {
+    "file": "lib/api/api-pipeline.js",
+    "symbol": "PipelineResponse._destroy",
+    "accept": [
+     "PipelineResponse._destroy"
+    ]
+   },
+   {
+    "file": "lib/api/api-pipeline.js",
+    "symbol": "destroy",
+    "accept": [
+     "destroy",
+     "PipelineHandler.constructor"
+    ]
+   },
+   {
+    "file": "lib/api/api-request.js",
+    "symbol": "RequestHandler.constructor",
+    "accept": [
+     "RequestHandler.constructor"
+    ]
+   },
+   {
+    "file": "lib/api/readable.js",
+    "symbol": "BodyReadable._destroy",
+    "accept": [
+     "BodyReadable._destroy"
+    ]
+   },
+   {
+    "file": "lib/api/readable.js",
+    "symbol": "consume",
+    "accept": [
+     "consume"
+    ]
+   },
+   {
+    "file": "lib/dispatcher/client-h1.js",
+    "symbol": "abort",
+    "accept": [
+     "abort",
+     "writeH1"
+    ]
+   },
+   {
+    "file": "lib/dispatcher/client-h1.js",
+    "symbol": "onClose",
+    "accept": [
+     "onClose",
+     "writeStream"
+    ]
+   },
+   {
+    "file": "lib/dispatcher/client-h2.js",
+    "symbol": "abort",
+    "accept": [
+     "abort",
+     "writeH2"
+    ]
+   },
+   {
+    "file": "lib/dispatcher/proxy-agent.js",
+    "symbol": "connect",
+    "accept": [
+     "connect",
+     "ProxyAgent.constructor"
+    ]
+   },
+   {
+    "file": "lib/handler/deduplication-handler.js",
+    "symbol": "DeduplicationHandler.#bufferWaitingChunk",
+    "accept": [
+     "DeduplicationHandler.#bufferWaitingChunk"
+    ]
+   },
+   {
+    "file": "lib/handler/deduplication-handler.js",
+    "symbol": "abort",
+    "accept": [
+     "abort",
+     "DeduplicationHandler.#createWaitingHandler"
+    ]
+   },
+   {
+    "file": "lib/handler/retry-handler.js",
+    "symbol": "RetryHandler.#onAbort",
+    "accept": [
+     "RetryHandler.#onAbort"
+    ]
+   },
+   {
+    "file": "lib/interceptor/dump.js",
+    "symbol": "DumpHandler.onResponseData",
+    "accept": [
+     "DumpHandler.onResponseData"
+    ]
+   },
+   {
+    "file": "lib/interceptor/dump.js",
+    "symbol": "DumpHandler.onResponseStart",
+    "accept": [
+     "DumpHandler.onResponseStart"
+    ]
+   }
+  ],
+  "commit": "046bb4c6fe413a32ecb6d51eb3ecaa56c8c15b87"
+ },
+ {
+  "id": "U2",
+  "repo": "undici",
+  "scope": "lib",
+  "ext": ".js",
+  "pat": "new (HeadersTimeoutError|BodyTimeoutError)\\(",
+  "excl": [],
+  "q": "In this repository's library code (lib/), find every place where a HeadersTimeoutError or a BodyTimeoutError is created. For each one, give the file and the enclosing function or method.",
+  "key": [
+   {
+    "file": "lib/dispatcher/client-h1.js",
+    "symbol": "onParserTimeout",
+    "accept": [
+     "onParserTimeout"
+    ]
+   },
+   {
+    "file": "lib/dispatcher/client-h2.js",
+    "symbol": "onNoStreamsTimeout",
+    "accept": [
+     "onNoStreamsTimeout"
+    ]
+   },
+   {
+    "file": "lib/dispatcher/client-h2.js",
+    "symbol": "onTimeout",
+    "accept": [
+     "onTimeout"
+    ]
+   },
+   {
+    "file": "lib/dispatcher/parser-h1.js",
+    "symbol": "onParserTimeout",
+    "accept": [
+     "onParserTimeout"
+    ]
+   }
+  ],
+  "commit": "046bb4c6fe413a32ecb6d51eb3ecaa56c8c15b87"
+ },
+ {
+  "id": "F1",
+  "repo": "fastify",
+  "scope": "lib",
+  "ext": ".js",
+  "pat": "FST_ERR_CTP_[A-Z_]+",
+  "excl": [
+   "lib/errors.js"
+  ],
+  "q": "In this repository's library code (lib/), find every place outside lib/errors.js that throws or returns one of the content-type-parser errors (the FST_ERR_CTP_* codes). For each one, give the file and the enclosing function.",
+  "key": [
+   {
+    "file": "lib/content-type-parser.js",
+    "symbol": "ContentTypeParser.prototype.add",
+    "accept": [
+     "ContentTypeParser.prototype.add"
+    ]
+   },
+   {
+    "file": "lib/content-type-parser.js",
+    "symbol": "ContentTypeParser.prototype.hasParser",
+    "accept": [
+     "ContentTypeParser.prototype.hasParser"
+    ]
+   },
+   {
+    "file": "lib/content-type-parser.js",
+    "symbol": "ContentTypeParser.prototype.remove",
+    "accept": [
+     "ContentTypeParser.prototype.remove"
+    ]
+   },
+   {
+    "file": "lib/content-type-parser.js",
+    "symbol": "ContentTypeParser.prototype.run",
+    "accept": [
+     "ContentTypeParser.prototype.run"
+    ]
+   },
+   {
+    "file": "lib/content-type-parser.js",
+    "symbol": "addContentTypeParser",
+    "accept": [
+     "addContentTypeParser"
+    ]
+   },
+   {
+    "file": "lib/content-type-parser.js",
+    "symbol": "defaultJsonParser",
+    "accept": [
+     "defaultJsonParser",
+     "getDefaultJsonParser"
+    ]
+   },
+   {
+    "file": "lib/content-type-parser.js",
+    "symbol": "onData",
+    "accept": [
+     "onData",
+     "rawBody"
+    ]
+   },
+   {
+    "file": "lib/content-type-parser.js",
+    "symbol": "onEnd",
+    "accept": [
+     "onEnd",
+     "rawBody"
+    ]
+   },
+   {
+    "file": "lib/content-type-parser.js",
+    "symbol": "rawBody",
+    "accept": [
+     "rawBody"
+    ]
+   },
+   {
+    "file": "lib/content-type-parser.js",
+    "symbol": "removeAllContentTypeParsers",
+    "accept": [
+     "removeAllContentTypeParsers"
+    ]
+   },
+   {
+    "file": "lib/content-type-parser.js",
+    "symbol": "removeContentTypeParser",
+    "accept": [
+     "removeContentTypeParser"
+    ]
+   },
+   {
+    "file": "lib/handle-request.js",
+    "symbol": "handleRequest",
+    "accept": [
+     "handleRequest"
+    ]
+   }
+  ],
+  "commit": "2a64ae1627d78fe1f22fb021a7e5763581384473"
+ },
+ {
+  "id": "F2",
+  "repo": "fastify",
+  "scope": "lib",
+  "ext": ".js",
+  "pat": "FST_ERR_HOOK_[A-Z_]+",
+  "excl": [
+   "lib/errors.js"
+  ],
+  "q": "In this repository's library code (lib/), find every place outside lib/errors.js that throws or returns one of the hook errors (the FST_ERR_HOOK_* codes). For each one, give the file and the enclosing function.",
+  "key": [
+   {
+    "file": "lib/hooks.js",
+    "symbol": "Hooks.prototype.validate",
+    "accept": [
+     "Hooks.prototype.validate"
+    ]
+   },
+   {
+    "file": "lib/hooks.js",
+    "symbol": "exit",
+    "accept": [
+     "exit",
+     "hookRunnerApplication"
+    ]
+   },
+   {
+    "file": "lib/route.js",
+    "symbol": "addNewRoute",
+    "accept": [
+     "addNewRoute",
+     "route",
+     "buildRouting"
+    ]
+   }
+  ],
+  "commit": "2a64ae1627d78fe1f22fb021a7e5763581384473"
+ },
+ {
+  "id": "C1",
+  "repo": "cachetools",
+  "scope": "src",
+  "ext": ".py",
+  "pat": "def (__setitem__|popitem)\\(",
+  "excl": [],
+  "q": "In this library, list every class that defines its own __setitem__ or popitem method. For each, give the file, the class and which of the two methods it defines.",
+  "key": [
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "Cache.__setitem__",
+    "accept": [
+     "Cache.__setitem__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "FIFOCache.__setitem__",
+    "accept": [
+     "FIFOCache.__setitem__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "FIFOCache.popitem",
+    "accept": [
+     "FIFOCache.popitem"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "LFUCache.__setitem__",
+    "accept": [
+     "LFUCache.__setitem__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "LFUCache.popitem",
+    "accept": [
+     "LFUCache.popitem"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "LRUCache.__setitem__",
+    "accept": [
+     "LRUCache.__setitem__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "LRUCache.popitem",
+    "accept": [
+     "LRUCache.popitem"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "RRCache.__setitem__",
+    "accept": [
+     "RRCache.__setitem__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "RRCache.popitem",
+    "accept": [
+     "RRCache.popitem"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "TLRUCache.__setitem__",
+    "accept": [
+     "TLRUCache.__setitem__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "TLRUCache.popitem",
+    "accept": [
+     "TLRUCache.popitem"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "TTLCache.__setitem__",
+    "accept": [
+     "TTLCache.__setitem__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "TTLCache.popitem",
+    "accept": [
+     "TTLCache.popitem"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "_DefaultSize.__setitem__",
+    "accept": [
+     "_DefaultSize.__setitem__"
+    ]
+   }
+  ],
+  "commit": "d9615b57b5c5e6fd602047a6cc1de2cf2983e5a4"
+ },
+ {
+  "id": "C2",
+  "repo": "cachetools",
+  "scope": "src",
+  "ext": ".py",
+  "pat": "\\.expire\\(",
+  "excl": [],
+  "q": "In this library's source code, find every method or function that calls expire(). For each call, give the file and the enclosing class and method.",
+  "key": [
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "TLRUCache.__delitem__",
+    "accept": [
+     "TLRUCache.__delitem__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "TLRUCache.__setitem__",
+    "accept": [
+     "TLRUCache.__setitem__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "TLRUCache.popitem",
+    "accept": [
+     "TLRUCache.popitem"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "TTLCache.__setitem__",
+    "accept": [
+     "TTLCache.__setitem__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "TTLCache.__setstate__",
+    "accept": [
+     "TTLCache.__setstate__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "TTLCache.popitem",
+    "accept": [
+     "TTLCache.popitem"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "_TimedCache.__len__",
+    "accept": [
+     "_TimedCache.__len__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "_TimedCache.__repr__",
+    "accept": [
+     "_TimedCache.__repr__"
+    ]
+   },
+   {
+    "file": "src/cachetools/__init__.py",
+    "symbol": "_TimedCache.currsize",
+    "accept": [
+     "_TimedCache.currsize"
+    ]
+   }
+  ],
+  "commit": "d9615b57b5c5e6fd602047a6cc1de2cf2983e5a4"
+ },
+ {
+  "id": "M1",
+  "repo": "markdown",
+  "scope": "markdown",
+  "ext": ".py",
+  "pat": "treeprocessors\\.register\\(",
+  "excl": [],
+  "q": "In this package's source (the markdown/ directory), find every place that registers a tree processor (treeprocessors.register). For each, give the file and the enclosing class and method.",
+  "key": [
+   {
+    "file": "markdown/extensions/abbr.py",
+    "symbol": "AbbrExtension.extendMarkdown",
+    "accept": [
+     "AbbrExtension.extendMarkdown"
+    ]
+   },
+   {
+    "file": "markdown/extensions/attr_list.py",
+    "symbol": "AttrListExtension.extendMarkdown",
+    "accept": [
+     "AttrListExtension.extendMarkdown"
+    ]
+   },
+   {
+    "file": "markdown/extensions/codehilite.py",
+    "symbol": "CodeHiliteExtension.extendMarkdown",
+    "accept": [
+     "CodeHiliteExtension.extendMarkdown"
+    ]
+   },
+   {
+    "file": "markdown/extensions/footnotes.py",
+    "symbol": "FootnoteExtension.extendMarkdown",
+    "accept": [
+     "FootnoteExtension.extendMarkdown"
+    ]
+   },
+   {
+    "file": "markdown/extensions/legacy_attrs.py",
+    "symbol": "LegacyAttrExtension.extendMarkdown",
+    "accept": [
+     "LegacyAttrExtension.extendMarkdown"
+    ]
+   },
+   {
+    "file": "markdown/extensions/smarty.py",
+    "symbol": "SmartyExtension.extendMarkdown",
+    "accept": [
+     "SmartyExtension.extendMarkdown"
+    ]
+   },
+   {
+    "file": "markdown/extensions/toc.py",
+    "symbol": "TocExtension.extendMarkdown",
+    "accept": [
+     "TocExtension.extendMarkdown"
+    ]
+   },
+   {
+    "file": "markdown/treeprocessors.py",
+    "symbol": "build_treeprocessors",
+    "accept": [
+     "build_treeprocessors"
+    ]
+   }
+  ],
+  "commit": "0f0a8604181d982e5e60bfdd6ab39d74ebe51432"
+ },
+ {
+  "id": "M2",
+  "repo": "markdown",
+  "scope": "markdown",
+  "ext": ".py",
+  "pat": "^class \\w+\\([^)]*InlineProcessor\\)",
+  "excl": [],
+  "q": "In this package's source (the markdown/ directory), list every class that subclasses an InlineProcessor class (directly, by naming a class ending in InlineProcessor as its base). Give the file and class name for each.",
+  "key": [
+   {
+    "file": "markdown/extensions/abbr.py",
+    "symbol": "AbbrInlineProcessor",
+    "accept": [
+     "AbbrInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/extensions/footnotes.py",
+    "symbol": "FootnoteInlineProcessor",
+    "accept": [
+     "FootnoteInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/extensions/smarty.py",
+    "symbol": "SubstituteTextPattern",
+    "accept": [
+     "SubstituteTextPattern"
+    ]
+   },
+   {
+    "file": "markdown/extensions/wikilinks.py",
+    "symbol": "WikiLinksInlineProcessor",
+    "accept": [
+     "WikiLinksInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "AutolinkInlineProcessor",
+    "accept": [
+     "AutolinkInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "AutomailInlineProcessor",
+    "accept": [
+     "AutomailInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "BacktickInlineProcessor",
+    "accept": [
+     "BacktickInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "DelimiterProcessor",
+    "accept": [
+     "DelimiterProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "DoubleTagInlineProcessor",
+    "accept": [
+     "DoubleTagInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "EscapeInlineProcessor",
+    "accept": [
+     "EscapeInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "HtmlInlineProcessor",
+    "accept": [
+     "HtmlInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "ImageInlineProcessor",
+    "accept": [
+     "ImageInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "ImageReferenceInlineProcessor",
+    "accept": [
+     "ImageReferenceInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "LinkInlineProcessor",
+    "accept": [
+     "LinkInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "ReferenceInlineProcessor",
+    "accept": [
+     "ReferenceInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "ShortImageReferenceInlineProcessor",
+    "accept": [
+     "ShortImageReferenceInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "ShortReferenceInlineProcessor",
+    "accept": [
+     "ShortReferenceInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "SimpleTagInlineProcessor",
+    "accept": [
+     "SimpleTagInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "SimpleTextInlineProcessor",
+    "accept": [
+     "SimpleTextInlineProcessor"
+    ]
+   },
+   {
+    "file": "markdown/inlinepatterns.py",
+    "symbol": "SubstituteTagInlineProcessor",
+    "accept": [
+     "SubstituteTagInlineProcessor"
+    ]
+   }
+  ],
+  "commit": "0f0a8604181d982e5e60bfdd6ab39d74ebe51432"
+ },
+ {
+  "id": "A1",
+  "repo": "anyio",
+  "scope": "src",
+  "ext": ".py",
+  "pat": "raise BrokenResourceError",
+  "excl": [],
+  "q": "In this library's source code (src/), find every place that raises BrokenResourceError. For each, give the file and the enclosing class and method.",
+  "key": [
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "ConnectedUDPSocket.receive",
+    "accept": [
+     "ConnectedUDPSocket.receive"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "ConnectedUDPSocket.send",
+    "accept": [
+     "ConnectedUDPSocket.send"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "ConnectedUNIXDatagramSocket.receive",
+    "accept": [
+     "ConnectedUNIXDatagramSocket.receive"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "ConnectedUNIXDatagramSocket.send",
+    "accept": [
+     "ConnectedUNIXDatagramSocket.send"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "SocketStream.receive",
+    "accept": [
+     "SocketStream.receive"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "SocketStream.send",
+    "accept": [
+     "SocketStream.send"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "StreamWriterWrapper.send",
+    "accept": [
+     "StreamWriterWrapper.send"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "UDPSocket.receive",
+    "accept": [
+     "UDPSocket.receive"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "UDPSocket.send",
+    "accept": [
+     "UDPSocket.send"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "UNIXDatagramSocket.receive",
+    "accept": [
+     "UNIXDatagramSocket.receive"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "UNIXDatagramSocket.send",
+    "accept": [
+     "UNIXDatagramSocket.send"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "UNIXSocketListener.accept",
+    "accept": [
+     "UNIXSocketListener.accept"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "UNIXSocketStream.receive",
+    "accept": [
+     "UNIXSocketStream.receive"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "UNIXSocketStream.receive_fds",
+    "accept": [
+     "UNIXSocketStream.receive_fds"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "UNIXSocketStream.send",
+    "accept": [
+     "UNIXSocketStream.send"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "UNIXSocketStream.send_fds",
+    "accept": [
+     "UNIXSocketStream.send_fds"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_trio.py",
+    "symbol": "ReceiveStreamWrapper.receive",
+    "accept": [
+     "ReceiveStreamWrapper.receive"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_trio.py",
+    "symbol": "SendStreamWrapper.send",
+    "accept": [
+     "SendStreamWrapper.send"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_trio.py",
+    "symbol": "_TrioSocketMixin._check_closed",
+    "accept": [
+     "_TrioSocketMixin._check_closed"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_trio.py",
+    "symbol": "_TrioSocketMixin._convert_socket_error",
+    "accept": [
+     "_TrioSocketMixin._convert_socket_error"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/file.py",
+    "symbol": "FileReadStream.receive",
+    "accept": [
+     "FileReadStream.receive"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/file.py",
+    "symbol": "FileWriteStream.send",
+    "accept": [
+     "FileWriteStream.send"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/memory.py",
+    "symbol": "MemoryObjectSendStream.send",
+    "accept": [
+     "MemoryObjectSendStream.send"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/memory.py",
+    "symbol": "MemoryObjectSendStream.send_nowait",
+    "accept": [
+     "MemoryObjectSendStream.send_nowait"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/tls.py",
+    "symbol": "TLSStream._call_sslobject_method",
+    "accept": [
+     "TLSStream._call_sslobject_method"
+    ]
+   }
+  ],
+  "commit": "95a01430f37542f993cac2114244043f2eb1baca"
+ },
+ {
+  "id": "A2",
+  "repo": "anyio",
+  "scope": "src",
+  "ext": ".py",
+  "pat": "(async )?def aclose\\(",
+  "excl": [],
+  "q": "In this library's source code (src/), list every class that implements an aclose() method. Give the file and the class for each.",
+  "key": [
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "ConnectedUDPSocket.aclose",
+    "accept": [
+     "ConnectedUDPSocket.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "Process.aclose",
+    "accept": [
+     "Process.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "SocketStream.aclose",
+    "accept": [
+     "SocketStream.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "StreamReaderWrapper.aclose",
+    "accept": [
+     "StreamReaderWrapper.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "StreamWriterWrapper.aclose",
+    "accept": [
+     "StreamWriterWrapper.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "TCPSocketListener.aclose",
+    "accept": [
+     "TCPSocketListener.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "UDPSocket.aclose",
+    "accept": [
+     "UDPSocket.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "UNIXSocketListener.aclose",
+    "accept": [
+     "UNIXSocketListener.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_asyncio.py",
+    "symbol": "_RawSocketMixin.aclose",
+    "accept": [
+     "_RawSocketMixin.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_trio.py",
+    "symbol": "Process.aclose",
+    "accept": [
+     "Process.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_trio.py",
+    "symbol": "ReceiveStreamWrapper.aclose",
+    "accept": [
+     "ReceiveStreamWrapper.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_trio.py",
+    "symbol": "SendStreamWrapper.aclose",
+    "accept": [
+     "SendStreamWrapper.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_backends/_trio.py",
+    "symbol": "_TrioSocketMixin.aclose",
+    "accept": [
+     "_TrioSocketMixin.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_core/_fileio.py",
+    "symbol": "AsyncFile.aclose",
+    "accept": [
+     "AsyncFile.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/_core/_tempfile.py",
+    "symbol": "SpooledTemporaryFile.aclose",
+    "accept": [
+     "SpooledTemporaryFile.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/abc/_resources.py",
+    "symbol": "AsyncResource.aclose",
+    "accept": [
+     "AsyncResource.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/buffered.py",
+    "symbol": "BufferedByteReceiveStream.aclose",
+    "accept": [
+     "BufferedByteReceiveStream.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/file.py",
+    "symbol": "_BaseFileStream.aclose",
+    "accept": [
+     "_BaseFileStream.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/memory.py",
+    "symbol": "MemoryObjectReceiveStream.aclose",
+    "accept": [
+     "MemoryObjectReceiveStream.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/memory.py",
+    "symbol": "MemoryObjectSendStream.aclose",
+    "accept": [
+     "MemoryObjectSendStream.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/stapled.py",
+    "symbol": "MultiListener.aclose",
+    "accept": [
+     "MultiListener.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/stapled.py",
+    "symbol": "StapledByteStream.aclose",
+    "accept": [
+     "StapledByteStream.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/stapled.py",
+    "symbol": "StapledObjectStream.aclose",
+    "accept": [
+     "StapledObjectStream.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/text.py",
+    "symbol": "TextReceiveStream.aclose",
+    "accept": [
+     "TextReceiveStream.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/text.py",
+    "symbol": "TextSendStream.aclose",
+    "accept": [
+     "TextSendStream.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/text.py",
+    "symbol": "TextStream.aclose",
+    "accept": [
+     "TextStream.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/tls.py",
+    "symbol": "TLSListener.aclose",
+    "accept": [
+     "TLSListener.aclose"
+    ]
+   },
+   {
+    "file": "src/anyio/streams/tls.py",
+    "symbol": "TLSStream.aclose",
+    "accept": [
+     "TLSStream.aclose"
+    ]
+   }
+  ],
+  "commit": "95a01430f37542f993cac2114244043f2eb1baca"
+ },
+ {
+  "id": "Z1",
+  "repo": "zod",
+  "scope": "packages/zod/src/v4/core",
+  "ext": ".ts",
+  "pat": "\\.coerce\\b|def\\.coerce",
+  "excl": [],
+  "notpath": "tests",
+  "q": "In zod's v4 core (packages/zod/src/v4/core, excluding tests), find every place that reads the coerce option of a schema definition. For each, give the file and the enclosing function.",
+  "key": [
+   {
+    "file": "packages/zod/src/v4/core/compile.ts",
+    "symbol": "fastPathAcceptsAbsence",
+    "accept": [
+     "fastPathAcceptsAbsence"
+    ]
+   },
+   {
+    "file": "packages/zod/src/v4/core/compile.ts",
+    "symbol": "generateCheck",
+    "accept": [
+     "generateCheck"
+    ]
+   },
+   {
+    "file": "packages/zod/src/v4/core/compile.ts",
+    "symbol": "generateRecordCheck",
+    "accept": [
+     "generateRecordCheck"
+    ]
+   },
+   {
+    "file": "packages/zod/src/v4/core/schemas.ts",
+    "symbol": "inst._zod.parse",
+    "accept": [
+     "inst._zod.parse"
+    ]
+   }
+  ],
+  "commit": "afdac65e0f80c0ccf9e8909da97c411567908b57"
+ },
+ {
+  "id": "Z2",
+  "repo": "zod",
+  "scope": "packages/zod/src/v4",
+  "ext": ".ts",
+  "pat": "new (core\\.)?\\$ZodAsyncError\\(",
+  "excl": [],
+  "notpath": "tests",
+  "q": "In zod's v4 source (packages/zod/src/v4, excluding tests), find every place that throws $ZodAsyncError, the error raised when a Promise shows up during synchronous parsing. For each, give the file and the enclosing function.",
+  "key": [
+   {
+    "file": "packages/zod/src/v4/core/compile.ts",
+    "symbol": "throwAsync",
+    "accept": [
+     "throwAsync"
+    ]
+   },
+   {
+    "file": "packages/zod/src/v4/core/parse.ts",
+    "symbol": "_safeParse",
+    "accept": [
+     "_safeParse"
+    ]
+   },
+   {
+    "file": "packages/zod/src/v4/core/parse.ts",
+    "symbol": "fn",
+    "accept": [
+     "fn",
+     "_parse"
+    ]
+   },
+   {
+    "file": "packages/zod/src/v4/core/parse.ts",
+    "symbol": "validateFallback",
+    "accept": [
+     "validateFallback"
+    ]
+   },
+   {
+    "file": "packages/zod/src/v4/core/schemas.ts",
+    "symbol": "handleCanaryResult",
+    "accept": [
+     "handleCanaryResult"
+    ]
+   },
+   {
+    "file": "packages/zod/src/v4/core/schemas.ts",
+    "symbol": "inst._zod.parse",
+    "accept": [
+     "inst._zod.parse"
+    ]
+   },
+   {
+    "file": "packages/zod/src/v4/core/schemas.ts",
+    "symbol": "inst._zod.run",
+    "accept": [
+     "inst._zod.run"
+    ]
+   },
+   {
+    "file": "packages/zod/src/v4/core/schemas.ts",
+    "symbol": "runChecks",
+    "accept": [
+     "runChecks"
+    ]
+   }
+  ],
+  "commit": "afdac65e0f80c0ccf9e8909da97c411567908b57"
+ }
+]
