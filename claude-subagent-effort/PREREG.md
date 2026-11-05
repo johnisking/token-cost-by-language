@@ -13,12 +13,12 @@ When the main agent is told to use subagents for a code search, does raising sub
 - Tools: read and search only. Edit, Write, Bash, WebFetch and WebSearch are disallowed. No MCP servers.
 - Models for the main agent: Haiku 5.5 and Opus 5.5, at default effort.
 - 12 search questions, 2 each in 6 open-source repos at fixed commits (in `questions.json`): undici, fastify, cachetools, Python-Markdown, anyio, zod.
-- 3 runs per cell. 12 x 2 models x 4 conditions x 3 = 288 runs. 2 runs at a time. Fresh copy of the repo for each run.
+- 3 runs per cell. 12 x 2 models x 4 conditions x 3 = 288 runs, in a shuffled order (seed 27), 2 at a time. Each repo is a clean git worktree at the listed commit; tools are read-only, and `git status` is checked after the runs.
 
 | Condition | Prompt | Subagent effort |
 |---|---|---|
 | C0 | question only | not set |
-| C1 | question + "Use subagents (the Explore agent) to search the codebase, then give the final list." | low |
+| C1 | question + " Use subagents (the Explore agent) for the searching, in parallel where it helps, and write the final answer yourself." (the wording used in the pilots) | low |
 | C2 | same as C1 | medium |
 | C3 | same as C1 | high |
 
