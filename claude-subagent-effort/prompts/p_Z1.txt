@@ -1,0 +1,1 @@
+In zod's v4 core (packages/zod/src/v4/core, excluding tests), find every place that reads the coerce option of a schema definition. For each, give the file and the enclosing function.

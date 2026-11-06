@@ -1,0 +1,1 @@
+In this library's source code (src/), find every place that raises BrokenResourceError. For each, give the file and the enclosing class and method.

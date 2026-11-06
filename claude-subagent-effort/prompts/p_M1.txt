@@ -1,0 +1,1 @@
+In this package's source (the markdown/ directory), find every place that registers a tree processor (treeprocessors.register). For each, give the file and the enclosing class and method.

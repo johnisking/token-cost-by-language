@@ -1,0 +1,1 @@
+In this library, list every class that defines its own __setitem__ or popitem method. For each, give the file, the class and which of the two methods it defines.

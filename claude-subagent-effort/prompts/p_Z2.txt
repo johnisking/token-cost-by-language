@@ -1,0 +1,1 @@
+In zod's v4 source (packages/zod/src/v4, excluding tests), find every place that throws $ZodAsyncError, the error raised when a Promise shows up during synchronous parsing. For each, give the file and the enclosing function.
