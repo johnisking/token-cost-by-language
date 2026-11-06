@@ -38,4 +38,6 @@ Claude Code 2.1.318 added a subagent effort setting (`CLAUDE_CODE_SUBAGENT_EFFOR
 
 Previous dataset: [claude-report-edge-cases](../claude-report-edge-cases)
 
-License: CC BY 4.0. Cite: TokenSave (2026). Subagent effort in Claude Code: 288 runs on 12 code-search questions [Data set]. https://github.com/johnisking/token-cost-by-language/tree/main/claude-subagent-effort
+DOI: [10.5281/zenodo.24014489](https://doi.org/10.5281/zenodo.24014489) · Hugging Face: [JOHNISKING/claude-subagent-effort](https://huggingface.co/datasets/JOHNISKING/claude-subagent-effort) · Page: https://tokensave.app/data/claude-subagent-effort
+
+License: CC BY 4.0. Cite: TokenSave (2026). Telling Claude Code to use subagents found nothing more and cost up to 221% more: 288 runs on subagent effort [Data set]. Zenodo. https://doi.org/10.5281/zenodo.24014489
