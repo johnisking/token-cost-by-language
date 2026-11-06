@@ -58,3 +58,16 @@ The first scored run (M1, Opus, C2) listed all 8 correct items in a table but na
 above the table, not on each row. The line rule gave it 1 of 8. The rule for `Class.method` names is changed to:
 `Class` as a whole word on some line, and `method` as a whole word anywhere in the answer.
 Nothing else changes. No condition comparison had been looked at. New scoring/score.py sha256: `efbd7038c1171c0ce089e2231e64250f750f715aa8e3d7e4fa30376076d87f3b`
+
+## Amendment 2 (2026-11-06, after 248 of 288 runs, made after seeing per-condition numbers)
+
+In Claude Code 2.1.318 the Explore subagent runs in the background. A headless run then emits several `result` events:
+first a note such as "the agent is still searching", then the answer, and sometimes a later "stopped the autonomous loop" note.
+The original rule scored only the last `result`, so runs that had answered fully scored 0. In 183 of 189 subagent runs
+the first `result` held no answer. The rule is changed to score the text of all `result` events joined. Cost is the last
+event's `total_cost_usd` (cumulative). Three runs kept the session open after answering and hit the 20-minute limit;
+they are scored on the answer they gave and listed separately. This change was made after the condition table was seen,
+so both scorings will be published. New scoring/score.py sha256: `f983c3734baac89698f1bd714181a785f6bb2932580cf4e3daadd9126ee21f59`
+
+40 runs (all after 03:05 KST) failed instantly with the subscription's 5-hour usage limit and produced no answer.
+They are excluded and will be re-run, not scored as 0.

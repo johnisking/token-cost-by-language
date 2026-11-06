@@ -17,12 +17,16 @@ def score(answer, key):
     hit = [k for k in key if k['file'].rsplit('/', 1)[-1] in answer and any(name_hit(a, lines) for a in k['accept'])]
     return len(hit) / len(key), hit
 def final_text(jsonl_path):
-    res = None
+    # amendment 2: Claude Code 2.1.318 runs subagents in the background, so one headless run can emit several
+    # result events (a "still searching" note, the answer, then an autonomous-loop stop note). The answer is
+    # the text of all result events joined; res is the last one (its total_cost_usd is cumulative).
+    res, texts = None, []
     for row in open(jsonl_path, encoding='utf-8', errors='replace'):
         try: o = json.loads(row)
         except Exception: continue
-        if o.get('type') == 'result': res = o
-    return (res or {}).get('result', '') or '', res
+        if o.get('type') == 'result':
+            res = o; texts.append(o.get('result') or '')
+    return '\n'.join(texts), res
 if __name__ == '__main__':
     qs = {q['id']: q for q in json.load(open(sys.argv[1]))}
     txt, _ = final_text(sys.argv[3])
