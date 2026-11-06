@@ -8,7 +8,7 @@ Claude Code 2.1.318 added a subagent effort setting (`CLAUDE_CODE_SUBAGENT_EFFOR
 - **They cost more.** Mean API cost per run: Haiku $0.0056 / $0.0098 / $0.0105 / $0.0121 (+74%, +87%, +116%); Opus $0.159 / $0.386 / $0.509 / $0.483 (+143%, +221%, +204%). Median time per run went from 18 to 37-48 seconds (Haiku) and 22 to 47-60 seconds (Opus).
 - **Subagents ran on the main model.** Every Explore subagent call ran on the same model as the main agent: Haiku called Haiku, Opus called Opus.
 - **Nobody used subagents unasked.** With no instruction, 0 of 72 runs called a subagent (and 0 of 504 runs in the previous dataset).
-- **Headless runs answer late.** In 2.1.318 the Explore agent runs in the background, so a headless run emits several `result` events: first "the agent is still searching", then the answer, sometimes a final "stopped the autonomous loop" note. In 183 of 189 subagent runs the first `result` held no answer. Scored on the first `result` only, the subagent conditions found 0-9% of the answers. 4 Haiku runs answered and then never exited (20-minute timeout).
+- **Headless runs answer late.** In 2.1.318 the Explore agent runs in the background, so a headless run emits several `result` events: first "the agent is still searching", then the answer, sometimes a final "stopped the autonomous loop" note. In 210 of 216 subagent runs the first `result` held no answer. Scored on the first `result` only, the subagent conditions found 0-9% of the answers. 4 Haiku runs answered and then never exited (20-minute timeout).
 
 ## Files
 
