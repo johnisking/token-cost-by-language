@@ -3,7 +3,7 @@ sys.path.insert(0,'/home/claude/ds27/scoring'); from score import score
 Q={q['id']:q for q in json.load(open('questions.json'))}
 R='runs1'; rows=[]; answers=[]
 MID={'haiku':'claude-haiku-5-5','opus':'claude-opus-5-5'}; EFF={'C0':'','C1':'low','C2':'medium','C3':'high'}
-def mask(s): return re.sub(r'(?i)CHOJAEHYUN','USER',s)
+def mask(s): return re.sub(r'(?i)(C:\\Users\\)[^\\]+', r'\1USER', s)
 for n in sorted(os.listdir(R)):
     qid,m,c,rep=n.split('_'); p=f'{R}/{n}/run.jsonl'
     ev=[];agents=0;subm=collections.Counter();outtok=0

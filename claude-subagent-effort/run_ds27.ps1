@@ -1,6 +1,6 @@
 param([int]$W)
-$B = "C:\Users\CHOJAEHYUN\Downloads\agent-test\ds27"
-$c = "C:\Users\CHOJAEHYUN\Downloads\agent-test\cc318\node_modules\.bin\claude.cmd"
+$B = "C:\Users\USER\Downloads\agent-test\ds27"
+$c = "C:\Users\USER\Downloads\agent-test\cc318\node_modules\.bin\claude.cmd"
 $sub = " Use subagents (the Explore agent) for the searching, in parallel where it helps, and write the final answer yourself."
 $eff = @{ C1 = "low"; C2 = "medium"; C3 = "high" }
 $mid = @{ haiku = "claude-haiku-5-5"; opus = "claude-opus-5-5" }
