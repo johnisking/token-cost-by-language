@@ -33,3 +33,12 @@ A widely shared post from February 2026 said Claude Code's built-in Explore suba
 ## Limits
 
 Part A uses Opus 4.5, not the current Opus, so dollar figures are for that model. Two questions and 2 runs per version show which model ran, not quality. One machine, one account.
+
+## Amendment 1 (2026-11-08, after the first 144 runs)
+
+What was seen: Part A switched between 2.1.175 (Explore on claude-haiku-4-5 in all 4 runs) and 2.1.200 (on the main model in all 4 runs). In Part B, `CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5` left Explore on claude-opus-5-5 in all 24 completed runs. 21 Part B runs failed instantly on the subscription's 5-hour limit and gave no answer.
+
+Added before running them:
+1. The 21 failed Part B runs are re-run unchanged. Failed attempts are kept in `runs_limit/` and not scored.
+2. Bisection between 2.1.175 and 2.1.200 over the 18 npm versions in between (2.1.176 ... 2.1.199): each probe is one M1 run with claude-opus-4-5; a probe is "Haiku" if `modelUsage` has a Haiku entry. The two versions on either side of the switch then get the full Part A set (M1 and U1, 2 runs each).
+3. Part C (pilot, descriptive): 2.1.318, claude-opus-5-5, M1, 2 runs each with (a) `CLAUDE_CODE_SUBAGENT_MODEL=haiku`, (b) `CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5` plus `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1`, (c) `haiku` plus `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1`. Outcome: which model Explore ran on, cost. If one setting moves Explore to Haiku, it gets the full Part B set (12 questions, 3 runs) as Part D, reported as added after the fact.
