@@ -8,6 +8,7 @@ A widely shared post from February 2026 said Claude Code's built-in Explore suba
 - **It doubled the cost of a delegated search.** Same prompt, same questions, main model Opus 4.5: $0.18 per run while Explore was Haiku, $0.37 after (+105%). Share of right answers found: 89% before, 94% after (2 questions, 4 runs per version, so read this as a small gap).
 - **`CLAUDE_CODE_SUBAGENT_MODEL` alone does not move Explore.** On 2.1.318 with Opus 5.5, setting it to `claude-haiku-5-5` left Explore on Opus 5.5 in all 36 runs (found 99% vs 100%, cost $0.37 vs $0.38).
 - **Adding `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1` does.** With `CLAUDE_CODE_SUBAGENT_MODEL=haiku` and `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1`, Explore ran on Haiku 5.5 in all 36 runs. Found: 100% vs 100% with the default, on the same 12 questions × 3 runs. Cost per run: $0.38 → $0.15 (−60%).
+- This matches the current Claude Code docs, which say Explore runs on the main conversation's model, that `CLAUDE_CODE_SUBAGENT_MODEL` alone doesn't change Explore, and that `CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1` (v2.1.257+) applies it to every subagent ([sub-agents docs](https://code.claude.com/docs/en/sub-agents)). The docs also say a user or project subagent named `Explore` with `model: haiku` overrides the built-in; we did not test that route. What this dataset adds is the version where the default changed and what each setting costs and finds.
 - Opus 5.5 is refused by the API below Claude Code 2.1.280, so the version history uses Opus 4.5 as the main model.
 
 ## Files
@@ -32,6 +33,6 @@ A widely shared post from February 2026 said Claude Code's built-in Explore suba
 
 ## Limitations
 
-Two questions per version in Part A; the version history says which model ran, not how good it was. One machine, one account, one prompt. The FORCE setting is undocumented as far as we found and may change.
+Two questions per version in Part A; the version history says which model ran, not how good it was. One machine, one account, one prompt. Settings and defaults may change in later versions.
 
 License: CC BY 4.0. Cite: TokenSave (2026). Which model does Claude Code's Explore subagent run on? 205 runs across 26 versions [Data set]. https://github.com/johnisking/token-cost-by-language/tree/main/claude-subagent-model-by-version
