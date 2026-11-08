@@ -1,0 +1,206 @@
+run,part,claude_code,main_model,question,rep,setting,subagent_models,subagent_messages,haiku_cost_usd,main_model_cost_usd,api_cost_usd,recall,recall_last_result_only,result_events,started_in_background,seconds,timed_out,turns
+A_2.1.0_M1_r1,A,2.1.0,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,11,0.0956,0.120831,0.216431,1.0,1.0,1,,53,False,2
+A_2.1.0_M1_r2,A,2.1.0,claude-opus-4-5,M1,2,,claude-haiku-4-5-20251001,12,0.062248,0.226936,0.289184,1.0,1.0,1,,51,False,2
+A_2.1.0_U1_r1,A,2.1.0,claude-opus-4-5,U1,1,,claude-haiku-4-5-20251001,33,0.239004,0.238262,0.477266,0.875,0.875,1,,104,False,3
+A_2.1.0_U1_r2,A,2.1.0,claude-opus-4-5,U1,2,,claude-haiku-4-5-20251001,18,0.145407,0.128445,0.273853,1.0,1.0,1,,76,False,3
+A_2.1.25_M1_r1,A,2.1.25,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,10,0.078384,0.040733,0.119118,1.0,1.0,1,,48,False,2
+A_2.1.25_M1_r2,A,2.1.25,claude-opus-4-5,M1,2,,claude-haiku-4-5-20251001,13,0.04714,0.056616,0.103756,1.0,1.0,1,,60,False,2
+A_2.1.25_U1_r1,A,2.1.25,claude-opus-4-5,U1,1,,claude-haiku-4-5-20251001,27,0.136189,0.053687,0.189876,0.875,0.875,1,,92,False,3
+A_2.1.25_U1_r2,A,2.1.25,claude-opus-4-5,U1,2,,claude-haiku-4-5-20251001,13,0.141329,0.123575,0.264904,1.0,1.0,1,,57,False,3
+A_2.1.50_M1_r1,A,2.1.50,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,3,0.030107,0.076758,0.106865,1.0,1.0,1,,33,False,2
+A_2.1.50_M1_r2,A,2.1.50,claude-opus-4-5,M1,2,,claude-haiku-4-5-20251001,13,0.086272,0.046364,0.132636,1.0,1.0,1,,31,False,2
+A_2.1.50_U1_r1,A,2.1.50,claude-opus-4-5,U1,1,,claude-haiku-4-5-20251001,35,0.090542,0.086744,0.177285,0.875,0.875,1,,44,False,3
+A_2.1.50_U1_r2,A,2.1.50,claude-opus-4-5,U1,2,,claude-haiku-4-5-20251001,14,0.065805,0.128716,0.194521,0.8125,0.8125,1,,35,False,2
+A_2.1.75_M1_r1,A,2.1.75,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,13,0.037896,0.088448,0.126344,1.0,1.0,1,,35,False,3
+A_2.1.75_M1_r2,A,2.1.75,claude-opus-4-5,M1,2,,claude-haiku-4-5-20251001,13,0.086104,0.05635,0.142454,1.0,1.0,1,,43,False,3
+A_2.1.75_U1_r1,A,2.1.75,claude-opus-4-5,U1,1,,claude-haiku-4-5-20251001,32,0.146028,0.115908,0.261936,0.75,0.75,1,,60,False,4
+A_2.1.75_U1_r2,A,2.1.75,claude-opus-4-5,U1,2,,claude-haiku-4-5-20251001,35,0.120824,0.100911,0.221735,0.8125,0.8125,1,,49,False,4
+A_2.1.100_M1_r1,A,2.1.100,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,13,0.057524,0.117063,0.174587,1.0,1.0,1,,34,False,2
+A_2.1.100_M1_r2,A,2.1.100,claude-opus-4-5,M1,2,,claude-haiku-4-5-20251001,11,0.047182,0.064902,0.112084,1.0,1.0,1,,33,False,2
+A_2.1.100_U1_r1,A,2.1.100,claude-opus-4-5,U1,1,,claude-haiku-4-5-20251001,17,0.050307,0.113587,0.163894,0.4375,0.4375,1,,33,False,2
+A_2.1.100_U1_r2,A,2.1.100,claude-opus-4-5,U1,2,,claude-haiku-4-5-20251001,14,0.059235,0.109681,0.168916,0.4375,0.4375,1,,37,False,2
+A_2.1.126_M1_r1,A,2.1.126,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,10,0.087367,0.03759,0.124957,1.0,1.0,1,,26,False,2
+A_2.1.126_M1_r2,A,2.1.126,claude-opus-4-5,M1,2,,claude-haiku-4-5-20251001,31,0.11011,0.112124,0.222234,1.0,1.0,1,,47,False,2
+A_2.1.126_U1_r1,A,2.1.126,claude-opus-4-5,U1,1,,claude-haiku-4-5-20251001,14,0.053016,0.037681,0.090698,0.6875,0.6875,1,,29,False,2
+A_2.1.126_U1_r2,A,2.1.126,claude-opus-4-5,U1,2,,claude-haiku-4-5-20251001,19,0.08533,0.074639,0.159969,0.6875,0.6875,1,,47,False,2
+A_2.1.150_M1_r1,A,2.1.150,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,13,0.082649,0.044198,0.126847,1.0,1.0,1,,32,False,2
+A_2.1.150_M1_r2,A,2.1.150,claude-opus-4-5,M1,2,,claude-haiku-4-5-20251001,11,0.040327,0.046798,0.087125,1.0,1.0,1,,32,False,2
+A_2.1.150_U1_r1,A,2.1.150,claude-opus-4-5,U1,1,,claude-haiku-4-5-20251001,17,0.067093,0.047696,0.114789,0.8125,0.8125,1,,40,False,2
+A_2.1.150_U1_r2,A,2.1.150,claude-opus-4-5,U1,2,,claude-haiku-4-5-20251001,12,0.11291,0.077733,0.190643,0.75,0.75,1,,31,False,2
+A_2.1.175_M1_r1,A,2.1.175,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,26,0.099866,0.074418,0.174285,1.0,1.0,1,,43,False,2
+A_2.1.175_M1_r2,A,2.1.175,claude-opus-4-5,M1,2,,claude-haiku-4-5-20251001,26,0.066758,0.25078,0.317538,1.0,1.0,1,,38,False,2
+A_2.1.175_U1_r1,A,2.1.175,claude-opus-4-5,U1,1,,claude-haiku-4-5-20251001,29,0.11134,0.126843,0.238183,1.0,1.0,1,,55,False,2
+A_2.1.175_U1_r2,A,2.1.175,claude-opus-4-5,U1,2,,claude-haiku-4-5-20251001,13,0.072181,0.067298,0.139479,0.875,0.875,1,,33,False,2
+A_2.1.176_M1_r1,A,2.1.176,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,12,0.044363,0.066846,0.111209,1.0,1.0,1,,29,False,2
+A_2.1.176_M1_r2,A,2.1.176,claude-opus-4-5,M1,2,,claude-haiku-4-5-20251001,16,0.089367,0.068666,0.158033,1.0,1.0,1,,30,False,2
+A_2.1.176_U1_r1,A,2.1.176,claude-opus-4-5,U1,1,,claude-haiku-4-5-20251001,19,0.090269,0.12157,0.211839,0.5625,0.5625,1,,33,False,2
+A_2.1.176_U1_r2,A,2.1.176,claude-opus-4-5,U1,2,,claude-haiku-4-5-20251001,22,0.103419,0.07422,0.177639,1.0,1.0,1,,50,False,2
+A_2.1.197_M1_r1,A,2.1.197,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,23,0.078882,0.068291,0.147172,1.0,1.0,1,,35,False,2
+A_2.1.197_M1_r2,A,2.1.197,claude-opus-4-5,M1,2,,claude-haiku-4-5-20251001,13,0.056747,0.07693,0.133678,1.0,1.0,1,,36,False,2
+A_2.1.197_U1_r1,A,2.1.197,claude-opus-4-5,U1,1,,claude-haiku-4-5-20251001,21,0.064566,0.141011,0.205577,0.4375,0.4375,1,,36,False,3
+A_2.1.197_U1_r2,A,2.1.197,claude-opus-4-5,U1,2,,claude-haiku-4-5-20251001,27,0.104018,0.076375,0.180393,0.9375,0.9375,1,,47,False,2
+A_2.1.198_M1_r1,A,2.1.198,claude-opus-4-5,M1,1,,claude-opus-4-5-20251101,15,0,0.279801,0.279801,1.0,1.0,1,,53,False,2
+A_2.1.198_M1_r2,A,2.1.198,claude-opus-4-5,M1,2,,claude-opus-4-5-20251101,15,0,0.236796,0.236796,1.0,1.0,1,,45,False,2
+A_2.1.198_U1_r1,A,2.1.198,claude-opus-4-5,U1,1,,claude-opus-4-5-20251101,14,0,0.558793,0.558793,0.8125,0.8125,1,,53,False,2
+A_2.1.198_U1_r2,A,2.1.198,claude-opus-4-5,U1,2,,claude-opus-4-5-20251101,19,0,0.290689,0.290689,0.8125,0.8125,1,,56,False,2
+A_2.1.200_M1_r1,A,2.1.200,claude-opus-4-5,M1,1,,claude-opus-4-5-20251101,21,0,0.394561,0.394561,1.0,1.0,1,,59,False,2
+A_2.1.200_M1_r2,A,2.1.200,claude-opus-4-5,M1,2,,claude-opus-4-5-20251101,15,0,0.26134,0.26134,1.0,1.0,1,,50,False,2
+A_2.1.200_U1_r1,A,2.1.200,claude-opus-4-5,U1,1,,claude-opus-4-5-20251101,18,0,0.354199,0.354199,1.0,1.0,1,,66,False,2
+A_2.1.200_U1_r2,A,2.1.200,claude-opus-4-5,U1,2,,claude-opus-4-5-20251101,19,0,0.482017,0.482017,1.0,1.0,1,,55,False,2
+A_2.1.225_M1_r1,A,2.1.225,claude-opus-4-5,M1,1,,claude-opus-4-5-20251101,17,0,0.266807,0.266807,1.0,1.0,1,,52,False,2
+A_2.1.225_M1_r2,A,2.1.225,claude-opus-4-5,M1,2,,claude-opus-4-5-20251101,16,0,0.456479,0.456479,1.0,1.0,1,,47,False,2
+A_2.1.225_U1_r1,A,2.1.225,claude-opus-4-5,U1,1,,claude-opus-4-5-20251101,13,0,0.676095,0.676095,0.9375,0.9375,1,,48,False,2
+A_2.1.225_U1_r2,A,2.1.225,claude-opus-4-5,U1,2,,claude-opus-4-5-20251101,21,0,0.395142,0.395142,0.9375,0.9375,1,,66,False,2
+A_2.1.250_M1_r1,A,2.1.250,claude-opus-4-5,M1,1,,claude-opus-4-5-20251101,16,0,0.296022,0.296022,1.0,1.0,1,0,66,False,2
+A_2.1.250_M1_r2,A,2.1.250,claude-opus-4-5,M1,2,,claude-opus-4-5-20251101,17,0,0.271913,0.271913,1.0,1.0,1,0,58,False,2
+A_2.1.250_U1_r1,A,2.1.250,claude-opus-4-5,U1,1,,claude-opus-4-5-20251101,22,0,0.363008,0.363008,0.9375,0.9375,1,0,66,False,2
+A_2.1.250_U1_r2,A,2.1.250,claude-opus-4-5,U1,2,,claude-opus-4-5-20251101,12,0,0.678231,0.678231,1.0,1.0,1,0,57,False,2
+A_2.1.275_M1_r1,A,2.1.275,claude-opus-4-5,M1,1,,claude-opus-4-5-20251101,18,0,0.277749,0.277749,1.0,1.0,2,1,53,False,1
+A_2.1.275_M1_r2,A,2.1.275,claude-opus-4-5,M1,2,,claude-opus-4-5-20251101,17,0,0.346708,0.346708,1.0,1.0,1,0,66,False,2
+A_2.1.275_U1_r1,A,2.1.275,claude-opus-4-5,U1,1,,claude-opus-4-5-20251101,39,0,0.410567,0.410567,0.9375,0.9375,2,1,81,False,1
+A_2.1.275_U1_r2,A,2.1.275,claude-opus-4-5,U1,2,,claude-opus-4-5-20251101,15,0,0.338905,0.338905,0.8125,0.8125,1,0,71,False,2
+A_2.1.290_M1_r1,A,2.1.290,claude-opus-4-5,M1,1,,claude-opus-4-5-20251101,17,0,0.331884,0.331884,1.0,1.0,1,0,59,False,2
+A_2.1.290_M1_r2,A,2.1.290,claude-opus-4-5,M1,2,,claude-opus-4-5-20251101,16,0,0.258342,0.258342,1.0,1.0,1,0,61,False,2
+A_2.1.290_U1_r1,A,2.1.290,claude-opus-4-5,U1,1,,claude-opus-4-5-20251101,29,0,0.614174,0.614174,0.875,0.875,1,0,97,False,2
+A_2.1.290_U1_r2,A,2.1.290,claude-opus-4-5,U1,2,,claude-opus-4-5-20251101,26,0,0.329059,0.329059,0.875,0.875,1,0,79,False,2
+A_2.1.295_M1_r1,A,2.1.295,claude-opus-4-5,M1,1,,claude-opus-4-5-20251101,21,0,0.31229,0.31229,1.0,1.0,1,0,65,False,2
+A_2.1.295_M1_r2,A,2.1.295,claude-opus-4-5,M1,2,,claude-opus-4-5-20251101,14,0,0.244298,0.244298,1.0,1.0,1,0,55,False,2
+A_2.1.295_U1_r1,A,2.1.295,claude-opus-4-5,U1,1,,claude-opus-4-5-20251101,20,0,0.36579,0.36579,0.9375,0.9375,1,0,70,False,2
+A_2.1.295_U1_r2,A,2.1.295,claude-opus-4-5,U1,2,,claude-opus-4-5-20251101,19,0,0.332403,0.332403,0.875,0.875,1,0,67,False,2
+A_2.1.300_M1_r1,A,2.1.300,claude-opus-4-5,M1,1,,claude-opus-4-5-20251101,8,0,0.489751,0.489751,1.0,1.0,1,0,68,False,2
+A_2.1.300_M1_r2,A,2.1.300,claude-opus-4-5,M1,2,,claude-opus-4-5-20251101,10,0,0.261494,0.261494,1.0,1.0,1,0,58,False,2
+A_2.1.300_U1_r1,A,2.1.300,claude-opus-4-5,U1,1,,claude-opus-4-5-20251101,28,0,0.401248,0.401248,0.875,0.875,1,0,72,False,2
+A_2.1.300_U1_r2,A,2.1.300,claude-opus-4-5,U1,2,,claude-opus-4-5-20251101,19,0,0.321387,0.321387,0.8125,0.8125,1,0,75,False,2
+A_2.1.305_M1_r1,A,2.1.305,claude-opus-4-5,M1,1,,claude-opus-4-5-20251101,12,0,0.317369,0.317369,1.0,1.0,1,0,75,False,2
+A_2.1.305_M1_r2,A,2.1.305,claude-opus-4-5,M1,2,,claude-opus-4-5-20251101,20,0,0.499024,0.499024,1.0,1.0,1,0,76,False,2
+A_2.1.305_U1_r1,A,2.1.305,claude-opus-4-5,U1,1,,claude-opus-4-5-20251101,26,0,0.413163,0.413163,0.9375,0.9375,1,0,73,False,2
+A_2.1.305_U1_r2,A,2.1.305,claude-opus-4-5,U1,2,,claude-opus-4-5-20251101,30,0,0.361726,0.361726,0.9375,0.9375,1,0,79,False,2
+A_2.1.310_M1_r1,A,2.1.310,claude-opus-4-5,M1,1,,claude-opus-4-5-20251101,15,0,0.36099,0.36099,1.0,1.0,1,0,75,False,2
+A_2.1.310_M1_r2,A,2.1.310,claude-opus-4-5,M1,2,,claude-opus-4-5-20251101,18,0,0.286843,0.286843,1.0,1.0,1,0,63,False,2
+A_2.1.310_U1_r1,A,2.1.310,claude-opus-4-5,U1,1,,claude-opus-4-5-20251101,41,0,0.478178,0.478178,0.875,0.875,3,2,77,False,1
+A_2.1.310_U1_r2,A,2.1.310,claude-opus-4-5,U1,2,,claude-opus-4-5-20251101,25,0,0.428976,0.428976,0.8125,0.8125,1,0,91,False,2
+A_2.1.318_M1_r1,A,2.1.318,claude-opus-4-5,M1,1,,claude-opus-4-5-20251101,16,0,0.289584,0.289584,1.0,1.0,1,0,57,False,2
+A_2.1.318_M1_r2,A,2.1.318,claude-opus-4-5,M1,2,,claude-opus-4-5-20251101,14,0,0.311481,0.311481,1.0,1.0,1,0,76,False,2
+A_2.1.318_U1_r1,A,2.1.318,claude-opus-4-5,U1,1,,claude-opus-4-5-20251101,13,0,0.202103,0.202103,0.6875,0.6875,1,0,46,False,2
+A_2.1.318_U1_r2,A,2.1.318,claude-opus-4-5,U1,2,,claude-opus-4-5-20251101,35,0,0.482322,0.482322,0.875,0.875,1,0,97,False,2
+probe_2.1.176,A-probe,2.1.176,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,10,0.058878,0.074726,0.133604,1.0,1.0,1,,32,False,2
+probe_2.1.177,A-probe,2.1.177,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,22,0.091101,0.259333,0.350435,1.0,1.0,1,,34,False,2
+probe_2.1.179,A-probe,2.1.179,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,11,0.074466,0.092064,0.16653,1.0,1.0,1,,27,False,2
+probe_2.1.186,A-probe,2.1.186,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,15,0.050988,0.260825,0.311812,1.0,1.0,1,,32,False,2
+probe_2.1.195,A-probe,2.1.195,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,18,0.085191,0.255352,0.340543,1.0,1.0,1,,39,False,2
+probe_2.1.197,A-probe,2.1.197,claude-opus-4-5,M1,1,,claude-haiku-4-5-20251001,12,0.084865,0.25726,0.342125,0.875,0.875,1,,29,False,2
+probe_2.1.198,A-probe,2.1.198,claude-opus-4-5,M1,1,,claude-opus-4-5-20251101,14,0,0.499962,0.499962,1.0,1.0,1,,54,False,2
+B_inherit_A1_r1,B,2.1.318,claude-opus-5-5,A1,1,,claude-opus-5-5,26,0,0.531203,0.531203,1.0,1.0,3,2,63,False,2
+B_inherit_A1_r2,B,2.1.318,claude-opus-5-5,A1,2,,claude-opus-5-5,20,0,0.428418,0.428418,1.0,1.0,2,2,48,False,2
+B_inherit_A1_r3,B,2.1.318,claude-opus-5-5,A1,3,,claude-opus-5-5,22,0,0.469235,0.469235,1.0,1.0,3,2,58,False,2
+B_inherit_A2_r1,B,2.1.318,claude-opus-5-5,A2,1,,claude-opus-5-5,46,0,0.891163,0.891163,1.0,1.0,3,2,81,False,2
+B_inherit_A2_r2,B,2.1.318,claude-opus-5-5,A2,2,,claude-opus-5-5,14,0,0.418692,0.418692,1.0,1.0,3,2,51,False,2
+B_inherit_A2_r3,B,2.1.318,claude-opus-5-5,A2,3,,claude-opus-5-5,13,0,0.421291,0.421291,1.0,1.0,3,2,56,False,2
+B_inherit_C1_r1,B,2.1.318,claude-opus-5-5,C1,1,,claude-opus-5-5,12,0,0.224096,0.224096,1.0,1.0,3,2,36,False,2
+B_inherit_C1_r2,B,2.1.318,claude-opus-5-5,C1,2,,claude-opus-5-5,20,0,0.324293,0.324293,1.0,1.0,3,2,48,False,2
+B_inherit_C1_r3,B,2.1.318,claude-opus-5-5,C1,3,,claude-opus-5-5,14,0,0.216304,0.216304,1.0,1.0,3,2,34,False,2
+B_inherit_C2_r1,B,2.1.318,claude-opus-5-5,C2,1,,claude-opus-5-5,12,0,0.244132,0.244132,1.0,1.0,2,2,32,False,3
+B_inherit_C2_r2,B,2.1.318,claude-opus-5-5,C2,2,,claude-opus-5-5,12,0,0.225642,0.225642,1.0,1.0,3,2,37,False,1
+B_inherit_C2_r3,B,2.1.318,claude-opus-5-5,C2,3,,claude-opus-5-5,12,0,0.255913,0.255913,1.0,1.0,3,2,34,False,2
+B_inherit_F1_r1,B,2.1.318,claude-opus-5-5,F1,1,,claude-opus-5-5,16,0,0.411719,0.411719,1.0,1.0,3,2,61,False,3
+B_inherit_F1_r2,B,2.1.318,claude-opus-5-5,F1,2,,claude-opus-5-5,18,0,0.353422,0.353422,1.0,1.0,3,2,48,False,1
+B_inherit_F1_r3,B,2.1.318,claude-opus-5-5,F1,3,,claude-opus-5-5,16,0,0.377849,0.377849,1.0,1.0,3,2,55,False,1
+B_inherit_F2_r1,B,2.1.318,claude-opus-5-5,F2,1,,claude-opus-5-5,21,0,0.392139,0.392139,1.0,1.0,3,2,62,False,2
+B_inherit_F2_r2,B,2.1.318,claude-opus-5-5,F2,2,,claude-opus-5-5,23,0,0.387194,0.387194,1.0,1.0,3,2,64,False,2
+B_inherit_F2_r3,B,2.1.318,claude-opus-5-5,F2,3,,claude-opus-5-5,24,0,0.371835,0.371835,1.0,1.0,3,2,56,False,1
+B_inherit_M1_r1,B,2.1.318,claude-opus-5-5,M1,1,,claude-opus-5-5,24,0,0.385244,0.385244,1.0,1.0,3,2,59,False,2
+B_inherit_M1_r2,B,2.1.318,claude-opus-5-5,M1,2,,claude-opus-5-5,19,0,0.322948,0.322948,1.0,1.0,3,2,52,False,2
+B_inherit_M1_r3,B,2.1.318,claude-opus-5-5,M1,3,,claude-opus-5-5,16,0,0.356041,0.356041,1.0,1.0,3,2,55,False,2
+B_inherit_M2_r1,B,2.1.318,claude-opus-5-5,M2,1,,claude-opus-5-5,12,0,0.255286,0.255286,1.0,1.0,3,2,44,False,1
+B_inherit_M2_r2,B,2.1.318,claude-opus-5-5,M2,2,,claude-opus-5-5,16,0,0.2556,0.2556,1.0,1.0,3,2,41,False,1
+B_inherit_M2_r3,B,2.1.318,claude-opus-5-5,M2,3,,claude-opus-5-5,15,0,0.262377,0.262377,1.0,1.0,3,2,42,False,1
+B_inherit_U1_r1,B,2.1.318,claude-opus-5-5,U1,1,,claude-opus-5-5,30,0,0.447456,0.447456,1.0,1.0,3,2,71,False,2
+B_inherit_U1_r2,B,2.1.318,claude-opus-5-5,U1,2,,claude-opus-5-5,29,0,0.454109,0.454109,1.0,1.0,3,2,65,False,3
+B_inherit_U1_r3,B,2.1.318,claude-opus-5-5,U1,3,,claude-opus-5-5,30,0,0.448391,0.448391,1.0,1.0,3,2,60,False,2
+B_inherit_U2_r1,B,2.1.318,claude-opus-5-5,U2,1,,claude-opus-5-5,27,0,0.369393,0.369393,1.0,1.0,3,2,49,False,1
+B_inherit_U2_r2,B,2.1.318,claude-opus-5-5,U2,2,,claude-opus-5-5,20,0,0.327336,0.327336,1.0,1.0,3,2,48,False,2
+B_inherit_U2_r3,B,2.1.318,claude-opus-5-5,U2,3,,claude-opus-5-5,20,0,0.305672,0.305672,1.0,1.0,3,2,45,False,2
+B_inherit_Z1_r1,B,2.1.318,claude-opus-5-5,Z1,1,,claude-opus-5-5,15,0,0.285707,0.285707,1.0,1.0,3,2,44,False,2
+B_inherit_Z1_r2,B,2.1.318,claude-opus-5-5,Z1,2,,claude-opus-5-5,30,0,0.531508,0.531508,1.0,1.0,3,2,81,False,4
+B_inherit_Z1_r3,B,2.1.318,claude-opus-5-5,Z1,3,,claude-opus-5-5,17,0,0.317502,0.317502,1.0,1.0,3,2,42,False,2
+B_inherit_Z2_r1,B,2.1.318,claude-opus-5-5,Z2,1,,claude-opus-5-5,24,0,0.490793,0.490793,1.0,1.0,2,2,66,False,5
+B_inherit_Z2_r2,B,2.1.318,claude-opus-5-5,Z2,2,,claude-opus-5-5,24,0,0.396566,0.396566,1.0,1.0,3,2,48,False,2
+B_inherit_Z2_r3,B,2.1.318,claude-opus-5-5,Z2,3,,claude-opus-5-5,25,0,0.499697,0.499697,1.0,1.0,3,2,51,False,2
+B_haiku_A1_r1,B,2.1.318,claude-opus-5-5,A1,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,24,0,0.469664,0.469664,1.0,1.0,3,2,65,False,3
+B_haiku_A1_r2,B,2.1.318,claude-opus-5-5,A1,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,24,0,0.455884,0.455884,1.0,1.0,2,2,56,False,3
+B_haiku_A1_r3,B,2.1.318,claude-opus-5-5,A1,3,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,18,0,0.459214,0.459214,1.0,1.0,3,2,50,False,2
+B_haiku_A2_r1,B,2.1.318,claude-opus-5-5,A2,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,17,0,0.296929,0.296929,1.0,1.0,3,2,48,False,2
+B_haiku_A2_r2,B,2.1.318,claude-opus-5-5,A2,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,15,0,0.363338,0.363338,1.0,1.0,3,2,50,False,3
+B_haiku_A2_r3,B,2.1.318,claude-opus-5-5,A2,3,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,12,0,0.297606,0.297606,1.0,1.0,3,2,39,False,2
+B_haiku_C1_r1,B,2.1.318,claude-opus-5-5,C1,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,17,0,0.24739,0.24739,1.0,1.0,3,2,35,False,2
+B_haiku_C1_r2,B,2.1.318,claude-opus-5-5,C1,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,32,0,0.578988,0.578988,1.0,1.0,3,2,54,False,3
+B_haiku_C1_r3,B,2.1.318,claude-opus-5-5,C1,3,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,49,0,0.606894,0.606894,1.0,1.0,3,2,49,False,2
+B_haiku_C2_r1,B,2.1.318,claude-opus-5-5,C2,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,14,0,0.282489,0.282489,1.0,1.0,3,2,45,False,2
+B_haiku_C2_r2,B,2.1.318,claude-opus-5-5,C2,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,14,0,0.252211,0.252211,1.0,1.0,3,2,34,False,1
+B_haiku_C2_r3,B,2.1.318,claude-opus-5-5,C2,3,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,10,0,0.289528,0.289528,1.0,1.0,3,2,38,False,2
+B_haiku_F1_r1,B,2.1.318,claude-opus-5-5,F1,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,13,0,0.432219,0.432219,1.0,1.0,3,2,55,False,2
+B_haiku_F1_r2,B,2.1.318,claude-opus-5-5,F1,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,11,0,0.318974,0.318974,1.0,1.0,3,2,45,False,2
+B_haiku_F1_r3,B,2.1.318,claude-opus-5-5,F1,3,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,17,0,0.42421,0.42421,1.0,1.0,3,2,58,False,3
+B_haiku_F2_r1,B,2.1.318,claude-opus-5-5,F2,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,15,0,0.423104,0.423104,1.0,1.0,3,2,61,False,4
+B_haiku_F2_r2,B,2.1.318,claude-opus-5-5,F2,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,15,0,0.40584,0.40584,1.0,1.0,3,2,62,False,2
+B_haiku_F2_r3,B,2.1.318,claude-opus-5-5,F2,3,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,19,0,0.357982,0.357982,1.0,1.0,3,2,65,False,2
+B_haiku_M1_r1,B,2.1.318,claude-opus-5-5,M1,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,19,0,0.330395,0.330395,1.0,1.0,3,2,53,False,2
+B_haiku_M1_r2,B,2.1.318,claude-opus-5-5,M1,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,11,0,0.280619,0.280619,1.0,1.0,3,2,39,False,3
+B_haiku_M1_r3,B,2.1.318,claude-opus-5-5,M1,3,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,11,0,0.280359,0.280359,1.0,1.0,3,2,46,False,2
+B_haiku_M2_r1,B,2.1.318,claude-opus-5-5,M2,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,18,0,0.36822,0.36822,1.0,1.0,3,2,46,False,2
+B_haiku_M2_r2,B,2.1.318,claude-opus-5-5,M2,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,14,0,0.234698,0.234698,1.0,1.0,3,2,36,False,1
+B_haiku_M2_r3,B,2.1.318,claude-opus-5-5,M2,3,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,17,0,0.345835,0.345835,1.0,1.0,3,2,49,False,2
+B_haiku_U1_r1,B,2.1.318,claude-opus-5-5,U1,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,34,0,0.483087,0.483087,0.875,0.875,3,2,66,False,2
+B_haiku_U1_r2,B,2.1.318,claude-opus-5-5,U1,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,26,0,0.412313,0.412313,0.875,0.875,3,2,60,False,2
+B_haiku_U1_r3,B,2.1.318,claude-opus-5-5,U1,3,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,34,0,0.435954,0.435954,0.875,0.875,3,2,53,False,1
+B_haiku_U2_r1,B,2.1.318,claude-opus-5-5,U2,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,20,0,0.307832,0.307832,1.0,1.0,3,2,46,False,1
+B_haiku_U2_r2,B,2.1.318,claude-opus-5-5,U2,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,19,0,0.265114,0.265114,1.0,1.0,3,2,37,False,2
+B_haiku_U2_r3,B,2.1.318,claude-opus-5-5,U2,3,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,17,0,0.284542,0.284542,1.0,1.0,3,2,37,False,2
+B_haiku_Z1_r1,B,2.1.318,claude-opus-5-5,Z1,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,19,0,0.437073,0.437073,1.0,1.0,3,2,52,False,2
+B_haiku_Z1_r2,B,2.1.318,claude-opus-5-5,Z1,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,17,0,0.307991,0.307991,1.0,1.0,3,2,44,False,2
+B_haiku_Z1_r3,B,2.1.318,claude-opus-5-5,Z1,3,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,18,0,0.310222,0.310222,1.0,1.0,3,2,56,False,2
+B_haiku_Z2_r1,B,2.1.318,claude-opus-5-5,Z2,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,17,0,0.336307,0.336307,1.0,1.0,3,2,47,False,2
+B_haiku_Z2_r2,B,2.1.318,claude-opus-5-5,Z2,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,24,0,0.554296,0.554296,1.0,1.0,3,2,66,False,6
+B_haiku_Z2_r3,B,2.1.318,claude-opus-5-5,Z2,3,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5,claude-opus-5-5,21,0,0.373985,0.373985,1.0,1.0,3,2,57,False,2
+C_b_r1,C,2.1.318,claude-opus-5-5,M1,1,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,16,0.005356,0.227785,0.233141,1.0,1.0,3,2,34,False,2
+C_b_r2,C,2.1.318,claude-opus-5-5,M1,2,CLAUDE_CODE_SUBAGENT_MODEL=claude-haiku-5-5; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,23,0.008735,0.120724,0.129459,1.0,1.0,3,2,50,False,3
+C_a_r1,C,2.1.318,claude-opus-5-5,M1,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku,claude-opus-5-5,23,0,0.408328,0.408328,1.0,1.0,3,2,66,False,2
+C_a_r2,C,2.1.318,claude-opus-5-5,M1,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku,claude-opus-5-5,19,0,0.337541,0.337541,1.0,1.0,3,2,50,False,2
+C_c_r1,C,2.1.318,claude-opus-5-5,M1,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,35,0.008524,0.176825,0.185349,1.0,1.0,3,2,58,False,4
+C_c_r2,C,2.1.318,claude-opus-5-5,M1,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,36,0.015892,0.097337,0.113229,1.0,1.0,3,2,44,False,2
+D_force_A1_r1,D,2.1.318,claude-opus-5-5,A1,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,27,0.009148,0.19952,0.208669,1.0,1.0,3,2,49,False,3
+D_force_A1_r2,D,2.1.318,claude-opus-5-5,A1,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,35,0.015057,0.154633,0.16969,1.0,1.0,3,2,70,False,3
+D_force_A1_r3,D,2.1.318,claude-opus-5-5,A1,3,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,36,0.016721,0.127094,0.143815,1.0,1.0,3,2,59,False,2
+D_force_A2_r1,D,2.1.318,claude-opus-5-5,A2,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,20,0.006177,0.171821,0.177998,1.0,1.0,3,2,43,False,4
+D_force_A2_r2,D,2.1.318,claude-opus-5-5,A2,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,37,0.009768,0.180826,0.190594,1.0,1.0,3,2,62,False,3
+D_force_A2_r3,D,2.1.318,claude-opus-5-5,A2,3,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,29,0.015601,0.087661,0.103263,1.0,1.0,1,0,59,False,4
+D_force_C1_r1,D,2.1.318,claude-opus-5-5,C1,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,42,0.011141,0.193975,0.205116,1.0,1.0,4,3,70,False,2
+D_force_C1_r2,D,2.1.318,claude-opus-5-5,C1,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,21,0.005804,0.107222,0.113026,1.0,1.0,3,2,37,False,2
+D_force_C1_r3,D,2.1.318,claude-opus-5-5,C1,3,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,22,0.005224,0.094172,0.099396,1.0,1.0,3,2,34,False,1
+D_force_C2_r1,D,2.1.318,claude-opus-5-5,C2,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,25,0.005296,0.134041,0.139337,1.0,1.0,3,2,34,False,2
+D_force_C2_r2,D,2.1.318,claude-opus-5-5,C2,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,35,0.008437,0.158102,0.166539,1.0,1.0,2,2,49,False,5
+D_force_C2_r3,D,2.1.318,claude-opus-5-5,C2,3,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,15,0.004835,0.088129,0.092964,1.0,1.0,3,2,28,False,1
+D_force_F1_r1,D,2.1.318,claude-opus-5-5,F1,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,17,0.008061,0.208758,0.216819,1.0,1.0,3,2,48,False,3
+D_force_F1_r2,D,2.1.318,claude-opus-5-5,F1,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,14,0.006333,0.132042,0.138375,1.0,1.0,3,2,39,False,2
+D_force_F1_r3,D,2.1.318,claude-opus-5-5,F1,3,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,19,0.006956,0.139732,0.146688,1.0,1.0,3,2,40,False,2
+D_force_F2_r1,D,2.1.318,claude-opus-5-5,F2,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,21,0.008584,0.166238,0.174822,1.0,1.0,3,2,48,False,3
+D_force_F2_r2,D,2.1.318,claude-opus-5-5,F2,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,27,0.008895,0.133248,0.142143,1.0,1.0,3,2,53,False,2
+D_force_F2_r3,D,2.1.318,claude-opus-5-5,F2,3,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,19,0.006941,0.138712,0.145652,1.0,1.0,3,2,46,False,2
+D_force_M1_r1,D,2.1.318,claude-opus-5-5,M1,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,22,0.006854,0.157808,0.164662,1.0,1.0,3,2,44,False,2
+D_force_M1_r2,D,2.1.318,claude-opus-5-5,M1,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,17,0.005432,0.102991,0.108423,1.0,1.0,3,2,39,False,2
+D_force_M1_r3,D,2.1.318,claude-opus-5-5,M1,3,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,22,0.006561,0.104853,0.111415,1.0,1.0,3,2,45,False,2
+D_force_M2_r1,D,2.1.318,claude-opus-5-5,M2,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,17,0.006471,0.145699,0.15217,1.0,1.0,3,2,36,False,2
+D_force_M2_r2,D,2.1.318,claude-opus-5-5,M2,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,20,0.005101,0.099821,0.104922,1.0,1.0,3,2,33,False,1
+D_force_M2_r3,D,2.1.318,claude-opus-5-5,M2,3,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,15,0.00517,0.100829,0.105999,1.0,1.0,3,2,36,False,3
+D_force_U1_r1,D,2.1.318,claude-opus-5-5,U1,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,46,0.012985,0.175943,0.188928,1.0,1.0,3,2,65,False,1
+D_force_U1_r2,D,2.1.318,claude-opus-5-5,U1,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,45,0.012838,0.13642,0.149259,1.0,1.0,3,2,57,False,2
+D_force_U1_r3,D,2.1.318,claude-opus-5-5,U1,3,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,51,0.012607,0.153809,0.166416,1.0,1.0,3,2,66,False,2
+D_force_U2_r1,D,2.1.318,claude-opus-5-5,U2,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,19,0.004486,0.142526,0.147012,1.0,1.0,3,2,34,False,2
+D_force_U2_r2,D,2.1.318,claude-opus-5-5,U2,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,21,0.004826,0.099658,0.104483,1.0,1.0,2,2,33,False,3
+D_force_U2_r3,D,2.1.318,claude-opus-5-5,U2,3,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,20,0.004383,0.106513,0.110895,1.0,1.0,2,2,32,False,3
+D_force_Z1_r1,D,2.1.318,claude-opus-5-5,Z1,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,26,0.008356,0.245976,0.254331,1.0,1.0,3,2,53,False,3
+D_force_Z1_r2,D,2.1.318,claude-opus-5-5,Z1,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,28,0.009181,0.116316,0.125497,1.0,1.0,3,2,57,False,2
+D_force_Z1_r3,D,2.1.318,claude-opus-5-5,Z1,3,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,20,0.006269,0.167036,0.173305,1.0,1.0,3,2,45,False,3
+D_force_Z2_r1,D,2.1.318,claude-opus-5-5,Z2,1,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,30,0.010503,0.154017,0.16452,1.0,1.0,3,2,60,False,2
+D_force_Z2_r2,D,2.1.318,claude-opus-5-5,Z2,2,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,22,0.006681,0.282748,0.289429,1.0,1.0,3,2,61,False,9
+D_force_Z2_r3,D,2.1.318,claude-opus-5-5,Z2,3,CLAUDE_CODE_SUBAGENT_MODEL=haiku; CLAUDE_CODE_SUBAGENT_MODEL_FORCE=1,claude-haiku-5-5,29,0.010149,0.115122,0.125271,1.0,1.0,3,2,57,False,2
