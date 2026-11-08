@@ -35,4 +35,6 @@ A widely shared post from February 2026 said Claude Code's built-in Explore suba
 
 Two questions per version in Part A; the version history says which model ran, not how good it was. One machine, one account, one prompt. Settings and defaults may change in later versions.
 
-License: CC BY 4.0. Cite: TokenSave (2026). Which model does Claude Code's Explore subagent run on? 205 runs across 26 versions [Data set]. https://github.com/johnisking/token-cost-by-language/tree/main/claude-subagent-model-by-version
+DOI: [10.5281/zenodo.24048094](https://doi.org/10.5281/zenodo.24048094) · Hugging Face: [JOHNISKING/claude-subagent-model-by-version](https://huggingface.co/datasets/JOHNISKING/claude-subagent-model-by-version) · Page: https://tokensave.app/data/claude-subagent-model-by-version
+
+License: CC BY 4.0. Cite: TokenSave (2026). Claude Code's Explore subagent stopped using Haiku in 2.1.198, and two settings cut the cost by 60%: 205 runs [Data set]. Zenodo. https://doi.org/10.5281/zenodo.24048094
