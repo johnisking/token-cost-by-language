@@ -51,4 +51,4 @@ Per-arm means, then the two primary contrasts with 10,000 bug-level bootstrap re
 
 ## Amendments
 
-(none)
+**Amendment 1 (2026-11-13 02:15 KST, after 30 runs, before any scoring).** The first 21 runs used the subscription's whole 5-hour window in 34 minutes (mean API cost per run: Fable 5.2 $0.78, Fable 5.1 $1.78, Opus 5.5 $0.34), so the full design would have needed about seven more 5-hour windows. The design is cut to Fable 5.2 × 2, Fable 5.1 × 1 and Opus 5.5 × 2 runs per bug (125 runs). The remaining jobs of `jobs.csv` keep their order; jobs for Fable 5.2 rep 3 and Fable 5.1 rep 2 that had not started are dropped (original list kept as `jobs_original.csv`). Ten runs in the dropped cells had already finished (Fable 5.2 rep 3: p1163, mit, mk4051, z6495; Fable 5.1 rep 2: z6496, y802, mk4059, q629, pm1643, d701). They are scored and published but left out of the primary analysis, so every bug has the same number of runs per arm. No outcome or threshold changes. Two runs cut off by the 5-hour limit (00:36) are not scored and were re-run.
