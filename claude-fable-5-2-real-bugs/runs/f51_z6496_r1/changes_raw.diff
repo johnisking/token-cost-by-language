@@ -1,0 +1,131 @@
+diff --git a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+index ece615e..a24680b 100644
+--- a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
++++ b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+@@ -1164,20 +1164,49 @@ describe("toJSONSchema", () => {
+         },
+         "propertyNames": {
+           "enum": [
+-            0,
+-            1,
++            "0",
++            "1",
+           ],
+-          "type": "number",
++          "type": "string",
+         },
+         "required": [
+-          0,
+-          1,
++          "0",
++          "1",
+         ],
+         "type": "object",
+       }
+     `);
+   });
+ 
++  test("record with numeric keys emits string propertyNames", () => {
++    expect(z.toJSONSchema(z.record(z.number(), z.number())).propertyNames).toEqual({
++      type: "string",
++      pattern: "^-?\\d+(?:\\.\\d+)?$",
++    });
++    // numeric range keywords have no string form and are dropped; integer keys get the integer pattern
++    expect(z.toJSONSchema(z.record(z.int().min(0), z.number())).propertyNames).toEqual({
++      type: "string",
++      pattern: "^-?\\d+$",
++    });
++    expect(z.toJSONSchema(z.record(z.union([z.literal(1), z.literal("a")]), z.number()))).toMatchObject({
++      propertyNames: {
++        anyOf: [
++          { type: "string", const: "1" },
++          { type: "string", const: "a" },
++        ],
++      },
++      required: ["1", "a"],
++    });
++    // a reused key type keeps its numeric schema elsewhere
++    const key = z.number();
++    const json = z.toJSONSchema(z.object({ a: key, b: z.record(key, z.string()) }));
++    expect(json.properties!.a).toEqual({ type: "number" });
++    expect((json.properties!.b as any).propertyNames).toEqual({
++      type: "string",
++      pattern: "^-?\\d+(?:\\.\\d+)?$",
++    });
++  });
++
+   test("strict record with regex key uses propertyNames", () => {
+     const schema = z.record(z.string().regex(/^label:[a-z]{2}$/), z.string());
+ 
+diff --git a/packages/zod/src/v4/core/json-schema-processors.ts b/packages/zod/src/v4/core/json-schema-processors.ts
+index 8258fca..019e8e6 100644
+--- a/packages/zod/src/v4/core/json-schema-processors.ts
++++ b/packages/zod/src/v4/core/json-schema-processors.ts
+@@ -1,5 +1,6 @@
+ import type * as checks from "./checks.js";
+ import type * as JSONSchema from "./json-schema.js";
++import * as regexes from "./regexes.js";
+ import type { $ZodRegistry } from "./registries.js";
+ import type * as schemas from "./schemas.js";
+ import {
+@@ -475,6 +476,34 @@ export const tupleProcessor: Processor<schemas.$ZodTuple> = (schema, ctx, _json,
+   if (typeof maximum === "number") json.maxItems = maximum;
+ };
+ 
++// property names are always strings, and record parsing matches a numeric-string key against Number(key), so a numeric key schema is rewritten to the string form it accepts. returns a copy, since the input may be shared with other users of the key type
++function stringifyPropertyNames(json: JSONSchema.BaseSchema): JSONSchema.BaseSchema {
++  let out = json;
++  const copy = () => {
++    if (out === json) out = { ...json };
++    return out;
++  };
++  for (const key of ["anyOf", "oneOf", "enum"] as const) {
++    const arr = json[key] as (JSONSchema.BaseSchema | string | number | boolean | null)[] | undefined;
++    if (!Array.isArray(arr)) continue;
++    const mapped = arr.map((o) =>
++      typeof o === "number" ? String(o) : typeof o === "object" && o ? stringifyPropertyNames(o) : o
++    );
++    if (mapped.some((o, i) => o !== arr[i])) (copy() as any)[key] = mapped;
++  }
++  if (typeof json.const === "number") copy().const = String(json.const);
++  if (json.type === "number" || json.type === "integer") {
++    const o = copy();
++    // numeric range keywords have no string form
++    for (const key of ["minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum", "multipleOf"]) delete o[key];
++    o.type = "string";
++    // an enum or const already pins the key down, so the pattern is only needed for an open number
++    if (json.const === undefined && !json.enum)
++      o.pattern = (json.type === "integer" ? regexes.integer : regexes.number).source;
++  }
++  return out;
++}
++
+ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _json, params) => {
+   const json = _json as JSONSchema.ObjectSchema;
+   const def = schema._zod.def as schemas.$ZodRecordDef;
+@@ -498,10 +527,12 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+   } else {
+     // Default behavior: use propertyNames + additionalProperties
+     if (ctx.target === "draft-07" || ctx.target === "draft-2020-12") {
+-      json.propertyNames = process(def.keyType, ctx as any, {
+-        ...params,
+-        path: [...params.path, "propertyNames"],
+-      });
++      json.propertyNames = stringifyPropertyNames(
++        process(def.keyType, ctx as any, {
++          ...params,
++          path: [...params.path, "propertyNames"],
++        })
++      );
+     }
+     json.additionalProperties = process(def.valueType, ctx as any, {
+       ...params,
+@@ -519,7 +550,7 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+     );
+ 
+     if (validKeyValues.length > 0) {
+-      json.required = validKeyValues as string[];
++      json.required = validKeyValues.map(String);
+     }
+   }
+ };

@@ -1,0 +1,49 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..add2439 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -18,7 +18,12 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+   const marker = state.src.slice(start, pos)
+   const openerLength = marker.length
+ 
+-  if (state.backticksScanned && (state.backticks[openerLength] || 0) <= start) {
++  // The cache only knows about backtick runs located after the position the
++  // full scan started from, so it can't be used for earlier openers (those are
++  // revisited when a link/image label was probed in validation mode and failed).
++  if (state.backticksScanned &&
++      start >= state.backticksScanStart &&
++      (state.backticks[openerLength] || 0) <= start) {
+     if (!silent) state.pending += marker
+     state.pos += openerLength
+     return true
+@@ -50,10 +55,16 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+     }
+ 
+     // Some different length found, put it in cache as upper limit of where closer can be found
+-    state.backticks[closerLength] = matchStart
++    // (keep the furthest one, scans are not always performed in order)
++    if ((state.backticks[closerLength] || 0) < matchStart) {
++      state.backticks[closerLength] = matchStart
++    }
+   }
+ 
+   // Scanned through the end, didn't find anything
++  if (!state.backticksScanned || start < state.backticksScanStart) {
++    state.backticksScanStart = start
++  }
+   state.backticksScanned = true
+ 
+   if (!silent) state.pending += marker
+diff --git a/src/rules_inline/state_inline.ts b/src/rules_inline/state_inline.ts
+index fbba926..bbe65fc 100644
+--- a/src/rules_inline/state_inline.ts
++++ b/src/rules_inline/state_inline.ts
+@@ -36,6 +36,8 @@ class StateInline {
+   // backtick length => last seen position
+   backticks: Record<number, number> = {}
+   backticksScanned = false
++  // position the full scan started from; the cache above is complete only after it
++  backticksScanStart = 0
+ 
+   // Counter used to disable inline linkify-it execution
+   // inside <a> and markdown links

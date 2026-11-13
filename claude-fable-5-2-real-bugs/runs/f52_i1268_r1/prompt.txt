@@ -1,0 +1,19 @@
+The current folder is a checkout of more-itertools, the Python library (sources in more_itertools/, tests in tests/). A user reported the bug below. Find the cause in the source code and fix it in more_itertools/, without breaking any other behaviour. Dependencies are already installed, and you may run commands in this folder to check your work, for example .venv/Scripts/python -m pytest -q tests (a virtual environment with pytest is in .venv). You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+seekable(..., maxlen=0): peek() and bool() drop items
+
+seekable(..., maxlen=0) is supposed to disable the history cache (elements() stays empty) while still iterating the source. peek() and bool() currently consume an item and it is lost:
+
+from more_itertools import seekable
+s = seekable([10, 20, 30], maxlen=0)
+s.peek()
+list(s)  # [20, 30]  - 10 is gone
+
+s = seekable([10, 20, 30], maxlen=0)
+bool(s)  # True
+list(s)  # [20, 30]  - 10 is gone
+
+The default maxlen=None is fine (peek is stable; bool does not consume).
+"""

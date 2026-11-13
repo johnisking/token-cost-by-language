@@ -1,0 +1,20 @@
+The current folder is a checkout of marked, the Markdown parser (TypeScript sources in src/, tests in test/). A user reported the bug below. Find the cause in the source code and fix it in src/, without breaking any other behaviour. Dependencies are already installed in node_modules, and you may run commands in this folder to check your work, for example node esbuild.config.js (builds lib/, which the tests import), then node --test test/run-spec-tests.js and node --test test/unit/marked.test.js. You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+Emphasis is lost in the text of a rejected reference link
+
+Expectation (what commonmark 0.31.2 returns):
+
+[foo *bar [baz](/url) qux*][ref]
+
+[ref]: /uri
+
+<p>[foo <em>bar <a href="/url">baz</a> qux</em>]<a href="/uri">ref</a></p>
+
+Result in marked:
+
+<p>[foo *bar <a href="/url">baz</a> qux*]<a href="/uri">ref</a></p>
+
+The asterisks are printed as text. The reference link and the inner link are both right, only the emphasis is gone. Same with _, with **, and when the inner link is a reference link instead of an inline one, which is CommonMark example 533. The trigger is ordinary prose: a reference link whose text happens to hold another link.
+"""

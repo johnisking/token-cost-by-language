@@ -1,0 +1,21 @@
+The current folder is a checkout of tomlkit, the style-preserving TOML library for Python (sources in tomlkit/, tests in tests/). A user reported the bug below. Find the cause in the source code and fix it in tomlkit/, without breaking any other behaviour. Dependencies are already installed, and you may run commands in this folder to check your work, for example .venv/Scripts/python -m pytest -q --ignore=tests/test_toml_tests.py tests (a virtual environment with pytest is in .venv). You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+Emitting underscores in integers
+
+TOML allows an underscore in an integer as long as there is a digit on each side of it (https://toml.io/en/v1.0.0#integer):
+
+  int5 = 1_000
+  int6 = 5_349_221
+  int7 = 53_49_221  # Indian number system grouping
+  int8 = 1_2_3_4_5  # VALID but discouraged
+
+I'd like to be able to emit an underscore-formatted integer when dumping a TOML file, by supplying a _-formatted integer as a string and having tomlkit render it as a number, without quotation marks. Today the grouping is lost:
+
+>>> import tomlkit
+>>> tomlkit.integer("1_000").as_string()
+'1000'
+
+Expected: tomlkit.integer("1_000").as_string() == '1_000' (and int() of it is still 1000), so that doc["n"] = tomlkit.integer("1_000"); tomlkit.dumps(doc) gives 'n = 1_000\n'.
+"""

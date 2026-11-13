@@ -1,0 +1,25 @@
+diff --git a/tomlkit/source.py b/tomlkit/source.py
+index b2e9caa..f7cbac8 100644
+--- a/tomlkit/source.py
++++ b/tomlkit/source.py
+@@ -231,10 +231,17 @@ class Source(str):
+ 
+     def _to_linecol(self) -> tuple[int, int]:
+         cur = 0
+-        for i, line in enumerate(self.splitlines()):
+-            if cur + len(line) + 1 > self.idx:
++        for i, line in enumerate(self.splitlines(keepends=True)):
++            # Width of the line including its terminator, which may be more
++            # than one character long (e.g. "\r\n"). An unterminated last
++            # line is given a virtual terminator so EOF maps onto it.
++            width = len(line)
++            if len(line.splitlines()[0]) == width:
++                width += 1
++
++            if cur + width > self.idx:
+                 return (i + 1, self.idx - cur)
+ 
+-            cur += len(line) + 1
++            cur += width
+ 
+         return len(self.splitlines()), 0

@@ -1,0 +1,47 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index c128bc9..dc244d0 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -3718,7 +3718,18 @@ def ichunked(iterable, n):
+     [8, 9, 10, 11]
+ 
+     """
++    # Validate eagerly, like chunked does.
++    if n is not None and n < 0:
++        raise ValueError('n must be at least 0')
++
++    return _ichunked(iterable, n)
++
++
++def _ichunked(iterable, n):
+     iterator = iter(iterable)
++    if n == 0:
++        # Like chunked: yield nothing, and don't consume from the source.
++        return
+     for first in iterator:
+         rest = islice(iterator, n - 1)
+         cache, cacher = tee(rest)
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 50fab9c..6af677f 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -4537,6 +4537,19 @@ class IchunkedTests(TestCase):
+         expected = ['0123', '4567', '89']
+         self.assertEqual(actual, expected)
+ 
++    def test_zero(self):
++        self.assertEqual(list(mi.ichunked(['a', 'b', 'c'], 0)), [])
++        self.assertEqual(list(mi.ichunked([], 0)), [])
++        # Nothing is consumed from the source, matching chunked
++        it = iter('abc')
++        self.assertEqual(list(mi.ichunked(it, 0)), [])
++        self.assertEqual(list(it), ['a', 'b', 'c'])
++
++    def test_negative(self):
++        for iterable in (['a', 'b', 'c'], []):
++            with self.assertRaisesRegex(ValueError, 'n must be at least 0'):
++                mi.ichunked(iterable, -1)
++
+     def test_zero(self):
+         iterable = []
+         actual = [list(c) for c in mi.ichunked(iterable, 0)]

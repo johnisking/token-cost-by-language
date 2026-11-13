@@ -1,0 +1,143 @@
+diff --git a/markdown/htmlparser.py b/markdown/htmlparser.py
+index d92dc0d..de63ae0 100644
+--- a/markdown/htmlparser.py
++++ b/markdown/htmlparser.py
+@@ -91,6 +91,8 @@ htmlparser.locatetagend = re.compile(r"""
+ # Match a blank line at the start of a block of text (two newlines).
+ # The newlines may be preceded by additional whitespace.
+ blank_line_re = re.compile(r'^([ ]*\n){2}')
++# Match a blank line anywhere within a block of text.
++blank_line_in_data_re = re.compile(r'\n[ \t]*\n')
+ 
+ 
+ class _HTMLParser(htmlparser.HTMLParser):
+@@ -146,6 +148,8 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         self.inraw = False
+         self.intail = False
+         self.stack: list[str] = []  # When `inraw==True`, stack contains a list of tags
++        # Inline (non-raw) tags which are currently open within a paragraph.
++        self.inline_stack: list[str] = []
+         self._cache: list[str] = []
+         self.cleandoc: list[str] = []
+         self.lineno_start_cache = [0]
+@@ -217,6 +221,7 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         if self.md.is_block_level(tag) and (self.intail or (self.at_line_start() and not self.inraw)):
+             # Started a new raw block. Prepare stack.
+             self.inraw = True
++            self.inline_stack = []
+             self.cleandoc.append('\n')
+ 
+         text = self.get_starttag_text()
+@@ -225,6 +230,10 @@ class HTMLExtractor(htmlparser.HTMLParser):
+             self._cache.append(text)
+         else:
+             self.cleandoc.append(text)
++            if tag not in self.CDATA_CONTENT_ELEMENTS:
++                # Track open inline tags so that nested block-level items (such as
++                # comments) are not split out of the paragraph.
++                self.inline_stack.append(tag)
+             if tag in self.CDATA_CONTENT_ELEMENTS:
+                 # This is presumably a standalone tag in a code span (see #1036).
+                 self.clear_cdata_mode()
+@@ -255,6 +264,11 @@ class HTMLExtractor(htmlparser.HTMLParser):
+                 self._cache = []
+         else:
+             self.cleandoc.append(text)
++            if tag in self.inline_stack:
++                # Remove tag from inline stack
++                while self.inline_stack:
++                    if self.inline_stack.pop() == tag:
++                        break
+ 
+     def handle_data(self, data: str):
+         if self.intail and '\n' in data:
+@@ -262,6 +276,9 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         if self.inraw:
+             self._cache.append(data)
+         else:
++            if self.inline_stack and blank_line_in_data_re.search(data):
++                # A blank line ends the paragraph and any inline tags left open within it.
++                self.inline_stack = []
+             self.cleandoc.append(data)
+ 
+     def handle_empty_tag(self, data: str, is_block: bool):
+@@ -269,7 +286,8 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         if self.inraw or self.intail:
+             # Append this to the existing raw block
+             self._cache.append(data)
+-        elif self.at_line_start() and is_block:
++        elif self.at_line_start() and is_block and not self.inline_stack:
++            # Not nested within an open inline raw HTML tag (such as `<picture>`).
+             # Handle this as a standalone raw block
+             if blank_line_re.match(self.rawdata[self.line_offset + self.offset + len(data):]):
+                 # Preserve blank line after tag in raw block.
+diff --git a/tests/test_syntax/blocks/test_html_blocks.py b/tests/test_syntax/blocks/test_html_blocks.py
+index 1f2f877..016163e 100644
+--- a/tests/test_syntax/blocks/test_html_blocks.py
++++ b/tests/test_syntax/blocks/test_html_blocks.py
+@@ -1004,6 +1004,65 @@ class TestHTMLBlocks(TestCase):
+             )
+         )
+ 
++    def test_comment_nested_in_inline_html(self):
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                <picture>
++                  <!-- TODO: what the heck? -->
++                  <source media="(prefers-color-scheme: dark)" srcset="../images/example.svg">
++                  <img alt="Example" src="../images/example.svg">
++                </picture>
++                """
++            ),
++            self.dedent(
++                """
++                <p><picture>
++                  <!-- TODO: what the heck? -->
++                  <source media="(prefers-color-scheme: dark)" srcset="../images/example.svg">
++                  <img alt="Example" src="../images/example.svg">
++                </picture></p>
++                """
++            )
++        )
++
++    def test_comment_after_closed_inline_html(self):
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                <span>foo</span>
++                <!-- comment -->
++                bar
++                """
++            ),
++            self.dedent(
++                """
++                <p><span>foo</span></p>
++                <!-- comment -->
++                <p>bar</p>
++                """
++            )
++        )
++
++    def test_comment_after_unclosed_inline_html_and_blank_line(self):
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                <span>foo
++
++                <!-- comment -->
++                bar
++                """
++            ),
++            self.dedent(
++                """
++                <p><span>foo</p>
++                <!-- comment -->
++                <p>bar</p>
++                """
++            )
++        )
++
+     def test_comment_in_code_block(self):
+         self.assertMarkdownRenders(
+             '    <!-- *foo* -->',

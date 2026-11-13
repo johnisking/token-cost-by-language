@@ -1,0 +1,17 @@
+The current folder is a checkout of pyparsing, the Python parsing library (sources in pyparsing/, tests in tests/). A user reported the bug below. Find the cause in the source code and fix it in pyparsing/, without breaking any other behaviour. Dependencies are already installed in a virtual environment in .venv, and you may run commands in this folder to check your work, for example .venv/Scripts/python -m pytest -q tests/test_unit.py -k Repeater. You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+match_previous_expr fails on nested and repeated matches
+
+match_previous_expr only works for the simplest case. With an opening tag {name} matched by an expression and the closing tag {/name} built with match_previous_expr from it:
+
+| input | expected | actual |
+|---|---|---|
+| {a}xx{/a} | match | match |
+| {a}{b}xx{/b}{/a} | match | fails |
+| two sequential pairs, a:a b:b under OneOrMore | match | fails |
+| reparsing valid input after one failed parse | match | fails |
+
+Once the expression has matched once, later matches fail, and a parser that failed once on bad input no longer accepts valid input.
+"""

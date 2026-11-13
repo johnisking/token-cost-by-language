@@ -1,0 +1,231 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index 5dc2b32..8d7d68a 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -2334,14 +2334,7 @@ class numeric_range(Sequence):
+             return self._start > self._stop
+ 
+     def __contains__(self, elem):
+-        if self._growing:
+-            if self._start <= elem < self._stop:
+-                return (elem - self._start) % self._step == self._zero
+-        else:
+-            if self._start >= elem > self._stop:
+-                return (self._start - elem) % (-self._step) == self._zero
+-
+-        return False
++        return self._find(elem) is not None
+ 
+     def __eq__(self, other):
+         # numeric_range object equality is intended to mirror the built-in range
+@@ -2418,9 +2411,94 @@ class numeric_range(Sequence):
+         distance = stop - start
+         if distance <= self._zero:
+             return 0
+-        else:  # distance > 0 and step > 0: regular euclidean division
++
++        # distance > 0 and step > 0: regular euclidean division. This is
++        # exact for exact types, but only an estimate for inexact ones
++        # (e.g. floats), where rounding can make it disagree with the items
++        # actually produced.
++        try:
+             q, r = divmod(distance, step)
+-            return int(q) + int(r != self._zero)
++            n = int(q) + int(r != self._zero)
++        except (OverflowError, ValueError):
++            n = 0
++
++        # The length is the number of leading indexes whose item lies before
++        # stop. Items are monotonic in the index, so verify the estimate
++        # and, if it is off, search for the boundary.
++        if n > 0 and not self._in_bounds(n - 1):
++            lo, hi = 0, n - 1
++        elif self._in_bounds(n):
++            lo = n + 1
++            hi = 2 * lo
++            while self._in_bounds(hi):
++                lo = hi + 1
++                hi *= 2
++        else:
++            return n
++
++        # Invariant: items below lo are in bounds, the item at hi is not.
++        while lo < hi:
++            mid = (lo + hi) // 2
++            if self._in_bounds(mid):
++                lo = mid + 1
++            else:
++                hi = mid
++        return lo
++
++    def _in_bounds(self, i):
++        # Whether the item at non-negative index i comes before stop.
++        try:
++            value = self._start + i * self._step
++        except OverflowError:
++            return False
++        if self._growing:
++            return value < self._stop
++        else:
++            return value > self._stop
++
++    def _find(self, value):
++        # The first index of value, or None if it's not an item of the range.
++        start = self._start
++        step = self._step
++        if self._growing:
++            if not (start <= value < self._stop):
++                return None
++            distance, abs_step = value - start, step
++        else:
++            if not (start >= value > self._stop):
++                return None
++            distance, abs_step = start - value, -step
++
++        n = self._len
++
++        # Fast path, always sufficient for exact types.
++        try:
++            q, r = divmod(distance, abs_step)
++            q = int(q)
++        except (OverflowError, ValueError):
++            pass
++        else:
++            if (
++                r == self._zero
++                and 0 <= q < n
++                and start + q * step == value
++                and (q == 0 or start + (q - 1) * step != value)
++            ):
++                return q
++
++        # Inexact arithmetic (e.g. floats): items are monotonic in the index,
++        # so bisect for the first item that is not before value.
++        before = lt if self._growing else gt
++        lo, hi = 0, n
++        while lo < hi:
++            mid = (lo + hi) // 2
++            if before(start + mid * step, value):
++                lo = mid + 1
++            else:
++                hi = mid
++        if lo < n and start + lo * step == value:
++            return lo
++        return None
+ 
+     def __reduce__(self):
+         return numeric_range, (self._start, self._stop, self._step)
+@@ -2433,30 +2511,17 @@ class numeric_range(Sequence):
+         )
+ 
+     def __reversed__(self):
+-        # Empty iterator
+-        try:
+-            start = self._get_by_index(-1)
+-        except IndexError:
+-            return iter([])
+-
+-        return iter(
+-            numeric_range(start, self._start - self._step, -self._step)
+-        )
++        # Produce exactly the items of forward iteration, in reverse order
++        start, step = self._start, self._step
++        return (start + i * step for i in range(self._len - 1, -1, -1))
+ 
+     def count(self, value):
+         return int(value in self)
+ 
+     def index(self, value):
+-        if self._growing:
+-            if self._start <= value < self._stop:
+-                q, r = divmod(value - self._start, self._step)
+-                if r == self._zero:
+-                    return int(q)
+-        else:
+-            if self._start >= value > self._stop:
+-                q, r = divmod(self._start - value, -self._step)
+-                if r == self._zero:
+-                    return int(q)
++        i = self._find(value)
++        if i is not None:
++            return i
+ 
+         raise ValueError(f"{value} is not in numeric range")
+ 
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 7440f5a..1a590f8 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -3086,6 +3086,72 @@ class NumericRangeTests(TestCase):
+         ]:
+             self.assertEqual(c, mi.numeric_range(*args).count(v))
+ 
++    def test_float_self_consistency(self):
++        # len(), indexing, `in`, index(), count() and reversed() must agree
++        # with the items produced by iteration, despite float rounding
++        rng = Random(0)
++        cases = [
++            (-8.732, -13.532, -2.4),
++            (-69.37276490678778, -29.8339073344664, 4.942357196540172),
++            (0.0, 1.0, 0.1),
++            (1.0, 0.0, -0.1),
++            (0.0, 2.1, 0.7),
++        ]
++        for _ in range(500):
++            step = rng.choice([1, -1]) * rng.uniform(0.01, 10)
++            cases.append((rng.uniform(-50, 50), rng.uniform(-50, 50), step))
++            cases.append(
++                (
++                    round(rng.uniform(-50, 50), 1),
++                    round(rng.uniform(-50, 50), 1),
++                    round(step, 1) or 0.1,
++                )
++            )
++
++        for args in cases:
++            with self.subTest(args=args):
++                r = mi.numeric_range(*args)
++                items = list(r)
++                self.assertEqual(len(r), len(items))
++                self.assertEqual(list(reversed(r)), items[::-1])
++                self.assertNotIn(args[1], r)
++                self.assertRaises(IndexError, lambda: r[len(items)])
++                for i, item in enumerate(items):
++                    self.assertEqual(r[i], item)
++                    self.assertIn(item, r)
++                    self.assertEqual(r.index(item), i)
++                    self.assertEqual(r.count(item), 1)
++
++    def test_float_len_examples(self):
++        r = mi.numeric_range(-8.732, -13.532, -2.4)
++        self.assertEqual(len(r), 2)
++        self.assertRaises(IndexError, lambda: r[2])
++
++        r = mi.numeric_range(
++            -69.37276490678778, -29.8339073344664, 4.942357196540172
++        )
++        self.assertEqual(len(r), 9)
++        self.assertEqual(r[8], list(r)[8])
++
++        r = mi.numeric_range(0.0, 1.0, 0.1)
++        self.assertEqual(r.index(r[3]), 3)
++        self.assertNotIn(0.3, r)
++        self.assertNotIn(0.05, r)
++
++    def test_datetime_near_max(self):
++        start = datetime(9999, 12, 29)
++        step = timedelta(days=1)
++        r = mi.numeric_range(start, datetime.max, step)
++        self.assertEqual(len(r), 3)
++        self.assertEqual(
++            list(reversed(r)), [start + 2 * step, start + step, start]
++        )
++        self.assertEqual(r[2], start + 2 * step)
++        self.assertRaises(IndexError, lambda: r[3])
++        self.assertIn(start + step, r)
++        self.assertEqual(r.index(start + 2 * step), 2)
++        self.assertNotIn(start + step / 2, r)
++
+     def test_index(self):
+         for args, v, i in [
+             ((7.0,), 0.0, 0),

@@ -1,0 +1,137 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 9ba9df6..3b040ca 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -300,6 +300,38 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+     return tokens;
+   }
+ 
++  /**
++   * Whether a `[label][ref]` / `[ref]` match found by `reflinkSearch` will
++   * become a link token, and so must be hidden from the em/strong scan.
++   * A link whose label itself contains a link is rejected by the tokenizer
++   * (links may not contain other links), so its label must stay visible
++   * for emphasis to be found in it. Images are never rejected.
++   */
++  private isMaskableReflink(match0: string): boolean {
++    const refStart = match0.lastIndexOf('[');
++    if (!Object.hasOwn(this.tokens.links, match0.slice(refStart + 1, -1))) {
++      return false;
++    }
++    if (match0.startsWith('!') || refStart === 0) {
++      return true;
++    }
++    const label = match0.slice(1, refStart - 1);
++    if (!label.includes('[')) {
++      return true;
++    }
++    for (const inner of label.matchAll(this.tokenizer.rules.inline.linkSearch)) {
++      // `![a](/b)` is an image, not a link, unless the `!` is escaped
++      if (label[inner.index - 1] !== '!' || label[inner.index - 2] === '\\') {
++        return false;
++      }
++    }
++    // a resolvable inner reflink yields a link token whether or not it is
++    // itself rejected, since a rejected link leaves its own inner link behind
++    const innerRefs = label.match(this.tokenizer.rules.inline.reflinkSearch) ?? [];
++    return !innerRefs.some(inner => !inner.startsWith('!')
++      && Object.hasOwn(this.tokens.links, inner.slice(inner.lastIndexOf('[') + 1, -1)));
++  }
++
+   /**
+    * Lexing/Compiling
+    */
+@@ -311,7 +343,7 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+     // Mask out reflinks
+     if (this.tokens.links && src.includes('[')) {
+       maskedSrc = maskedSrc.replace(this.tokenizer.rules.inline.reflinkSearch, match0 =>
+-        Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))
++        this.isMaskableReflink(match0)
+           ? '[' + 'a'.repeat(match0.length - 2) + ']'
+           : match0);
+     }
+diff --git a/src/rules.ts b/src/rules.ts
+index aeb880c..b652d95 100644
+--- a/src/rules.ts
++++ b/src/rules.ts
+@@ -303,9 +303,14 @@ const _punctuationGfmStrongEm = /(?!~)[\p{P}\p{S}]/u;
+ const _punctuationOrSpaceGfmStrongEm = /(?!~)[\s\p{P}\p{S}]/u;
+ const _notPunctuationOrSpaceGfmStrongEm = /(?:[^\s\p{P}\p{S}]|~)/u;
+ 
++const _inlineLinkSearch = /\[(?:[^\[\]`]|(?<a>`+)[^`]+\k<a>(?!`))*?\]\((?:\\[\s\S]|[^\\\(\)]|\((?:\\[\s\S]|[^\\\(\)])*\))*\)/;
++
++// used to detect an inline link nested in a reflink label
++const linkSearch = edit(_inlineLinkSearch, 'g').getRegex();
++
+ // sequences em should skip over [title](link), `code`, <html>
+ const blockSkip = edit(/link|precode-code|html/, 'g')
+-  .replace('link', /\[(?:[^\[\]`]|(?<a>`+)[^`]+\k<a>(?!`))*?\]\((?:\\[\s\S]|[^\\\(\)]|\((?:\\[\s\S]|[^\\\(\)])*\))*\)/)
++  .replace('link', _inlineLinkSearch)
+   .replace('precode-', supportsLookbehind ? '(?<!`)()' : '(^^|[^`])')
+   .replace('code', /(?<b>`+)[^`]+\k<b>(?!`)/)
+   .replace('html', /<(?! )[^<>]*?>/)
+@@ -484,6 +489,7 @@ const inlineNormal = {
+   emStrongRDelimUnd,
+   escape,
+   link,
++  linkSearch,
+   nolink,
+   punctuation,
+   reflink,
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 4e348a4..92b13ab 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index 47d0a22..a2bf8ca 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/unit/marked.test.js b/test/unit/marked.test.js
+index 5d1449b..ece1a6d 100644
+--- a/test/unit/marked.test.js
++++ b/test/unit/marked.test.js
+@@ -69,6 +69,24 @@ describe('marked unit', () => {
+         '<p>[a &amp; b <pre> <a href="/uri">x</a>](/uri)</p>',
+       );
+     });
++
++    it('should keep emphasis in the text of a rejected reference link', () => {
++      // a resolvable reflink is masked out before the em/strong scan; one that
++      // holds another link is rejected later, so its text must not be masked
++      const cases = [
++        ['[foo *bar [baz](/url) qux*][ref]\n\n[ref]: /uri', '<p>[foo <em>bar <a href="/url">baz</a> qux</em>]<a href="/uri">ref</a></p>'],
++        ['[foo _bar [baz](/url) qux_][ref]\n\n[ref]: /uri', '<p>[foo <em>bar <a href="/url">baz</a> qux</em>]<a href="/uri">ref</a></p>'],
++        ['[foo **bar [baz][ref] qux**][ref]\n\n[ref]: /uri', '<p>[foo <strong>bar <a href="/uri">baz</a> qux</strong>]<a href="/uri">ref</a></p>'],
++        ['[*foo [bar][ref]*][ref]\n\n[ref]: /uri', '<p>[<em>foo <a href="/uri">bar</a></em>]<a href="/uri">ref</a></p>'],
++        // images are not rejected, so these stay links / images
++        ['[foo *bar ![baz](/url) qux*][ref]\n\n[ref]: /uri', '<p><a href="/uri">foo <em>bar <img src="/url" alt="baz"> qux</em></a></p>'],
++        ['![foo *bar [baz](/url) qux*][ref]\n\n[ref]: /uri', '<p><img src="/uri" alt="foo bar [baz](/url) qux"></p>'],
++        ['*a [b][ref] c*\n\n[ref]: /uri', '<p><em>a <a href="/uri">b</a> c</em></p>'],
++      ];
++      for (const [md, html] of cases) {
++        assert.strictEqual(marked.parse(md).trim(), html, md);
++      }
++    });
+   });
+ 
+   describe('use extension', () => {

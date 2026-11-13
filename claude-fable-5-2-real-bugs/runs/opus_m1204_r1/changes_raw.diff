@@ -1,0 +1,21 @@
+diff --git a/src/markdownit.ts b/src/markdownit.ts
+index 4dc2ce9..f2d0c96 100644
+--- a/src/markdownit.ts
++++ b/src/markdownit.ts
+@@ -162,6 +162,16 @@ class MarkdownIt {
+       }
+     }
+ 
++    if (parsed.hostname && parsed.hostname.indexOf(':') !== -1) {
++      // IPv6 address literal: brackets around the host must be kept as is
++      // (WHATWG URL requires `[` and `]`), so encode the other parts separately.
++      const host = parsed.hostname
++      const before = mdurl.format({ ...parsed, hostname: '', port: null, pathname: null, search: null, hash: null })
++      const after = mdurl.format({ ...parsed, protocol: null, slashes: false, auth: null, hostname: '' })
++
++      return mdurl.encode(before) + '[' + mdurl.encode(host) + ']' + mdurl.encode(after)
++    }
++
+     return mdurl.encode(mdurl.format(parsed))
+   }
+ 

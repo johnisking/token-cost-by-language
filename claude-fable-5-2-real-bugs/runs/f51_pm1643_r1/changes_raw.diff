@@ -1,0 +1,191 @@
+diff --git a/docs/changelog.md b/docs/changelog.md
+index c99a7c3..03561ea 100644
+--- a/docs/changelog.md
++++ b/docs/changelog.md
+@@ -18,6 +18,7 @@ See the [Contributing Guide](contributing.md) for details.
+ * Improve ancestor handling in the inline `Treeprocessor` (#1646).
+ * Fix issue where inline HTML attributes were rejected if they had `<` or `>` in the attribute (#1647).
+ * Fix issue where an unterminated end tag (`</foo`) could cause all remaining content to be dropped (#1651).
++* Fix issue where an HTML comment nested in inline raw HTML split the surrounding paragraph (#1643).
+ 
+ ## [3.11.0] - 2026-09-25
+ 
+diff --git a/markdown/htmlparser.py b/markdown/htmlparser.py
+index d92dc0d..d3448ca 100644
+--- a/markdown/htmlparser.py
++++ b/markdown/htmlparser.py
+@@ -193,6 +193,23 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         # Confirm up to first 3 chars are whitespace
+         return self.rawdata[self.line_offset:self.line_offset + self.offset].strip() == ''
+ 
++    def at_block_start(self) -> bool:
++        """
++        Returns True if the content already extracted to `cleandoc` ends at a block boundary.
++
++        That is, `cleandoc` is empty or ends with a blank line (ignoring any indentation
++        on the current line). Used to distinguish an item which starts a new block from one
++        which is a continuation of a paragraph (e.g. a comment nested in inline raw HTML).
++        """
++        text = ''
++        for item in reversed(self.cleandoc):
++            text = item + text
++            if text.strip(' \t\n'):
++                # Found non-whitespace content preceding the current line.
++                return text.rstrip(' \t').endswith('\n\n')
++        # Nothing but whitespace precedes the current line.
++        return True
++
+     def get_endtag_text(self, tag: str) -> str:
+         """
+         Returns the text of the end tag.
+@@ -297,18 +314,20 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         self.handle_empty_tag('&{};'.format(name), is_block=False)
+ 
+     def handle_comment(self, data: str):
+-        # Check if the comment is unclosed, if so, we need to override position
+-        self.handle_empty_tag('<!--{}-->'.format(data), is_block=True)
++        # Comments (and the declarations, etc. below) are only block-level when they
++        # start a new block. If they are within a paragraph (e.g. nested in inline raw
++        # HTML), they are passed through inline so as not to split the paragraph.
++        self.handle_empty_tag('<!--{}-->'.format(data), is_block=self.at_block_start())
+ 
+     def handle_decl(self, data: str):
+-        self.handle_empty_tag('<!{}>'.format(data), is_block=True)
++        self.handle_empty_tag('<!{}>'.format(data), is_block=self.at_block_start())
+ 
+     def handle_pi(self, data: str):
+-        self.handle_empty_tag('<?{}?>'.format(data), is_block=True)
++        self.handle_empty_tag('<?{}?>'.format(data), is_block=self.at_block_start())
+ 
+     def unknown_decl(self, data: str):
+         end = ']]>' if data.startswith('CDATA[') else ']>'
+-        self.handle_empty_tag('<![{}{}'.format(data, end), is_block=True)
++        self.handle_empty_tag('<![{}{}'.format(data, end), is_block=self.at_block_start())
+ 
+     def parse_pi(self, i: int) -> int:
+         if self.at_line_start() or self.intail:
+diff --git a/tests/test_syntax/blocks/test_html_blocks.py b/tests/test_syntax/blocks/test_html_blocks.py
+index 1f2f877..14ded5e 100644
+--- a/tests/test_syntax/blocks/test_html_blocks.py
++++ b/tests/test_syntax/blocks/test_html_blocks.py
+@@ -1004,6 +1004,120 @@ class TestHTMLBlocks(TestCase):
+             )
+         )
+ 
++    def test_comment_in_inline_raw_html(self):
++        # A comment nested in inline (non-block-level) raw HTML must not split the paragraph.
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                <picture>
++                  <!-- TODO: what the heck? -->
++                  <source media="(prefers-color-scheme: dark)" srcset="../images/example.svg">
++                  <img alt="Example" src="../images/example.svg">
++                </picture>
++                """
++            ),
++            self.dedent(
++                """
++                <p><picture>
++                  <!-- TODO: what the heck? -->
++                  <source media="(prefers-color-scheme: dark)" srcset="../images/example.svg">
++                  <img alt="Example" src="../images/example.svg">
++                </picture></p>
++                """
++            )
++        )
++
++    def test_comment_in_inline_raw_html_not_indented(self):
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                <span>
++                <!-- *foo* -->
++                *bar*</span>
++                """
++            ),
++            self.dedent(
++                """
++                <p><span>
++                <!-- *foo* -->
++                <em>bar</em></span></p>
++                """
++            )
++        )
++
++    def test_comment_in_paragraph(self):
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                *foo*
++                <!-- comment -->
++                *bar*
++                """
++            ),
++            self.dedent(
++                """
++                <p><em>foo</em>
++                <!-- comment -->
++                <em>bar</em></p>
++                """
++            )
++        )
++
++    def test_comment_after_paragraph_with_blank_line(self):
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                *foo*
++
++                  <!-- comment -->
++
++                *bar*
++                """
++            ),
++            self.dedent(
++                """
++                <p><em>foo</em></p>
++                <!-- comment -->
++
++                <p><em>bar</em></p>
++                """
++            )
++        )
++
++    def test_consecutive_raw_comments(self):
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                <!-- foo -->
++                <!-- bar -->
++                """
++            ),
++            self.dedent(
++                """
++                <!-- foo -->
++                <!-- bar -->
++                """
++            )
++        )
++
++    def test_cdata_in_inline_raw_html(self):
++        self.assertMarkdownRenders(
++            self.dedent(
++                """
++                <span>
++                <![CDATA[ *foo* ]]>
++                </span>
++                """
++            ),
++            self.dedent(
++                """
++                <p><span>
++                <![CDATA[ *foo* ]]>
++                </span></p>
++                """
++            )
++        )
++
+     def test_comment_in_code_block(self):
+         self.assertMarkdownRenders(
+             '    <!-- *foo* -->',

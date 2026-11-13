@@ -1,0 +1,47 @@
+diff --git a/lib/parse.js b/lib/parse.js
+index 2345b75..4be84e7 100644
+--- a/lib/parse.js
++++ b/lib/parse.js
+@@ -192,7 +192,12 @@ var parseValues = function parseQueryStringValues(str, options) {
+         }
+ 
+         if (val && options.interpretNumericEntities && charset === 'iso-8859-1') {
+-            val = interpretNumericEntities(String(val));
++            // comma-split values are arrays; interpret each element so the array is not stringified back into one value
++            val = isArray(val)
++                ? utils.maybeMap(val, function (item) {
++                    return item === null || typeof item === 'undefined' ? item : interpretNumericEntities(String(item));
++                })
++                : interpretNumericEntities(String(val));
+         }
+ 
+         if (isEmptyBracketKey) {
+diff --git a/test/parse.js b/test/parse.js
+index 204b8df..af2c260 100644
+--- a/test/parse.js
++++ b/test/parse.js
+@@ -1309,12 +1309,23 @@ test('parse()', function (t) {
+     t.test('interpretNumericEntities with comma:true and iso charset does not crash', function (st) {
+         st.deepEqual(
+             qs.parse('b&a[]=1,' + urlEncodedNumSmiley, { comma: true, charset: 'iso-8859-1', interpretNumericEntities: true }),
+-            { b: '', a: ['1,☺'] }
++            { b: '', a: [['1', '☺']] }
+         );
+ 
+         st.end();
+     });
+ 
++    t.test('`comma` still splits values when `interpretNumericEntities` with iso charset', function (st) {
++        var options = { comma: true, charset: 'iso-8859-1', interpretNumericEntities: true };
++        st.deepEqual(qs.parse('a=b,c', options), { a: ['b', 'c'] });
++        st.deepEqual(qs.parse('a=' + urlEncodedNumSmiley + ',x', options), { a: ['☺', 'x'] });
++        st.deepEqual(qs.parse('a=b,c&a=d', options), { a: ['b', 'c', 'd'] });
++        st.deepEqual(qs.parse('a=b', options), { a: 'b' });
++        st.deepEqual(qs.parse('a=%26%2344%3B', options), { a: ',' }, 'an entity-encoded comma is not a separator');
++
++        st.end();
++    });
++
+     t.test('does not interpret %uXXXX syntax in iso-8859-1 mode', function (st) {
+         st.deepEqual(qs.parse('%u263A=%u263A', { charset: 'iso-8859-1' }), { '%u263A': '%u263A' });
+         st.end();

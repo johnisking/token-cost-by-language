@@ -1,0 +1,90 @@
+diff --git a/tests/test_api.py b/tests/test_api.py
+index b5f31bc..09de38e 100644
+--- a/tests/test_api.py
++++ b/tests/test_api.py
+@@ -222,6 +222,46 @@ def test_integer() -> None:
+     i = tomlkit.integer("34")
+ 
+     assert isinstance(i, Integer)
++    assert i == 34
++    assert i.as_string() == "34"
++
++
++@pytest.mark.parametrize(
++    ("raw", "value"),
++    [
++        ("1_000", 1000),
++        ("5_349_221", 5349221),
++        ("53_49_221", 5349221),
++        ("1_2_3_4_5", 12345),
++        ("+1_000", 1000),
++        ("-1_000", -1000),
++        ("0xdead_beef", 0xDEADBEEF),
++        ("0o7_55", 0o755),
++        ("0b1_0", 2),
++    ],
++)
++def test_integer_preserves_raw_literal(raw: str, value: int) -> None:
++    i = tomlkit.integer(raw)
++
++    assert isinstance(i, Integer)
++    assert int(i) == value
++    assert i.as_string() == raw
++
++    doc = tomlkit.document()
++    doc["n"] = i
++    assert tomlkit.dumps(doc) == f"n = {raw}\n"
++    assert tomlkit.parse(tomlkit.dumps(doc))["n"] == value
++
++
++def test_integer_from_non_literal_string_falls_back_to_int() -> None:
++    i = tomlkit.integer(" 42 ")
++
++    assert isinstance(i, Integer)
++    assert i == 42
++    assert i.as_string() == "42"
++
++    with pytest.raises(ValueError):
++        tomlkit.integer("1__000")
+ 
+ 
+ def test_float() -> None:
+diff --git a/tomlkit/api.py b/tomlkit/api.py
+index b0f8cd6..fde1906 100644
+--- a/tomlkit/api.py
++++ b/tomlkit/api.py
+@@ -2,6 +2,7 @@ from __future__ import annotations
+ 
+ import contextlib
+ import datetime as _datetime
++import re
+ 
+ from collections.abc import Iterable
+ from collections.abc import Mapping
+@@ -114,8 +115,25 @@ def document() -> TOMLDocument:
+ 
+ 
+ # Items
++# Shape of a TOML integer literal. Placement of underscores and leading
++# zeros is validated by the parser; this only rules out whitespace and
++# non-ASCII digits that ``int()`` would otherwise tolerate.
++_INTEGER_LITERAL = re.compile(
++    r"^[+-]?(?:0x[0-9A-Fa-f_]+|0o[0-7_]+|0b[01_]+|[0-9_]+)$"
++)
++
++
+ def integer(raw: str | int) -> Integer:
+-    """Create an integer item from a number or string."""
++    """Create an integer item from a number or string.
++
++    When ``raw`` is a string that is a valid TOML integer literal (for
++    example ``"1_000"`` or ``"0xff"``), its spelling is preserved when the
++    item is rendered, so the underscores or base prefix survive a dump.
++    """
++    if isinstance(raw, str) and _INTEGER_LITERAL.match(raw):
++        parsed = Parser(raw)._parse_number(raw, Trivia())
++        if isinstance(parsed, Integer):
++            return parsed
+     return item(int(raw))
+ 
+ 

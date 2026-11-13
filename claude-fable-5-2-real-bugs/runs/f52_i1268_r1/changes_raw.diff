@@ -1,0 +1,70 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index 6d43f7b..15a7851 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -3099,6 +3099,9 @@ class seekable:
+         else:
+             self._cache = deque([], maxlen)
+         self._index = None
++        # Holds an item that was peeked at but could not be kept in the
++        # cache (i.e. when maxlen=0), so that it isn't lost.
++        self._peeked = _marker
+ 
+     def __iter__(self):
+         return self
+@@ -3113,7 +3116,11 @@ class seekable:
+                 self._index += 1
+                 return item
+ 
+-        item = next(self._source)
++        if self._peeked is not _marker:
++            item = self._peeked
++            self._peeked = _marker
++        else:
++            item = next(self._source)
+         self._cache.append(item)
+         return item
+ 
+@@ -3131,6 +3138,12 @@ class seekable:
+             if default is _marker:
+                 raise
+             return default
++        if not self._cache:
++            # The cache can't hold the item (maxlen=0), so stash it to be
++            # returned by the next call to __next__.
++            self._index = None
++            self._peeked = peeked
++            return peeked
+         if self._index is None:
+             self._index = len(self._cache)
+         self._index -= 1
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 9757022..59db478 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -3781,6 +3781,25 @@ class SeekableTest(PeekableMixinTests, TestCase):
+         self.assertEqual(list(s), iterable)
+         self.assertEqual(list(s.elements()), [])
+ 
++    def test_maxlen_zero_peek_and_bool(self):
++        s = mi.seekable([10, 20, 30], maxlen=0)
++        self.assertEqual(s.peek(), 10)
++        self.assertEqual(s.peek(), 10)
++        self.assertTrue(s)
++        self.assertEqual(next(s), 10)
++        self.assertTrue(s)
++        self.assertEqual(list(s), [20, 30])
++        self.assertEqual(list(s.elements()), [])
++        self.assertFalse(s)
++        self.assertEqual(s.peek('default'), 'default')
++        self.assertRaises(StopIteration, s.peek)
++
++        # A peeked item still counts as the next item when seeking
++        s = mi.seekable([10, 20, 30], maxlen=0)
++        s.peek()
++        s.seek(2)
++        self.assertEqual(list(s), [30])
++
+     def test_relative_seek(self):
+         iterable = [str(x) for x in range(5)]
+         s = mi.seekable(iterable)

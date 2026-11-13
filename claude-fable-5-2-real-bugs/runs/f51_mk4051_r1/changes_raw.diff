@@ -1,0 +1,217 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 64cbe81..911325b 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -378,7 +378,13 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+       // link
+       if (token = this.tokenizer.link(src)) {
+         src = src.substring(token.raw.length);
+-        tokens.push(token);
++        const lastToken = tokens.at(-1);
++        if (token.type === 'text' && lastToken?.type === 'text') {
++          lastToken.raw += token.raw;
++          lastToken.text += token.text;
++        } else {
++          tokens.push(token);
++        }
+         continue;
+       }
+ 
+diff --git a/src/Tokenizer.ts b/src/Tokenizer.ts
+index b651849..e6fa6c4 100644
+--- a/src/Tokenizer.ts
++++ b/src/Tokenizer.ts
+@@ -11,22 +11,55 @@ import type { _Lexer } from './Lexer.ts';
+ import type { Links, Tokens, Token } from './Tokens.ts';
+ import type { MarkedOptions } from './MarkedOptions.ts';
+ 
+-function outputLink(cap: string[], link: Pick<Tokens.Link, 'href' | 'title'>, raw: string, lexer: _Lexer, rules: Rules): Tokens.Link | Tokens.Image {
++/**
++ * Returns true if any token (at any depth) is a bracket link, i.e. `[text](href)`,
++ * `[text][ref]` or `[ref]`. Autolinks and bare urls are not bracket links.
++ */
++function containsBracketLink(tokens: Token[] | undefined): boolean {
++  if (!tokens) {
++    return false;
++  }
++  for (const token of tokens) {
++    if (token.type === 'link' && token.raw.charAt(0) === '[') {
++      return true;
++    }
++    if (containsBracketLink((token as Tokens.Generic).tokens)) {
++      return true;
++    }
++  }
++  return false;
++}
++
++function outputLink(cap: string[], link: Pick<Tokens.Link, 'href' | 'title'>, raw: string, lexer: _Lexer, rules: Rules): Tokens.Link | Tokens.Image | Tokens.Text {
+   const href = link.href;
+   const title = link.title || null;
+   const text = cap[1].replace(rules.other.outputLinkReplace, '$1');
++  const type = cap[0].charAt(0) === '!' ? 'image' : 'link';
+ 
++  const prevInLink = lexer.state.inLink;
+   lexer.state.inLink = true;
+-  const token: Tokens.Link | Tokens.Image = {
+-    type: cap[0].charAt(0) === '!' ? 'image' : 'link',
++  const tokens = lexer.inlineTokens(text);
++  lexer.state.inLink = prevInLink;
++
++  if (type === 'link' && containsBracketLink(tokens)) {
++    // CommonMark: links may not contain other links, at any level of nesting.
++    // The inner link wins and the opening bracket of the outer one is literal text.
++    const bracket = cap[0].charAt(0);
++    return {
++      type: 'text',
++      raw: bracket,
++      text: bracket,
++    };
++  }
++
++  return {
++    type,
+     raw,
+     href,
+     title,
+     text,
+-    tokens: lexer.inlineTokens(text),
++    tokens,
+   };
+-  lexer.state.inLink = false;
+-  return token;
+ }
+ 
+ function indentCodeCompensation(raw: string, text: string, rules: Rules) {
+@@ -662,7 +695,7 @@ export class _Tokenizer<ParserOutput = string, RendererOutput = string> {
+     }
+   }
+ 
+-  link(src: string): Tokens.Link | Tokens.Image | undefined {
++  link(src: string): Tokens.Link | Tokens.Image | Tokens.Text | undefined {
+     const cap = this.rules.inline.link.exec(src);
+     if (cap) {
+       const trimmedUrl = cap[2].trim();
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 6e14498..4e348a4 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4145,8 +4145,7 @@
+     "example": 518,
+     "start_line": 7886,
+     "end_line": 7890,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *[bar [baz](/uri)](/uri)*](/uri)\n",
+@@ -4154,8 +4153,7 @@
+     "example": 519,
+     "start_line": 7893,
+     "end_line": 7897,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "![[[foo](uri1)](uri2)](uri3)\n",
+@@ -4263,8 +4261,7 @@
+     "example": 532,
+     "start_line": 8044,
+     "end_line": 8050,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *bar [baz][ref]*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index c8ffbc1..47d0a22 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4145,8 +4145,7 @@
+     "example": 518,
+     "start_line": 7886,
+     "end_line": 7890,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *[bar [baz](/uri)](/uri)*](/uri)\n",
+@@ -4154,8 +4153,7 @@
+     "example": 519,
+     "start_line": 7893,
+     "end_line": 7897,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "![[[foo](uri1)](uri2)](uri3)\n",
+@@ -4263,8 +4261,7 @@
+     "example": 532,
+     "start_line": 8044,
+     "end_line": 8050,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "[foo *bar [baz][ref]*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/unit/marked.test.js b/test/unit/marked.test.js
+index 07e58f8..c87f966 100644
+--- a/test/unit/marked.test.js
++++ b/test/unit/marked.test.js
+@@ -42,6 +42,50 @@ describe('marked unit', () => {
+     });
+   });
+ 
++  describe('nested links', () => {
++    it('should not nest an inline link inside an inline link', () => {
++      const html = marked.parse('[foo [bar](/uri)](/uri)');
++
++      assert.strictEqual(html, '<p>[foo <a href="/uri">bar</a>](/uri)</p>\n');
++    });
++
++    it('should not nest an inline link inside a reference link', () => {
++      const html = marked.parse('[foo [bar](/uri)][ref]\n\n[ref]: /uri');
++
++      assert.strictEqual(html, '<p>[foo <a href="/uri">bar</a>]<a href="/uri">ref</a></p>\n');
++    });
++
++    it('should not nest a reference link inside an inline link', () => {
++      const html = marked.parse('[foo [ref]](/uri)\n\n[ref]: /uri');
++
++      assert.strictEqual(html, '<p>[foo <a href="/uri">ref</a>](/uri)</p>\n');
++    });
++
++    it('should not nest a link at any depth', () => {
++      const html = marked.parse('[foo *[bar [baz](/uri)](/uri)*](/uri)');
++
++      assert.strictEqual(html, '<p>[foo <em>[bar <a href="/uri">baz</a>](/uri)</em>](/uri)</p>\n');
++    });
++
++    it('should keep surrounding text and emphasis around an unnested link', () => {
++      const html = marked.parse('a **b** [foo [bar](/uri)](/uri) c');
++
++      assert.strictEqual(html, '<p>a <strong>b</strong> [foo <a href="/uri">bar</a>](/uri) c</p>\n');
++    });
++
++    it('should still allow an image inside a link', () => {
++      const html = marked.parse('[![alt](/img.png)](/uri)');
++
++      assert.strictEqual(html, '<p><a href="/uri"><img src="/img.png" alt="alt"></a></p>\n');
++    });
++
++    it('should still allow a link inside an image description', () => {
++      const html = marked.parse('![foo [bar](/uri)](/img.png)');
++
++      assert.strictEqual(html, '<p><img src="/img.png" alt="foo bar"></p>\n');
++    });
++  });
++
+   describe('parseInline', () => {
+     it('should parse inline tokens', () => {
+       const md = '**strong** _em_';

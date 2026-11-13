@@ -1,0 +1,89 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..81999ac 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -18,7 +18,13 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+   const marker = state.src.slice(start, pos)
+   const openerLength = marker.length
+ 
+-  if (state.backticksScanned && (state.backticks[openerLength] || 0) <= start) {
++  // The cache is only trustworthy for openers at or after the position some
++  // scan has already walked to the end of the input from. Earlier positions
++  // (revisited e.g. after a failed link label lookahead) may have closers
++  // between them and that position which were never recorded.
++  if (state.backticksScanned &&
++      state.backticksScannedFrom <= start &&
++      (state.backticks[openerLength] || 0) <= start) {
+     if (!silent) state.pending += marker
+     state.pos += openerLength
+     return true
+@@ -49,11 +55,18 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+       return true
+     }
+ 
+-    // Some different length found, put it in cache as upper limit of where closer can be found
+-    state.backticks[closerLength] = matchStart
++    // Some different length found, put it in cache as upper limit of where closer can be found.
++    // Never move an entry backwards: a shorter scan (one that ends at a matching
++    // closer) must not hide runs a previous, longer scan already saw further on.
++    if ((state.backticks[closerLength] || 0) < matchStart) {
++      state.backticks[closerLength] = matchStart
++    }
+   }
+ 
+   // Scanned through the end, didn't find anything
++  if (!state.backticksScanned || start < state.backticksScannedFrom) {
++    state.backticksScannedFrom = start
++  }
+   state.backticksScanned = true
+ 
+   if (!silent) state.pending += marker
+diff --git a/src/rules_inline/state_inline.ts b/src/rules_inline/state_inline.ts
+index fbba926..8c01c1c 100644
+--- a/src/rules_inline/state_inline.ts
++++ b/src/rules_inline/state_inline.ts
+@@ -35,7 +35,11 @@ class StateInline {
+ 
+   // backtick length => last seen position
+   backticks: Record<number, number> = {}
++  // true once some backtick scan has reached the end of the input without
++  // finding a closer; `backticksScannedFrom` is the smallest position such a
++  // scan started from (all backtick runs after it are recorded in `backticks`)
+   backticksScanned = false
++  backticksScannedFrom = 0
+ 
+   // Counter used to disable inline linkify-it execution
+   // inside <a> and markdown links
+diff --git a/test/fixtures/markdown-it/commonmark_extras.txt b/test/fixtures/markdown-it/commonmark_extras.txt
+index c8bbc7a..3c6b44a 100644
+--- a/test/fixtures/markdown-it/commonmark_extras.txt
++++ b/test/fixtures/markdown-it/commonmark_extras.txt
+@@ -406,6 +406,28 @@ Coverage. Should continue scanning after closing "```" despite cache
+ .
+ 
+ 
++Unclosed link label should not suppress a later code span (backticks cache)
++.
++[foo `bar` baz`
++
++![alt `code` x`
++
++[`a`b`
++.
++<p>[foo <code>bar</code> baz`</p>
++<p>![alt <code>code</code> x`</p>
++<p>[<code>a</code>b`</p>
++.
++
++
++Shorter backtick scan should not hide closers seen by an earlier longer scan
++.
++``` ``a`b`` `c`
++.
++<p>``` <code>a`b</code> <code>c</code></p>
++.
++
++
+ Coverage. Entities.
+ .
+ *&*

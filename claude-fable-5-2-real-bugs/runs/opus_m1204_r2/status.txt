@@ -1,0 +1,2 @@
+ M src/markdownit.ts
+ M test/fixtures/markdown-it/normalize.txt

@@ -1,0 +1,128 @@
+diff --git a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+index ece615e..79bedca 100644
+--- a/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
++++ b/packages/zod/src/v4/classic/tests/to-json-schema.test.ts
+@@ -1164,20 +1164,52 @@ describe("toJSONSchema", () => {
+         },
+         "propertyNames": {
+           "enum": [
+-            0,
+-            1,
++            "0",
++            "1",
+           ],
+-          "type": "number",
++          "type": "string",
+         },
+         "required": [
+-          0,
+-          1,
++          "0",
++          "1",
+         ],
+         "type": "object",
+       }
+     `);
+   });
+ 
++  test("record with numeric keys emits string propertyNames", () => {
++    expect(z.toJSONSchema(z.record(z.number(), z.number())).propertyNames).toEqual({
++      type: "string",
++      pattern: "^-?\\d+(?:\\.\\d+)?$",
++    });
++    // range checks have no string form and are dropped; annotations survive
++    expect(z.toJSONSchema(z.record(z.int().min(1).describe("id"), z.number())).propertyNames).toEqual({
++      type: "string",
++      pattern: "^-?\\d+$",
++      description: "id",
++    });
++    expect(z.toJSONSchema(z.record(z.literal(1), z.number()))).toMatchObject({
++      propertyNames: { type: "string", const: "1" },
++      required: ["1"],
++    });
++    expect(z.toJSONSchema(z.record(z.literal([1, 2]), z.number()), { target: "draft-07" })).toMatchObject({
++      propertyNames: { type: "string", enum: ["1", "2"] },
++      required: ["1", "2"],
++    });
++    expect(z.toJSONSchema(z.record(z.union([z.literal("a"), z.literal(1)]), z.number())).propertyNames).toEqual({
++      anyOf: [
++        { type: "string", const: "a" },
++        { type: "string", const: "1" },
++      ],
++    });
++    // string keys are untouched
++    expect(z.toJSONSchema(z.record(z.string().min(2), z.number())).propertyNames).toEqual({
++      type: "string",
++      minLength: 2,
++    });
++  });
++
+   test("strict record with regex key uses propertyNames", () => {
+     const schema = z.record(z.string().regex(/^label:[a-z]{2}$/), z.string());
+ 
+diff --git a/packages/zod/src/v4/core/json-schema-processors.ts b/packages/zod/src/v4/core/json-schema-processors.ts
+index 8258fca..24bbaa3 100644
+--- a/packages/zod/src/v4/core/json-schema-processors.ts
++++ b/packages/zod/src/v4/core/json-schema-processors.ts
+@@ -1,5 +1,6 @@
+ import type * as checks from "./checks.js";
+ import type * as JSONSchema from "./json-schema.js";
++import * as regexes from "./regexes.js";
+ import type { $ZodRegistry } from "./registries.js";
+ import type * as schemas from "./schemas.js";
+ import {
+@@ -475,6 +476,28 @@ export const tupleProcessor: Processor<schemas.$ZodTuple> = (schema, ctx, _json,
+   if (typeof maximum === "number") json.maxItems = maximum;
+ };
+ 
++// object keys are always strings, so a numeric key schema is emitted as the string form the record parser retries as Number(key); range checks have no string equivalent and are dropped
++function stringifyKeySchema(json: JSONSchema.BaseSchema): JSONSchema.BaseSchema {
++  const type = json.type;
++  if (type !== "number" && type !== "integer") {
++    for (const keyword of ["anyOf", "oneOf"] as const) {
++      const options = json[keyword];
++      if (!Array.isArray(options)) continue;
++      const mapped = options.map(stringifyKeySchema);
++      if (mapped.some((o, i) => o !== options[i])) return { ...json, [keyword]: mapped };
++    }
++    return json;
++  }
++  const out: JSONSchema.StringSchema = { ...(json as JSONSchema.BaseSchema), type: "string" };
++  for (const keyword of ["minimum", "maximum", "exclusiveMinimum", "exclusiveMaximum", "multipleOf", "format"]) {
++    delete (out as JSONSchema.BaseSchema)[keyword];
++  }
++  if (json.const !== undefined) out.const = String(json.const);
++  else if (json.enum) out.enum = json.enum.map(String);
++  else out.pattern = (type === "integer" ? regexes.integer : regexes.number).source;
++  return out;
++}
++
+ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _json, params) => {
+   const json = _json as JSONSchema.ObjectSchema;
+   const def = schema._zod.def as schemas.$ZodRecordDef;
+@@ -498,10 +521,12 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+   } else {
+     // Default behavior: use propertyNames + additionalProperties
+     if (ctx.target === "draft-07" || ctx.target === "draft-2020-12") {
+-      json.propertyNames = process(def.keyType, ctx as any, {
+-        ...params,
+-        path: [...params.path, "propertyNames"],
+-      });
++      json.propertyNames = stringifyKeySchema(
++        process(def.keyType, ctx as any, {
++          ...params,
++          path: [...params.path, "propertyNames"],
++        })
++      );
+     }
+     json.additionalProperties = process(def.valueType, ctx as any, {
+       ...params,
+@@ -519,7 +544,7 @@ export const recordProcessor: Processor<schemas.$ZodRecord> = (schema, ctx, _jso
+     );
+ 
+     if (validKeyValues.length > 0) {
+-      json.required = validKeyValues as string[];
++      json.required = validKeyValues.map(String);
+     }
+   }
+ };

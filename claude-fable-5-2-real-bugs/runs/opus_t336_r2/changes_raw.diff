@@ -1,0 +1,73 @@
+diff --git a/tests/test_api.py b/tests/test_api.py
+index b5f31bc..fd40c66 100644
+--- a/tests/test_api.py
++++ b/tests/test_api.py
+@@ -611,3 +611,32 @@ def test_parse_accepts_nesting_at_the_depth_limit() -> None:
+     assert parse(array).as_string() == array
+     dotted = ".".join(["a"] * depth) + " = 1"
+     assert parse(dotted).as_string() == dotted
++
++
++@pytest.mark.parametrize(
++    "raw, expected_str, expected_int",
++    [
++        ("1_000", "1_000", 1000),
++        ("5_349_221", "5_349_221", 5349221),
++        ("53_49_221", "53_49_221", 5349221),
++        ("1_2_3_4_5", "1_2_3_4_5", 12345),
++        ("+1_000", "+1_000", 1000),
++        ("-1_000", "-1_000", -1000),
++        ("42", "42", 42),
++        (" 7 ", "7", 7),
++        ("007", "7", 7),
++        (1000, "1000", 1000),
++    ],
++)
++def test_integer_preserves_string_format(raw, expected_str, expected_int):
++    i = tomlkit.integer(raw)
++    assert i.as_string() == expected_str
++    assert int(i) == expected_int
++    assert i == expected_int
++
++
++def test_integer_with_underscores_dumps():
++    doc = tomlkit.document()
++    doc["n"] = tomlkit.integer("1_000")
++    assert tomlkit.dumps(doc) == "n = 1_000\n"
++    assert tomlkit.parse(tomlkit.dumps(doc))["n"] == 1000
+diff --git a/tomlkit/api.py b/tomlkit/api.py
+index b0f8cd6..33d808f 100644
+--- a/tomlkit/api.py
++++ b/tomlkit/api.py
+@@ -2,6 +2,7 @@ from __future__ import annotations
+ 
+ import contextlib
+ import datetime as _datetime
++import re as _re
+ 
+ from collections.abc import Iterable
+ from collections.abc import Mapping
+@@ -114,9 +115,21 @@ def document() -> TOMLDocument:
+ 
+ 
+ # Items
++_TOML_DEC_INT_RE = _re.compile(r"^[+-]?(?:0|[1-9](?:_?[0-9])*)$")
++
++
+ def integer(raw: str | int) -> Integer:
+-    """Create an integer item from a number or string."""
+-    return item(int(raw))
++    """Create an integer item from a number or string.
++
++    If ``raw`` is a string that is a valid TOML decimal integer (e.g. ``"1_000"``
++    or ``"+42"``), its formatting is preserved when rendered.
++    """
++    value = int(raw)
++    if isinstance(raw, str):
++        stripped = raw.strip()
++        if _TOML_DEC_INT_RE.match(stripped):
++            return Integer(value, Trivia(), stripped)
++    return item(value)
+ 
+ 
+ def float_(raw: str | float) -> Float:

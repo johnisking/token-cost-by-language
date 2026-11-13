@@ -1,0 +1,29 @@
+The current folder is a checkout of zod, the TypeScript schema library (monorepo; the library source is in packages/zod/src/, tests next to it in packages/zod/src/v4/classic/tests/). A user reported the bug below. Find the cause in the source code and fix it in packages/zod/src/, without breaking any other behaviour. Dependencies are already installed in node_modules, and you may run commands in this folder to check your work, for example node node_modules/vitest/vitest.mjs run --typecheck.enabled=false packages/zod/src/v4/classic/tests/default.test.ts (any test file can be given). You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+Functions are executed twice for object property defaults
+
+If you define an object type and use a function for a property's default value, the function is executed twice:
+
+let test = 0;
+const schema = z.object({
+    TEST: z.string().default(() => {
+        console.log(`Executed... ${test++}`);
+        return 'default';
+    })
+})
+schema.parse({});
+// Executed... 0
+// Executed... 1
+
+When it's not wrapped in an object, the function is only executed once, as expected:
+
+const defaultTuna = z.string().default(() => {
+    console.log(`tuna`);
+    return 'tuna';
+});
+defaultTuna.parse(undefined); // => "tuna"
+
+Zod v4.4.2 does not have this issue and the default function is only executed once.
+"""

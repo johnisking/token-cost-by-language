@@ -1,0 +1,58 @@
+diff --git a/tests/test_api.py b/tests/test_api.py
+index b5f31bc..f6d64e8 100644
+--- a/tests/test_api.py
++++ b/tests/test_api.py
+@@ -611,3 +611,21 @@ def test_parse_accepts_nesting_at_the_depth_limit() -> None:
+     assert parse(array).as_string() == array
+     dotted = ".".join(["a"] * depth) + " = 1"
+     assert parse(dotted).as_string() == dotted
++
++
++def test_integer_preserves_underscores():
++    for raw, value in [("1_000", 1000), ("-5_349_221", -5349221), ("1_2_3", 123)]:
++        i = tomlkit.integer(raw)
++        assert i.as_string() == raw
++        assert int(i) == value
++        assert i == value
++
++    doc = tomlkit.document()
++    doc["n"] = tomlkit.integer("1_000")
++    assert tomlkit.dumps(doc) == "n = 1_000\n"
++    assert tomlkit.parse(tomlkit.dumps(doc))["n"] == 1000
++
++    assert tomlkit.integer("42").as_string() == "42"
++    assert tomlkit.integer(1000).as_string() == "1000"
++    # Not valid TOML (leading zero): fall back to the canonical form
++    assert tomlkit.integer("0_1").as_string() == "1"
+diff --git a/tomlkit/api.py b/tomlkit/api.py
+index b0f8cd6..4775e79 100644
+--- a/tomlkit/api.py
++++ b/tomlkit/api.py
+@@ -2,6 +2,7 @@ from __future__ import annotations
+ 
+ import contextlib
+ import datetime as _datetime
++import re
+ 
+ from collections.abc import Iterable
+ from collections.abc import Mapping
+@@ -116,7 +117,18 @@ def document() -> TOMLDocument:
+ # Items
+ def integer(raw: str | int) -> Integer:
+     """Create an integer item from a number or string."""
+-    return item(int(raw))
++    value = int(raw)
++    if isinstance(raw, str):
++        # Preserve digit grouping (e.g. "1_000") when the string is a valid
++        # TOML decimal integer; otherwise fall back to the canonical form.
++        text = raw.strip()
++        if "_" in text and _GROUPED_INTEGER.match(text):
++            return Integer(value, Trivia(), text)
++
++    return item(value)
++
++
++_GROUPED_INTEGER = re.compile(r"[+-]?[1-9](?:_?[0-9])*\Z")
+ 
+ 
+ def float_(raw: str | float) -> Float:

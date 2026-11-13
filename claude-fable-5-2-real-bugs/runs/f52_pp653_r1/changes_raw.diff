@@ -1,0 +1,76 @@
+diff --git a/pyparsing/helpers.py b/pyparsing/helpers.py
+index c88e543..5cd451f 100644
+--- a/pyparsing/helpers.py
++++ b/pyparsing/helpers.py
+@@ -156,18 +156,61 @@ def match_previous_expr(expr: ParserElement) -> ParserElement:
+     e2 = expr.copy()
+     rep <<= e2
+ 
+-    def copy_token_to_repeater(s, l, t):
+-        match_tokens = _flatten(t.as_list())
+-
+-        def must_match_these_tokens(s, l, t):
+-            these_tokens = _flatten(t.as_list())
+-            if these_tokens != match_tokens:
+-                raise ParseException(
+-                    s, l, f"Expected {match_tokens}, found{these_tokens}"
+-                )
++    # Matches of expr and of the repeater seen so far in the current input
++    # string, each kept in ascending order of location. A repeat pairs with
++    # the nearest preceding match of expr that has not already been repeated,
++    # so that nested and sequential uses resolve correctly.
++    state: dict = {"instring": None, "opens": [], "closes": []}
++
++    def reset_if_new_string(s):
++        if state["instring"] is not s:
++            state["instring"] = s
++            state["opens"] = []
++            state["closes"] = []
+ 
+-        e2.add_parse_action(must_match_these_tokens, call_during_try=True)
++    def copy_token_to_repeater(s, l, t):
++        reset_if_new_string(s)
++        # anything recorded at or after this location is left over from an
++        # abandoned (backtracked or lookahead) parse path
++        state["opens"] = [o for o in state["opens"] if o[0] < l]
++        state["closes"] = [c for c in state["closes"] if c < l]
++        state["opens"].append((l, _flatten(t.as_list())))
++
++    def expected_tokens(l):
++        opens = [o for o in state["opens"] if o[0] < l]
++        if not opens:
++            return None
++        closes = [c for c in state["closes"] if c < l]
++        stack: list = []
++        ci = 0
++        for open_loc, open_tokens in opens:
++            while ci < len(closes) and closes[ci] < open_loc:
++                if stack:
++                    stack.pop()
++                ci += 1
++            stack.append(open_tokens)
++        for _ in closes[ci:]:
++            if stack:
++                stack.pop()
++        # if every previous match has already been repeated, repeat the
++        # most recent one again (e.g. first + second + second)
++        return stack[-1] if stack else opens[-1][1]
++
++    def must_match_these_tokens(s, l, t):
++        reset_if_new_string(s)
++        match_tokens = expected_tokens(l)
++        if match_tokens is None:
++            return
++        these_tokens = _flatten(t.as_list())
++        if these_tokens != match_tokens:
++            raise ParseException(
++                s, l, f"Expected {match_tokens}, found{these_tokens}"
++            )
++        state["opens"] = [o for o in state["opens"] if o[0] <= l]
++        state["closes"] = [c for c in state["closes"] if c < l]
++        state["closes"].append(l)
+ 
++    e2.add_parse_action(must_match_these_tokens, call_during_try=True)
+     expr.add_parse_action(copy_token_to_repeater, call_during_try=True)
+     rep.set_name(f"(prev) {expr}")
+     return rep

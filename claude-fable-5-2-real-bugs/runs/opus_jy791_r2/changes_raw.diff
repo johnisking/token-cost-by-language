@@ -1,0 +1,37 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 35bf033..ffc6b18 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -1449,7 +1449,12 @@ function parseEvents (input: string, options: ParserOptions): Event[] {
+   const nullpos = input.indexOf('\0')
+   if (nullpos !== -1) YAMLException.throwAt(input, nullpos, 'null byte is not allowed in input', state.filename)
+ 
+-  if (state.input.charCodeAt(state.position) === 0xFEFF) state.position++
++  if (state.input.charCodeAt(state.position) === 0xFEFF) {
++    // Skip the BOM and treat the following character as the line start,
++    // so indentation of the first line is not offset by the BOM.
++    state.position++
++    state.lineStart = state.position
++  }
+ 
+   while (state.position < state.length) {
+     skipSeparationSpace(state, true)
+diff --git a/test/core/units/load-other.test.mjs b/test/core/units/load-other.test.mjs
+index dd33711..046ed7e 100644
+--- a/test/core/units/load-other.test.mjs
++++ b/test/core/units/load-other.test.mjs
+@@ -8,6 +8,14 @@ describe('core/units/load-other', () => {
+     assert.deepStrictEqual(load('foo: bar\n'), { foo: 'bar' })
+   })
+ 
++  it('BOM does not shift indentation of the first line', () => {
++    const expected = { abc: 5, cba: ['Xyz', 'Zyx'] }
++    assert.deepStrictEqual(load('\uFEFFabc: 5\ncba:\n  - Xyz\n  - Zyx\n'), expected)
++    assert.deepStrictEqual(load('abc: 5\ncba:\n  - Xyz\n  - Zyx\n'), expected)
++    assert.deepStrictEqual(load('\uFEFFa: 1\nb: 2\n'), { a: 1, b: 2 })
++    assert.deepStrictEqual(load('\uFEFF- a\n- b\n'), ['a', 'b'])
++  })
++
+   it('Loading multidocument source using `load` should cause an error', () => {
+     assert.throws(() => {
+       load('--- # first document\n--- # second document\n')

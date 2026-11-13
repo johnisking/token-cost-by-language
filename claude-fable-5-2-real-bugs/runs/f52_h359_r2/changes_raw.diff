@@ -1,0 +1,53 @@
+diff --git a/src/humanize/number.py b/src/humanize/number.py
+index 2dfeffe..4b7ca92 100644
+--- a/src/humanize/number.py
++++ b/src/humanize/number.py
+@@ -550,11 +550,17 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
+     old_bucket = exponent // 3 * 3
+     value /= 10**old_bucket
+     digits = int(max(0, precision - exponent % 3 - 1))
+-    if exponent < 30 and round(abs(value), digits) >= 1000:
++    rounded = round(abs(value), digits)
++    if exponent < 30 and rounded >= 1000:
+         exponent += 3 - exponent % 3
+         new_bucket = exponent // 3 * 3
+         value /= 10 ** (new_bucket - old_bucket)
+         digits = int(max(0, precision - exponent % 3 - 1))
++    elif exponent % 3 != 2 and rounded >= 10 ** (exponent % 3 + 1):
++        # Rounding carried the mantissa up a power of ten within the same
++        # prefix bucket (e.g. 9.999 -> 10.0), so one fewer decimal is needed.
++        exponent += 1
++        digits = int(max(0, precision - exponent % 3 - 1))
+ 
+     if exponent >= 3:
+         ordinal_ = "kMGTPEZYRQ"[exponent // 3 - 1]
+diff --git a/tests/test_number.py b/tests/test_number.py
+index 6f0a664..4100909 100644
+--- a/tests/test_number.py
++++ b/tests/test_number.py
+@@ -327,3 +327,25 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
+ )
+ def test_metric(test_args: list[typing.Any], expected: str) -> None:
+     assert humanize.metric(*test_args) == expected
++
++
++@pytest.mark.parametrize(
++    "test_args, expected",
++    [
++        ([9999], "10.0 k"),
++        ([99999], "100 k"),
++        ([9.99999], "10.0"),
++        ([-9999], "-10.0 k"),
++        ([99.99], "100"),
++        ([0.0099999], "10.0 m"),
++        ([0.99999], "1.00"),
++        ([999999], "1.00 M"),
++        ([9.99, "V"], "9.99 V"),
++        ([9.996, "V", 4], "9.996 V"),
++        ([9.9996, "V", 4], "10.00 V"),
++        ([999, "", 1], "999"),
++        ([9.5, "", 1], "10"),
++    ],
++)
++def test_metric_rounding_carry(test_args: list[typing.Any], expected: str) -> None:
++    assert humanize.metric(*test_args) == expected

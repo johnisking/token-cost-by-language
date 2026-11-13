@@ -1,0 +1,56 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index f020777..6c82b74 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -85,6 +85,12 @@ export function canonicalize(
+ 
+   let canonicalizedObj: any;
+ 
++  // Like JSON.stringify, call toJSON (once) before deciding how to serialize the value, so that
++  // arrays with a toJSON method are honoured and toJSON results that are arrays stay arrays.
++  if (obj && typeof obj.toJSON === 'function') {
++    obj = obj.toJSON(key === undefined ? '' : key);
++  }
++
+   if ('[object Array]' === Object.prototype.toString.call(obj)) {
+     stack.push(obj);
+     canonicalizedObj = new Array(obj.length);
+@@ -97,10 +103,6 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && typeof obj.toJSON === 'function') {
+-    obj = obj.toJSON();
+-  }
+-
+   if (typeof obj === 'object' && obj !== null) {
+     stack.push(obj);
+     // Use a null-prototype object so that an own "__proto__" key is stored as
+diff --git a/test/diff/json.js b/test/diff/json.js
+index d7f2de7..2b32f6d 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -144,6 +144,23 @@ describe('diff/json', function() {
+       ]);
+     });
+ 
++    it('keeps arrays returned by toJSON as arrays', function() {
++      const x = { toJSON: () => [1, {b: 2, a: 1}] };
++      expect(diffJson({ foo: x }, { foo: [1, {a: 1, b: 2}] })).to.eql([
++        { count: 9, value: JSON.stringify({ foo: [1, {a: 1, b: 2}] }, null, '  '), added: false, removed: false }
++      ]);
++    });
++
++    it('honours toJSON methods on arrays', function() {
++      const x = [1, 2, 3];
++      x.toJSON = () => ({ items: 3 });
++      const y = [4, 5];
++      y.toJSON = (key) => 'key:' + key;
++      expect(diffJson({ foo: x, bar: y }, { foo: { items: 3 }, bar: 'key:bar' })).to.eql([
++        { count: 6, value: '{\n  "bar": "key:bar",\n  "foo": {\n    "items": 3\n  }\n}', added: false, removed: false }
++      ]);
++    });
++
+     it('treats non-callable toJSON properties as normal properties (like JSON.stringify does)', function() {
+       const x = {
+         toJSON: 'aaa'

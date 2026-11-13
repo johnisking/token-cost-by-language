@@ -1,0 +1,44 @@
+diff --git a/lib/parse.js b/lib/parse.js
+index 2345b75..fdea7ea 100644
+--- a/lib/parse.js
++++ b/lib/parse.js
+@@ -192,7 +192,9 @@ var parseValues = function parseQueryStringValues(str, options) {
+         }
+ 
+         if (val && options.interpretNumericEntities && charset === 'iso-8859-1') {
+-            val = interpretNumericEntities(String(val));
++            val = utils.maybeMap(val, function (item) {
++                return interpretNumericEntities(String(item));
++            });
+         }
+ 
+         if (isEmptyBracketKey) {
+diff --git a/test/parse.js b/test/parse.js
+index 204b8df..7477e65 100644
+--- a/test/parse.js
++++ b/test/parse.js
+@@ -1309,12 +1309,23 @@ test('parse()', function (t) {
+     t.test('interpretNumericEntities with comma:true and iso charset does not crash', function (st) {
+         st.deepEqual(
+             qs.parse('b&a[]=1,' + urlEncodedNumSmiley, { comma: true, charset: 'iso-8859-1', interpretNumericEntities: true }),
+-            { b: '', a: ['1,☺'] }
++            { b: '', a: [['1', '☺']] },
++            'matches the shape produced by utf-8 parsing of `b&a[]=1,c`'
+         );
+ 
+         st.end();
+     });
+ 
++    t.test('interpretNumericEntities with comma:true and iso charset still splits on commas', function (st) {
++        var options = { comma: true, charset: 'iso-8859-1', interpretNumericEntities: true };
++        st.deepEqual(qs.parse('a=b,c', options), { a: ['b', 'c'] }, 'plain values are split');
++        st.deepEqual(qs.parse('a=' + urlEncodedNumSmiley + ',x', options), { a: ['☺', 'x'] }, 'entities are interpreted in each split value');
++        st.deepEqual(qs.parse('a=' + urlEncodedNumSmiley, options), { a: '☺' }, 'a single value without commas stays a string');
++        st.deepEqual(qs.parse('a=b,c', { comma: true }), { a: ['b', 'c'] }, 'utf-8 behaviour is unchanged');
++
++        st.end();
++    });
++
+     t.test('does not interpret %uXXXX syntax in iso-8859-1 mode', function (st) {
+         st.deepEqual(qs.parse('%u263A=%u263A', { charset: 'iso-8859-1' }), { '%u263A': '%u263A' });
+         st.end();

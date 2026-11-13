@@ -1,0 +1,101 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 9ba9df6..2965cec 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -301,19 +301,24 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+   }
+ 
+   /**
+-   * Lexing/Compiling
++   * Build the masked copy of inline src used by emStrong and del: reflinks,
++   * escapes, code spans, links and html are masked so their delimiters are
++   * not matched. The start of every masked reflink is recorded in
++   * `reflinkMasks` as the length of src remaining at that point.
+    */
+-  inlineTokens(src: string, tokens: Token[] = []): Token[] {
+-    this.tokenizer.lexer = this;
+-    // String with links masked to avoid interference with em and strong
++  private maskInlineSrc(src: string, reflinkMasks: Set<number>): string {
+     let maskedSrc = src;
+ 
+     // Mask out reflinks
+     if (this.tokens.links && src.includes('[')) {
+-      maskedSrc = maskedSrc.replace(this.tokenizer.rules.inline.reflinkSearch, match0 =>
+-        Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))
+-          ? '[' + 'a'.repeat(match0.length - 2) + ']'
+-          : match0);
++      maskedSrc = maskedSrc.replace(this.tokenizer.rules.inline.reflinkSearch, (match0: string, ...args: unknown[]) => {
++        if (!Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))) {
++          return match0;
++        }
++        const offset = args.find(arg => typeof arg === 'number') as number;
++        reflinkMasks.add(src.length - offset);
++        return '[' + 'a'.repeat(match0.length - 2) + ']';
++      });
+     }
+ 
+     // Mask out escaped characters.
+@@ -331,6 +336,20 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+     // Mask out blocks from extensions
+     maskedSrc = this.options.hooks?.emStrongMask?.call({ lexer: this }, maskedSrc) ?? maskedSrc;
+ 
++    return maskedSrc;
++  }
++
++  /**
++   * Lexing/Compiling
++   */
++  inlineTokens(src: string, tokens: Token[] = []): Token[] {
++    this.tokenizer.lexer = this;
++    // String with links masked to avoid interference with em and strong
++    // `reflinkMasks` holds, for each masked reflink, the remaining src length
++    // at its start, so the mask can be lifted if the reflink is rejected.
++    const reflinkMasks = new Set<number>();
++    let maskedSrc = this.maskInlineSrc(src, reflinkMasks);
++
+     let keepPrevChar = false;
+     let prevChar = '';
+     let srcLength = Infinity;
+@@ -395,6 +414,14 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+         continue;
+       }
+ 
++      if (reflinkMasks.has(src.length)) {
++        // A masked reflink was rejected (e.g. its text holds another link), so
++        // its brackets are plain text: unmask its contents so emphasis inside
++        // them can still be matched. Re-mask everything after the `[`.
++        reflinkMasks.clear();
++        maskedSrc = src.charAt(0) + this.maskInlineSrc(src.slice(1), reflinkMasks);
++      }
++
+       // em & strong
+       if (token = this.tokenizer.emStrong(src, maskedSrc, prevChar)) {
+         src = src.substring(token.raw.length);
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 4e348a4..92b13ab 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index 47d0a22..a2bf8ca 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",

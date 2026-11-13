@@ -1,0 +1,60 @@
+diff --git a/src/markdownit.ts b/src/markdownit.ts
+index 4dc2ce9..043cbd8 100644
+--- a/src/markdownit.ts
++++ b/src/markdownit.ts
+@@ -162,7 +162,25 @@ class MarkdownIt {
+       }
+     }
+ 
+-    return mdurl.encode(mdurl.format(parsed))
++    const formatted = mdurl.format(parsed)
++
++    // IPv6 address literals must keep their enclosing brackets
++    // (`http://[::1]/`), otherwise browsers reject the host. Encode the
++    // parts around the host separately so brackets elsewhere in the url
++    // (e.g. in the path or query) are still percent-encoded.
++    if (parsed.hostname && parsed.hostname.indexOf(':') >= 0) {
++      const literal = `[${parsed.hostname}]`
++      const start = formatted.indexOf(literal)
++
++      if (start >= 0) {
++        const end = start + literal.length
++        return mdurl.encode(formatted.slice(0, start)) +
++               literal +
++               mdurl.encode(formatted.slice(end))
++      }
++    }
++
++    return mdurl.encode(formatted)
+   }
+ 
+   /**
+diff --git a/test/fixtures/markdown-it/normalize.txt b/test/fixtures/markdown-it/normalize.txt
+index 3b0c39a..40d56ad 100644
+--- a/test/fixtures/markdown-it/normalize.txt
++++ b/test/fixtures/markdown-it/normalize.txt
+@@ -93,3 +93,24 @@ test xn--n3h@xn--n3h.net foo
+ .
+ <p>test <a href="mailto:xn--n3h@xn--n3h.net">xn--n3h@☃.net</a> foo</p>
+ .
++
++
++IPv6 address literals should keep their brackets:
++
++.
++[visit](http://[2001:db8::1]/)
++.
++<p><a href="http://[2001:db8::1]/">visit</a></p>
++.
++
++.
++<http://[::1]:8080/path?q=[x]>
++.
++<p><a href="http://[::1]:8080/path?q=%5Bx%5D">http://[::1]:8080/path?q=[x]</a></p>
++.
++
++.
++[](//[2001:db8::1]/α)
++.
++<p><a href="//[2001:db8::1]/%CE%B1"></a></p>
++.

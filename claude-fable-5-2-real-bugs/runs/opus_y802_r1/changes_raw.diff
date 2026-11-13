@@ -1,0 +1,16 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 861ee60..b530039 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -709,7 +709,10 @@ function readBlockScalar (state: ParserState, parentIndent: number, props: NodeP
+         state.position = linePosition + column
+         throwError(state, 'tab characters must not be used in indentation')
+       }
+-      if (column < maxLeadingIndent) {
++      // Leading blank lines must not be more indented than the first content
++      // line. A line at or below the parent indent is not content, though: it
++      // ends the scalar, so the blank lines simply form a whitespace-only body.
++      if (column < maxLeadingIndent && column > parentIndent) {
+         state.position = linePosition + column
+         throwError(state, 'bad indentation of a mapping entry')
+       }

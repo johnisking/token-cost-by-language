@@ -1,0 +1,56 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index f020777..4b58791 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -85,6 +85,13 @@ export function canonicalize(
+ 
+   let canonicalizedObj: any;
+ 
++  // Like JSON.stringify, apply a callable toJSON method (on arrays as well as other objects)
++  // before deciding how to serialize the value, so that a toJSON returning an array is
++  // serialized as an array.
++  if (obj && typeof obj.toJSON === 'function') {
++    obj = obj.toJSON(key === undefined ? '' : key);
++  }
++
+   if ('[object Array]' === Object.prototype.toString.call(obj)) {
+     stack.push(obj);
+     canonicalizedObj = new Array(obj.length);
+@@ -97,10 +104,6 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && typeof obj.toJSON === 'function') {
+-    obj = obj.toJSON();
+-  }
+-
+   if (typeof obj === 'object' && obj !== null) {
+     stack.push(obj);
+     // Use a null-prototype object so that an own "__proto__" key is stored as
+diff --git a/test/diff/json.js b/test/diff/json.js
+index d7f2de7..1909e6f 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -144,6 +144,22 @@ describe('diff/json', function() {
+       ]);
+     });
+ 
++    it('serializes an array returned by toJSON as an array (like JSON.stringify does)', function() {
++      const x = { toJSON: () => [1, 2] };
++      expect(diffJson({ foo: x }, { foo: [1, 2] })).to.eql([
++        { count: 6, value: '{\n  "foo": [\n    1,\n    2\n  ]\n}', removed: false, added: false }
++      ]);
++      expect(canonicalize(x, [], [])).to.eql([1, 2]);
++    });
++
++    it('applies toJSON methods defined on arrays (like JSON.stringify does)', function() {
++      const arr = [1, 2, 3];
++      arr.toJSON = () => 'replaced';
++      expect(diffJson({ foo: arr }, { foo: 'replaced' })).to.eql([
++        { count: 3, value: '{\n  "foo": "replaced"\n}', removed: false, added: false }
++      ]);
++    });
++
+     it('treats non-callable toJSON properties as normal properties (like JSON.stringify does)', function() {
+       const x = {
+         toJSON: 'aaa'

@@ -1,0 +1,49 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index 20fe8c8..dd51715 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -97,7 +97,9 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && obj.toJSON) {
++  // Like JSON.stringify, only call toJSON if it is actually callable; a
++  // plain data property named "toJSON" (e.g. from JSON.parse) must be kept.
++  if (obj && typeof obj.toJSON === 'function') {
+     obj = obj.toJSON();
+   }
+ 
+diff --git a/test/diff/json.js b/test/diff/json.js
+index 7c744cb..ff0a0da 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -127,6 +127,29 @@ describe('diff/json', function() {
+         { count: 1, value: '}', removed: false, added: false }
+       ]);
+     });
++
++    it('should treat a non-callable toJSON property as ordinary data', function() {
++      const diffResult = diffJson(
++        JSON.parse('{"toJSON":"old"}'),
++        JSON.parse('{"toJSON":"new"}')
++      );
++      expect(diffResult).to.eql([
++        { count: 1, value: '{\n', removed: false, added: false },
++        { count: 1, value: '  "toJSON": "old"\n', added: false, removed: true },
++        { count: 1, value: '  "toJSON": "new"\n', added: true, removed: false },
++        { count: 1, value: '}', removed: false, added: false }
++      ]);
++    });
++
++    it('should still call a callable toJSON', function() {
++      const diffResult = diffJson(
++        {a: {toJSON() { return 'x'; }}},
++        {a: {toJSON() { return 'x'; }}}
++      );
++      expect(diffResult).to.eql([
++        { count: 3, value: '{\n  "a": "x"\n}', removed: false, added: false }
++      ]);
++    });
+   });
+ 
+   describe('#canonicalize', function() {

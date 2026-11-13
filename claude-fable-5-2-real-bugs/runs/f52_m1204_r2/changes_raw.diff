@@ -1,0 +1,81 @@
+diff --git a/src/markdownit.ts b/src/markdownit.ts
+index 4dc2ce9..513d06f 100644
+--- a/src/markdownit.ts
++++ b/src/markdownit.ts
+@@ -62,6 +62,9 @@ const GOOD_DATA_RE = /^data:image\/(gif|png|jpeg|webp);/
+ 
+ const RECODE_HOSTNAME_FOR = ['http:', 'https:', 'mailto:']
+ 
++// Hostname of IPv6 address literal, without brackets (`mdurl.parse` strips those)
++const IPV6_HOSTNAME_RE = /^[0-9a-f.]*:[0-9a-f:.]*$/i
++
+ /**
+  * Parses Markdown into tokens and renders them to HTML.
+  *
+@@ -162,6 +165,23 @@ class MarkdownIt {
+       }
+     }
+ 
++    if (parsed.hostname && IPV6_HOSTNAME_RE.test(parsed.hostname)) {
++      // IPv6 address literal. `mdurl.parse` strips the surrounding brackets and
++      // `mdurl.format` restores them; they must stay literal, because a host
++      // starting with `%5B` is not a valid IPv6 host. So, encode everything
++      // around the host, but not the host itself (brackets in other parts of
++      // the url are still encoded).
++      const prefix = (parsed.protocol || '') +
++        (parsed.slashes ? '//' : '') +
++        (parsed.auth ? parsed.auth + '@' : '')
++      const suffix = (parsed.port ? ':' + parsed.port : '') +
++        (parsed.pathname || '') +
++        (parsed.search || '') +
++        (parsed.hash || '')
++
++      return mdurl.encode(prefix) + '[' + parsed.hostname + ']' + mdurl.encode(suffix)
++    }
++
+     return mdurl.encode(mdurl.format(parsed))
+   }
+ 
+diff --git a/test/fixtures/markdown-it/normalize.txt b/test/fixtures/markdown-it/normalize.txt
+index 3b0c39a..8df09e1 100644
+--- a/test/fixtures/markdown-it/normalize.txt
++++ b/test/fixtures/markdown-it/normalize.txt
+@@ -93,3 +93,38 @@ test xn--n3h@xn--n3h.net foo
+ .
+ <p>test <a href="mailto:xn--n3h@xn--n3h.net">xn--n3h@☃.net</a> foo</p>
+ .
++
++
++Keep brackets of IPv6 address literals, but encode brackets elsewhere:
++
++.
++[visit](http://[2001:db8::1]/)
++.
++<p><a href="http://[2001:db8::1]/">visit</a></p>
++.
++
++.
++[visit](https://user@[::1]:8080/a[b]?c[d]=[e]#[f])
++.
++<p><a href="https://user@[::1]:8080/a%5Bb%5D?c%5Bd%5D=%5Be%5D#%5Bf%5D">visit</a></p>
++.
++
++.
++<http://[::ffff:192.0.2.1]/α>
++.
++<p><a href="http://[::ffff:192.0.2.1]/%CE%B1">http://[::ffff:192.0.2.1]/α</a></p>
++.
++
++.
++[ref]
++
++[ref]: http://[2001:db8::1]/x
++.
++<p><a href="http://[2001:db8::1]/x">ref</a></p>
++.
++
++.
++[visit](http://[foo]/[bar])
++.
++<p><a href="http://foo/%5Bbar%5D">visit</a></p>
++.

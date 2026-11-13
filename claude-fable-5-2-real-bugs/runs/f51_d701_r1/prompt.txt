@@ -1,0 +1,16 @@
+The current folder is a checkout of jsdiff, the npm package "diff" (TypeScript sources in src/, tests in test/). A user reported the bug below. Find the cause in the source code and fix it in src/, without breaking any other behaviour. Dependencies are already installed in node_modules, and you may run commands in this folder to check your work, for example node node_modules/typescript/bin/tsc --module nodenext --outDir libesm --target es6 (the tests import libesm/) and node node_modules/mocha/bin/mocha.js --timeout 20000 --ignore test/patch/readme-rename-example.js "test/**/*.js". You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+applyPatch drops a literal carriage return at the end of a file
+
+applyPatch corrupts output when a Unix source is patched with a patch whose final line's content ends in a literal carriage return and has no trailing newline. The \r is silently dropped.
+
+import { structuredPatch, applyPatch } from 'diff';
+const oldFile = 'line1\nline2\n';
+const newFile = 'line1\nline2\nline3\r';
+const patch = structuredPatch('f', 'f', oldFile, newFile, undefined, undefined, {context: 0});
+applyPatch(oldFile, patch); // => 'line1\nline2\nline3'  (the '\r' is lost)
+
+I found this by fuzzing random source/target pairs through structuredPatch -> applyPatch; 80 of 200k pairs failed to round-trip, all of this shape. Expected: applyPatch(oldFile, patch) === newFile.
+"""

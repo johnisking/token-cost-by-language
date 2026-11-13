@@ -1,0 +1,51 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..4ca8e0d 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -38,6 +38,15 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+ 
+     if (closerLength === openerLength) {
+       // Found matching closer length.
++
++      // Remember this closer in the cache too. A later full scan (which sets
++      // `backticksScanned`) starts after this point and won't see it, but
++      // openers before it may be re-parsed (e.g. after a failed link label
++      // was scanned with skipToken) and must still find it.
++      if ((state.backticks[closerLength] || 0) < matchStart) {
++        state.backticks[closerLength] = matchStart
++      }
++
+       if (!silent) {
+         const token = state.push('code_inline', 'code', 0)
+         token.markup = marker
+@@ -50,7 +59,9 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+     }
+ 
+     // Some different length found, put it in cache as upper limit of where closer can be found
+-    state.backticks[closerLength] = matchStart
++    if ((state.backticks[closerLength] || 0) < matchStart) {
++      state.backticks[closerLength] = matchStart
++    }
+   }
+ 
+   // Scanned through the end, didn't find anything
+diff --git a/test/markdown-it/misc.test.mjs b/test/markdown-it/misc.test.mjs
+index 5b2ca86..c077e54 100644
+--- a/test/markdown-it/misc.test.mjs
++++ b/test/markdown-it/misc.test.mjs
+@@ -564,3 +564,15 @@ describe('Token attributes', function () {
+     assert.strictEqual(t.attrGet('myattr'), 'myvalue')
+   })
+ })
++
++describe('Backticks cache', function () {
++  it('unclosed link/image label should not suppress later code span', function () {
++    for (const preset of ['default', 'commonmark', 'zero']) {
++      const md = markdownit(preset)
++      assert.strictEqual(md.render('[foo `bar` baz`'), '<p>[foo <code>bar</code> baz`</p>\n')
++      assert.strictEqual(md.render('![alt `code` x`'), '<p>![alt <code>code</code> x`</p>\n')
++      assert.strictEqual(md.render('[`a`b`'), '<p>[<code>a</code>b`</p>\n')
++      assert.strictEqual(md.render('[``a`` `b` ``'), '<p>[<code>a</code> <code>b</code> ``</p>\n')
++    }
++  })
++})

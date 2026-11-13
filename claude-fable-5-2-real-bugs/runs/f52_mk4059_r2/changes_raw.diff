@@ -1,0 +1,88 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 9ba9df6..bf84e78 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -300,6 +300,43 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+     return tokens;
+   }
+ 
++  /**
++   * Mask reference links so their text cannot pair with em/strong/del
++   * delimiters outside of them. The result has the same length as `src`.
++   */
++  private maskReflinks(src: string): string {
++    return src.replace(this.tokenizer.rules.inline.reflinkSearch, (match0: string, label?: string) => {
++      if (!Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))) {
++        return match0;
++      }
++      // A link whose text holds another link is rejected by the tokenizer: its
++      // brackets become text and its text is tokenized in place, so the
++      // delimiters in it must stay visible. Only what is still a link inside
++      // it (and the trailing `[ref]`, which becomes a link of its own) is masked.
++      if (label && match0.charAt(0) !== '!' && label.includes('[') && this.linkTextHasLink(label)) {
++        const labelEnd = 1 + label.length;
++        return '[' + this.maskReflinks(label) + ']' + this.maskReflinks(match0.slice(labelEnd + 1));
++      }
++      return '[' + 'a'.repeat(match0.length - 2) + ']';
++    });
++  }
++
++  /**
++   * Whether tokenizing `text` as the text of a link produces a link, which
++   * makes the tokenizer reject the outer link.
++   */
++  private linkTextHasLink(text: string): boolean {
++    const { inLink, linkEmitted, inRawBlock } = this.state;
++    this.state.inLink = true;
++    this.state.linkEmitted = false;
++    this.inlineTokens(text.replace(this.tokenizer.rules.other.outputLinkReplace, '$1'));
++    const hasLink = this.state.linkEmitted;
++    this.state.inLink = inLink;
++    this.state.linkEmitted = linkEmitted;
++    this.state.inRawBlock = inRawBlock;
++    return hasLink;
++  }
++
+   /**
+    * Lexing/Compiling
+    */
+@@ -310,10 +347,7 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+ 
+     // Mask out reflinks
+     if (this.tokens.links && src.includes('[')) {
+-      maskedSrc = maskedSrc.replace(this.tokenizer.rules.inline.reflinkSearch, match0 =>
+-        Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))
+-          ? '[' + 'a'.repeat(match0.length - 2) + ']'
+-          : match0);
++      maskedSrc = this.maskReflinks(maskedSrc);
+     }
+ 
+     // Mask out escaped characters.
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 4e348a4..92b13ab 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index 47d0a22..a2bf8ca 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",

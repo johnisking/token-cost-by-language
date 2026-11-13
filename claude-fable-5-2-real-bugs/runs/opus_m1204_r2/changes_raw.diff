@@ -1,0 +1,57 @@
+diff --git a/src/markdownit.ts b/src/markdownit.ts
+index 4dc2ce9..9e90649 100644
+--- a/src/markdownit.ts
++++ b/src/markdownit.ts
+@@ -162,6 +162,23 @@ class MarkdownIt {
+       }
+     }
+ 
++    if (parsed.hostname && parsed.hostname.indexOf(':') !== -1) {
++      // IPv6 address literal: brackets around the host must stay literal
++      // (WHATWG URL requires `[` and `]`, `%5B...%5D` is an invalid host),
++      // so encode the parts around the host separately.
++      const head = (parsed.protocol || '') +
++        (parsed.slashes ? '//' : '') +
++        (parsed.auth ? parsed.auth + '@' : '')
++      const tail = (parsed.port ? ':' + parsed.port : '') +
++        (parsed.pathname || '') +
++        (parsed.search || '') +
++        (parsed.hash || '')
++
++      return mdurl.encode(head) +
++        '[' + mdurl.encode(parsed.hostname) + ']' +
++        mdurl.encode(tail)
++    }
++
+     return mdurl.encode(mdurl.format(parsed))
+   }
+ 
+diff --git a/test/fixtures/markdown-it/normalize.txt b/test/fixtures/markdown-it/normalize.txt
+index 3b0c39a..452a08c 100644
+--- a/test/fixtures/markdown-it/normalize.txt
++++ b/test/fixtures/markdown-it/normalize.txt
+@@ -93,3 +93,24 @@ test xn--n3h@xn--n3h.net foo
+ .
+ <p>test <a href="mailto:xn--n3h@xn--n3h.net">xn--n3h@☃.net</a> foo</p>
+ .
++
++
++Keep IPv6 address literal brackets in link destinations:
++
++.
++[visit](http://[2001:db8::1]/)
++.
++<p><a href="http://[2001:db8::1]/">visit</a></p>
++.
++
++.
++[visit](http://user@[::1]:8080/a[b]?x=[1]#[y])
++.
++<p><a href="http://user@[::1]:8080/a%5Bb%5D?x=%5B1%5D#%5By%5D">visit</a></p>
++.
++
++.
++<http://[2001:db8::1]/>
++.
++<p><a href="http://[2001:db8::1]/">http://[2001:db8::1]/</a></p>
++.

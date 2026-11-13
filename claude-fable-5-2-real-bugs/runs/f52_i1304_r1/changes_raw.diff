@@ -1,0 +1,48 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index c128bc9..120b959 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -3717,8 +3717,21 @@ def ichunked(iterable, n):
+     >>> list(c_3)
+     [8, 9, 10, 11]
+ 
++    As with :func:`chunked`, nothing is yielded if *n* is ``0``, and
++    ``ValueError`` is raised if *n* is negative.
++
+     """
+-    iterator = iter(iterable)
++    if n < 0:
++        raise ValueError('n must be at least 0')
++
++    return _ichunked(iter(iterable), n)
++
++
++def _ichunked(iterator, n):
++    if n == 0:
++        # Like chunked(): no chunks, and nothing is consumed from the source.
++        return
++
+     for first in iterator:
+         rest = islice(iterator, n - 1)
+         cache, cacher = tee(rest)
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 50fab9c..1b45bd5 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -4525,6 +4525,16 @@ class OnlyTests(TestCase):
+ 
+ 
+ class IchunkedTests(TestCase):
++    def test_zero_nonempty(self):
++        iterator = iter('abc')
++        self.assertEqual(list(mi.ichunked(iterator, 0)), [])
++        # Like chunked(), nothing is consumed from the source
++        self.assertEqual(list(iterator), ['a', 'b', 'c'])
++
++    def test_negative(self):
++        with self.assertRaisesRegex(ValueError, 'n must be at least 0'):
++            mi.ichunked('abc', -1)
++
+     def test_even(self):
+         iterable = (str(x) for x in range(10))
+         actual = [''.join(c) for c in mi.ichunked(iterable, 5)]

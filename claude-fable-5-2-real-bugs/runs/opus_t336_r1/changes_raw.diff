@@ -1,0 +1,90 @@
+diff --git a/tests/test_api.py b/tests/test_api.py
+index b5f31bc..eb3d462 100644
+--- a/tests/test_api.py
++++ b/tests/test_api.py
+@@ -224,6 +224,36 @@ def test_integer() -> None:
+     assert isinstance(i, Integer)
+ 
+ 
++@pytest.mark.parametrize(
++    "raw,expected",
++    [
++        ("1_000", 1000),
++        ("5_349_221", 5349221),
++        ("53_49_221", 5349221),
++        ("1_2_3_4_5", 12345),
++        ("+1_000", 1000),
++        ("-1_000", -1000),
++    ],
++)
++def test_integer_preserves_underscores(raw: str, expected: int) -> None:
++    i = tomlkit.integer(raw)
++
++    assert isinstance(i, Integer)
++    assert int(i) == expected
++    assert i.as_string() == raw
++
++    doc = tomlkit.document()
++    doc["n"] = i
++    assert tomlkit.dumps(doc) == f"n = {raw}\n"
++    assert tomlkit.parse(tomlkit.dumps(doc))["n"] == expected
++
++
++def test_integer_normalizes_non_toml_strings() -> None:
++    assert tomlkit.integer("010").as_string() == "10"
++    assert tomlkit.integer(" 42 ").as_string() == "42"
++    assert (tomlkit.integer("+1_000") + 1).as_string() == "+1001"
++
++
+ def test_float() -> None:
+     i = tomlkit.float_("34.56")
+ 
+diff --git a/tomlkit/api.py b/tomlkit/api.py
+index b0f8cd6..9c5cd89 100644
+--- a/tomlkit/api.py
++++ b/tomlkit/api.py
+@@ -2,6 +2,7 @@ from __future__ import annotations
+ 
+ import contextlib
+ import datetime as _datetime
++import re
+ 
+ from collections.abc import Iterable
+ from collections.abc import Mapping
+@@ -115,8 +116,21 @@ def document() -> TOMLDocument:
+ 
+ # Items
+ def integer(raw: str | int) -> Integer:
+-    """Create an integer item from a number or string."""
+-    return item(int(raw))
++    """Create an integer item from a number or string.
++
++    If a string using a valid TOML decimal representation is given
++    (e.g. ``"1_000"``), its formatting is preserved when dumping.
++    """
++    value = int(raw)
++    if isinstance(raw, str):
++        stripped = raw.strip()
++        if _DECIMAL_INTEGER_RE.match(stripped):
++            return Integer(value, Trivia(), stripped)
++
++    return item(value)
++
++
++_DECIMAL_INTEGER_RE = re.compile(r"^[+\-]?(?:0|[1-9](?:_?[0-9])*)$")
+ 
+ 
+ def float_(raw: str | float) -> Float:
+diff --git a/tomlkit/items.py b/tomlkit/items.py
+index 8589df9..965162b 100644
+--- a/tomlkit/items.py
++++ b/tomlkit/items.py
+@@ -627,7 +627,7 @@ class Integer(Item, _CustomInt):
+         self._raw = raw
+         self._sign = False
+ 
+-        if re.match(r"^[+\-]\d+$", raw):
++        if re.match(r"^[+\-]\d[\d_]*$", raw):
+             self._sign = True
+ 
+     def unwrap(self) -> int:

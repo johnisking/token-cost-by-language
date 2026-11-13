@@ -1,0 +1,77 @@
+diff --git a/src/patch/line-endings.ts b/src/patch/line-endings.ts
+index d36c7a5..fa35575 100644
+--- a/src/patch/line-endings.ts
++++ b/src/patch/line-endings.ts
+@@ -41,7 +41,14 @@ export function winToUnix(patch: StructuredPatch | StructuredPatch[]): Structure
+     ...patch,
+     hunks: patch.hunks.map(hunk => ({
+       ...hunk,
+-      lines: hunk.lines.map(line => line.endsWith('\r') ? line.substring(0, line.length - 1) : line)
++      lines: hunk.lines.map(
++        // A line immediately followed by a "\ No newline at end of file" marker has no line ending,
++        // so a trailing \r on such a line is part of its content and must be preserved.
++        (line, i) =>
++          (line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\'))
++            ? line.substring(0, line.length - 1)
++            : line
++      )
+     }))
+   };
+ }
+@@ -55,7 +62,7 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+   return !patch.some(
+     index => index.hunks.some(
+       hunk => hunk.lines.some(
+-        line => !line.startsWith('\\') && line.endsWith('\r')
++        (line, i) => !line.startsWith('\\') && line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\')
+       )
+     )
+   );
+@@ -66,7 +73,11 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+  */
+ export function isWin(patch: StructuredPatch | StructuredPatch[]): boolean {
+   if (!Array.isArray(patch)) { patch = [patch]; }
+-  return patch.some(index => index.hunks.some(hunk => hunk.lines.some(line => line.endsWith('\r'))))
++  // (A line followed by a "\ No newline at end of file" marker has no line ending, so a trailing
++  // \r on it is content, not evidence of Windows line endings.)
++  return patch.some(index => index.hunks.some(hunk => hunk.lines.some(
++    (line, i) => !line.startsWith('\\') && line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\')
++  )))
+     && patch.every(
+       index => index.hunks.every(
+         hunk => hunk.lines.every(
+diff --git a/test/patch/apply.js b/test/patch/apply.js
+index c789488..3df1853 100644
+--- a/test/patch/apply.js
++++ b/test/patch/apply.js
+@@ -1492,6 +1492,30 @@ describe('patch/apply', function() {
+       expect(applyPatch(oldFile, diffFile, {autoConvertLineEndings: false})).to.equal(false);
+     });
+ 
++    it('should preserve a literal \\r at the end of a final line with no trailing newline', () => {
++      // Unix source, patch whose only added line ends in \r with no newline after it
++      let oldFile = 'line1\nline2\n';
++      let newFile = 'line1\nline2\nline3\r';
++      let patch = structuredPatch('f', 'f', oldFile, newFile, undefined, undefined, {context: 0});
++      expect(applyPatch(oldFile, patch)).to.equal(newFile);
++
++      // Same, but with context lines (Unix line endings) in the hunk
++      patch = structuredPatch('f', 'f', oldFile, newFile);
++      expect(applyPatch(oldFile, patch)).to.equal(newFile);
++
++      // Windows source: the \r is content, not a line ending, so it must not be doubled/removed
++      oldFile = 'line1\r\nline2\r\n';
++      newFile = 'line1\r\nline2\r\nline3\r';
++      patch = structuredPatch('f', 'f', oldFile, newFile, undefined, undefined, {context: 0});
++      expect(applyPatch(oldFile, patch)).to.equal(newFile);
++
++      // Removing such a line from a Unix file
++      oldFile = 'line1\nline2\nline3\r';
++      newFile = 'line1\nline2\n';
++      patch = structuredPatch('f', 'f', oldFile, newFile, undefined, undefined, {context: 0});
++      expect(applyPatch(oldFile, patch)).to.equal(newFile);
++    });
++
+     it('fails if asked to remove a non-existent trailing newline with fuzzFactor 0', () => {
+       const oldFile = 'foo\nbar\nbaz\nqux';
+       const diffFile =

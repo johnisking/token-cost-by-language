@@ -1,0 +1,14 @@
+The current folder is a checkout of tomlkit, the style-preserving TOML library for Python (sources in tomlkit/, tests in tests/). A user reported the bug below. Find the cause in the source code and fix it in tomlkit/, without breaking any other behaviour. Dependencies are already installed, and you may run commands in this folder to check your work, for example .venv/Scripts/python -m pytest -q --ignore=tests/test_toml_tests.py tests (a virtual environment with pytest is in .venv). You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+Parse errors report the wrong line and column for CRLF files
+
+The line and column reported in a parse error depend on the document's line endings. With \r\n line endings the error lands on the wrong line and the wrong column:
+
+from tomlkit.parser import Parser
+Parser("a = 1\r\nb = 2\r\nc = @\r\nd = 4\r\n").parse()
+# UnexpectedCharError: Unexpected character: '@' at line 4 col 0
+
+The '@' is on line 3, column 4, which is what the same document with \n endings reports. Files with mixed line endings are affected too. Expected: the reported position is the same whatever the line endings are.
+"""

@@ -1,0 +1,89 @@
+diff --git a/src/cachetools/_cachedmethod.py b/src/cachetools/_cachedmethod.py
+index 2a626ab..98a5912 100644
+--- a/src/cachetools/_cachedmethod.py
++++ b/src/cachetools/_cachedmethod.py
+@@ -81,14 +81,33 @@ class _DescriptorBase:
+                 f"({self.__attrname!r} and {name!r})."
+             )
+ 
++    def __unbound_wrapper_type(self):
++        try:
++            return self.__unbound
++        except AttributeError:
++            pass
++        descriptor = self
++
++        class UnboundWrapper(self.Wrapper):  # type: ignore
++            """Wrapper returned on class access, e.g. `Class.method(obj, ...)`."""
++
++            def __call__(self, obj, /, *args, **kwargs):
++                # Behave like an ordinary function accessed through the
++                # class: bind to the explicitly supplied instance.
++                return descriptor.__get__(obj, type(obj))(*args, **kwargs)
++
++        self.__unbound = UnboundWrapper
++        return UnboundWrapper
++
+     def __get__(self, obj, objtype=None):
+-        wrapper = self.Wrapper(obj)  # type: ignore
+         if obj is None:
+-            # Return the wrapper itself without modification when accessed
+-            # through the class to support class-level introspection, such
+-            # as for mocking with autospec=True in unittest.mock.
+-            pass
+-        elif self.__attrname is not None:
++            # Return an unbound wrapper when accessed through the class to
++            # support class-level introspection, such as for mocking with
++            # autospec=True in unittest.mock, and calls with an explicitly
++            # supplied instance, i.e. `Class.method(obj, *args)`.
++            return self.__unbound_wrapper_type()(None)
++        wrapper = self.Wrapper(obj)  # type: ignore
++        if self.__attrname is not None:
+             # replace descriptor instance with wrapper in instance dict
+             try:
+                 # In case of a race condition where another thread already replaced
+diff --git a/tests/test_cachedmethod.py b/tests/test_cachedmethod.py
+index 8d519f6..284e192 100644
+--- a/tests/test_cachedmethod.py
++++ b/tests/test_cachedmethod.py
+@@ -690,3 +690,40 @@ class AutospecTest(unittest.TestCase):
+             warnings.simplefilter("always")
+             unittest.mock.create_autospec(Cached, instance=True)
+         self.assertEqual(len(w), 0)
++
++
++class ClassAccessTest(unittest.TestCase):
++    NAMES = (
++        "get",
++        "get_typed",
++        "get_info",
++        "get_lock",
++        "get_lock_info",
++        "get_cond",
++        "get_cond_info",
++        "get_lock_cond",
++        "get_lock_cond_info",
++    )
++
++    def test_class_access_with_instance(self):
++        for name in self.NAMES:
++            with self.subTest(name=name):
++                cached = Cached(Cache(maxsize=2))
++                method = getattr(Cached, name)
++                self.assertEqual(method(cached, 0), 0)
++                self.assertEqual(method(cached, 0), 0)
++                self.assertEqual(getattr(cached, name)(0), 0)
++                self.assertEqual(getattr(cached, name)(1), 1)
++                self.assertEqual(method(cached, 1), 1)
++                self.assertEqual(len(cached.cache), 2)
++                if name.endswith("_info"):
++                    self.assertEqual(getattr(cached, name).cache_info().hits, 3)
++
++    def test_class_access_keyword_arguments(self):
++        cached = Cached(Cache(maxsize=2))
++        self.assertEqual(Cached.get(cached, value=0), 0)
++        self.assertEqual(cached.get(value=0), 0)
++
++    def test_class_access_introspection(self):
++        self.assertEqual(Cached.get.__name__, "get")
++        self.assertEqual(Cached.get.__doc__, "docstring")

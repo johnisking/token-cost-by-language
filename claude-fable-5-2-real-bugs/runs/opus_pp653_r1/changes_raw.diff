@@ -1,0 +1,119 @@
+diff --git a/pyparsing/helpers.py b/pyparsing/helpers.py
+index c88e543..bb6e128 100644
+--- a/pyparsing/helpers.py
++++ b/pyparsing/helpers.py
+@@ -156,18 +156,49 @@ def match_previous_expr(expr: ParserElement) -> ParserElement:
+     e2 = expr.copy()
+     rep <<= e2
+ 
+-    def copy_token_to_repeater(s, l, t):
+-        match_tokens = _flatten(t.as_list())
+-
+-        def must_match_these_tokens(s, l, t):
+-            these_tokens = _flatten(t.as_list())
+-            if these_tokens != match_tokens:
+-                raise ParseException(
+-                    s, l, f"Expected {match_tokens}, found{these_tokens}"
+-                )
++    # Matches of ``expr`` are recorded on a stack, so that nested and repeated
++    # pairs are each matched against their own opening expression. Each entry
++    # is [input string, match location, matched tokens, location where the
++    # entry was matched by the repeat (or None if not matched yet)].
++    # Entries left over from abandoned (backtracked) parse attempts, or from
++    # parsing a different input string, are discarded based on locations.
++    matches: list = []
++
++    def _prune(s, l):
++        # discard entries from other input strings, or from alternatives that
++        # started at or after the current location (they were backtracked)
++        while matches and (matches[-1][0] is not s or matches[-1][1] >= l):
++            matches.pop()
++        if matches and matches[0][0] is not s:
++            matches[:] = [m for m in matches if m[0] is s and m[1] < l]
++        # repeat matches at or after the current location were also backtracked
++        for m in matches:
++            if m[3] is not None and m[3] >= l:
++                m[3] = None
+ 
+-        e2.add_parse_action(must_match_these_tokens, call_during_try=True)
++    def copy_token_to_repeater(s, l, t):
++        _prune(s, l)
++        matches.append([s, l, _flatten(t.as_list()), None])
++
++    def must_match_these_tokens(s, l, t):
++        _prune(s, l)
++        these_tokens = _flatten(t.as_list())
++        target = next((m for m in reversed(matches) if m[3] is None), None)
++        if target is None:
++            # all previous matches already repeated; compare to the most recent
++            target = matches[-1] if matches else None
++        if target is None:
++            # nothing to compare against (``expr`` has not matched yet)
++            return
++        match_tokens = target[2]
++        if these_tokens != match_tokens:
++            raise ParseException(
++                s, l, f"Expected {match_tokens}, found {these_tokens}"
++            )
++        if target[3] is None:
++            target[3] = l
+ 
++    e2.add_parse_action(must_match_these_tokens, call_during_try=True)
+     expr.add_parse_action(copy_token_to_repeater, call_during_try=True)
+     rep.set_name(f"(prev) {expr}")
+     return rep
+diff --git a/tests/test_unit.py b/tests/test_unit.py
+index a96efd9..d819b3a 100644
+--- a/tests/test_unit.py
++++ b/tests/test_unit.py
+@@ -2442,6 +2442,50 @@ class Test02_WithoutPackrat(ppt.TestParseResultsAsserts, TestCase):
+ 
+         self.assertParseResultsEquals(result, expected_list=expected)
+ 
++    def testRepeaterNestedAndRepeated(self):
++        """test match_previous_expr with nested, repeated, and re-parsed matches"""
++
++        if ParserElement._packratEnabled or ParserElement._left_recursion_enabled:
++            print("skipping this test, not compatible with memoization")
++            return
++
++        tag = pp.Word(pp.alphas)
++        open_tag = pp.Suppress("{") + tag + pp.Suppress("}")
++        close_tag = pp.Suppress("{/") + pp.match_previous_expr(tag) + pp.Suppress("}")
++        element = pp.Forward()
++        element <<= pp.Group(open_tag + pp.ZeroOrMore(element | pp.Word("x")) + close_tag)
++
++        tests = [
++            ("{a}xx{/a}", [["a", "xx", "a"]]),
++            ("{a}{b}xx{/b}{/a}", [["a", ["b", "xx", "b"], "a"]]),
++            ("{a}{b}x{/b}{c}x{/c}{/a}", [["a", ["b", "x", "b"], ["c", "x", "c"], "a"]]),
++            ("{a}{b}xx{/a}{/b}", None),
++            ("{a}xx{/b}", None),
++            ("{a}xx{/a}", [["a", "xx", "a"]]),
++            ("{a}{b}xx{/b}{/a}", [["a", ["b", "xx", "b"], "a"]]),
++        ]
++        for tst, expected in tests:
++            if expected is None:
++                with self.assertRaisesParseException(msg=f"expected fail: {tst!r}"):
++                    element.parse_string(tst, parse_all=True)
++            else:
++                self.assertParseAndCheckList(element, tst, expected)
++
++        first = pp.Word(pp.alphas)
++        seq = pp.OneOrMore(pp.Group(first + ":" + pp.match_previous_expr(first)))
++        tests = [
++            ("a:a b:b", [["a", ":", "a"], ["b", ":", "b"]]),
++            ("a:a b:a", None),
++            ("a:b", None),
++            ("a:a b:b c:c", [["a", ":", "a"], ["b", ":", "b"], ["c", ":", "c"]]),
++        ]
++        for tst, expected in tests:
++            if expected is None:
++                with self.assertRaisesParseException(msg=f"expected fail: {tst!r}"):
++                    seq.parse_string(tst, parse_all=True)
++            else:
++                self.assertParseAndCheckList(seq, tst, expected)
++
+     def testRecursiveCombine(self):
+         testInput = "myc(114)r(11)dd"
+         stream = pp.Forward()

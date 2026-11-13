@@ -1,0 +1,40 @@
+diff --git a/src/humanize/number.py b/src/humanize/number.py
+index 2dfeffe..52a8aa2 100644
+--- a/src/humanize/number.py
++++ b/src/humanize/number.py
+@@ -550,8 +550,11 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
+     old_bucket = exponent // 3 * 3
+     value /= 10**old_bucket
+     digits = int(max(0, precision - exponent % 3 - 1))
+-    if exponent < 30 and round(abs(value), digits) >= 1000:
+-        exponent += 3 - exponent % 3
++    # Rounding may carry the mantissa up a power of ten (e.g. 9.999 -> 10.00),
++    # which would show one significant digit too many. Recompute the exponent
++    # (and the SI prefix, if the carry crosses into the next bucket).
++    if exponent < 32 and round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
++        exponent += 1
+         new_bucket = exponent // 3 * 3
+         value /= 10 ** (new_bucket - old_bucket)
+         digits = int(max(0, precision - exponent % 3 - 1))
+diff --git a/tests/test_number.py b/tests/test_number.py
+index 6f0a664..939c57c 100644
+--- a/tests/test_number.py
++++ b/tests/test_number.py
+@@ -318,6 +318,17 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
+         ([10, "", 3], "10.0"),
+         ([100, "", 3], "100"),
+         ([1000, "", 3], "1.00 k"),
++        ([9.99999], "10.0"),
++        ([99.9999], "100"),
++        ([999.999], "1.00 k"),
++        ([9999], "10.0 k"),
++        ([99999], "100 k"),
++        ([999999], "1.00 M"),
++        ([-9999], "-10.0 k"),
++        ([0.0009999], "1.00 m"),
++        ([9.9996e-14, "", 4], "100.0 f"),
++        ([9.9999e30], "10.0 Q"),
++        ([9.6, "", 1], "10"),
+         ([math.nan], "NaN"),
+         ([math.nan, "m"], "NaN"),
+         ([math.inf], "+Inf"),

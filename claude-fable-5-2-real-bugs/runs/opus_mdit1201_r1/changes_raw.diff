@@ -1,0 +1,85 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..ee521d4 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -18,7 +18,12 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+   const marker = state.src.slice(start, pos)
+   const openerLength = marker.length
+ 
+-  if (state.backticksScanned && (state.backticks[openerLength] || 0) <= start) {
++  // The cache is only trustworthy if a full scan to the end of the source
++  // started at or before this position (scans can happen out of order,
++  // e.g. when a link label is validated via skipToken).
++  if (state.backticksScanned &&
++      start >= state.backticksScannedFrom &&
++      (state.backticks[openerLength] || 0) <= start) {
+     if (!silent) state.pending += marker
+     state.pos += openerLength
+     return true
+@@ -50,11 +55,15 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+     }
+ 
+     // Some different length found, put it in cache as upper limit of where closer can be found
+-    state.backticks[closerLength] = matchStart
++    // (keep the largest position, so a later partial scan can't shrink it)
++    if ((state.backticks[closerLength] || 0) < matchStart) {
++      state.backticks[closerLength] = matchStart
++    }
+   }
+ 
+   // Scanned through the end, didn't find anything
+   state.backticksScanned = true
++  if (start < state.backticksScannedFrom) state.backticksScannedFrom = start
+ 
+   if (!silent) state.pending += marker
+   state.pos += openerLength
+diff --git a/src/rules_inline/state_inline.ts b/src/rules_inline/state_inline.ts
+index fbba926..f305419 100644
+--- a/src/rules_inline/state_inline.ts
++++ b/src/rules_inline/state_inline.ts
+@@ -36,6 +36,9 @@ class StateInline {
+   // backtick length => last seen position
+   backticks: Record<number, number> = {}
+   backticksScanned = false
++  // Smallest position from which a failed backtick scan reached the end of
++  // the source. The cache above is only complete for positions >= this one.
++  backticksScannedFrom = Infinity
+ 
+   // Counter used to disable inline linkify-it execution
+   // inside <a> and markdown links
+diff --git a/test/fixtures/markdown-it/commonmark_extras.txt b/test/fixtures/markdown-it/commonmark_extras.txt
+index c8bbc7a..3a032d6 100644
+--- a/test/fixtures/markdown-it/commonmark_extras.txt
++++ b/test/fixtures/markdown-it/commonmark_extras.txt
+@@ -876,3 +876,31 @@ foo
+ <p>foo</p>
+ <!bar baz>
+ .
++
++Unclosed link label must not suppress a later code span
++.
++[foo `bar` baz`
++.
++<p>[foo <code>bar</code> baz`</p>
++.
++
++Unclosed image label must not suppress a later code span
++.
++![alt `code` x`
++.
++<p>![alt <code>code</code> x`</p>
++.
++
++Unclosed link label, minimal case
++.
++[`a`b`
++.
++<p>[<code>a</code>b`</p>
++.
++
++Backtick cache with mixed lengths after unclosed label
++.
++[a ``b`` `c` ```
++.
++<p>[a <code>b</code> <code>c</code> ```</p>
++.

@@ -1,0 +1,52 @@
+diff --git a/tests/test_parser.py b/tests/test_parser.py
+index 44d5cd6..4e2ac7a 100644
+--- a/tests/test_parser.py
++++ b/tests/test_parser.py
+@@ -246,3 +246,18 @@ def test_parser_accepts_uppercase_exponent_after_leading_zero() -> None:
+         value = Parser(f"a = {raw}").parse()["a"]
+         assert isinstance(value, Float)
+         assert value == float(raw)
++
++
++@pytest.mark.parametrize(
++    "content",
++    [
++        "a = 1\nb = 2\nc = @\nd = 4\n",
++        "a = 1\r\nb = 2\r\nc = @\r\nd = 4\r\n",
++        "a = 1\r\nb = 2\nc = @\r\nd = 4\n",
++    ],
++)
++def test_parse_error_position_independent_of_line_endings(content: str) -> None:
++    with pytest.raises(UnexpectedCharError) as e:
++        Parser(content).parse()
++
++    assert (e.value.line, e.value.col) == (3, 4)
+diff --git a/tomlkit/source.py b/tomlkit/source.py
+index b2e9caa..48a92e3 100644
+--- a/tomlkit/source.py
++++ b/tomlkit/source.py
+@@ -230,11 +230,20 @@ class Source(str):
+         return exception(line, col, *args, **kwargs)
+ 
+     def _to_linecol(self) -> tuple[int, int]:
++        # Keep the line endings so that the offset of each line start is
++        # computed from the real length of its terminator ("\n" or "\r\n"),
++        # making the reported position independent of the line endings.
++        lines = self.splitlines(keepends=True)
+         cur = 0
+-        for i, line in enumerate(self.splitlines()):
+-            if cur + len(line) + 1 > self.idx:
++        for i, line in enumerate(lines):
++            # A final line without a terminator also owns the end-of-input
++            # position (as if it were followed by a newline).
++            end = cur + len(line)
++            if line.splitlines()[0] == line:
++                end += 1
++            if end > self.idx:
+                 return (i + 1, self.idx - cur)
+ 
+-            cur += len(line) + 1
++            cur += len(line)
+ 
+-        return len(self.splitlines()), 0
++        return len(lines), 0

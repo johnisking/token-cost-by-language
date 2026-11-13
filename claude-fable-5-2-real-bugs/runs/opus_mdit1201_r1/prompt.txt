@@ -1,0 +1,27 @@
+The current folder is a checkout of markdown-it, the Markdown parser (TypeScript sources in src/, tests in test/). A user reported the bug below. Find the cause in the source code and fix it in src/, without breaking any other behaviour. Dependencies are already installed in node_modules, and you may run commands in this folder to check your work, for example node --test test/markdown-it/markdown-it.test.mjs. You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+Unclosed link/image label suppresses a later inline code span
+
+An unclosed link or image label ([ / ![) earlier on a line causes a later, valid inline code span to be rendered as literal text.
+
+Input:
+
+[foo `bar` baz`
+
+Output:
+
+markdown-it 15.0.0:   <p>[foo `bar` baz`</p>          (code span dropped, all literal)
+CommonMark reference: <p>[foo <code>bar</code> baz`</p>
+
+The same happens for image labels and for the default/zero presets:
+
+![alt `code` x`
+markdown-it:  <p>![alt `code` x`</p>
+reference:    <p>![alt <code>code</code> x`</p>
+
+Minimal trigger: [`a`b`
+
+Code spans bind more tightly than links (CommonMark 0.31.2), so this is a spec divergence on valid input.
+"""

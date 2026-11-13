@@ -1,0 +1,54 @@
+diff --git a/tests/test_api.py b/tests/test_api.py
+index b5f31bc..f03c3e2 100644
+--- a/tests/test_api.py
++++ b/tests/test_api.py
+@@ -611,3 +611,23 @@ def test_parse_accepts_nesting_at_the_depth_limit() -> None:
+     assert parse(array).as_string() == array
+     dotted = ".".join(["a"] * depth) + " = 1"
+     assert parse(dotted).as_string() == dotted
++
++
++def test_integer_from_string_keeps_underscores():
++    i = tomlkit.integer("1_000")
++    assert i.as_string() == "1_000"
++    assert int(i) == 1000
++    assert i == 1000
++
++    doc = tomlkit.document()
++    doc["n"] = tomlkit.integer("1_000")
++    doc["m"] = tomlkit.integer("-53_49_221")
++    assert tomlkit.dumps(doc) == "n = 1_000\nm = -53_49_221\n"
++    assert tomlkit.parse(tomlkit.dumps(doc)) == dict(n=1000, m=-5349221)
++
++    assert tomlkit.integer("1000").as_string() == "1000"
++    assert tomlkit.integer(1000).as_string() == "1000"
++    # Not a valid TOML literal: normalized as before
++    assert tomlkit.integer("0_1").as_string() == "1"
++    with pytest.raises(ValueError):
++        tomlkit.integer("1__000")
+diff --git a/tomlkit/api.py b/tomlkit/api.py
+index b0f8cd6..f900db4 100644
+--- a/tomlkit/api.py
++++ b/tomlkit/api.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import contextlib
++import re
+ import datetime as _datetime
+ 
+ from collections.abc import Iterable
+@@ -116,6 +117,13 @@ def document() -> TOMLDocument:
+ # Items
+ def integer(raw: str | int) -> Integer:
+     """Create an integer item from a number or string."""
++    if isinstance(raw, str) and "_" in raw:
++        # Keep the digit grouping when the string is a valid TOML decimal
++        # integer (an underscore must have a digit on each side, and leading
++        # zeros are not allowed). Anything else is normalized as before.
++        if re.fullmatch(r"[+-]?(?:0|[1-9](?:_?[0-9])*)", raw):
++            return Integer(int(raw), Trivia(), raw)
++
+     return item(int(raw))
+ 
+ 

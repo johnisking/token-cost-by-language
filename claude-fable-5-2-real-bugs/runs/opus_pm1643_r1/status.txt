@@ -1,0 +1,4 @@
+ M markdown/extensions/md_in_html.py
+ M markdown/htmlparser.py
+ M tests/test_syntax/blocks/test_html_blocks.py
+ M tests/test_syntax/extensions/test_md_in_html.py

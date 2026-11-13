@@ -1,0 +1,64 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..839e503 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -53,8 +53,28 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+     state.backticks[closerLength] = matchStart
+   }
+ 
+-  // Scanned through the end, didn't find anything
+-  state.backticksScanned = true
++  // Scanned through the end, didn't find anything.
++  //
++  // The loop above only cached the runs located after this opener. The parser
++  // can still be rewound to an earlier position (e.g. after a silent lookahead
++  // for an unclosed link/image label), so make the cache complete by recording
++  // the last position of every backtick run in the source before trusting it.
++  if (!state.backticksScanned) {
++    let runStart = -1
++    let runEnd = 0
++
++    while ((runStart = state.src.indexOf('`', runEnd)) !== -1 && runStart < start) {
++      runEnd = runStart + 1
++      while (runEnd < max && state.src.charCodeAt(runEnd) === 0x60/* ` */) { runEnd++ }
++
++      const runLength = runEnd - runStart
++      if ((state.backticks[runLength] || 0) < runStart) {
++        state.backticks[runLength] = runStart
++      }
++    }
++
++    state.backticksScanned = true
++  }
+ 
+   if (!silent) state.pending += marker
+   state.pos += openerLength
+diff --git a/test/fixtures/markdown-it/commonmark_extras.txt b/test/fixtures/markdown-it/commonmark_extras.txt
+index c8bbc7a..6453038 100644
+--- a/test/fixtures/markdown-it/commonmark_extras.txt
++++ b/test/fixtures/markdown-it/commonmark_extras.txt
+@@ -876,3 +876,24 @@ foo
+ <p>foo</p>
+ <!bar baz>
+ .
++
++Unclosed link label must not suppress a later code span (stale backtick scan cache)
++.
++[foo `bar` baz`
++.
++<p>[foo <code>bar</code> baz`</p>
++.
++
++Same for an unclosed image label
++.
++![alt `code` x`
++.
++<p>![alt <code>code</code> x`</p>
++.
++
++Unclosed label, code spans of different lengths before an unmatched run
++.
++[a `` b ` c `` d ```
++.
++<p>[a <code>b ` c</code> d ```</p>
++.

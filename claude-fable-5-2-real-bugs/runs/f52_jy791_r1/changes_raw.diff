@@ -1,0 +1,41 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 35bf033..dbec531 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -1449,7 +1449,13 @@ function parseEvents (input: string, options: ParserOptions): Event[] {
+   const nullpos = input.indexOf('\0')
+   if (nullpos !== -1) YAMLException.throwAt(input, nullpos, 'null byte is not allowed in input', state.filename)
+ 
+-  if (state.input.charCodeAt(state.position) === 0xFEFF) state.position++
++  // Skip the BOM. It is not part of the first line's content, so the line
++  // must start after it - otherwise indentation (column) of the first line
++  // is computed off by one.
++  if (state.input.charCodeAt(state.position) === 0xFEFF) {
++    state.position++
++    state.lineStart = state.position
++  }
+ 
+   while (state.position < state.length) {
+     skipSeparationSpace(state, true)
+diff --git a/test/core/units/load-other.test.mjs b/test/core/units/load-other.test.mjs
+index dd33711..16c3345 100644
+--- a/test/core/units/load-other.test.mjs
++++ b/test/core/units/load-other.test.mjs
+@@ -8,6 +8,17 @@ describe('core/units/load-other', () => {
+     assert.deepStrictEqual(load('foo: bar\n'), { foo: 'bar' })
+   })
+ 
++  it('BOM does not count as indentation of the first line', () => {
++    const expected = { abc: 5, cba: ['Xyz', 'Zyx'] }
++    assert.deepStrictEqual(load('\uFEFFabc: 5\ncba:\n  - Xyz\n  - Zyx\n'), expected)
++    assert.deepStrictEqual(load('\uFEFFabc: 5\ncba:\n- Xyz\n- Zyx\n'), expected)
++    assert.deepStrictEqual(load('\uFEFF- a\n- b\n'), ['a', 'b'])
++    assert.deepStrictEqual(load('\uFEFF---\na: 1\nb: 2\n'), { a: 1, b: 2 })
++    assert.deepStrictEqual(load('\uFEFF--- a\n'), 'a')
++    assert.deepStrictEqual(load('\uFEFF# comment\na: 1\nb: 2\n'), { a: 1, b: 2 })
++    assert.deepStrictEqual(load('\uFEFF%YAML 1.2\n---\na: 1\n'), { a: 1 })
++  })
++
+   it('Loading multidocument source using `load` should cause an error', () => {
+     assert.throws(() => {
+       load('--- # first document\n--- # second document\n')

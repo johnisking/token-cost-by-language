@@ -1,0 +1,24 @@
+The current folder is a checkout of zod, the TypeScript schema library (monorepo; the library source is in packages/zod/src/, tests next to it in packages/zod/src/v4/classic/tests/). A user reported the bug below. Find the cause in the source code and fix it in packages/zod/src/, without breaking any other behaviour. Dependencies are already installed in node_modules, and you may run commands in this folder to check your work, for example node node_modules/vitest/vitest.mjs run --typecheck.enabled=false packages/zod/src/v4/classic/tests/default.test.ts (any test file can be given). You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+toJSONSchema on record with numeric keys results in invalid propertyNames
+
+import * as z from "zod";
+const schema = z.record(z.number(), z.number());
+const jsonSchema = z.toJSONSchema(schema);
+console.log(jsonSchema);
+
+produces this output:
+
+{
+  '$schema': 'https://json-schema.org/draft/2020-12/schema',
+  type: 'object',
+  propertyNames: { type: 'number' },
+  additionalProperties: { type: 'number' }
+}
+
+which can never work because in JSON the property names are always strings.
+
+Zod already handles Record<number, ...> keys in a way that mirrors TypeScript ("Zod supports numeric keys inside records in a way that closely mirrors TypeScript itself"), so toJSONSchema should also support numeric keys in a sensible way: the property names in the JSON Schema must be strings, not numbers.
+"""

@@ -1,0 +1,14 @@
+The current folder is a checkout of qs, the query string parser and serializer (sources in lib/, tests in test/). A user reported the bug below. Find the cause in the source code and fix it in lib/, without breaking any other behaviour. Dependencies are already installed in node_modules, and you may run commands in this folder to check your work, for example node node_modules/tape/bin/tape "test/**/*.js". You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+comma: true is ignored with charset 'iso-8859-1' and interpretNumericEntities
+
+const qs = require('qs');
+qs.parse('a=b,c', { comma: true });
+// => { a: ['b', 'c'] }
+qs.parse('a=b,c', { comma: true, charset: 'iso-8859-1', interpretNumericEntities: true });
+// => { a: 'b,c' }      (expected { a: ['b', 'c'] })
+
+The two options cancel each other out. Reproduced on 6.16.1.
+"""

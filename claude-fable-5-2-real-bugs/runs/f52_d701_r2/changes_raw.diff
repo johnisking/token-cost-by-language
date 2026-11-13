@@ -1,0 +1,77 @@
+diff --git a/src/patch/line-endings.ts b/src/patch/line-endings.ts
+index d36c7a5..f42bfef 100644
+--- a/src/patch/line-endings.ts
++++ b/src/patch/line-endings.ts
+@@ -41,7 +41,14 @@ export function winToUnix(patch: StructuredPatch | StructuredPatch[]): Structure
+     ...patch,
+     hunks: patch.hunks.map(hunk => ({
+       ...hunk,
+-      lines: hunk.lines.map(line => line.endsWith('\r') ? line.substring(0, line.length - 1) : line)
++      // A line followed by a "\ No newline at end of file" marker has no line ending at all, so a
++      // trailing '\r' on it is literal content rather than half of a '\r\n', and must be kept.
++      lines: hunk.lines.map(
++        (line, i) =>
++          (line.endsWith('\r') && !line.startsWith('\\') && !hunk.lines[i + 1]?.startsWith('\\'))
++            ? line.substring(0, line.length - 1)
++            : line
++      )
+     }))
+   };
+ }
+@@ -55,7 +62,9 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+   return !patch.some(
+     index => index.hunks.some(
+       hunk => hunk.lines.some(
+-        line => !line.startsWith('\\') && line.endsWith('\r')
++        // (A '\r' at the end of a line that has no trailing newline is literal content, not part
++        // of a Windows line ending, so such lines are ignored here.)
++        (line, i) => !line.startsWith('\\') && line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\')
+       )
+     )
+   );
+@@ -66,7 +75,15 @@ export function isUnix(patch: StructuredPatch | StructuredPatch[]): boolean {
+  */
+ export function isWin(patch: StructuredPatch | StructuredPatch[]): boolean {
+   if (!Array.isArray(patch)) { patch = [patch]; }
+-  return patch.some(index => index.hunks.some(hunk => hunk.lines.some(line => line.endsWith('\r'))))
++  return patch.some(
++    index => index.hunks.some(
++      hunk => hunk.lines.some(
++        // Lines with no trailing newline don't count as evidence of Windows line endings, even if
++        // their content happens to end in a literal '\r'.
++        (line, i) => !line.startsWith('\\') && line.endsWith('\r') && !hunk.lines[i + 1]?.startsWith('\\')
++      )
++    )
++  )
+     && patch.every(
+       index => index.hunks.every(
+         hunk => hunk.lines.every(
+diff --git a/test/patch/apply.js b/test/patch/apply.js
+index c789488..876e91c 100644
+--- a/test/patch/apply.js
++++ b/test/patch/apply.js
+@@ -1492,6 +1492,24 @@ describe('patch/apply', function() {
+       expect(applyPatch(oldFile, diffFile, {autoConvertLineEndings: false})).to.equal(false);
+     });
+ 
++    it('should preserve a literal carriage return at the end of a final line with no trailing newline', () => {
++      const oldFile = 'line1\nline2\n';
++      const newFile = 'line1\nline2\nline3\r';
++      const patch = structuredPatch('f', 'f', oldFile, newFile, undefined, undefined, {context: 0});
++      expect(applyPatch(oldFile, patch)).to.equal(newFile);
++
++      // ... including when the rest of the patch really does use Windows line endings
++      const diffFile =
++        '--- f\n'
++        + '+++ f\n'
++        + '@@ -2,1 +2,3 @@\n'
++        + ' line2\r\n'
++        + '+line3\r\n'
++        + '+line4\r\n'
++        + '\\ No newline at end of file\n';
++      expect(applyPatch(oldFile, diffFile)).to.equal('line1\nline2\nline3\nline4\r');
++    });
++
+     it('fails if asked to remove a non-existent trailing newline with fuzzFactor 0', () => {
+       const oldFile = 'foo\nbar\nbaz\nqux';
+       const diffFile =

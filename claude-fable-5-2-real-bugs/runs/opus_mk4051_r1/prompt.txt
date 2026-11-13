@@ -1,0 +1,20 @@
+The current folder is a checkout of marked, the Markdown parser (TypeScript sources in src/, tests in test/). A user reported the bug below. Find the cause in the source code and fix it in src/, without breaking any other behaviour. Dependencies are already installed in node_modules, and you may run commands in this folder to check your work, for example node esbuild.config.js (builds lib/, which the tests import), then node --test test/run-spec-tests.js and node --test test/unit/marked.test.js. You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+A link inside link text produces nested links
+
+CommonMark 6.3: "Links may not contain other links, at any level of nesting." When a link's text contains a link, the outer brackets are literal text and the inner link wins. Both commonmark 0.31.2 and markdown-it 15 return:
+
+<p>[foo <a href="/uri">bar</a>](/uri)</p>
+
+Result in marked:
+
+marked.parse('[foo [bar](/uri)](/uri)');
+// <p><a href="/uri">foo <a href="/uri">bar</a></a></p>
+
+marked.parse('[foo [bar](/uri)][ref]\n\n[ref]: /uri');
+// <p><a href="/uri">foo <a href="/uri">bar</a></a></p>
+
+The output is nested <a> elements, which is invalid HTML. This is CommonMark examples 518, 519 and 532.
+"""

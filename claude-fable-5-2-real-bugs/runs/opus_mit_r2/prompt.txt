@@ -1,0 +1,43 @@
+The current folder is a checkout of more-itertools, the Python library (sources in more_itertools/, tests in tests/). A user reported the bug below. Find the cause in the source code and fix it in more_itertools/, without breaking any other behaviour. Dependencies are already installed in a virtual environment in .venv, and you may run commands in this folder to check your work, for example .venv/Scripts/python -m pytest -q tests/test_more.py. You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+numeric_range: len(), `in` and index() disagree with the items produced, for float steps
+
+With floats, a range can report a length that does not match what it yields, and can deny membership to its own items. On 11.1.0:
+
+len() disagrees with iteration, in both directions:
+
+>>> from more_itertools import numeric_range
+>>> r = numeric_range(-8.732, -13.532, -2.4)
+>>> list(r)
+[-8.732, -11.132]
+>>> len(r)
+3
+>>> r[2]                      # counted, but it is the excluded stop value
+-13.532
+
+>>> r = numeric_range(-69.37276490678778, -29.8339073344664, 4.942357196540172)
+>>> len(list(r))
+9
+>>> len(r)
+8
+>>> r[8]                      # an item iteration yields, but indexing cannot reach
+IndexError: numeric range object index out of range
+
+Items are not `in` their own range:
+
+>>> r = numeric_range(0.0, 1.0, 0.1)
+>>> r[3]
+0.30000000000000004
+>>> r[3] in r
+False
+>>> r.index(r[3])
+ValueError: 0.30000000000000004 is not in numeric range
+>>> sum(1 for v in r if v not in r)
+5
+
+count() follows `in`, so it returns 0 for those items too.
+
+Exact types (Decimal, Fraction, int, datetime/timedelta) behave correctly and must keep doing so. numeric_range is a Sequence, and here r[i] not in r and len(r) != len(list(r)): the object disagrees with itself, so .index(), .count(), in, len() and indexing give inconsistent answers for the same range.
+"""

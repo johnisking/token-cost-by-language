@@ -1,0 +1,52 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index c128bc9..bfbbf59 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -3717,8 +3717,24 @@ def ichunked(iterable, n):
+     >>> list(c_3)
+     [8, 9, 10, 11]
+ 
++    As with :func:`chunked`, if *n* is ``0`` then nothing is yielded (and
++    *iterable* is not advanced), and if *n* is negative then ``ValueError``
++    is raised.
++
++    >>> list(ichunked([1, 2, 3], 0))
++    []
++
+     """
+-    iterator = iter(iterable)
++    if n < 0:
++        raise ValueError('n must be at least 0')
++
++    return _ichunked(iter(iterable), n)
++
++
++def _ichunked(iterator, n):
++    if n == 0:
++        return
++
+     for first in iterator:
+         rest = islice(iterator, n - 1)
+         cache, cacher = tee(rest)
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 50fab9c..b04d4f2 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -4525,6 +4525,17 @@ class OnlyTests(TestCase):
+ 
+ 
+ class IchunkedTests(TestCase):
++    def test_zero(self):
++        iterator = iter('abc')
++        self.assertEqual(list(mi.ichunked(iterator, 0)), [])
++        self.assertEqual(list(iterator), ['a', 'b', 'c'])
++        self.assertEqual(list(mi.ichunked([], 0)), [])
++
++    def test_negative(self):
++        for iterable in ('abc', ''):
++            with self.assertRaisesRegex(ValueError, 'n must be at least 0'):
++                mi.ichunked(iterable, -1)
++
+     def test_even(self):
+         iterable = (str(x) for x in range(10))
+         actual = [''.join(c) for c in mi.ichunked(iterable, 5)]

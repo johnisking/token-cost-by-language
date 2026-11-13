@@ -1,0 +1,106 @@
+diff --git a/src/cachetools/_cachedmethod.py b/src/cachetools/_cachedmethod.py
+index 2a626ab..6e7df2b 100644
+--- a/src/cachetools/_cachedmethod.py
++++ b/src/cachetools/_cachedmethod.py
+@@ -71,6 +71,26 @@ class _DescriptorBase:
+     def __init__(self, deprecated=False):
+         self.__attrname = None
+         self.__deprecated = deprecated
++        self.__unbound = None
++
++    def __unbound_wrapper(self):
++        # Wrapper returned when the descriptor is accessed through the
++        # class, e.g. `Class.method`.  Like a plain function, calling it
++        # requires the instance to be passed explicitly as the first
++        # positional argument, and the call is routed through the
++        # instance's own (bound) wrapper so the instance's cache is used.
++        if self.__unbound is None:
++            descriptor = self
++
++            class Unbound(self.Wrapper):  # type: ignore
++                def __init__(self):
++                    super().__init__(None)
++
++                def __call__(self, obj, /, *args, **kwargs):
++                    return descriptor.__get__(obj, type(obj))(*args, **kwargs)
++
++            self.__unbound = Unbound()
++        return self.__unbound
+ 
+     def __set_name__(self, owner, name):
+         if self.__attrname is None:
+@@ -82,13 +102,14 @@ class _DescriptorBase:
+             )
+ 
+     def __get__(self, obj, objtype=None):
+-        wrapper = self.Wrapper(obj)  # type: ignore
+         if obj is None:
+-            # Return the wrapper itself without modification when accessed
+-            # through the class to support class-level introspection, such
+-            # as for mocking with autospec=True in unittest.mock.
+-            pass
+-        elif self.__attrname is not None:
++            # Accessed through the class: return an unbound wrapper that
++            # supports class-level introspection, such as for mocking with
++            # autospec=True in unittest.mock, and explicit instance calls
++            # like `Class.method(instance, *args)`.
++            return self.__unbound_wrapper()
++        wrapper = self.Wrapper(obj)  # type: ignore
++        if self.__attrname is not None:
+             # replace descriptor instance with wrapper in instance dict
+             try:
+                 # In case of a race condition where another thread already replaced
+diff --git a/tests/test_cachedmethod.py b/tests/test_cachedmethod.py
+index 8d519f6..f87ec79 100644
+--- a/tests/test_cachedmethod.py
++++ b/tests/test_cachedmethod.py
+@@ -683,6 +683,49 @@ class NoneMethodTest(unittest.TestCase):
+             wrapper.cache_info()
+ 
+ 
++class ClassAccessTest(unittest.TestCase):
++    METHODS = [
++        "get",
++        "get_typed",
++        "get_info",
++        "get_lock",
++        "get_lock_info",
++        "get_cond",
++        "get_cond_info",
++        "get_lock_cond",
++        "get_lock_cond_info",
++    ]
++
++    def test_explicit_instance(self):
++        for name in self.METHODS:
++            with self.subTest(name=name), warnings.catch_warnings():
++                warnings.simplefilter("error")
++                cached = Cached(Cache(2))
++                unbound = getattr(Cached, name)
++                self.assertIs(unbound, getattr(Cached, name))
++                self.assertEqual(unbound.__name__, name)
++                # class access behaves like instance access, sharing its cache
++                self.assertEqual(unbound(cached, 1), 0)
++                self.assertEqual(unbound(cached, 1), 0)
++                self.assertEqual(getattr(cached, name)(1), 0)
++                self.assertEqual(getattr(cached, name)(2), 1)
++                self.assertEqual(unbound(cached, 2), 1)
++                self.assertEqual(len(cached.cache), 2)
++                self.assertEqual(cached.count, 2)
++                if name.endswith("_info"):
++                    info = getattr(cached, name).cache_info()
++                    self.assertEqual(info.hits, 3)
++                    self.assertEqual(info.misses, 2)
++                getattr(cached, name).cache_clear()
++                self.assertEqual(unbound(cached, 1), 2)
++
++    def test_explicit_instance_kwargs(self):
++        cached = Cached(Cache(2))
++        self.assertEqual(Cached.get(cached, value=1), 0)
++        self.assertEqual(cached.get(value=1), 0)
++        self.assertEqual(cached.get(1), 1)
++
++
+ class AutospecTest(unittest.TestCase):
+     def test_autospec_no_warnings(self):
+ 

@@ -1,0 +1,59 @@
+diff --git a/tests/test_items.py b/tests/test_items.py
+index 8284029..667391a 100644
+--- a/tests/test_items.py
++++ b/tests/test_items.py
+@@ -1637,3 +1637,37 @@ def test_out_of_order_table_proxy_membership() -> None:
+         _ = 123 in table
+     # membership must not resolve values or mutate the document
+     assert doc.as_string() == content
++
++
++@pytest.mark.parametrize(
++    "key, expected",
++    [
++        (slice(None, 0), "[1, 2, 3]"),
++        (slice(-1, None), "[1, 2]"),
++        (slice(None, -1), "[3]"),
++        (slice(None, None, -1), "[]"),
++        (slice(None, None, 2), "[2]"),
++        (slice(-10, 10), "[]"),
++        (slice(2, 1), "[1, 2, 3]"),
++    ],
++)
++def test_array_delete_slice_keeps_string_in_sync(key, expected):
++    doc = parse("a = [1, 2, 3]\n")
++    del doc["a"][key]
++    assert doc["a"].as_string() == expected
++    assert parse(doc.as_string())["a"] == list(doc["a"])
++
++
++def test_array_delete_slice_exhaustive():
++    bounds = [None, -7, -5, -3, -1, 0, 1, 2, 4, 5, 9]
++    for start in bounds:
++        for stop in bounds:
++            for step in [None, 1, 2, 3, -1, -2]:
++                doc = parse("a = [1, 2, 3, 4, 5]\n")
++                del doc["a"][start:stop:step]
++                assert parse(doc.as_string())["a"] == list(doc["a"]), (
++                    start,
++                    stop,
++                    step,
++                    doc.as_string(),
++                )
+diff --git a/tomlkit/items.py b/tomlkit/items.py
+index aaf8db7..7324f20 100644
+--- a/tomlkit/items.py
++++ b/tomlkit/items.py
+@@ -1687,9 +1687,9 @@ class Array(Item, _CustomList):  # type: ignore[type-arg]
+         list.__delitem__(self, key)
+ 
+         if isinstance(key, slice):
+-            indices_to_remove = list(
+-                range(key.start or 0, key.stop or length, key.step or 1)
+-            )
++            # Let slice.indices() resolve negative, omitted, zero and
++            # out-of-range bounds exactly like list.__delitem__ does.
++            indices_to_remove = list(range(*key.indices(length)))
+         else:
+             indices_to_remove = [length + key if key < 0 else key]
+         for i in sorted(indices_to_remove, reverse=True):

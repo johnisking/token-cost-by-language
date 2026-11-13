@@ -1,0 +1,48 @@
+diff --git a/tests/test_parser.py b/tests/test_parser.py
+index 44d5cd6..0e71c0b 100644
+--- a/tests/test_parser.py
++++ b/tests/test_parser.py
+@@ -246,3 +246,23 @@ def test_parser_accepts_uppercase_exponent_after_leading_zero() -> None:
+         value = Parser(f"a = {raw}").parse()["a"]
+         assert isinstance(value, Float)
+         assert value == float(raw)
++
++
++@pytest.mark.parametrize("newline", ["\n", "\r\n"])
++def test_parse_error_position_is_independent_of_line_endings(newline):
++    content = newline.join(["a = 1", "b = 2", "c = @", "d = 4", ""])
++    parser = Parser(content)
++    with pytest.raises(UnexpectedCharError) as e:
++        parser.parse()
++
++    assert e.value.line == 3
++    assert e.value.col == 4
++
++
++def test_parse_error_position_with_mixed_line_endings():
++    parser = Parser("a = 1\r\nb = 2\nc = 3\r\nd = @\n")
++    with pytest.raises(UnexpectedCharError) as e:
++        parser.parse()
++
++    assert e.value.line == 4
++    assert e.value.col == 4
+diff --git a/tomlkit/source.py b/tomlkit/source.py
+index b2e9caa..3c3c263 100644
+--- a/tomlkit/source.py
++++ b/tomlkit/source.py
+@@ -231,10 +231,12 @@ class Source(str):
+ 
+     def _to_linecol(self) -> tuple[int, int]:
+         cur = 0
+-        for i, line in enumerate(self.splitlines()):
+-            if cur + len(line) + 1 > self.idx:
++        # Keep the line endings so that their real length is counted:
++        # "\r\n" is two characters long, not one.
++        for i, line in enumerate(self.splitlines(keepends=True)):
++            if cur + len(line) > self.idx:
+                 return (i + 1, self.idx - cur)
+ 
+-            cur += len(line) + 1
++            cur += len(line)
+ 
+         return len(self.splitlines()), 0

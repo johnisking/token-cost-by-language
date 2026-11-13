@@ -1,0 +1,80 @@
+diff --git a/markdown/htmlparser.py b/markdown/htmlparser.py
+index d92dc0d..c1d4158 100644
+--- a/markdown/htmlparser.py
++++ b/markdown/htmlparser.py
+@@ -91,6 +91,13 @@ htmlparser.locatetagend = re.compile(r"""
+ # Match a blank line at the start of a block of text (two newlines).
+ # The newlines may be preceded by additional whitespace.
+ blank_line_re = re.compile(r'^([ ]*\n){2}')
++# Match a blank line anywhere in a block of text.
++any_blank_line_re = re.compile(r'\n[ \t]*\n')
++# HTML void elements, which never have a closing tag.
++void_elements = frozenset([
++    'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta',
++    'param', 'source', 'track', 'wbr'
++])
+ 
+ 
+ class _HTMLParser(htmlparser.HTMLParser):
+@@ -146,6 +153,8 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         self.inraw = False
+         self.intail = False
+         self.stack: list[str] = []  # When `inraw==True`, stack contains a list of tags
++        # Unclosed inline (non-block-level) tags within the current paragraph.
++        self.inline_stack: list[str] = []
+         self._cache: list[str] = []
+         self.cleandoc: list[str] = []
+         self.lineno_start_cache = [0]
+@@ -217,6 +226,7 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         if self.md.is_block_level(tag) and (self.intail or (self.at_line_start() and not self.inraw)):
+             # Started a new raw block. Prepare stack.
+             self.inraw = True
++            self.inline_stack = []
+             self.cleandoc.append('\n')
+ 
+         text = self.get_starttag_text()
+@@ -225,6 +235,9 @@ class HTMLExtractor(htmlparser.HTMLParser):
+             self._cache.append(text)
+         else:
+             self.cleandoc.append(text)
++            if tag not in void_elements and not self.md.is_block_level(tag):
++                # Track open inline raw HTML so that nested content does not end the paragraph.
++                self.inline_stack.append(tag)
+             if tag in self.CDATA_CONTENT_ELEMENTS:
+                 # This is presumably a standalone tag in a code span (see #1036).
+                 self.clear_cdata_mode()
+@@ -255,6 +268,10 @@ class HTMLExtractor(htmlparser.HTMLParser):
+                 self._cache = []
+         else:
+             self.cleandoc.append(text)
++            if tag in self.inline_stack:
++                # Remove tag (and any unclosed tags nested within it) from the inline stack.
++                while self.inline_stack.pop() != tag:
++                    pass
+ 
+     def handle_data(self, data: str):
+         if self.intail and '\n' in data:
+@@ -262,6 +279,9 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         if self.inraw:
+             self._cache.append(data)
+         else:
++            if self.inline_stack and any_blank_line_re.search(data):
++                # A blank line ends the paragraph, and with it any unclosed inline tags.
++                self.inline_stack = []
+             self.cleandoc.append(data)
+ 
+     def handle_empty_tag(self, data: str, is_block: bool):
+@@ -269,7 +289,12 @@ class HTMLExtractor(htmlparser.HTMLParser):
+         if self.inraw or self.intail:
+             # Append this to the existing raw block
+             self._cache.append(data)
+-        elif self.at_line_start() and is_block:
++        elif self.at_line_start() and is_block and not (
++            # Comments, declarations and processing instructions nested within an
++            # unclosed inline raw HTML element (such as `<picture>`) are part of
++            # that element and must not interrupt the surrounding paragraph.
++            self.inline_stack and data.startswith(('<!', '<?'))
++        ):
+             # Handle this as a standalone raw block
+             if blank_line_re.match(self.rawdata[self.line_offset + self.offset + len(data):]):
+                 # Preserve blank line after tag in raw block.

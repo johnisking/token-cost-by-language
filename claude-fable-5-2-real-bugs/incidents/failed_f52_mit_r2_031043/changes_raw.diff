@@ -1,0 +1,149 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index 5dc2b32..b733313 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -31,9 +31,11 @@ from queue import Empty, Queue
+ from random import random, randrange, shuffle, uniform
+ from operator import (
+     attrgetter,
++    ge,
+     getitem,
+     is_not,
+     itemgetter,
++    le,
+     lt,
+     neg,
+     sub,
+@@ -2334,14 +2336,8 @@ class numeric_range(Sequence):
+             return self._start > self._stop
+ 
+     def __contains__(self, elem):
+-        if self._growing:
+-            if self._start <= elem < self._stop:
+-                return (elem - self._start) % self._step == self._zero
+-        else:
+-            if self._start >= elem > self._stop:
+-                return (self._start - elem) % (-self._step) == self._zero
+-
+-        return False
++        first, last = self._find(elem)
++        return first < last
+ 
+     def __eq__(self, other):
+         # numeric_range object equality is intended to mirror the built-in range
+@@ -2420,7 +2416,40 @@ class numeric_range(Sequence):
+             return 0
+         else:  # distance > 0 and step > 0: regular euclidean division
+             q, r = divmod(distance, step)
+-            return int(q) + int(r != self._zero)
++            n = int(q) + int(r != self._zero)
++
++        # The division above is exact for exact types, but only an estimate
++        # for inexact ones (e.g. floats). The length is defined by the items
++        # themselves: it is the smallest n for which the n-th item,
++        # start + n * step, is no longer before stop. Items are monotonic
++        # in n, so correct the estimate with a galloping binary search.
++        if self._before_stop(n):
++            lo, jump = n, 1  # lo is always before stop
++            hi = lo + jump
++            while self._before_stop(hi):
++                lo, jump = hi, jump * 2
++                hi = lo + jump
++        else:
++            hi, jump = n, 1  # hi is never before stop
++            lo = max(hi - jump, 0)
++            while lo and not self._before_stop(lo):
++                hi, jump = lo, jump * 2
++                lo = max(hi - jump, 0)
++            # Item 0 is before stop, since the range is not empty
++        while hi - lo > 1:
++            mid = (lo + hi) // 2
++            if self._before_stop(mid):
++                lo = mid
++            else:
++                hi = mid
++        return hi
++
++    def _before_stop(self, n):
++        value = self._start + n * self._step
++        if self._growing:
++            return value < self._stop
++        else:
++            return value > self._stop
+ 
+     def __reduce__(self):
+         return numeric_range, (self._start, self._stop, self._step)
+@@ -2433,32 +2462,54 @@ class numeric_range(Sequence):
+         )
+ 
+     def __reversed__(self):
+-        # Empty iterator
+-        try:
+-            start = self._get_by_index(-1)
+-        except IndexError:
+-            return iter([])
+-
+-        return iter(
+-            numeric_range(start, self._start - self._step, -self._step)
+-        )
++        start, step = self._start, self._step
++        return (start + n * step for n in range(self._len - 1, -1, -1))
+ 
+     def count(self, value):
+-        return int(value in self)
++        first, last = self._find(value)
++        return last - first
+ 
+     def index(self, value):
++        first, last = self._find(value)
++        if first < last:
++            return first
++
++        raise ValueError(f"{value} is not in numeric range")
++
++    def _find(self, value):
++        """Return indexes (first, last) such that the items equal to *value*
++        are exactly those at indexes ``first <= i < last``. If *value* is not
++        in the range, then ``first == last``.
++
++        The items are compared directly, rather than dividing by the step,
++        so that the result agrees with the items produced even for inexact
++        types such as floats. Items are monotonic, so bisection is used.
++        """
++        start, step = self._start, self._step
+         if self._growing:
+-            if self._start <= value < self._stop:
+-                q, r = divmod(value - self._start, self._step)
+-                if r == self._zero:
+-                    return int(q)
++            if not (start <= value < self._stop):
++                return 0, 0
++            before, not_after = lt, le
+         else:
+-            if self._start >= value > self._stop:
+-                q, r = divmod(self._start - value, -self._step)
+-                if r == self._zero:
+-                    return int(q)
++            if not (start >= value > self._stop):
++                return 0, 0
++            before, not_after = gt, ge
++
++        def bisect(pred):
++            # Smallest index whose item does not satisfy pred
++            lo, hi = 0, self._len
++            while lo < hi:
++                mid = (lo + hi) // 2
++                if pred(start + mid * step, value):
++                    lo = mid + 1
++                else:
++                    hi = mid
++            return lo
+ 
+-        raise ValueError(f"{value} is not in numeric range")
++        first = bisect(before)
++        if first >= self._len or start + first * step != value:
++            return first, first
++        return first, bisect(not_after)
+ 
+     def _get_by_index(self, i):
+         if i < 0:

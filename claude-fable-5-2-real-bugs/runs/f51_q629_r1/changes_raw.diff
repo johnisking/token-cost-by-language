@@ -1,0 +1,41 @@
+diff --git a/lib/parse.js b/lib/parse.js
+index 2345b75..fdea7ea 100644
+--- a/lib/parse.js
++++ b/lib/parse.js
+@@ -192,7 +192,9 @@ var parseValues = function parseQueryStringValues(str, options) {
+         }
+ 
+         if (val && options.interpretNumericEntities && charset === 'iso-8859-1') {
+-            val = interpretNumericEntities(String(val));
++            val = utils.maybeMap(val, function (item) {
++                return interpretNumericEntities(String(item));
++            });
+         }
+ 
+         if (isEmptyBracketKey) {
+diff --git a/test/parse.js b/test/parse.js
+index 204b8df..4ffbb79 100644
+--- a/test/parse.js
++++ b/test/parse.js
+@@ -1268,6 +1268,12 @@ test('parse()', function (t) {
+             'an iso-8859-1 charset sentinel enables interpretation'
+         );
+         st.deepEqual(qs.parse('a=' + urlEncodedNumSmiley + ',x', { charset: 'iso-8859-1', comma: true }), { a: ['&#9786;', 'x'] }, '`comma` splits without `interpretNumericEntities`');
++        st.deepEqual(qs.parse('a=b,c', { charset: 'iso-8859-1', comma: true, interpretNumericEntities: true }), { a: ['b', 'c'] }, '`comma` still splits with `interpretNumericEntities`');
++        st.deepEqual(
++            qs.parse('a=' + urlEncodedNumSmiley + ',x,' + urlEncodedNumSmiley, { charset: 'iso-8859-1', comma: true, interpretNumericEntities: true }),
++            { a: ['☺', 'x', '☺'] },
++            'entities are interpreted in each comma-split element'
++        );
+         st.end();
+     });
+ 
+@@ -1309,7 +1315,7 @@ test('parse()', function (t) {
+     t.test('interpretNumericEntities with comma:true and iso charset does not crash', function (st) {
+         st.deepEqual(
+             qs.parse('b&a[]=1,' + urlEncodedNumSmiley, { comma: true, charset: 'iso-8859-1', interpretNumericEntities: true }),
+-            { b: '', a: ['1,☺'] }
++            { b: '', a: [['1', '☺']] }
+         );
+ 
+         st.end();

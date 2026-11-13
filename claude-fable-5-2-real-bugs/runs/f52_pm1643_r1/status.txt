@@ -1,0 +1,2 @@
+ M markdown/htmlparser.py
+ M tests/test_syntax/blocks/test_html_blocks.py

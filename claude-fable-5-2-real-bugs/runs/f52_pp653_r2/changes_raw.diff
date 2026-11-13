@@ -1,0 +1,128 @@
+diff --git a/pyparsing/helpers.py b/pyparsing/helpers.py
+index c88e543..93e145e 100644
+--- a/pyparsing/helpers.py
++++ b/pyparsing/helpers.py
+@@ -156,18 +156,46 @@ def match_previous_expr(expr: ParserElement) -> ParserElement:
+     e2 = expr.copy()
+     rep <<= e2
+ 
++    # Matches of expr and of the repeater are tracked as a list of events,
++    # ordered by location in the string being parsed. Each event is a tuple
++    # (loc, is_repeat, open_stack, last_tokens), where open_stack is a linked
++    # list (tokens, parent) of the matches of expr that have not yet been
++    # "closed" by a matching repeat, and last_tokens are the tokens of the most
++    # recent match of expr. Keeping the stack makes nested constructs such as
++    # "{a}{b}..{/b}{/a}" work; events found at or after the current location
++    # are leftovers from lookahead or abandoned alternatives and are dropped.
++    events: list = []
++    current_string: list = [None]
++
++    def discard_events_from(s, l, keep_first_at_loc):
++        if current_string[0] != s:
++            current_string[0] = s
++            del events[:]
++        while events and (
++            events[-1][0] > l
++            or (events[-1][0] == l and not (keep_first_at_loc and not events[-1][1]))
++        ):
++            events.pop()
++
+     def copy_token_to_repeater(s, l, t):
+         match_tokens = _flatten(t.as_list())
+-
+-        def must_match_these_tokens(s, l, t):
+-            these_tokens = _flatten(t.as_list())
+-            if these_tokens != match_tokens:
+-                raise ParseException(
+-                    s, l, f"Expected {match_tokens}, found{these_tokens}"
+-                )
+-
+-        e2.add_parse_action(must_match_these_tokens, call_during_try=True)
+-
++        discard_events_from(s, l, False)
++        open_stack = events[-1][2] if events else None
++        events.append((l, False, (match_tokens, open_stack), match_tokens))
++
++    def must_match_these_tokens(s, l, t):
++        discard_events_from(s, l, True)
++        if not events:
++            # no previous match to compare with
++            return
++        _, _, open_stack, last_tokens = events[-1]
++        match_tokens = open_stack[0] if open_stack else last_tokens
++        these_tokens = _flatten(t.as_list())
++        if these_tokens != match_tokens:
++            raise ParseException(s, l, f"Expected {match_tokens}, found{these_tokens}")
++        events.append((l, True, open_stack[1] if open_stack else None, last_tokens))
++
++    e2.add_parse_action(must_match_these_tokens, call_during_try=True)
+     expr.add_parse_action(copy_token_to_repeater, call_during_try=True)
+     rep.set_name(f"(prev) {expr}")
+     return rep
+diff --git a/tests/test_unit.py b/tests/test_unit.py
+index a96efd9..8a72c88 100644
+--- a/tests/test_unit.py
++++ b/tests/test_unit.py
+@@ -2559,6 +2559,62 @@ class Test02_WithoutPackrat(ppt.TestParseResultsAsserts, TestCase):
+                 ):
+                     expr.parse_string(tst)
+ 
++    def testRepeaterNestedAndRepeated(self):
++        """test match_previous_expr with nested, sequential and repeated parses"""
++
++        if ParserElement._packratEnabled or ParserElement._left_recursion_enabled:
++            print("skipping this test, not compatible with memoization")
++            return
++
++        name = pp.Word(pp.alphas)
++        opener = pp.Suppress("{") + name + pp.Suppress("}")
++        closer = pp.Suppress("{/") + pp.match_previous_expr(name) + pp.Suppress("}")
++        item = pp.Forward()
++        item <<= pp.Group(opener + pp.ZeroOrMore(item | pp.Word("x")) + closer)
++
++        tests = [
++            ("{a}xx{/a}", [["a", "xx", "a"]]),
++            ("{a}{b}xx{/b}{/a}", [["a", ["b", "xx", "b"], "a"]]),
++            ("{a}{b}xx{/a}{/b}", None),
++            ("{a}xx{/b}", None),
++            (
++                "{a}{b}xx{/b}{c}x{/c}{/a}",
++                [["a", ["b", "xx", "b"], ["c", "x", "c"], "a"]],
++            ),
++            ("{a}{b}xx{/b}{c}x{/c}{/b}", None),
++            # valid input must still parse after earlier failures
++            ("{a}xx{/a}", [["a", "xx", "a"]]),
++        ]
++        for tst, expected in tests:
++            with self.subTest(tst=tst):
++                if expected is not None:
++                    self.assertParseAndCheckList(item, tst, expected)
++                else:
++                    with self.assertRaisesParseException():
++                        item.parse_string(tst, parse_all=True)
++
++        first = pp.Word(pp.nums)
++        second = pp.match_previous_expr(first)
++        pairs = pp.OneOrMore(first + pp.Suppress(":") + second)
++        for tst, expected in [
++            ("1:1 2:2", ["1", "1", "2", "2"]),
++            ("1:2", None),
++            ("1:1 2:3", None),
++            ("1:1 2:2 3:3", ["1", "1", "2", "2", "3", "3"]),
++        ]:
++            with self.subTest(tst=tst):
++                if expected is not None:
++                    self.assertParseAndCheckList(pairs, tst, expected)
++                else:
++                    with self.assertRaisesParseException():
++                        pairs.parse_string(tst, parse_all=True)
++
++        # more than one repeat of a single match
++        triple = first + ":" + second + ":" + second
++        self.assertParseAndCheckList(triple, "1:1:1", ["1", ":", "1", ":", "1"])
++        with self.assertRaisesParseException():
++            triple.parse_string("1:1:2", parse_all=True)
++
+     def testSetNameToStrAndNone(self):
+         wd = pp.Word(pp.alphas)
+         with self.subTest():

@@ -1,0 +1,53 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index f020777..3d3b7f5 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -85,6 +85,12 @@ export function canonicalize(
+ 
+   let canonicalizedObj: any;
+ 
++  // Like JSON.stringify, apply toJSON before deciding how to serialize the value, so that
++  // arrays with their own toJSON are honoured and arrays returned by toJSON stay arrays.
++  if (obj && typeof obj.toJSON === 'function') {
++    obj = obj.toJSON(key === undefined ? '' : key);
++  }
++
+   if ('[object Array]' === Object.prototype.toString.call(obj)) {
+     stack.push(obj);
+     canonicalizedObj = new Array(obj.length);
+@@ -97,10 +103,6 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && typeof obj.toJSON === 'function') {
+-    obj = obj.toJSON();
+-  }
+-
+   if (typeof obj === 'object' && obj !== null) {
+     stack.push(obj);
+     // Use a null-prototype object so that an own "__proto__" key is stored as
+diff --git a/test/diff/json.js b/test/diff/json.js
+index d7f2de7..9f11fca 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -298,6 +298,20 @@ describe('diff/json', function() {
+       expect(calls).to.deep.equal(jsonStringifyCalls);
+     });
+ 
++    it('serializes an array returned by toJSON as an array', function() {
++      expect(diffJson({a: {toJSON() { return [1, 2]; }}}, {a: [1, 2]})).to.eql([
++        { count: 6, value: '{\n  "a": [\n    1,\n    2\n  ]\n}', removed: false, added: false }
++      ]);
++    });
++
++    it('honours toJSON on arrays', function() {
++      const arr = [1, 2, 3];
++      arr.toJSON = function() { return {len: this.length}; };
++      expect(diffJson({a: arr}, {a: {len: 3}})).to.eql([
++        { count: 5, value: '{\n  "a": {\n    "len": 3\n  }\n}', removed: false, added: false }
++      ]);
++    });
++
+     it("doesn't throw on Object.create(null)", function() {
+       let diff;
+       expect(function() {

@@ -1,0 +1,87 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 861ee60..6419794 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -704,23 +704,29 @@ function readBlockScalar (state: ParserState, parentIndent: number, props: NodeP
+       maxLeadingIndent = Math.max(maxLeadingIndent, column)
+     }
+ 
+-    if (!detectedIndent && contentIndent === -1 && !isEol(first)) {
+-      if (first === 0x09/* Tab */ && column < parentIndent) {
+-        state.position = linePosition + column
+-        throwError(state, 'tab characters must not be used in indentation')
+-      }
+-      if (column < maxLeadingIndent) {
+-        state.position = linePosition + column
+-        throwError(state, 'bad indentation of a mapping entry')
+-      }
++    if (!detectedIndent && contentIndent === -1 && !isEol(first) &&
++        first === 0x09/* Tab */ && column < parentIndent) {
++      state.position = linePosition + column
++      throwError(state, 'tab characters must not be used in indentation')
+     }
+ 
+     if (contentIndent === -1 && first !== 0 && !isEol(first) && column < parentIndent) {
++      // A less indented line terminates the block scalar; any whitespace-only
++      // lines before it are simply trailing empty lines of the scalar.
+       state.lineIndent = column
+       state.position = linePosition + column
+       break
+     }
+ 
++    // Leading empty lines must not contain more spaces than the first
++    // non-empty content line (YAML 1.2 §8.1.1.1). This only applies to lines
++    // that are actually part of the scalar, so it is checked after the
++    // termination test above.
++    if (!detectedIndent && contentIndent === -1 && !isEol(first) && column < maxLeadingIndent) {
++      state.position = linePosition + column
++      throwError(state, 'bad indentation of a mapping entry')
++    }
++
+     if (!detectedIndent && first !== 0 && !isEol(first) && contentIndent === -1) {
+       contentIndent = column
+     }
+diff --git a/test/core/units/load-other.test.mjs b/test/core/units/load-other.test.mjs
+index 735784f..a0d0f06 100644
+--- a/test/core/units/load-other.test.mjs
++++ b/test/core/units/load-other.test.mjs
+@@ -66,4 +66,39 @@ last: document
+ --- !a1!str 123
+ `), '123')
+   })
++
++  describe('block scalar with a whitespace-only body', () => {
++    it('ends at a less indented sequence entry', () => {
++      const source = [
++        'a:',
++        '  oneOf:',
++        '    - type: string',
++        '      example: |+',
++        ' '.repeat(8),
++        '    - type: array',
++        ''
++      ].join('\n')
++
++      assert.deepStrictEqual(load(source), {
++        a: { oneOf: [{ type: 'string', example: '\n' }, { type: 'array' }] }
++      })
++    })
++
++    it('ends at a sibling key for every block style and chomping mode', () => {
++      const expected = { '|': '', '|+': '\n', '|-': '', '>': '', '>+': '\n', '>-': '' }
++
++      for (const [header, value] of Object.entries(expected)) {
++        assert.deepStrictEqual(
++          load(`a:\n  x: ${header}\n      \n  y: 1\n`),
++          { a: { x: value, y: 1 } },
++          `header ${header}`
++        )
++      }
++    })
++
++    it('still rejects a leading blank line more indented than the content', () => {
++      assert.throws(() => load('x: |\n   \n  foo\n'), YAMLException)
++      assert.deepStrictEqual(load('x: |\n  \n   foo\n'), { x: '\nfoo\n' })
++    })
++  })
+ })

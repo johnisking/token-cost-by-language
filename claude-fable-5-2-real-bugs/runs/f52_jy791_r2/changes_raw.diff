@@ -1,0 +1,36 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 35bf033..b71f4f9 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -1449,7 +1449,12 @@ function parseEvents (input: string, options: ParserOptions): Event[] {
+   const nullpos = input.indexOf('\0')
+   if (nullpos !== -1) YAMLException.throwAt(input, nullpos, 'null byte is not allowed in input', state.filename)
+ 
+-  if (state.input.charCodeAt(state.position) === 0xFEFF) state.position++
++  if (state.input.charCodeAt(state.position) === 0xFEFF) {
++    // The BOM is not content: the first line starts after it, otherwise
++    // indentation computed from `lineStart` is off by one on that line.
++    state.position++
++    state.lineStart = state.position
++  }
+ 
+   while (state.position < state.length) {
+     skipSeparationSpace(state, true)
+diff --git a/test/core/units/load-other.test.mjs b/test/core/units/load-other.test.mjs
+index dd33711..480a40d 100644
+--- a/test/core/units/load-other.test.mjs
++++ b/test/core/units/load-other.test.mjs
+@@ -5,6 +5,13 @@ import { load, YAMLException } from 'js-yaml'
+ describe('core/units/load-other', () => {
+   it('BOM strip', () => {
+     assert.deepStrictEqual(load('\uFEFFfoo: bar\n'), { foo: 'bar' })
++    assert.deepStrictEqual(
++      load('\uFEFFabc: 5\ncba:\n  - Xyz\n  - Zyx\n'),
++      { abc: 5, cba: ['Xyz', 'Zyx'] }
++    )
++    assert.deepStrictEqual(load('\uFEFF- a\n- b\n'), ['a', 'b'])
++    assert.deepStrictEqual(load('\uFEFF--- a\n...\n'), 'a')
++    assert.deepStrictEqual(load('\uFEFF? a\n: b\nc: d\n'), { a: 'b', c: 'd' })
+     assert.deepStrictEqual(load('foo: bar\n'), { foo: 'bar' })
+   })
+ 

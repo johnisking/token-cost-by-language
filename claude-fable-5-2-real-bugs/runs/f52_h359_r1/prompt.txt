@@ -1,0 +1,25 @@
+The current folder is a checkout of humanize, the Python library of number and time formatting helpers (sources in src/humanize/, tests in tests/). A user reported the bug below. Find the cause in the source code and fix it in src/humanize/, without breaking any other behaviour. Dependencies are already installed, and you may run commands in this folder to check your work, for example .venv/Scripts/python -m pytest -q tests (a virtual environment with pytest is in .venv). You may add tests. Do not install packages and do not use the network. Change the files in place and finish.
+
+Bug report:
+"""
+metric() shows one significant figure too many
+
+metric() can show one significant figure too many when rounding carries the mantissa up a power of ten.
+
+>>> import humanize
+>>> humanize.metric(9999)
+'10.00 k'      # 4 significant figures at the default precision=3
+>>> humanize.metric(99999)
+'100.0 k'      # 4 significant figures
+>>> humanize.metric(9.99999)
+'10.00'
+
+The neighbours show the inconsistency: same magnitude, correct 3 significant figures:
+
+>>> humanize.metric(10000)
+'10.0 k'
+>>> humanize.metric(100000)
+'100 k'
+
+Expected: metric(9999) == '10.0 k', metric(99999) == '100 k', metric(9.99999) == '10.0'.
+"""

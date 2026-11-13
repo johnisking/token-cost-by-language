@@ -1,0 +1,59 @@
+diff --git a/packages/zod/src/v4/classic/tests/default.test.ts b/packages/zod/src/v4/classic/tests/default.test.ts
+index d7ff8b4..2f8a6e8 100644
+--- a/packages/zod/src/v4/classic/tests/default.test.ts
++++ b/packages/zod/src/v4/classic/tests/default.test.ts
+@@ -5,6 +5,26 @@ test("basic defaults", () => {
+   expect(z.string().default("default").parse(undefined)).toBe("default");
+ });
+ 
++test("default factory runs once per parse inside an object", () => {
++  let calls = 0;
++  const factory = () => {
++    calls++;
++    return "d";
++  };
++  const schema = z.object({ a: z.string().default(factory), b: z.string().prefault(factory) });
++  expect(schema.parse({})).toEqual({ a: "d", b: "d" });
++  expect(calls).toBe(2);
++  expect(schema.parse({ a: "x", b: "y" })).toEqual({ a: "x", b: "y" });
++  expect(calls).toBe(2);
++});
++
++test("merge keeps a recursive catchall detectable", () => {
++  const Node: z.ZodType = z.lazy(() => z.object({}).merge(z.object({}).catchall(Node)));
++  const value: any = {};
++  value.self = value;
++  expect(() => Node.parse(value)).not.toThrow();
++});
++
+ test("default with optional", () => {
+   const schema = z.string().optional().default("default");
+   expect(schema.parse(undefined)).toBe("default");
+diff --git a/packages/zod/src/v4/core/memoizer.ts b/packages/zod/src/v4/core/memoizer.ts
+index 72a85db..5805565 100644
+--- a/packages/zod/src/v4/core/memoizer.ts
++++ b/packages/zod/src/v4/core/memoizer.ts
+@@ -56,6 +56,8 @@ function isRecursive(inst: $ZodType, stack: Set<object>): boolean {
+     // `for...in` skips symbols, so a cycle through a declared symbol key would read as non-recursive
+     if (shape) for (const key of Reflect.ownKeys(shape)) check(shape[key]);
+     for (const key in def) {
++      // accessors can run user code (a `.default()` factory), so only data properties are walked
++      if (Object.getOwnPropertyDescriptor(def, key)?.get) continue;
+       const value = def[key];
+       if (!value || typeof value !== "object") continue;
+       if (value._zod) check(value);
+diff --git a/packages/zod/src/v4/core/util.ts b/packages/zod/src/v4/core/util.ts
+index 747494a..ffacef7 100644
+--- a/packages/zod/src/v4/core/util.ts
++++ b/packages/zod/src/v4/core/util.ts
+@@ -751,9 +751,7 @@ export function merge(a: schemas.$ZodObject, b: schemas.$ZodObject): any {
+       assignProp(this, "shape", _shape); // self-caching
+       return _shape;
+     },
+-    get catchall() {
+-      return b._zod.def.catchall;
+-    },
++    catchall: b._zod.def.catchall,
+     checks: b._zod.def.checks ?? [],
+   });
+ 

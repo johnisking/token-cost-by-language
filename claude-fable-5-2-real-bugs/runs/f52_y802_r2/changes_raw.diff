@@ -1,0 +1,41 @@
+diff --git a/src/parser/parser.ts b/src/parser/parser.ts
+index 861ee60..550880f 100644
+--- a/src/parser/parser.ts
++++ b/src/parser/parser.ts
+@@ -709,7 +709,10 @@ function readBlockScalar (state: ParserState, parentIndent: number, props: NodeP
+         state.position = linePosition + column
+         throwError(state, 'tab characters must not be used in indentation')
+       }
+-      if (column < maxLeadingIndent) {
++      // A line indented less than the parent ends the scalar (handled below),
++      // so it is not content and cannot be under-indented relative to the
++      // leading blank lines.
++      if (column >= parentIndent && column < maxLeadingIndent) {
+         state.position = linePosition + column
+         throwError(state, 'bad indentation of a mapping entry')
+       }
+diff --git a/test/core/parser/parser.test.mjs b/test/core/parser/parser.test.mjs
+index f75c419..b295893 100644
+--- a/test/core/parser/parser.test.mjs
++++ b/test/core/parser/parser.test.mjs
+@@ -22,4 +22,20 @@ describe('parser', () => {
+       [{ a: null }, { x: 1 }]
+     )
+   })
++
++  it('ends a whitespace-only block scalar at a less indented line', () => {
++    for (const [header, value] of [['|+', '\n'], ['|', ''], ['>', ''], ['>+', '\n']]) {
++      assert.deepEqual(
++        loadAll(`a:\n  oneOf:\n    - type: string\n      example: ${header}\n        \n    - type: array\n`),
++        [{ a: { oneOf: [{ type: 'string', example: value }, { type: 'array' }] } }]
++      )
++      assert.deepEqual(
++        loadAll(`a:\n  x: ${header}\n      \n  y: 1\n`),
++        [{ a: { x: value, y: 1 } }]
++      )
++    }
++
++    // Content less indented than a leading blank line is still an error.
++    assert.throws(() => loadAll('a:\n  x: |\n      \n   y\n'), /bad indentation/)
++  })
+ })

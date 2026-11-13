@@ -1,0 +1,46 @@
+diff --git a/src/humanize/number.py b/src/humanize/number.py
+index 2dfeffe..c65be60 100644
+--- a/src/humanize/number.py
++++ b/src/humanize/number.py
+@@ -550,11 +550,19 @@ def metric(value: float, unit: str = "", precision: int = 3) -> str:
+     old_bucket = exponent // 3 * 3
+     value /= 10**old_bucket
+     digits = int(max(0, precision - exponent % 3 - 1))
+-    if exponent < 30 and round(abs(value), digits) >= 1000:
+-        exponent += 3 - exponent % 3
+-        new_bucket = exponent // 3 * 3
+-        value /= 10 ** (new_bucket - old_bucket)
+-        digits = int(max(0, precision - exponent % 3 - 1))
++    # Rounding to the displayed digits may carry the mantissa up a power of ten
++    # (e.g. 9.999 -> 10.00), which would show one significant figure too many.
++    if round(abs(value), digits) >= 10 ** (exponent % 3 + 1):
++        if exponent % 3 != 2:
++            # Same prefix, one more integer digit: drop one decimal.
++            exponent += 1
++            digits = int(max(0, precision - exponent % 3 - 1))
++        elif exponent < 30:
++            # Carried up to 1000: move to the next prefix.
++            exponent += 1
++            new_bucket = exponent // 3 * 3
++            value /= 10 ** (new_bucket - old_bucket)
++            digits = int(max(0, precision - exponent % 3 - 1))
+ 
+     if exponent >= 3:
+         ordinal_ = "kMGTPEZYRQ"[exponent // 3 - 1]
+diff --git a/tests/test_number.py b/tests/test_number.py
+index 6f0a664..ba1ebc0 100644
+--- a/tests/test_number.py
++++ b/tests/test_number.py
+@@ -273,6 +273,12 @@ def test_clamp(test_args: list[typing.Any], expected: str) -> None:
+         ([999.9, "V"], "1.00 kV"),
+         ([999.99, "V"], "1.00 kV"),
+         ([999_999, "V"], "1.00 MV"),
++        ([9999], "10.0 k"),
++        ([99999], "100 k"),
++        ([9.99999], "10.0"),
++        ([-9999], "-10.0 k"),
++        ([0.0099999, "V"], "10.0 mV"),
++        ([9.9999e30], "10.0 Q"),
+         ([0.0009999, "V"], "1.00 mV"),
+         ([1e25, "m"], "10.0 Ym"),
+         ([1e26, "m"], "100 Ym"),

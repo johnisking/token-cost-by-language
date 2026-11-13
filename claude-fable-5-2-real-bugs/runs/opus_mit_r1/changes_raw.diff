@@ -1,0 +1,141 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index 5dc2b32..b91fe2f 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -2334,14 +2334,7 @@ class numeric_range(Sequence):
+             return self._start > self._stop
+ 
+     def __contains__(self, elem):
+-        if self._growing:
+-            if self._start <= elem < self._stop:
+-                return (elem - self._start) % self._step == self._zero
+-        else:
+-            if self._start >= elem > self._stop:
+-                return (self._start - elem) % (-self._step) == self._zero
+-
+-        return False
++        return self._find(elem) is not None
+ 
+     def __eq__(self, other):
+         # numeric_range object equality is intended to mirror the built-in range
+@@ -2418,9 +2411,24 @@ class numeric_range(Sequence):
+         distance = stop - start
+         if distance <= self._zero:
+             return 0
+-        else:  # distance > 0 and step > 0: regular euclidean division
+-            q, r = divmod(distance, step)
+-            return int(q) + int(r != self._zero)
++        # distance > 0 and step > 0: regular euclidean division
++        q, r = divmod(distance, step)
++        n = int(q) + int(r != self._zero)
++        # With inexact types (e.g. float) the quotient may be off by a little;
++        # adjust it so the length agrees with the items iteration produces.
++        while n > 0 and not self._in_bounds(n - 1):
++            n -= 1
++        while self._in_bounds(n):
++            n += 1
++        return n
++
++    def _in_bounds(self, i):
++        # Whether the i-th item, computed exactly as iteration does, comes
++        # before *stop*.
++        value = self._start + i * self._step
++        if self._growing:
++            return value < self._stop
++        return value > self._stop
+ 
+     def __reduce__(self):
+         return numeric_range, (self._start, self._stop, self._step)
+@@ -2433,32 +2441,38 @@ class numeric_range(Sequence):
+         )
+ 
+     def __reversed__(self):
+-        # Empty iterator
+-        try:
+-            start = self._get_by_index(-1)
+-        except IndexError:
+-            return iter([])
+-
+-        return iter(
+-            numeric_range(start, self._start - self._step, -self._step)
+-        )
++        # Produce exactly the items iteration does, in reverse order.
++        start, step = self._start, self._step
++        return (start + i * step for i in reversed(range(self._len)))
+ 
+     def count(self, value):
+         return int(value in self)
+ 
+     def index(self, value):
++        i = self._find(value)
++        if i is None:
++            raise ValueError(f"{value} is not in numeric range")
++        return i
++
++    def _find(self, value):
++        # Return the index of the first item equal to *value*, or None.
+         if self._growing:
+-            if self._start <= value < self._stop:
+-                q, r = divmod(value - self._start, self._step)
+-                if r == self._zero:
+-                    return int(q)
++            if not (self._start <= value < self._stop):
++                return None
++            q, r = divmod(value - self._start, self._step)
+         else:
+-            if self._start >= value > self._stop:
+-                q, r = divmod(self._start - value, -self._step)
+-                if r == self._zero:
+-                    return int(q)
+-
+-        raise ValueError(f"{value} is not in numeric range")
++            if not (self._start >= value > self._stop):
++                return None
++            q, r = divmod(self._start - value, -self._step)
++
++        # For exact types, r == 0 and item q is the match. Inexact types
++        # (e.g. float) can produce items that do not divide evenly by the
++        # step, so compare against the items actually produced near q.
++        q = int(q)
++        for i in range(q - 1, q + 3):
++            if 0 <= i < self._len and self._start + i * self._step == value:
++                return i
++        return None
+ 
+     def _get_by_index(self, i):
+         if i < 0:
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 7440f5a..a975916 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -2992,6 +2992,30 @@ class NumericRangeTests(TestCase):
+         ]:
+             self.assertEqual(expected, len(mi.numeric_range(*args)))
+ 
++    def test_float_consistency(self):
++        # len(), indexing, reversed(), `in`, index() and count() must agree
++        # with the items that iteration produces, even with float rounding.
++        for args, expected_len in [
++            ((-8.732, -13.532, -2.4), 2),
++            ((-69.37276490678778, -29.8339073344664, 4.942357196540172), 9),
++            ((0.0, 1.0, 0.1), 10),
++            ((1.0, 0.0, -0.1), 10),
++        ]:
++            with self.subTest(args=args):
++                r = mi.numeric_range(*args)
++                items = list(r)
++                self.assertEqual(len(items), expected_len)
++                self.assertEqual(len(r), expected_len)
++                self.assertEqual(list(reversed(r)), items[::-1])
++                with self.assertRaises(IndexError):
++                    r[len(items)]
++                for i, v in enumerate(items):
++                    self.assertEqual(r[i], v)
++                    self.assertIn(v, r)
++                    self.assertEqual(r.index(v), i)
++                    self.assertEqual(r.count(v), 1)
++                self.assertNotIn(args[1], r)
++
+     def test_repr(self):
+         for args, *expected in [
+             ((7.0,), "numeric_range(0.0, 7.0)"),

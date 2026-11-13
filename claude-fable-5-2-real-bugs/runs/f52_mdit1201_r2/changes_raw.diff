@@ -1,0 +1,67 @@
+diff --git a/src/rules_inline/backticks.ts b/src/rules_inline/backticks.ts
+index 9fd05dc..a0e9fe6 100644
+--- a/src/rules_inline/backticks.ts
++++ b/src/rules_inline/backticks.ts
+@@ -36,6 +36,15 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+ 
+     const closerLength = matchEnd - matchStart
+ 
++    // Remember the last seen position of every run length (including matched
++    // closers), as an upper limit of where a closer can be found. Matched
++    // closers must be recorded too: the same span can be scanned again later
++    // (validation pass of an unclosed link label, then the real pass), after
++    // `backticksScanned` was set by a failed scan further in the line.
++    if ((state.backticks[closerLength] || 0) < matchStart) {
++      state.backticks[closerLength] = matchStart
++    }
++
+     if (closerLength === openerLength) {
+       // Found matching closer length.
+       if (!silent) {
+@@ -48,9 +57,6 @@ export default function backtick (state: StateInline, silent: boolean): boolean
+       state.pos = matchEnd
+       return true
+     }
+-
+-    // Some different length found, put it in cache as upper limit of where closer can be found
+-    state.backticks[closerLength] = matchStart
+   }
+ 
+   // Scanned through the end, didn't find anything
+diff --git a/test/fixtures/markdown-it/commonmark_extras.txt b/test/fixtures/markdown-it/commonmark_extras.txt
+index c8bbc7a..bf89067 100644
+--- a/test/fixtures/markdown-it/commonmark_extras.txt
++++ b/test/fixtures/markdown-it/commonmark_extras.txt
+@@ -406,6 +406,32 @@ Coverage. Should continue scanning after closing "```" despite cache
+ .
+ 
+ 
++Unclosed link label should not suppress a later code span
++.
++[foo `bar` baz`
++.
++<p>[foo <code>bar</code> baz`</p>
++.
++
++.
++![alt `code` x`
++.
++<p>![alt <code>code</code> x`</p>
++.
++
++.
++[`a`b`
++.
++<p>[<code>a</code>b`</p>
++.
++
++.
++[``a``b` ``c`` `d`
++.
++<p>[<code>a</code>b<code>``c``</code>d`</p>
++.
++
++
+ Coverage. Entities.
+ .
+ *&*

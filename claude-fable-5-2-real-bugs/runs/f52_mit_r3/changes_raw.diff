@@ -1,0 +1,256 @@
+diff --git a/more_itertools/more.py b/more_itertools/more.py
+index 5dc2b32..600f4f0 100644
+--- a/more_itertools/more.py
++++ b/more_itertools/more.py
+@@ -2327,21 +2327,75 @@ class numeric_range(Sequence):
+             raise ValueError('numeric_range() arg 3 must not be zero')
+         self._growing = self._step > self._zero
+ 
++    # Items are defined as ``start + n * step`` for n = 0, 1, 2, ... while the
++    # result is on the near side of *stop*. With inexact types (e.g. floats)
++    # that is not the same as what division of the distance by the step
++    # suggests, so length, membership and indexing are all derived from the
++    # items themselves. Slices remember the range they were taken from
++    # (``_origin``), so that their items are exactly the parent's items.
++    _origin = None
++
++    def _item(self, n):
++        if self._origin is None:
++            return self._start + n * self._step
++        base, base_step, offset, multiple = self._origin
++        return base + (offset + n * multiple) * base_step
++
++    def _item_precedes(self, n, value):
++        # Items are monotonic in n. An item that cannot be computed because it
++        # is out of the type's range (e.g. datetime) is beyond any value.
++        try:
++            item = self._item(n)
++        except OverflowError:
++            return False
++        return item < value if self._growing else item > value
++
++    def _find(self, value):
++        """Return the first index of *value*, or ``None`` if it's absent."""
++        if self._origin is None:
++            if self._growing:
++                if not (self._start <= value < self._stop):
++                    return None
++            elif not (self._start >= value > self._stop):
++                return None
++            hi = 1
++            while self._item_precedes(hi, value):
++                hi *= 2
++        else:
++            hi = self._len - 1
++            if hi < 0:
++                return None
++            first, last = self._item(0), self._item(hi)
++            if self._growing:
++                if not (first <= value <= last):
++                    return None
++            elif not (first >= value >= last):
++                return None
++
++        lo = 0
++        while lo < hi:
++            mid = (lo + hi) // 2
++            if self._item_precedes(mid, value):
++                lo = mid + 1
++            else:
++                hi = mid
++
++        try:
++            found = self._item(lo) == value
++        except OverflowError:
++            return None
++        return lo if found else None
++
+     def __bool__(self):
++        if self._origin is not None:
++            return self._len > 0
+         if self._growing:
+             return self._start < self._stop
+         else:
+             return self._start > self._stop
+ 
+     def __contains__(self, elem):
+-        if self._growing:
+-            if self._start <= elem < self._stop:
+-                return (elem - self._start) % self._step == self._zero
+-        else:
+-            if self._start >= elem > self._stop:
+-                return (self._start - elem) % (-self._step) == self._zero
+-
+-        return False
++        return self._find(elem) is not None
+ 
+     def __eq__(self, other):
+         # numeric_range object equality is intended to mirror the built-in range
+@@ -2373,11 +2427,28 @@ class numeric_range(Sequence):
+             return self._get_by_index(key)
+         elif isinstance(key, slice):
+             start_idx, stop_idx, step_idx = key.indices(self._len)
+-            return numeric_range(
+-                self._start + start_idx * self._step,
++            if self._origin is None:
++                base, base_step, offset, multiple = (
++                    self._start,
++                    self._step,
++                    0,
++                    1,
++                )
++            else:
++                base, base_step, offset, multiple = self._origin
++            result = numeric_range(
++                self._item(start_idx),
+                 self._start + stop_idx * self._step,
+                 self._step * step_idx,
+             )
++            result._origin = (
++                base,
++                base_step,
++                offset + start_idx * multiple,
++                multiple * step_idx,
++            )
++            result._len = len(range(start_idx, stop_idx, step_idx))
++            return result
+         else:
+             raise TypeError(
+                 'numeric range indices must be '
+@@ -2396,6 +2467,8 @@ class numeric_range(Sequence):
+         return hash((len_self, self._start, self._step))
+ 
+     def __iter__(self):
++        if self._origin is not None:
++            return map(self._item, range(self._len))
+         values = (self._start + (n * self._step) for n in count())
+         if self._growing:
+             return takewhile(partial(gt, self._stop), values)
+@@ -2418,12 +2491,40 @@ class numeric_range(Sequence):
+         distance = stop - start
+         if distance <= self._zero:
+             return 0
+-        else:  # distance > 0 and step > 0: regular euclidean division
+-            q, r = divmod(distance, step)
+-            return int(q) + int(r != self._zero)
++
++        # distance > 0 and step > 0: regular euclidean division
++        q, r = divmod(distance, step)
++        estimate = max(int(q) + int(r != self._zero), 1)
++
++        # The estimate is exact for exact types. For inexact ones, rounding
++        # can put it off, so settle on the number of items that are actually
++        # before stop: the smallest n whose item is not before stop. Item 0
++        # (start) is known to be before stop here.
++        stop = self._stop
++        if self._item_precedes(estimate, stop):
++            lo, gap = estimate, 1
++            while self._item_precedes(lo + gap, stop):
++                lo += gap
++                gap *= 2
++            lo, hi = lo + 1, lo + gap
++        elif self._item_precedes(estimate - 1, stop):
++            return estimate
++        else:
++            lo, hi = 1, estimate - 1
++        while lo < hi:
++            mid = (lo + hi) // 2
++            if self._item_precedes(mid, stop):
++                lo = mid + 1
++            else:
++                hi = mid
++        return lo
+ 
+     def __reduce__(self):
+-        return numeric_range, (self._start, self._stop, self._step)
++        args = (self._start, self._stop, self._step)
++        if self._origin is None:
++            return numeric_range, args
++        state = {'_origin': self._origin, '_len': self._len}
++        return numeric_range, args, state
+ 
+     def __repr__(self):
+         if self._step == 1:
+@@ -2433,39 +2534,23 @@ class numeric_range(Sequence):
+         )
+ 
+     def __reversed__(self):
+-        # Empty iterator
+-        try:
+-            start = self._get_by_index(-1)
+-        except IndexError:
+-            return iter([])
+-
+-        return iter(
+-            numeric_range(start, self._start - self._step, -self._step)
+-        )
++        return map(self._item, range(self._len - 1, -1, -1))
+ 
+     def count(self, value):
+         return int(value in self)
+ 
+     def index(self, value):
+-        if self._growing:
+-            if self._start <= value < self._stop:
+-                q, r = divmod(value - self._start, self._step)
+-                if r == self._zero:
+-                    return int(q)
+-        else:
+-            if self._start >= value > self._stop:
+-                q, r = divmod(self._start - value, -self._step)
+-                if r == self._zero:
+-                    return int(q)
+-
+-        raise ValueError(f"{value} is not in numeric range")
++        n = self._find(value)
++        if n is None:
++            raise ValueError(f"{value} is not in numeric range")
++        return n
+ 
+     def _get_by_index(self, i):
+         if i < 0:
+             i += self._len
+         if i < 0 or i >= self._len:
+             raise IndexError("numeric range object index out of range")
+-        return self._start + i * self._step
++        return self._item(i)
+ 
+ 
+ def count_cycle(iterable, n=None):
+diff --git a/tests/test_more.py b/tests/test_more.py
+index 7440f5a..8f2181e 100644
+--- a/tests/test_more.py
++++ b/tests/test_more.py
+@@ -2626,6 +2626,32 @@ class GroupByTransformTests(TestCase):
+ 
+ 
+ class NumericRangeTests(TestCase):
++    def test_float_self_consistency(self):
++        for args in [
++            (-8.732, -13.532, -2.4),
++            (-69.37276490678778, -29.8339073344664, 4.942357196540172),
++            (0.0, 1.0, 0.1),
++            (1.0, 0.0, -0.1),
++            (1e16, 1e16 + 100, 0.1),
++        ]:
++            with self.subTest(args=args):
++                r = mi.numeric_range(*args)
++                items = list(r)
++                self.assertEqual(len(r), len(items))
++                self.assertEqual(list(reversed(r)), items[::-1])
++                self.assertNotIn(args[1], r)
++                for i, item in enumerate(items):
++                    self.assertEqual(r[i], item)
++                    self.assertIn(item, r)
++                    self.assertEqual(r.count(item), 1)
++                    self.assertEqual(r[r.index(item)], item)
++                for key in [slice(1, None), slice(None, None, -2)]:
++                    s = r[key]
++                    self.assertEqual(list(s), items[key])
++                    self.assertEqual(len(s), len(items[key]))
++                    self.assertTrue(all(x in s for x in items[key]))
++                    self.assertEqual(list(loads(dumps(s))), items[key])
++
+     def test_basic(self):
+         for args, expected in [
+             ((4,), [0, 1, 2, 3]),

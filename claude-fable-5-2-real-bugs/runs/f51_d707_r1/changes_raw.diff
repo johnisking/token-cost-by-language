@@ -1,0 +1,67 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index f020777..0089679 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -85,6 +85,13 @@ export function canonicalize(
+ 
+   let canonicalizedObj: any;
+ 
++  // Like JSON.stringify, honour a custom toJSON method before deciding how to serialize the value.
++  // This must happen before the array check so that arrays with their own toJSON are respected and
++  // toJSON results that are arrays are serialized as arrays rather than as objects with numeric keys.
++  if (obj && typeof obj.toJSON === 'function') {
++    obj = obj.toJSON(key === undefined ? '' : key);
++  }
++
+   if ('[object Array]' === Object.prototype.toString.call(obj)) {
+     stack.push(obj);
+     canonicalizedObj = new Array(obj.length);
+@@ -97,10 +104,6 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && typeof obj.toJSON === 'function') {
+-    obj = obj.toJSON();
+-  }
+-
+   if (typeof obj === 'object' && obj !== null) {
+     stack.push(obj);
+     // Use a null-prototype object so that an own "__proto__" key is stored as
+diff --git a/test/diff/json.js b/test/diff/json.js
+index d7f2de7..8d2c109 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -144,6 +144,33 @@ describe('diff/json', function() {
+       ]);
+     });
+ 
++    it('serializes toJSON results that are arrays as arrays (like JSON.stringify does)', function() {
++      const x = {
++        toJSON: () => [1, 2]
++      };
++
++      expect(diffJson({ foo: x }, { foo: [1, 2] })).to.eql([
++        { count: 6, value: '{\n  "foo": [\n    1,\n    2\n  ]\n}', removed: false, added: false }
++      ]);
++    });
++
++    it('honours toJSON methods on arrays (like JSON.stringify does)', function() {
++      const x = [1, 2, 3];
++      x.toJSON = () => 'aaa';
++      const y = [4, 5, 6];
++      y.toJSON = () => 'bbb';
++
++      expect(diffJson({ foo: x }, { foo: y })).to.eql([
++        { count: 1, value: '{\n', removed: false, added: false },
++        { count: 1, value: '  "foo": "aaa"\n', added: false, removed: true },
++        { count: 1, value: '  "foo": "bbb"\n', added: true, removed: false },
++        { count: 1, value: '}', removed: false, added: false }
++      ]);
++      expect(diffJson({ foo: x }, { foo: 'aaa' })).to.eql([
++        { count: 3, value: '{\n  "foo": "aaa"\n}', removed: false, added: false }
++      ]);
++    });
++
+     it('treats non-callable toJSON properties as normal properties (like JSON.stringify does)', function() {
+       const x = {
+         toJSON: 'aaa'

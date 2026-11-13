@@ -1,0 +1,137 @@
+diff --git a/src/Lexer.ts b/src/Lexer.ts
+index 9ba9df6..09532e7 100644
+--- a/src/Lexer.ts
++++ b/src/Lexer.ts
+@@ -300,6 +300,30 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+     return tokens;
+   }
+ 
++  /**
++   * Whether a link label contains an inline link or a resolvable reference link
++   * (images are not links).
++   */
++  labelHasLink(label: string): boolean {
++    if (!label.includes('[')) {
++      return false;
++    }
++    const { linkSearch, reflinkSearch } = this.tokenizer.rules.inline;
++    for (const match of label.matchAll(linkSearch)) {
++      if (match[0].charAt(0) !== '!') {
++        return true;
++      }
++    }
++    for (const match of label.matchAll(reflinkSearch)) {
++      const match0 = match[0];
++      if (match0.charAt(0) !== '!'
++        && Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))) {
++        return true;
++      }
++    }
++    return false;
++  }
++
+   /**
+    * Lexing/Compiling
+    */
+@@ -310,10 +334,17 @@ export class _Lexer<ParserOutput = string, RendererOutput = string> {
+ 
+     // Mask out reflinks
+     if (this.tokens.links && src.includes('[')) {
+-      maskedSrc = maskedSrc.replace(this.tokenizer.rules.inline.reflinkSearch, match0 =>
+-        Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))
+-          ? '[' + 'a'.repeat(match0.length - 2) + ']'
+-          : match0);
++      maskedSrc = maskedSrc.replace(this.tokenizer.rules.inline.reflinkSearch, match0 => {
++        if (!Object.hasOwn(this.tokens.links, match0.slice(match0.lastIndexOf('[') + 1, -1))) {
++          return match0;
++        }
++        // A link whose text contains another link is rejected by the tokenizer
++        // and re-scanned as text, so its label must stay visible to em/strong.
++        if (match0.charAt(0) !== '!' && this.labelHasLink(match0.slice(1, match0.lastIndexOf('[')))) {
++          return match0;
++        }
++        return '[' + 'a'.repeat(match0.length - 2) + ']';
++      });
+     }
+ 
+     // Mask out escaped characters.
+diff --git a/src/rules.ts b/src/rules.ts
+index aeb880c..6ad18d4 100644
+--- a/src/rules.ts
++++ b/src/rules.ts
+@@ -449,6 +449,9 @@ const link = edit(/^!?\[(label)\]\(\s*(href)(?:(?:[ \t]+(?:\n[ \t]*)?|\n[ \t]*)(
+   .replace('title', /"(?:\\"?|[^"\\])*"|'(?:\\'?|[^'\\])*'|\((?:\\\)?|[^)\\])*\)/)
+   .getRegex();
+ 
++// unanchored `link`, used to find inline links inside a reflink label
++const linkSearch = edit(link.source.slice(1), 'g').getRegex();
++
+ const reflink = edit(/^!?\[(label)\]\[(ref)\]/)
+   .replace('label', _inlineLabel)
+   .replace('ref', _blockLabel)
+@@ -484,6 +487,7 @@ const inlineNormal = {
+   emStrongRDelimUnd,
+   escape,
+   link,
++  linkSearch,
+   nolink,
+   punctuation,
+   reflink,
+diff --git a/test/specs/commonmark/commonmark.0.31.2.json b/test/specs/commonmark/commonmark.0.31.2.json
+index 4e348a4..92b13ab 100644
+--- a/test/specs/commonmark/commonmark.0.31.2.json
++++ b/test/specs/commonmark/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/specs/gfm/commonmark.0.31.2.json b/test/specs/gfm/commonmark.0.31.2.json
+index 47d0a22..a2bf8ca 100644
+--- a/test/specs/gfm/commonmark.0.31.2.json
++++ b/test/specs/gfm/commonmark.0.31.2.json
+@@ -4269,8 +4269,7 @@
+     "example": 533,
+     "start_line": 8053,
+     "end_line": 8059,
+-    "section": "Links",
+-    "shouldFail": true
++    "section": "Links"
+   },
+   {
+     "markdown": "*[foo*][ref]\n\n[ref]: /uri\n",
+diff --git a/test/unit/marked.test.js b/test/unit/marked.test.js
+index 5d1449b..88b1083 100644
+--- a/test/unit/marked.test.js
++++ b/test/unit/marked.test.js
+@@ -69,6 +69,25 @@ describe('marked unit', () => {
+         '<p>[a &amp; b <pre> <a href="/uri">x</a>](/uri)</p>',
+       );
+     });
++
++    it('should keep emphasis in the text of a rejected reference link', () => {
++      // the reflink is masked out before em/strong run, but a reflink whose
++      // text holds a link is rejected and re-scanned as text, so it must stay visible
++      const links = '\n\n[ref]: /uri';
++      assert.strictEqual(
++        marked.parse('[foo *bar [baz](/url) qux*][ref]' + links).trim(),
++        '<p>[foo <em>bar <a href="/url">baz</a> qux</em>]<a href="/uri">ref</a></p>',
++      );
++      assert.strictEqual(
++        marked.parse('[foo __bar [baz][ref] qux__][ref]' + links).trim(),
++        '<p>[foo <strong>bar <a href="/uri">baz</a> qux</strong>]<a href="/uri">ref</a></p>',
++      );
++      // an image is not a link, so this reflink is still accepted and still masked
++      assert.strictEqual(
++        marked.parse('*a [b ![c](/img) d* e][ref]' + links).trim(),
++        '<p>*a <a href="/uri">b <img src="/img" alt="c"> d* e</a></p>',
++      );
++    });
+   });
+ 
+   describe('use extension', () => {

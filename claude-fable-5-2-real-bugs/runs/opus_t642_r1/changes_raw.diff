@@ -1,0 +1,52 @@
+diff --git a/tests/test_parser.py b/tests/test_parser.py
+index 44d5cd6..b49c4a2 100644
+--- a/tests/test_parser.py
++++ b/tests/test_parser.py
+@@ -246,3 +246,19 @@ def test_parser_accepts_uppercase_exponent_after_leading_zero() -> None:
+         value = Parser(f"a = {raw}").parse()["a"]
+         assert isinstance(value, Float)
+         assert value == float(raw)
++
++
++@pytest.mark.parametrize(
++    "content",
++    [
++        "a = 1\nb = 2\nc = @\nd = 4\n",
++        "a = 1\r\nb = 2\r\nc = @\r\nd = 4\r\n",
++        "a = 1\r\nb = 2\nc = @\r\nd = 4\n",
++    ],
++)
++def test_error_position_does_not_depend_on_line_endings(content: str) -> None:
++    with pytest.raises(UnexpectedCharError) as e:
++        Parser(content).parse()
++
++    assert e.value.line == 3
++    assert e.value.col == 4
+diff --git a/tomlkit/source.py b/tomlkit/source.py
+index b2e9caa..0fce936 100644
+--- a/tomlkit/source.py
++++ b/tomlkit/source.py
+@@ -231,10 +231,16 @@ class Source(str):
+ 
+     def _to_linecol(self) -> tuple[int, int]:
+         cur = 0
+-        for i, line in enumerate(self.splitlines()):
+-            if cur + len(line) + 1 > self.idx:
+-                return (i + 1, self.idx - cur)
+-
+-            cur += len(line) + 1
+-
+-        return len(self.splitlines()), 0
++        lines = self.splitlines(keepends=True)
++        for i, line in enumerate(lines):
++            # Line content without its terminator (which may be "\n", "\r\n",
++            # "\r", ...), so that positions do not depend on line endings.
++            content_len = len(line.splitlines()[0]) if line else 0
++            # The position of the terminator (or end of input for the last
++            # line) belongs to this line, as with "\n" line endings.
++            if self.idx < cur + len(line) or self.idx <= cur + content_len:
++                return (i + 1, min(self.idx - cur, content_len))
++
++            cur += len(line)
++
++        return len(lines), 0

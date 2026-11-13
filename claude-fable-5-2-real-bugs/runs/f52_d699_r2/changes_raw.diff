@@ -1,0 +1,40 @@
+diff --git a/src/diff/json.ts b/src/diff/json.ts
+index 20fe8c8..1848953 100644
+--- a/src/diff/json.ts
++++ b/src/diff/json.ts
+@@ -97,7 +97,8 @@ export function canonicalize(
+     return canonicalizedObj;
+   }
+ 
+-  if (obj && obj.toJSON) {
++  // Like JSON.stringify, only call toJSON if it is callable
++  if (obj && typeof obj.toJSON === 'function') {
+     obj = obj.toJSON();
+   }
+ 
+diff --git a/test/diff/json.js b/test/diff/json.js
+index 7c744cb..b6a8f99 100644
+--- a/test/diff/json.js
++++ b/test/diff/json.js
+@@ -16,6 +16,21 @@ describe('diff/json', function() {
+       ]);
+     });
+ 
++    it('should not call a non-callable toJSON property', function() {
++      expect(diffJson(
++        {toJSON: 'old'},
++        {toJSON: 'new'}
++      )).to.eql([
++        { count: 1, value: '{\n', removed: false, added: false },
++        { count: 1, value: '  "toJSON": "old"\n', added: false, removed: true },
++        { count: 1, value: '  "toJSON": "new"\n', added: true, removed: false },
++        { count: 1, value: '}', removed: false, added: false }
++      ]);
++      expect(diffJson({a: {toJSON: true}}, {a: {toJSON: true}})).to.eql([
++        { count: 5, value: '{\n  "a": {\n    "toJSON": true\n  }\n}', removed: false, added: false }
++      ]);
++    });
++
+     it('should accept objects with different order', function() {
+       expect(diffJson(
+         {a: 123, b: 456, c: 789},
