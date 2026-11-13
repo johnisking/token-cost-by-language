@@ -2,7 +2,7 @@
 
 125 pre-registered Claude Code runs (135 published) on the 25 real bugs of [dataset 25](../claude-real-bugs), scored by the maintainers' own tests.
 
-Page with tables and method: https://tokensave.app/data/claude-fable-5-2-real-bugs
+Page with tables and method: https://tokensave.app/data/claude-fable-5-2-real-bugs · DOI [10.5281/zenodo.24186078](https://doi.org/10.5281/zenodo.24186078) · [Hugging Face](https://huggingface.co/datasets/JOHNISKING/claude-fable-5-2-real-bugs) · [Kaggle](https://www.kaggle.com/datasets/johnisking/claude-fable-5-2-vs-opus-5-5-on-25-real-bugs)
 
 ![Clean fixes and cost per run](claude-fable-5-2-real-bugs-chart.png)
 
@@ -34,4 +34,4 @@ Page with tables and method: https://tokensave.app/data/claude-fable-5-2-real-bu
 
 25 bugs; 2 runs per bug for Fable 5.2 and Opus 5.5 and 1 for Fable 5.1, so the Fable 5.1 fix rate is the least certain number. One machine, one prompt style, effort medium only. Bounded single-issue bugs.
 
-License: CC BY 4.0. Cite: TokenSave (2026). Claude Fable 5.2 costs 40% less than 5.1 per run, not 20%, and fixed the same bugs as Opus 5.5 at 83% more: 125 runs [Data set]. https://tokensave.app/data/claude-fable-5-2-real-bugs
+License: CC BY 4.0. Cite: TokenSave (2026). Claude Fable 5.2 costs 40% less than 5.1 per run, not 20%, and fixed the same bugs as Opus 5.5 at 83% more: 125 runs [Data set]. Zenodo. https://doi.org/10.5281/zenodo.24186078
