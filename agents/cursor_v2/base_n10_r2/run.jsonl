@@ -1,0 +1,7 @@
+{"type":"system","subtype":"init","apiKeySource":"login","cwd":"C:\\Users\\USER\\Downloads\\agent-test\\cursor_v2\\base_n10_r2","session_id":"c2031706-a4ef-4851-84f5-98c9a9aee375","model":"Auto","permissionMode":"default"}
+{"type":"user","message":{"role":"user","content":[{"type":"text","text":"Reply with the single word OK."}]},"session_id":"c2031706-a4ef-4851-84f5-98c9a9aee375"}
+{"type":"thinking","subtype":"delta","text":"The","session_id":"c2031706-a4ef-4851-84f5-98c9a9aee375","timestamp_ms":1794906656429}
+{"type":"thinking","subtype":"delta","text":" user wants me to reply with a single word: OK.","session_id":"c2031706-a4ef-4851-84f5-98c9a9aee375","timestamp_ms":1794906656466}
+{"type":"thinking","subtype":"completed","session_id":"c2031706-a4ef-4851-84f5-98c9a9aee375","timestamp_ms":1794906656472}
+{"type":"assistant","message":{"role":"assistant","content":[{"type":"text","text":"OK"}]},"session_id":"c2031706-a4ef-4851-84f5-98c9a9aee375"}
+{"type":"result","subtype":"success","duration_ms":1730,"duration_api_ms":1730,"is_error":false,"result":"OK","session_id":"c2031706-a4ef-4851-84f5-98c9a9aee375","request_id":"b6e713fe-12ea-4a7d-99bf-9cb3d22c81c0","usage":{"inputTokens":8167,"outputTokens":14,"cacheReadTokens":3968,"cacheWriteTokens":0}}
